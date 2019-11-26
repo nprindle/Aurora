@@ -1,3 +1,14 @@
-html {
+/* All elements default to white-on-black */
+*{
     font-family: monospace;
+    color: white;
+    background-color: black;
+}
+
+*>button {
+    font-size: 18px;
+}
+
+.main-menu {
+    font-size: 24px;
 }
