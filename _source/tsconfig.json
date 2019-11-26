@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "removeComments": true,
+      "target": "ES6",
+      "outDir": "../_built/",
+      "strict": true,
+      "experimentalDecorators": true,
+      "module": "ES6",
+      "newLine": "LF",
+    },
+    "include": [
+      "**/*.ts"
+    ]
+  }
+  
