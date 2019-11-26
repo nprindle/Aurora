@@ -1,6 +1,6 @@
-rm -r "./_built/" # delete previous build
+rm -r "./out/" # delete previous build
 echo "Compiling..."
-tsc -p _source # typescript compiler
+tsc # typescript compiler
 timestamp=$(date +"%r")
 echo "Finished build at $timestamp"
 

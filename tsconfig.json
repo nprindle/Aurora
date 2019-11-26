@@ -2,14 +2,15 @@
     "compilerOptions": {
       "removeComments": true,
       "target": "ES6",
-      "outDir": "../_built/",
+      "outDir": "./out/",
+      "rootDir": "./src/",
       "strict": true,
       "experimentalDecorators": true,
       "module": "ES6",
       "newLine": "LF",
     },
     "include": [
-      "**/*.ts"
+      "src/**/*.ts"
     ]
   }
   
