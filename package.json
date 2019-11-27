@@ -19,8 +19,8 @@
     "typescript": "^3.6.4"
   },
   "scripts": {
-    "build": "rm -r out/ 2>/dev/null ; tsc",
-    "start": "live-server -q &"
+    "build": "(rm -r out/ || rmdir /S /Q out || true) && npx tsc",
+    "start": "npx live-server -q"
   },
   "homepage": "https://github.com/GRarer/Aurora#readme"
 }
