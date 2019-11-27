@@ -1,16 +1,15 @@
 {
-    "compilerOptions": {
-      "removeComments": true,
-      "target": "ES6",
-      "outDir": "./out/",
-      "rootDir": "./src/",
-      "strict": true,
-      "experimentalDecorators": true,
-      "module": "ES6",
-      "newLine": "LF",
-    },
-    "include": [
-      "src/**/*.ts"
-    ]
-  }
-  
+  "compilerOptions": {
+    "removeComments": true,
+    "target": "ES6",
+    "outDir": "./out/",
+    "rootDir": "./src/",
+    "strict": true,
+    "experimentalDecorators": true,
+    "module": "ES6",
+    "newLine": "LF"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

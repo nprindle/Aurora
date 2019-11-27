@@ -1,0 +1,26 @@
+{
+  "name": "aurora",
+  "version": "1.0.0",
+  "description": "Aurora",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GRarer/Aurora.git"
+  },
+  "author": "Grace Rarer",
+  "bugs": {
+    "url": "https://github.com/GRarer/Aurora/issues"
+  },
+  "license": "Apache-2.0",
+  "main": "out/App.js",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  },
+  "scripts": {
+    "build": "(rm -r out/ || rmdir /S /Q out || true) && npx tsc && echo Build completed",
+    "start": "npx live-server -q"
+  },
+  "homepage": "https://github.com/GRarer/Aurora#readme"
+}
