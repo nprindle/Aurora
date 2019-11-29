@@ -4,5 +4,5 @@ import GameWindow from "./UI/GameWindow.js"
 window.onload = function() {
     console.log("Script Loaded");
 
-    GameWindow.ShowMainMenu();
+    GameWindow.showMainMenu();
 }
