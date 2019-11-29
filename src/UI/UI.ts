@@ -78,9 +78,9 @@ export default class UI{
      * creates a list of buttons
      * @param options a list of [string, Function] tuples containing the label text and callback function for each button
      */
-    static makeOptions(options: [string, Function][]): HTMLElement {
+    static makeOptions(options: [string, Function][], classes?: string[]): HTMLElement {
         const buttons = options.map((tuple: [string, Function]) => this.makeButton(tuple[0], tuple[1]));
-        return this.makeDivContaining(buttons, ['buttons']);
+        return this.makeDivContaining(buttons, classes);
     }
 
     /**
