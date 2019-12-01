@@ -16,11 +16,16 @@
     "live-server": "^1.2.1"
   },
   "devDependencies": {
-    "typescript": "^3.6.4"
+    "closure-webpack-plugin": "^2.2.1",
+    "google-closure-compiler": "^20191111.0.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "build": "(rm -r out/ || rmdir /S /Q out || true) && npx tsc && echo Build completed",
-    "start": "npx live-server"
+    "start": "npx live-server",
+    "minify": "npx webpack"
   },
   "homepage": "https://github.com/GRarer/Aurora#readme"
 }
