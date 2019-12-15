@@ -11,7 +11,7 @@ export default class World {
     // world grid is indexed grid[row][column]
     grid: AbstractTile[][];
 
-    constructor(width: number = 10, height: number = 5) {
+    constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
 
@@ -26,14 +26,14 @@ export default class World {
 
         // set correct coordinates for tiles
         for (let row: number = 0; row < height; row++) {
-            for (let column: number = 0; column < height; column++) {
+            for (let column: number = 0; column < width; column++) {
                 this.grid[row][column].xPosition = column;
                 this.grid[row][column].yPosition = row;
             }
         }
 
         // place starting tiles
-        this.placeTile(new Habitat(1, 1));
+        this.placeTile(new Habitat(1, 2));
     }
 
     // place a tile into the grid in the position given by the tile's coordinates

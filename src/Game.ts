@@ -7,7 +7,7 @@ export default class Game {
 
     static startRun() {
 
-        this.world = new World(5, 5);
+        this.world = new World(16, 8);
 
         GameWindow.showWorldScreen();
     }

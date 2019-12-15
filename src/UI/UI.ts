@@ -78,6 +78,9 @@ export default class UI{
         const canvas = document.createElement('canvas') as HTMLCanvasElement;
         canvas.width = width;
         canvas.height = height;
+        if(classes) {
+            canvas.classList.add(...classes);
+        }
         return canvas;
     }
 
