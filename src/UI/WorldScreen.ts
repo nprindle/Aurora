@@ -45,4 +45,9 @@ export default class WorldScreen {
 
         return this.worldScreenHTML;
     }
+
+    // keyboard events when on this page are passed to the map ui, which uses arrow keys or wasd to move around the map
+    handleKeyDown(ev: KeyboardEvent) {
+        this.mapUI.handleKeyDown(ev);
+    }
 }

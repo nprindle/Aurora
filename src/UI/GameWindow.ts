@@ -13,6 +13,12 @@ export default class GameWindow {
     }
 
     public static showWorldScreen() {
-        UI.fillHTML(this.rootDiv, [new WorldScreen().rerenderWorldScreen()]);
+        let worldScreen = new WorldScreen();
+        UI.fillHTML(this.rootDiv, [worldScreen.rerenderWorldScreen()]);
+        
+        // Attach keyboard input listener
+        document.onkeydown = (e: KeyboardEvent) => {
+            worldScreen.handleKeyDown(e);
+        };
     }
 }
