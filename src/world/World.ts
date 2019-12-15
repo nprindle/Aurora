@@ -4,6 +4,7 @@ import Wasteland from "./Tiles/Wasteland.js";
 import Habitat from "./Tiles/Habitat.js";
 import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
+import Util from "../util/Util.js";
 
 export default class World {
     
@@ -35,7 +36,7 @@ export default class World {
         }
 
         // randomly place terrain
-        let mountainNumber = Random.intBetween(10, 15);
+        let mountainNumber = Random.intBetween(20, 25);
         for(let i = 0; i < mountainNumber; i++) {
             let x = Random.intBetween(0, width);
             let y = Random.intBetween(0, height);
@@ -45,9 +46,6 @@ export default class World {
 
         // place starting tiles
         this.placeTile(new Habitat(1, 2));
-        
-
-
 
     }
 
@@ -58,6 +56,29 @@ export default class World {
 
     getTiles(): AbstractTile[] {
         return Arrays.flatten(this.grid);
+    }
+
+    getTilesInRectangle(top: number, left: number, width: number, height: number): AbstractTile[] {
+        if (top < 0) {
+            top = 0;
+        }
+        if (left < 0) {
+            left = 0;
+        }
+
+        let bottom = top + height;
+        let right = left + width;
+        console.log(`Fetching tiles between (${left}, ${top}) and (${right},${bottom})`);
+
+        let tiles: AbstractTile[] = [];
+
+        let rowsInRange = this.grid.slice(top, top + height + 1);
+        rowsInRange.forEach((row: AbstractTile[]) => {
+            let tilesInRange = row.slice(left, left + width + 1);
+            tilesInRange.forEach((tile: AbstractTile) => tiles.push(tile));
+        });
+
+        return tiles;
     }
 
     getTileAtCoordinates(x: number, y: number) {

@@ -26,9 +26,17 @@ export default class MapUI {
         // TODO change viewable area dimensions to scale with screen size?
 
         this.worldCanvas = UI.makeCanvas(this.world.width * this.tileScale, this.world.height * this.tileScale);
+        let worldContext = this.worldCanvas.getContext('2d')!;
+
+        // this is for debug reasons, to let us see when an area has failed to render
+        worldContext.beginPath();
+        worldContext.rect(0, 0, this.worldCanvas.width, this.worldCanvas.height);
+        worldContext.fillStyle = "black";
+        worldContext.fill();
+
         this.viewCanvas = UI.makeCanvas(this.viewWidth * this.tileScale, this.viewHeight * this.tileScale, ['map-canvas']);
 
-        // attach click listener to view canvas for tile selection
+        // attach click listener to for tile selection
         this.viewCanvas.addEventListener('click', ev => {
 
             let x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPositionX;
@@ -41,7 +49,12 @@ export default class MapUI {
             //TODO update world screen sidebar
         });
 
-        this.rerenderFullMap();
+        // render the starting area
+        world.getTilesInRectangle(0, 0, this.viewWidth, this.viewHeight).forEach((tile: AbstractTile) => {
+            this.rerenderTile(tile, true);
+        });
+        this.updateViewCanvas();
+
     }
 
     getViewCanvas() {
@@ -53,13 +66,6 @@ export default class MapUI {
         let pixelWidth = this.viewWidth * this.tileScale;
         let pixelHeight = this.viewHeight * this.tileScale;
         context.drawImage(this.worldCanvas, this.viewPositionX * this.tileScale, this.viewPositionY * this.tileScale, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
-    }
-
-    rerenderFullMap() {
-        this.world.getTiles().forEach(tile => {
-            this.rerenderTile(tile, true);
-        });
-        this.updateViewCanvas();
     }
 
     drawImageAtCoordinates(src: string, gridX: number, gridY: number, skipViewUpdate?: boolean) {
@@ -123,9 +129,33 @@ export default class MapUI {
     }
 
     private moveViewArea(right: number, down: number) {
+        let oldPositionX = this.viewPositionX;
+        let oldPositionY = this.viewPositionY;
+
         this.viewPositionX = Util.clamp(0, this.viewPositionX + right, this.world.width - this.viewWidth);
         this.viewPositionY = Util.clamp(0, this.viewPositionY + down, this.world.height - this.viewHeight);
         console.log(`moved view area to ${this.viewPositionX}, ${this.viewPositionY}`);
+
+        right = this.viewPositionX - oldPositionX;
+        down = this.viewPositionY - oldPositionY;
+
+        // make sure that the are we're moving into has been rendered
+        if (right > 0) {
+            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX + this.viewWidth - right),  right, this.viewHeight)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+        if (right < 0) {
+            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX),  right * -1, this.viewHeight)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+        if (down > 0) {
+            this.world.getTilesInRectangle((this.viewPositionY + this.viewHeight - down), (this.viewPositionX),  this.viewWidth, down)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        } if (down < 0) {
+            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX),  this.viewWidth, down * -1)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+
         this.updateViewCanvas();
     }
 }   
