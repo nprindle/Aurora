@@ -6,7 +6,6 @@ import WorldScreen from "./WorldScreen.js";
 export default class GameWindow {
 
     private static rootDiv: HTMLElement = document.getElementById('rootdiv')!; // find the div that holds all graphical UI (see index.html)
-    private static worldScreen: WorldScreen = new WorldScreen();
 
 
     public static showMainMenu() {
@@ -14,6 +13,6 @@ export default class GameWindow {
     }
 
     public static showWorldScreen() {
-        UI.fillHTML(this.rootDiv, [this.worldScreen.rerenderWorldScreen()]);
+        UI.fillHTML(this.rootDiv, [new WorldScreen().rerenderWorldScreen()]);
     }
 }
