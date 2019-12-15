@@ -25,7 +25,6 @@ export default class WorldScreen {
     /* Refreshes all components of the world screen and returns then new HTML
      */
     rerenderWorldScreen(): HTMLElement {
-        this.mapUI.rerenderFullMap();
         let mapHTML = this.mapUI.getViewCanvas();
         this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
         this.sidebar = UI.makePara("Project options go here", ['world-screen-sidebar']);
