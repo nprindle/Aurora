@@ -2,6 +2,8 @@ import AbstractTile from "./AbstractTile.js";
 import Arrays from "../util/Arrays.js"
 import Wasteland from "./Tiles/Wasteland.js";
 import Habitat from "./Tiles/Habitat.js";
+import Mountain from "./Tiles/Mountain.js";
+import Random from "../util/Random.js";
 
 export default class World {
     
@@ -32,8 +34,21 @@ export default class World {
             }
         }
 
+        // randomly place terrain
+        let mountainNumber = Random.intBetween(10, 15);
+        for(let i = 0; i < mountainNumber; i++) {
+            let x = Random.intBetween(0, width);
+            let y = Random.intBetween(0, height);
+            
+            this.placeTile(new Mountain(x, y));
+        }
+
         // place starting tiles
         this.placeTile(new Habitat(1, 2));
+        
+
+
+
     }
 
     // place a tile into the grid in the position given by the tile's coordinates
