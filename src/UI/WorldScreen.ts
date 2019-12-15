@@ -1,18 +1,20 @@
 import UI from "./UI.js";
+import MapUI from "./MapUI.js";
+import Game from "../Game.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
  */
 export default class WorldScreen {
 
-    private mapHTML: HTMLElement;
+    private mapUI: MapUI;
     private inventoryHTML: HTMLElement;
     private sidebar: HTMLElement;
     private headerHTML: HTMLElement;
     worldScreenHTML: HTMLElement;
 
     constructor() {
-        this.mapHTML = UI.makePara("To be assembled in rerender");
+        this.mapUI = new MapUI(Game.world);
         this.inventoryHTML = UI.makePara("To be assembled in rerender");
         this.sidebar = UI.makePara("To be assembled in rerender");
         this.headerHTML = UI.makePara("To be assembled in rerender");
@@ -21,24 +23,23 @@ export default class WorldScreen {
     }
 
     /* Refreshes all components of the world screen and returns then new HTML
-     *
      */
     rerenderWorldScreen(): HTMLElement {
-        //TODO call renderers for components
-        this.mapHTML = UI.makePara("MAP GOES HERE", ['map-display', 'fill-vertical']);
+        let mapHTML = this.mapUI.rerenderFullMap();
         this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
         this.sidebar = UI.makePara("Project options go here", ['world-screen-sidebar']);
         this.headerHTML = UI.makePara("Status Header goes here", ['world-screen-header']);
 
         this.worldScreenHTML = UI.makeDivContaining([
+
             this.headerHTML,
 
             UI.makeDivContaining([
-                this.mapHTML,
+                this.inventoryHTML,
+                UI.makeDivContaining([mapHTML], ['world-screen-map-box']),
                 this.sidebar
-            ], ['flex-horizontal', 'fill-horizontal']),
+            ], ['world-screen-hbox']),
 
-            this.inventoryHTML,
         ], ['flex-vertical']);
 
         return this.worldScreenHTML;

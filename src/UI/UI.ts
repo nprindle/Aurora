@@ -74,6 +74,13 @@ export default class UI{
         return img;
     }
 
+    static makeCanvas(width: number, height: number, classes?: string[]): HTMLCanvasElement {
+        const canvas = document.createElement('canvas') as HTMLCanvasElement;
+        canvas.width = width;
+        canvas.height = height;
+        return canvas;
+    }
+
     /**
      * creates a list of buttons
      * @param options a list of [string, Function] tuples containing the label text and callback function for each button

@@ -47,11 +47,23 @@ button {
     margin: 0px;
 }
 
-.map-display {
-    background-color: green;
+.world-screen-hbox {
+    height: 800px;
+    margin: 0;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.world-screen-map-box {
+    height: 100%;
     width: 100%;
-    height: 400px;
-    margin: 0px;
+}
+
+.map-canvas {
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 .world-screen-sidebar {
@@ -62,6 +74,6 @@ button {
 
 .world-screen-inventory {
     background-color: orange;
-    height: 150px;
+    width: 400px;
     margin: 0px;
 }
