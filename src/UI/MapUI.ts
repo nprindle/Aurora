@@ -3,25 +3,29 @@ import UI from "./UI.js";
 import AbstractTile from "../world/AbstractTile.js";
 import Util from "../util/Util.js";
 import GridCoordinates from "../world/GridCoordinates.js";
+import WorldScreen from "./WorldScreen.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI {
-    world: World;
-    worldCanvas: HTMLCanvasElement; // canvas containing the whole world (not shown directly to the user)
+    private world: World;
+    private worldCanvas: HTMLCanvasElement; // canvas containing the whole world (not shown directly to the user)
     viewCanvas: HTMLCanvasElement; // the canvas we actually show, containing the currently viewed area
 
-    viewWidth: number = 10;
-    viewHeight: number = 6;
+    private parentScreen: WorldScreen;
 
-    viewPositionX: number = 0; // x-coord of the top-left corner of the currently viewed area
-    viewPositionY: number = 0; // y-coord of the top-left corner of the currently viewed area
+    private viewWidth: number = 10;
+    private viewHeight: number = 6;
 
-    tileScale: number = 64; // pixels per tile (before being stretched)
+    private viewPositionX: number = 0; // x-coord of the top-left corner of the currently viewed area
+    private viewPositionY: number = 0; // y-coord of the top-left corner of the currently viewed area
 
-    highlightedCoordinates: GridCoordinates | null = null;
+    private tileScale: number = 64; // pixels per tile (before being stretched)
 
-    constructor(world: World) {
+    private highlightedCoordinates: GridCoordinates | null = null;
+
+    constructor(parent: WorldScreen, world: World) {
         this.world = world;
+        this.parentScreen = parent;
 
         // TODO change viewable area dimensions to scale with screen size?
 
@@ -42,11 +46,9 @@ export default class MapUI {
             let x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPositionX;
             let y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPositionY;
         
-            let targetTile = this.world.getTileAtCoordinates(x, y);
+            let targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
             
             this.selectTile(targetTile);
-
-            //TODO update world screen sidebar
         });
 
         // render the starting area
@@ -61,14 +63,14 @@ export default class MapUI {
         return this.viewCanvas;
     }
 
-    updateViewCanvas() {
+    private updateViewCanvas() {
         let context = this.viewCanvas.getContext('2d')!;
         let pixelWidth = this.viewWidth * this.tileScale;
         let pixelHeight = this.viewHeight * this.tileScale;
         context.drawImage(this.worldCanvas, this.viewPositionX * this.tileScale, this.viewPositionY * this.tileScale, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
     }
 
-    drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
+    private drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
         let context = this.worldCanvas.getContext('2d')!;
         let image = new Image();
         image.onload = () => {
@@ -83,7 +85,7 @@ export default class MapUI {
     }
 
     // redraws the given tile at its selected location
-    rerenderTile(tile: AbstractTile, skipViewUpdate?: boolean) {
+    private rerenderTile(tile: AbstractTile, skipViewUpdate?: boolean) {
         // draw tile
         this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
 
@@ -93,13 +95,11 @@ export default class MapUI {
         }
     }
 
-    selectTile(tile: AbstractTile | null) {
+    private selectTile(tile: AbstractTile | null) {
 
         // deselect previous highlight
         if (this.highlightedCoordinates) {
-            let prevX = this.highlightedCoordinates.x;
-            let prevY = this.highlightedCoordinates.y;
-            let prevSelection = this.world.getTileAtCoordinates(prevX, prevY);
+            let prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
             this.highlightedCoordinates = null;
             this.rerenderTile(prevSelection);
         }
@@ -111,6 +111,8 @@ export default class MapUI {
         } else {
             this.highlightedCoordinates = null;
         }
+
+        this.parentScreen.changeSidebarTile(this.highlightedCoordinates);
     }
 
     getHighlightedCoordinates(): GridCoordinates | null {

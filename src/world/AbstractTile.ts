@@ -13,5 +13,7 @@ import GridCoordinates from "./GridCoordinates.js";
         this.position = new GridCoordinates(x, y);
     }
 
+    abstract getTileName(): string; // user-visible label for the tile type
+
     abstract getImgSrc(): string; // the path to the map texture for this tile type
  }

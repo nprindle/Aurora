@@ -1,7 +1,6 @@
 import AbstractTile from "../AbstractTile.js";
 
 export default class Wasteland extends AbstractTile {
-
     constructor(x: number, y: number) {
         super(x, y);
     }
@@ -10,4 +9,7 @@ export default class Wasteland extends AbstractTile {
         return "assets/tiles/wasteland.png";
     }
 
+    getTileName(): string {
+        return "Wasteland";
+    }
 }

@@ -1,6 +1,8 @@
 import UI from "./UI.js";
 import MapUI from "./MapUI.js";
 import Game from "../Game.js";
+import TileSidebar from "./TileSidebar.js";
+import GridCoordinates from "../world/GridCoordinates.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -9,14 +11,14 @@ export default class WorldScreen {
 
     private mapUI: MapUI;
     private inventoryHTML: HTMLElement;
-    private sidebar: HTMLElement;
+    private sidebar: TileSidebar;
     private headerHTML: HTMLElement;
     worldScreenHTML: HTMLElement;
 
     constructor() {
-        this.mapUI = new MapUI(Game.world);
+        this.mapUI = new MapUI(this, Game.world);
         this.inventoryHTML = UI.makePara("To be assembled in rerender");
-        this.sidebar = UI.makePara("To be assembled in rerender");
+        this.sidebar = new TileSidebar(Game.world);
         this.headerHTML = UI.makePara("To be assembled in rerender");
         this.worldScreenHTML = UI.makePara("To be assembled in rerender");
         this.rerenderWorldScreen();
@@ -27,7 +29,7 @@ export default class WorldScreen {
     rerenderWorldScreen(): HTMLElement {
         let mapHTML = this.mapUI.getViewCanvas();
         this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
-        this.sidebar = UI.makePara("Project options go here", ['world-screen-sidebar']);
+        let sidebarHTML = this.sidebar.getHTML();
         this.headerHTML = UI.makePara("Status Header goes here", ['world-screen-header']);
 
         this.worldScreenHTML = UI.makeDivContaining([
@@ -37,7 +39,7 @@ export default class WorldScreen {
             UI.makeDivContaining([
                 this.inventoryHTML,
                 UI.makeDivContaining([mapHTML], ['world-screen-map-box']),
-                this.sidebar
+                sidebarHTML,
             ], ['world-screen-hbox']),
 
         ], ['flex-vertical']);
@@ -48,5 +50,9 @@ export default class WorldScreen {
     // keyboard events when on this page are passed to the map ui, which uses arrow keys or wasd to move around the map
     handleKeyDown(ev: KeyboardEvent) {
         this.mapUI.handleKeyDown(ev);
+    }
+
+    changeSidebarTile(position: GridCoordinates | null) {
+        this.sidebar.changeTile(position);
     }
 }

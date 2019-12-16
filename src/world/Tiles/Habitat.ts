@@ -10,4 +10,8 @@ export default class Habitat extends AbstractTile {
         return "assets/tiles/habitat.png";
     }
 
+    getTileName(): string {
+        return "Habitat Dome";
+    }
+
 }
