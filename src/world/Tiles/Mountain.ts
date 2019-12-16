@@ -10,4 +10,8 @@ export default class Mountain extends AbstractTile {
         return "assets/tiles/mountain.png";
     }
 
+    getTileName(): string {
+        return "Mountains";
+    }
+
 }

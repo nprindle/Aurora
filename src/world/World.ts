@@ -80,7 +80,7 @@ export default class World {
         return tiles;
     }
 
-    getTileAtCoordinates(x: number, y: number) {
-        return this.grid[y][x];
+    getTileAtCoordinates(coordinates: GridCoordinates) {
+        return this.grid[coordinates.y][coordinates.x];
     }
 }
