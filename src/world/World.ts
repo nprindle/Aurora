@@ -5,6 +5,7 @@ import Habitat from "./Tiles/Habitat.js";
 import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
 import Util from "../util/Util.js";
+import GridCoordinates from "./GridCoordinates.js";
 
 export default class World {
     
@@ -30,8 +31,7 @@ export default class World {
         // set correct coordinates for tiles
         for (let row: number = 0; row < height; row++) {
             for (let column: number = 0; column < width; column++) {
-                this.grid[row][column].xPosition = column;
-                this.grid[row][column].yPosition = row;
+                this.grid[row][column].position = new GridCoordinates(column, row);
             }
         }
 
@@ -51,7 +51,7 @@ export default class World {
 
     // place a tile into the grid in the position given by the tile's coordinates
     placeTile(tile: AbstractTile) {
-        this.grid[tile.yPosition][tile.xPosition] = tile;
+        this.grid[tile.position.y][tile.position.x] = tile;
     }
 
     getTiles(): AbstractTile[] {
@@ -68,7 +68,6 @@ export default class World {
 
         let bottom = top + height;
         let right = left + width;
-        console.log(`Fetching tiles between (${left}, ${top}) and (${right},${bottom})`);
 
         let tiles: AbstractTile[] = [];
 

@@ -1,8 +1,8 @@
-import World from "../world/World";
+import World from "../world/World.js";
 import UI from "./UI.js";
-import Wasteland from "../world/Tiles/Wasteland.js";
 import AbstractTile from "../world/AbstractTile.js";
 import Util from "../util/Util.js";
+import GridCoordinates from "../world/GridCoordinates.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI {
@@ -18,7 +18,7 @@ export default class MapUI {
 
     tileScale: number = 64; // pixels per tile (before being stretched)
 
-    highlightedCoordinates: [number, number] | null = null; // [x, y] grid coordinates of the selected tile, or null if no tile is selected
+    highlightedCoordinates: GridCoordinates | null = null;
 
     constructor(world: World) {
         this.world = world;
@@ -57,7 +57,7 @@ export default class MapUI {
 
     }
 
-    getViewCanvas() {
+    getViewCanvas(): HTMLCanvasElement {
         return this.viewCanvas;
     }
 
@@ -68,11 +68,11 @@ export default class MapUI {
         context.drawImage(this.worldCanvas, this.viewPositionX * this.tileScale, this.viewPositionY * this.tileScale, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
     }
 
-    drawImageAtCoordinates(src: string, gridX: number, gridY: number, skipViewUpdate?: boolean) {
+    drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
         let context = this.worldCanvas.getContext('2d')!;
         let image = new Image();
         image.onload = () => {
-            context.drawImage(image, gridX * this.tileScale, gridY * this.tileScale, this.tileScale, this.tileScale);
+            context.drawImage(image,coordinates.x * this.tileScale, coordinates.y * this.tileScale, this.tileScale, this.tileScale);
             if(!skipViewUpdate) {
                 this.updateViewCanvas();
             }
@@ -85,11 +85,11 @@ export default class MapUI {
     // redraws the given tile at its selected location
     rerenderTile(tile: AbstractTile, skipViewUpdate?: boolean) {
         // draw tile
-        this.drawImageAtCoordinates(tile.getImgSrc(), tile.xPosition, tile.yPosition);
+        this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
 
         // draw highlight icon
-        if ([tile.xPosition, tile.yPosition] === this.highlightedCoordinates) {
-            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.xPosition, tile.yPosition, skipViewUpdate);
+        if (tile.position === this.highlightedCoordinates) {
+            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position, skipViewUpdate);
         }
     }
 
@@ -97,7 +97,8 @@ export default class MapUI {
 
         // deselect previous highlight
         if (this.highlightedCoordinates) {
-            let [prevX, prevY] = this.highlightedCoordinates;
+            let prevX = this.highlightedCoordinates.x;
+            let prevY = this.highlightedCoordinates.y;
             let prevSelection = this.world.getTileAtCoordinates(prevX, prevY);
             this.highlightedCoordinates = null;
             this.rerenderTile(prevSelection);
@@ -105,11 +106,15 @@ export default class MapUI {
 
         // highlight new tile
         if (tile) {
-            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.xPosition, tile.yPosition);
-            this.highlightedCoordinates = [tile.xPosition, tile.yPosition];
+            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position);
+            this.highlightedCoordinates = tile.position;
         } else {
             this.highlightedCoordinates = null;
         }
+    }
+
+    getHighlightedCoordinates(): GridCoordinates | null {
+        return this.highlightedCoordinates;
     }
 
     handleKeyDown(ev: KeyboardEvent) {
@@ -134,7 +139,6 @@ export default class MapUI {
 
         this.viewPositionX = Util.clamp(0, this.viewPositionX + right, this.world.width - this.viewWidth);
         this.viewPositionY = Util.clamp(0, this.viewPositionY + down, this.world.height - this.viewHeight);
-        console.log(`moved view area to ${this.viewPositionX}, ${this.viewPositionY}`);
 
         right = this.viewPositionX - oldPositionX;
         down = this.viewPositionY - oldPositionY;
