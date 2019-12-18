@@ -3,18 +3,19 @@ import UI from "./UI.js";
 import World from "../world/World.js";
 import TileProject from "../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
+import Game from "../Game.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
-    world: World;
+    run: Game;
     parentScreen: WorldScreen;
 
     private root: HTMLElement;
 
 
-    constructor(parentScreen: WorldScreen, world: World) {
+    constructor(parentScreen: WorldScreen, run: Game) {
         this.parentScreen = parentScreen;
-        this.world = world;
+        this.run = run;
         this.root = UI.makeDiv(['world-screen-sidebar']);
 
         this.refresh();
@@ -31,12 +32,12 @@ export default class TileSidebar {
 
     refresh() {
         if (this.position != null) {
-            let tile = this.world.getTileAtCoordinates(this.position);
+            let tile = this.run.world.getTileAtCoordinates(this.position);
 
             let projectsHTML = UI.makeDiv();
             tile.possibleProjects.forEach((project: TileProject) => {
                 let button = UI.makeButton(project.title, () => {
-                    project.action(tile.position, this.world);
+                    project.action(tile.position, this.run);
                     this.parentScreen.refreshComponents();
                 });
 

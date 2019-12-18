@@ -3,6 +3,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import World from "../World.js";
 import Habitat from "./Habitat.js";
+import Game from "../../Game.js";
 
 
 export default class Wasteland extends AbstractTile {
@@ -14,8 +15,8 @@ export default class Wasteland extends AbstractTile {
 
     possibleProjects: TileProject[] = [
         new TileProject("Construct habitat dome", 
-            (position: GridCoordinates, world: World) => {
-                world.placeTile(new Habitat(position));
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new Habitat(position));
             }
         ),
     ];
