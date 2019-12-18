@@ -1,10 +1,14 @@
 import AbstractTile from "../AbstractTile.js";
+import TileProject from "../../tileProjects/TileProject.js";
+import GridCoordinates from "../GridCoordinates.js";
 
 export default class Habitat extends AbstractTile {
 
-    constructor(x: number, y: number) {
-        super(x, y);
+    constructor(position: GridCoordinates) {
+        super(position);
     }
+
+    possibleProjects: TileProject[] = [];
 
     getImgSrc(): string {
         return "assets/tiles/habitat.png";
