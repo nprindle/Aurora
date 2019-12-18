@@ -1,8 +1,8 @@
 import UI from "./UI.js";
 import MapUI from "./MapUI.js";
-import Game from "../Game.js";
 import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../world/GridCoordinates.js";
+import Game from "../Game.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -15,10 +15,10 @@ export default class WorldScreen {
     private headerHTML: HTMLElement;
     worldScreenHTML: HTMLElement;
 
-    constructor() {
-        this.mapUI = new MapUI(this, Game.world);
+    constructor(run: Game) {
+        this.mapUI = new MapUI(this, run.world);
         this.inventoryHTML = UI.makePara("To be assembled in rerender");
-        this.sidebar = new TileSidebar(this, Game.world);
+        this.sidebar = new TileSidebar(this, run);
         this.headerHTML = UI.makePara("To be assembled in rerender");
         this.worldScreenHTML = UI.makePara("To be assembled in rerender");
         this.assembleWorldScreen();

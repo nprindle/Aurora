@@ -1,14 +1,12 @@
-import GameWindow from "./UI/GameWindow.js";
 import World from "./world/World.js";
 
+/* Holds the state of a run of the game, including the game world, inventory, and run statistics
+ */
 export default class Game {
-    
-    static world: World = new World(5, 5);
+    readonly world: World;
 
-    static startRun() {
-
-        this.world = new World(20, 20);
-
-        GameWindow.showWorldScreen();
+    constructor() {
+        // TODO pass some sort of `WorldGenerationParameters` object to specify size, terrain frequency, etc
+        this.world = new World (20, 20); 
     }
 }
