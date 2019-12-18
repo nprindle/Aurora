@@ -24,7 +24,7 @@ export default class World {
         this.grid = Arrays.generate(height, () => {
             // populate row
             return Arrays.generate(width, () => {
-                return new Wasteland(0, 0)
+                return new Wasteland(new GridCoordinates(0, 0));
             });
         });
 
@@ -41,11 +41,11 @@ export default class World {
             let x = Random.intBetween(0, width);
             let y = Random.intBetween(0, height);
             
-            this.placeTile(new Mountain(x, y));
+            this.placeTile(new Mountain(new GridCoordinates(x, y)));
         }
 
         // place starting tiles
-        this.placeTile(new Habitat(1, 2));
+        this.placeTile(new Habitat(new GridCoordinates(1, 2)));
 
     }
 

@@ -14,7 +14,7 @@ export default class GameWindow {
 
     public static showWorldScreen() {
         let worldScreen = new WorldScreen();
-        UI.fillHTML(this.rootDiv, [worldScreen.rerenderWorldScreen()]);
+        UI.fillHTML(this.rootDiv, [worldScreen.assembleWorldScreen()]);
         
         // Attach keyboard input listener
         document.onkeydown = (e: KeyboardEvent) => {

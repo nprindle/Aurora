@@ -52,10 +52,7 @@ export default class MapUI {
         });
 
         // render the starting area
-        world.getTilesInRectangle(0, 0, this.viewWidth, this.viewHeight).forEach((tile: AbstractTile) => {
-            this.rerenderTile(tile, true);
-        });
-        this.updateViewCanvas();
+        this.refreshViewableArea();
 
     }
 
@@ -69,6 +66,14 @@ export default class MapUI {
         let pixelHeight = this.viewHeight * this.tileScale;
         context.drawImage(this.worldCanvas, this.viewPositionX * this.tileScale, this.viewPositionY * this.tileScale, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
     }
+
+    public refreshViewableArea() {
+        this.world.getTilesInRectangle(this.viewPositionX, this.viewPositionY, this.viewWidth, this.viewHeight).forEach((tile: AbstractTile) => {
+            this.rerenderTile(tile, true);
+        });
+        this.updateViewCanvas();
+    }
+
 
     private drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
         let context = this.worldCanvas.getContext('2d')!;

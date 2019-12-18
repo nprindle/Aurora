@@ -18,15 +18,15 @@ export default class WorldScreen {
     constructor() {
         this.mapUI = new MapUI(this, Game.world);
         this.inventoryHTML = UI.makePara("To be assembled in rerender");
-        this.sidebar = new TileSidebar(Game.world);
+        this.sidebar = new TileSidebar(this, Game.world);
         this.headerHTML = UI.makePara("To be assembled in rerender");
         this.worldScreenHTML = UI.makePara("To be assembled in rerender");
-        this.rerenderWorldScreen();
+        this.assembleWorldScreen();
     }
 
     /* Refreshes all components of the world screen and returns then new HTML
      */
-    rerenderWorldScreen(): HTMLElement {
+    assembleWorldScreen(): HTMLElement {
         let mapHTML = this.mapUI.getViewCanvas();
         this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
         let sidebarHTML = this.sidebar.getHTML();
@@ -46,6 +46,15 @@ export default class WorldScreen {
 
         return this.worldScreenHTML;
     }
+
+    refreshComponents() {
+        this.mapUI.refreshViewableArea();
+        this.sidebar.refresh();
+        // TODO refresh status bar UI
+        // TODO refresh inventory UI
+    }
+
+
 
     // keyboard events when on this page are passed to the map ui, which uses arrow keys or wasd to move around the map
     handleKeyDown(ev: KeyboardEvent) {
