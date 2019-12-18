@@ -17,16 +17,8 @@ export default class WorldScreen {
 
     constructor(run: Game) {
         this.mapUI = new MapUI(this, run.world);
-        this.inventoryHTML = UI.makePara("To be assembled in rerender");
         this.sidebar = new TileSidebar(this, run);
-        this.headerHTML = UI.makePara("To be assembled in rerender");
-        this.worldScreenHTML = UI.makePara("To be assembled in rerender");
-        this.assembleWorldScreen();
-    }
 
-    /* Refreshes all components of the world screen and returns then new HTML
-     */
-    assembleWorldScreen(): HTMLElement {
         let mapHTML = this.mapUI.getViewCanvas();
         this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
         let sidebarHTML = this.sidebar.getHTML();
@@ -43,7 +35,9 @@ export default class WorldScreen {
             ], ['world-screen-hbox']),
 
         ], ['flex-vertical']);
+    }
 
+    public getHTML(): HTMLElement {
         return this.worldScreenHTML;
     }
 

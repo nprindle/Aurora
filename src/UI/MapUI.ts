@@ -77,6 +77,7 @@ export default class MapUI {
 
     private drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
         let context = this.worldCanvas.getContext('2d')!;
+        context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
         let image = new Image();
         image.onload = () => {
             context.drawImage(image,coordinates.x * this.tileScale, coordinates.y * this.tileScale, this.tileScale, this.tileScale);
