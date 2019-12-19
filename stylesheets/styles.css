@@ -1,3 +1,5 @@
+@import 'worldscreen.css';
+
 :root {
     background-color: black;
     color: white;
@@ -38,49 +40,4 @@ button[disabled]{
     height: 100%;
 }
 
-.main-menu {
-    font-size: 24px;
-    
-}
 
-.main-menu button {
-    font-size: 24px;
-}
-
-.world-screen-header {
-    background-color: blueviolet;
-    height: 100px;
-    margin: 0px;
-}
-
-.world-screen-hbox {
-    height: 800px;
-    margin: 0;
-
-    display: flex;
-    flex-direction: row;
-}
-
-.world-screen-map-box {
-    height: 100%;
-    width: 100%;
-}
-
-.map-canvas {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-}
-
-.world-screen-sidebar {
-    background-color: black;
-    width: 400px;
-    margin: 20px;
-    font-size: 16px;
-}
-
-.world-screen-inventory {
-    width: 400px;
-    margin: 10px;
-    font-size: 16px;
-}
