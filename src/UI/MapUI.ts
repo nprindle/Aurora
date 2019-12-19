@@ -68,7 +68,9 @@ export default class MapUI {
     }
 
     public refreshViewableArea() {
-        this.world.getTilesInRectangle(this.viewPositionX, this.viewPositionY, this.viewWidth, this.viewHeight).forEach((tile: AbstractTile) => {
+        let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPositionX, this.viewPositionY, this.viewWidth, this.viewHeight);
+        console.log(`viewable tiles: ${tilesInViewableArea.length}`);
+        tilesInViewableArea.forEach((tile: AbstractTile) => {
             this.rerenderTile(tile, true);
         });
         this.updateViewCanvas();
@@ -153,18 +155,18 @@ export default class MapUI {
 
         // make sure that the are we're moving into has been rendered
         if (right > 0) {
-            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX + this.viewWidth - right),  right, this.viewHeight)
+            this.world.getTilesInRectangle((this.viewPositionX + this.viewWidth - right), (this.viewPositionY),  right, this.viewHeight)
                 .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
         }
         if (right < 0) {
-            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX),  right * -1, this.viewHeight)
+            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY),  right * -1, this.viewHeight)
                 .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
         }
         if (down > 0) {
-            this.world.getTilesInRectangle((this.viewPositionY + this.viewHeight - down), (this.viewPositionX),  this.viewWidth, down)
+            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY + this.viewHeight - down),  this.viewWidth, down)
                 .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
         } if (down < 0) {
-            this.world.getTilesInRectangle((this.viewPositionY), (this.viewPositionX),  this.viewWidth, down * -1)
+            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY),  this.viewWidth, down * -1)
                 .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
         }
 
