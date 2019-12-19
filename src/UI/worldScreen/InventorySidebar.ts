@@ -1,7 +1,7 @@
-import UI from "./UI.js";
-import Inventory from "../resources/Inventory.js";
-import Game from "../Game.js";
-import { Resource } from "../resources/Resource.js";
+import UI from "../UI.js";
+import Inventory from "../../resources/Inventory.js";
+import Game from "../../Game.js";
+import { Resource } from "../../resources/Resource.js";
 
 export default class InventorySidebar {
 

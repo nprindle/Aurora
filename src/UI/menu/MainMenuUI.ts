@@ -1,5 +1,5 @@
-import UI from "./UI.js";
-import GameWindow from "./GameWindow.js";
+import UI from "../UI.js";
+import GameWindow from "../GameWindow.js";
 
 export default class MainMenuUI {
     static renderMainMenu(): HTMLElement {
