@@ -80,7 +80,7 @@ button[disabled]{
 }
 
 .world-screen-inventory {
-    background-color: orange;
     width: 400px;
-    margin: 0px;
+    margin: 10px;
+    font-size: 16px;
 }
