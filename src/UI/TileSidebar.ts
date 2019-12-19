@@ -4,6 +4,8 @@ import World from "../world/World.js";
 import TileProject from "../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
 import Game from "../Game.js";
+import Cost from "../resources/Cost.js";
+import { Resource } from "../resources/Resource.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
@@ -36,12 +38,21 @@ export default class TileSidebar {
 
             let projectsHTML = UI.makeDiv();
             tile.possibleProjects.forEach((project: TileProject) => {
+                let disabled = !project.canDo(tile.position, this.run);
                 let button = UI.makeButton(project.title, () => {
-                    project.action(tile.position, this.run);
+                    project.doAction(tile.position, this.run);
                     this.parentScreen.refreshComponents();
-                });
+                }, [], disabled);
 
                 projectsHTML.appendChild(button);
+
+                if (project.costs.length == 0) {
+                    projectsHTML.appendChild(UI.makePara("Cost: Free"));
+                } else {
+                    let costDescriptions = project.costs.map((cost: Cost) => `${Resource.getName(cost.resource)} x${cost.quantity}`);
+                    let costsString = "Cost: " + costDescriptions.join(', ');
+                    projectsHTML.appendChild(UI.makePara(costsString));
+                }
             });
 
             UI.fillHTML(this.root, [

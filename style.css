@@ -13,6 +13,12 @@ button {
     font-family: monospace;
 }
 
+button:disabled,
+button[disabled]{
+  color: #808080;
+  border-color: #808080;
+}
+
 .flex-horizontal {
     display: flex;
     flex-direction: row;

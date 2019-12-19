@@ -44,7 +44,7 @@ export default class WorldScreen {
     }
 
     refreshComponents() {
-        this.mapUI.refreshViewableArea();
+        this.mapUI.refreshViewableArea(); //TODO fix problem where tile changes are sometimes not shown on update
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
         // TODO refresh status bar UI

@@ -13,6 +13,6 @@ export default class Game {
         this.world = new World (20, 20);
         this.inventory = new Inventory();
         // TODO set correct starting resources
-        this.inventory.add(Resource.colonists, 100);
+        this.inventory.addQuantity(Resource.colonists, 100);
     }
 }
