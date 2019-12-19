@@ -1,6 +1,6 @@
 import World from "./world/World.js";
 import Inventory from "./resources/Inventory.js";
-import { Resource } from "./resources/Resource.js";
+import Resource from "./resources/Resource.js";
 
 /* Holds the state of a run of the game, including the game world, inventory, and run statistics
  */
@@ -13,6 +13,6 @@ export default class Game {
         this.world = new World (20, 20);
         this.inventory = new Inventory();
         // TODO set correct starting resources
-        this.inventory.addQuantity(Resource.colonists, 100);
+        this.inventory.addQuantity(Resource.Colonists, 100);
     }
 }

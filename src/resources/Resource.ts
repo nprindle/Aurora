@@ -1,27 +1,16 @@
-export enum Resource {
-    energy,
-    colonists,
-    metal,
-}
+export default class Resource {
+    // define all resources here
+    static readonly Energy = new Resource("Energy");
+    static readonly Colonists = new Resource("Human Colonists");
+    static readonly Metal = new Resource("Refined Metals");
 
-// typescript doesn't allow enum members to have fields and this is my horrible workaround
-class ResourceSpecification {
-    constructor(
-        public name: string,
+    // the constructor is private because the resources defined as static members above should be the only possible instances
+    private constructor(
+        public readonly name: string,
     ){}
-}
 
-// if you add a new resource you have to write its corrosponding specification here
-const resourceSpecifications = new Map<Resource, ResourceSpecification>([
-    [Resource.energy, new ResourceSpecification("Energy")],
-    [Resource.metal, new ResourceSpecification("Refined Metals")],
-    [Resource.colonists, new ResourceSpecification("Human Colonists")],
-]);
-
-export namespace Resource {
-    // the user-visible name of this resource type
-    export function getName(resource: Resource): string {
-        let specification: ResourceSpecification =  resourceSpecifications.get(resource)!;
-        return specification.name;
+    // returns a list of all resource instances
+    static values(): Resource[] {
+        return Object.keys(Resource).map((k: string) => ((Resource as { [key: string]: any})[k] as Resource));
     }
 }

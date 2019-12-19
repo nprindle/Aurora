@@ -1,7 +1,7 @@
 import UI from "../UI.js";
 import Inventory from "../../resources/Inventory.js";
 import Game from "../../Game.js";
-import { Resource } from "../../resources/Resource.js";
+import Resource from "../../resources/Resource.js";
 
 export default class InventorySidebar {
 
@@ -21,7 +21,7 @@ export default class InventorySidebar {
     refresh() {
         let resourceListHTML = UI.makeDiv();
         this.inventory.getResourceList().forEach((resource: Resource) => {
-            let description = `${Resource.getName(resource)}: ${this.inventory.getQuantity(resource)}`;
+            let description = `${resource.name}: ${this.inventory.getQuantity(resource)}`;
             resourceListHTML.appendChild(UI.makePara(description));
         });
 
