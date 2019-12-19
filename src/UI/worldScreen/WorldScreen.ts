@@ -1,8 +1,8 @@
-import UI from "./UI.js";
+import UI from "../UI.js";
 import MapUI from "./MapUI.js";
 import TileSidebar from "./TileSidebar.js";
-import GridCoordinates from "../world/GridCoordinates.js";
-import Game from "../Game.js";
+import GridCoordinates from "../../world/GridCoordinates.js";
+import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
 
 /* The class associated with the "world screen"

@@ -1,8 +1,8 @@
-import World from "../world/World.js";
-import UI from "./UI.js";
-import AbstractTile from "../world/AbstractTile.js";
-import Util from "../util/Util.js";
-import GridCoordinates from "../world/GridCoordinates.js";
+import World from "../../world/World.js";
+import UI from "../UI.js";
+import AbstractTile from "../../world/AbstractTile.js";
+import Util from "../../util/Util.js";
+import GridCoordinates from "../../world/GridCoordinates.js";
 import WorldScreen from "./WorldScreen.js";
 
 // class to manage the UI canvas that shows the map
@@ -69,7 +69,6 @@ export default class MapUI {
 
     public refreshViewableArea() {
         let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPositionX, this.viewPositionY, this.viewWidth, this.viewHeight);
-        console.log(`viewable tiles: ${tilesInViewableArea.length}`);
         tilesInViewableArea.forEach((tile: AbstractTile) => {
             this.rerenderTile(tile, true);
         });

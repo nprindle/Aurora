@@ -1,6 +1,6 @@
-import MainMenuUI from "./MainMenuUI.js";
+import MainMenuUI from "./menu/MainMenuUI.js";
 import UI from "./UI.js";
-import WorldScreen from "./WorldScreen.js";
+import WorldScreen from "./worldScreen/WorldScreen.js";
 import Game from "../Game.js";
 
 

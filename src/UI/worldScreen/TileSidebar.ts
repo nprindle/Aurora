@@ -1,12 +1,11 @@
-import GridCoordinates from "../world/GridCoordinates.js";
-import UI from "./UI.js";
-import World from "../world/World.js";
-import TileProject from "../tileProjects/TileProject.js";
+import GridCoordinates from "../../world/GridCoordinates.js";
+import UI from "../UI.js";
+import TileProject from "../../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
-import Game from "../Game.js";
-import Cost from "../resources/Cost.js";
-import { Resource } from "../resources/Resource.js";
-import AbstractTile from "../world/AbstractTile.js";
+import Game from "../../Game.js";
+import Cost from "../../resources/Cost.js";
+import { Resource } from "../../resources/Resource.js";
+import AbstractTile from "../../world/AbstractTile.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
@@ -68,7 +67,6 @@ export default class TileSidebar {
     }
 
     private doProject(project: TileProject, tile: AbstractTile) {
-        console.log("Sidebar starts tile action");
         project.doAction(tile.position, this.run);
         this.parentScreen.refreshComponents();
     }
