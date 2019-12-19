@@ -4,7 +4,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
-import { Resource } from "../../resources/Resource.js";
+import Resource from "../../resources/Resource.js";
 import AbstractTile from "../../world/AbstractTile.js";
 
 export default class TileSidebar {
@@ -48,7 +48,7 @@ export default class TileSidebar {
                 if (project.costs.length == 0) {
                     projectsHTML.appendChild(UI.makePara("Cost: Free"));
                 } else {
-                    let costDescriptions = project.costs.map((cost: Cost) => `${Resource.getName(cost.resource)} x${cost.quantity}`);
+                    let costDescriptions = project.costs.map((cost: Cost) => `${cost.resource.name} x${cost.quantity}`);
                     let costsString = "Cost: " + costDescriptions.join(', ');
                     projectsHTML.appendChild(UI.makePara(costsString));
                 }

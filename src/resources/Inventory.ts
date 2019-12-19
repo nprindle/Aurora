@@ -1,4 +1,4 @@
-import { Resource } from "./Resource";
+import Resource from "./Resource";
 import Cost from "./Cost";
 
 export default class Inventory {
