@@ -4,7 +4,6 @@ import Wasteland from "./Tiles/Wasteland.js";
 import Habitat from "./Tiles/Habitat.js";
 import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
-import Util from "../util/Util.js";
 import GridCoordinates from "./GridCoordinates.js";
 
 export default class World {
@@ -58,22 +57,19 @@ export default class World {
         return Arrays.flatten(this.grid);
     }
 
-    getTilesInRectangle(top: number, left: number, width: number, height: number): AbstractTile[] {
-        if (top < 0) {
-            top = 0;
+    getTilesInRectangle(leftX: number, topY: number, width: number, height: number): AbstractTile[] {
+        if (topY < 0) {
+            topY = 0;
         }
-        if (left < 0) {
-            left = 0;
+        if (leftX < 0) {
+            leftX = 0;
         }
-
-        let bottom = top + height;
-        let right = left + width;
 
         let tiles: AbstractTile[] = [];
 
-        let rowsInRange = this.grid.slice(top, top + height + 1);
+        let rowsInRange = this.grid.slice(topY, topY + height);
         rowsInRange.forEach((row: AbstractTile[]) => {
-            let tilesInRange = row.slice(left, left + width + 1);
+            let tilesInRange = row.slice(leftX, leftX + width);
             tilesInRange.forEach((tile: AbstractTile) => tiles.push(tile));
         });
 

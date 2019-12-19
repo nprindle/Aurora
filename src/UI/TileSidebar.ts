@@ -6,6 +6,7 @@ import WorldScreen from "./WorldScreen.js";
 import Game from "../Game.js";
 import Cost from "../resources/Cost.js";
 import { Resource } from "../resources/Resource.js";
+import AbstractTile from "../world/AbstractTile.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
@@ -40,8 +41,7 @@ export default class TileSidebar {
             tile.possibleProjects.forEach((project: TileProject) => {
                 let disabled = !project.canDo(tile.position, this.run);
                 let button = UI.makeButton(project.title, () => {
-                    project.doAction(tile.position, this.run);
-                    this.parentScreen.refreshComponents();
+                   this.doProject(project, tile);
                 }, [], disabled);
 
                 projectsHTML.appendChild(button);
@@ -67,7 +67,11 @@ export default class TileSidebar {
         }
     }
 
-
+    private doProject(project: TileProject, tile: AbstractTile) {
+        console.log("Sidebar starts tile action");
+        project.doAction(tile.position, this.run);
+        this.parentScreen.refreshComponents();
+    }
 
 
 }
