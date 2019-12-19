@@ -3,6 +3,7 @@ import MapUI from "./MapUI.js";
 import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../world/GridCoordinates.js";
 import Game from "../Game.js";
+import InventorySidebar from "./InventorySidebar.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -10,18 +11,19 @@ import Game from "../Game.js";
 export default class WorldScreen {
 
     private mapUI: MapUI;
-    private inventoryHTML: HTMLElement;
-    private sidebar: TileSidebar;
+    private inventorySidebar: InventorySidebar;
+    private tileSidebar: TileSidebar;
     private headerHTML: HTMLElement;
     worldScreenHTML: HTMLElement;
 
     constructor(run: Game) {
         this.mapUI = new MapUI(this, run.world);
-        this.sidebar = new TileSidebar(this, run);
+        this.tileSidebar = new TileSidebar(this, run);
 
         let mapHTML = this.mapUI.getViewCanvas();
-        this.inventoryHTML = UI.makePara("Resource List Goes Here", ['world-screen-inventory']);
-        let sidebarHTML = this.sidebar.getHTML();
+        this.inventorySidebar = new InventorySidebar(run);
+        let tileSidebarHTML = this.tileSidebar.getHTML();
+        let inventoryHTML = this.inventorySidebar.getHTML();
         this.headerHTML = UI.makePara("Status Header goes here", ['world-screen-header']);
 
         this.worldScreenHTML = UI.makeDivContaining([
@@ -29,9 +31,9 @@ export default class WorldScreen {
             this.headerHTML,
 
             UI.makeDivContaining([
-                this.inventoryHTML,
+                inventoryHTML,
                 UI.makeDivContaining([mapHTML], ['world-screen-map-box']),
-                sidebarHTML,
+                tileSidebarHTML,
             ], ['world-screen-hbox']),
 
         ], ['flex-vertical']);
@@ -43,9 +45,9 @@ export default class WorldScreen {
 
     refreshComponents() {
         this.mapUI.refreshViewableArea();
-        this.sidebar.refresh();
+        this.tileSidebar.refresh();
+        this.inventorySidebar.refresh();
         // TODO refresh status bar UI
-        // TODO refresh inventory UI
     }
 
 
@@ -56,6 +58,6 @@ export default class WorldScreen {
     }
 
     changeSidebarTile(position: GridCoordinates | null) {
-        this.sidebar.changeTile(position);
+        this.tileSidebar.changeTile(position);
     }
 }
