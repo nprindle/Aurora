@@ -1,5 +1,6 @@
 import GridCoordinates from "./GridCoordinates.js";
 import TileProject from "../tileProjects/TileProject.js";
+import TilePredicate from "../predicates/TilePredicate.js";
 
 /**
  * A tile is an object in the world that occupies a map square
@@ -17,7 +18,10 @@ import TileProject from "../tileProjects/TileProject.js";
         this.position = position;
     }
 
-    abstract getTileName(): string; // user-visible label for the tile type
+    //overload this with a user-visible name for each specific tile subclass
+    static readonly tileName: string = "If you're seeing this you forgot to overrid the tile name"; 
+
+    abstract getTileName(): string; // should return the subclass's overload of tileName
 
     abstract getImgSrc(): string; // the path to the map texture for this tile type
  }
