@@ -18,10 +18,10 @@ import TilePredicate from "../predicates/TilePredicate.js";
         this.position = position;
     }
 
-    //overload this with a user-visible name for each specific tile subclass
-    static readonly tileName: string = "If you're seeing this you forgot to overrid the tile name"; 
-
-    abstract getTileName(): string; // should return the subclass's overload of tileName
+    // Should return the subclass's tile name. The tileName should
+    // optimally be taken from a `static readonly tileName: string` property on
+    // the subclass, so it can be used in tile predicates.
+    abstract getTileName(): string;
 
     abstract getImgSrc(): string; // the path to the map texture for this tile type
  }
