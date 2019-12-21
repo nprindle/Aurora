@@ -6,6 +6,7 @@ import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import AbstractTile from "../../world/AbstractTile.js";
+import TilePredicate from "../../predicates/TilePredicate.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
@@ -38,20 +39,7 @@ export default class TileSidebar {
 
             let projectsHTML = UI.makeDiv();
             tile.possibleProjects.forEach((project: TileProject) => {
-                let disabled = !project.canDo(tile.position, this.run);
-                let button = UI.makeButton(project.title, () => {
-                   this.doProject(project, tile);
-                }, [], disabled);
-
-                projectsHTML.appendChild(button);
-
-                if (project.costs.length == 0) {
-                    projectsHTML.appendChild(UI.makePara("Cost: Free"));
-                } else {
-                    let costDescriptions = project.costs.map((cost: Cost) => `${cost.resource.name} x${cost.quantity}`);
-                    let costsString = "Cost: " + costDescriptions.join(', ');
-                    projectsHTML.appendChild(UI.makePara(costsString));
-                }
+                projectsHTML.appendChild(this.makeProjectHTML(tile, project));
             });
 
             UI.fillHTML(this.root, [
@@ -64,6 +52,32 @@ export default class TileSidebar {
                 UI.makePara(`No structure or terrain tile selected`),
             ]);
         }
+    }
+
+    private makeProjectHTML(tile: AbstractTile, project: TileProject): HTMLElement {
+        let projectHTML = UI.makeDiv();
+
+        let disabled = !project.canDo(tile.position, this.run);
+        let button = UI.makeButton(project.title, () => {
+            this.doProject(project, tile);
+        }, [], disabled);
+        projectHTML.appendChild(button);
+
+        if (project.costs.length == 0) {
+            projectHTML.appendChild(UI.makePara("Cost: Free"));
+        } else {
+            let costDescriptions = project.costs.map((cost: Cost) => `${cost.resource.name} x${cost.quantity}`);
+            let costsString = "Cost: " + costDescriptions.join(', ');
+            projectHTML.appendChild(UI.makePara(costsString));
+        }
+
+        if (project.completionRequirements.length > 0) {
+            let requirementsString = project.completionRequirements.map((req: TilePredicate) => `- ${req.toString()}\n`).join('');
+            projectHTML.appendChild(UI.makePara(`Requirements:\n${requirementsString}`));
+        }               
+
+
+        return projectHTML;
     }
 
     private doProject(project: TileProject, tile: AbstractTile) {

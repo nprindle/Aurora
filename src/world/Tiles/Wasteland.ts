@@ -5,6 +5,8 @@ import Habitat from "./Habitat.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
+import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js";
+
 
 
 export default class Wasteland extends AbstractTile {
@@ -19,7 +21,8 @@ export default class Wasteland extends AbstractTile {
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Habitat(position));
             },
-            [new Cost(Resource.Metal, 100)]
+            [new Cost(Resource.Metal, 100)],
+            [new TileWithinDistancePredicate(1, Habitat)]
         ),
     ];
 
@@ -27,7 +30,8 @@ export default class Wasteland extends AbstractTile {
         return "assets/tiles/wasteland.png";
     }
 
+    static readonly tileName: string = "Wasteland"
     getTileName(): string {
-        return "Wasteland";
+        return Wasteland.tileName;
     }
 }

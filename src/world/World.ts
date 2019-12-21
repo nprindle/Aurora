@@ -79,4 +79,11 @@ export default class World {
     getTileAtCoordinates(coordinates: GridCoordinates) {
         return this.grid[coordinates.y][coordinates.x];
     }
+
+    getTilesInCircle(center: GridCoordinates, radius: number) {
+        let tilesInRadius = this.getTiles().filter((tile: AbstractTile) => (center.distanceFrom(tile.position) <= radius));
+        return tilesInRadius;
+    }
+
+    
 }
