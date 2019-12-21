@@ -8,13 +8,8 @@ import AbstractTile from "../world/AbstractTile.js";
 // file for putting different implementations of TilePredicate
 
 export class TileWithinDistancePredicate extends TilePredicate {
-    radius: number;
-    targetType: typeof AbstractTile;
-
-    constructor(radius: number, targetType: typeof AbstractTile) {
+    constructor(public radius: number, public targetType: typeof AbstractTile & { readonly tileName: string }) {
         super();
-        this.radius = radius;
-        this.targetType = targetType;
     }
 
     evaluate(run: Game, position: GridCoordinates): boolean {
