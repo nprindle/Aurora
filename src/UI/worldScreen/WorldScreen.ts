@@ -4,6 +4,8 @@ import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
+import WorldScreenHeader from "./WorldScreenHeader.js";
+import GameWindow from "../GameWindow.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -13,8 +15,8 @@ export default class WorldScreen {
     private mapUI: MapUI;
     private inventorySidebar: InventorySidebar;
     private tileSidebar: TileSidebar;
-    private headerHTML: HTMLElement;
-    worldScreenHTML: HTMLElement;
+    private header: WorldScreenHeader;
+    private worldScreenHTML: HTMLElement;
 
     constructor(run: Game) {
         this.mapUI = new MapUI(this, run.world);
@@ -24,11 +26,11 @@ export default class WorldScreen {
         this.inventorySidebar = new InventorySidebar(run);
         let tileSidebarHTML = this.tileSidebar.getHTML();
         let inventoryHTML = this.inventorySidebar.getHTML();
-        this.headerHTML = UI.makePara("Status Header goes here", ['world-screen-header']);
+        this.header = new WorldScreenHeader(run);
 
         this.worldScreenHTML = UI.makeDivContaining([
 
-            this.headerHTML,
+            this.header.getHTML(),
 
             UI.makeDivContaining([
                 inventoryHTML,
@@ -44,10 +46,10 @@ export default class WorldScreen {
     }
 
     refreshComponents() {
-        this.mapUI.refreshViewableArea(); //TODO fix problem where tile changes are sometimes not shown on update
+        this.mapUI.refreshViewableArea();
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
-        // TODO refresh status bar UI
+        this.header.refresh();
     }
 
 
