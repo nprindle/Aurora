@@ -18,23 +18,18 @@ export default class GameWindow {
     public static startGame() {
         this.currentRun = new Game();
         this.showWorldScreen();
-
-
-        
     }
 
     public static showWorldScreen() {
         let worldScreen = new WorldScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [worldScreen.getHTML()]);
 
-
         this.enableCheats(worldScreen); // cheats are available when on the world screen
-        
         
         // Attach keyboard input listener
         document.onkeydown = (e: KeyboardEvent) => {
             worldScreen.handleKeyDown(e);
-        };
+        };  
     }
 
     // makes a 'cheats' object available from the bowser console when on the world screen

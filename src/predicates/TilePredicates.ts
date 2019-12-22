@@ -18,7 +18,6 @@ export class TileWithinDistancePredicate extends TilePredicate {
         let matchingTilesInDistance = tilesInDistance.filter((tile: AbstractTile) => {
             return tile instanceof this.targetType;
         });
-        console.log(`evaluated distance preidcate from ${position}, found ${matchingTilesInDistance.length} matches out of ${tilesInDistance.length} tiles in radius`);
         return (matchingTilesInDistance.length > 0);
     }
 

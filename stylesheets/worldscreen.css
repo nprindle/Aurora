@@ -1,6 +1,6 @@
 .world-screen-header {
-    background-color: blueviolet;
-    height: 100px;
+    display: flex;
+    flex-direction: row;
     margin: 0px;
 }
 
