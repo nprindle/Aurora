@@ -4,6 +4,7 @@ import WorldScreen from "./worldScreen/WorldScreen.js";
 import Game from "../Game.js";
 import Cheats from "../util/Cheats.js";
 import Resource from "../resources/Resource.js";
+import TransitionScreen from "./transitionScreen/TransitionScreen.js";
 
 
 export default class GameWindow {
@@ -12,6 +13,7 @@ export default class GameWindow {
     private static currentRun: Game;
 
     public static showMainMenu() {
+        this.disableCheats();
         UI.fillHTML(this.rootDiv, [MainMenuUI.renderMainMenu()]);
     }
 
@@ -30,6 +32,16 @@ export default class GameWindow {
         document.onkeydown = (e: KeyboardEvent) => {
             worldScreen.handleKeyDown(e);
         };  
+    }
+
+    public static transitionToNextTurn() {
+        this.disableCheats();
+        let transitionScreen = new TransitionScreen();
+        UI.fillHTML(this.rootDiv, [transitionScreen.getHTML()]);
+        
+        this.currentRun.completeTurn(); // update game state
+
+        transitionScreen.revealButton();
     }
 
     // makes a 'cheats' object available from the bowser console when on the world screen

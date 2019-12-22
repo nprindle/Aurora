@@ -7,6 +7,7 @@ import Resource from "./resources/Resource.js";
 export default class Game {
     readonly world: World;
     readonly inventory: Inventory;
+    private turnNumber: number = 1;
 
     constructor() {
         // TODO pass some sort of `WorldGenerationParameters` object to specify size, terrain frequency, etc
@@ -14,5 +15,13 @@ export default class Game {
         this.inventory = new Inventory();
         // TODO set correct starting resources
         this.inventory.addQuantity(Resource.Colonists, 100);
+    }
+
+    // this is called at the end of each turn
+    completeTurn() {
+        console.log(`Finished turn ${this.turnNumber}`)
+        this.turnNumber++;
+
+        // TODO calculate resource update
     }
 }

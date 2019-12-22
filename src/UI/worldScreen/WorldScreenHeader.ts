@@ -13,18 +13,14 @@ export default class WorldScreenHeader {
     }
 
     refresh() {
-        let quitButton = UI.makeButton("Quit Game", () => {this.transition();});
+        let quitButton = UI.makeButton("Quit Game", () => {GameWindow.showMainMenu();});
+        let transitionButton = UI.makeButton("Next Turn", () => {GameWindow.transitionToNextTurn();});
 
         UI.fillHTML(this.html, [
             quitButton,
+            transitionButton,
         ]);
     }
-
-    private transition() {
-        GameWindow.showMainMenu();
-    }
-
-
 
     getHTML(): HTMLElement {
         return this.html;
