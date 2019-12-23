@@ -1,5 +1,6 @@
 import Resource from "./Resource";
 import Cost from "./Cost";
+import Conversion from "./Conversion";
 
 export default class Inventory {
 
@@ -50,5 +51,15 @@ export default class Inventory {
 
     getResourceList(): Resource[] {
         return Array.from(this.resourceQuantities.keys());
+    }
+
+    // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
+    applyConversions(conversions: Conversion[]) {
+        conversions.forEach((conversion: Conversion) => {
+            if (this.canAfford(conversion.inputs)) {
+                this.payCost(conversion.inputs);
+                conversion.outputs.forEach((output: Cost) => this.addQuantity(output.resource, output.quantity));
+            }
+        });
     }
 }

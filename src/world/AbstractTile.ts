@@ -1,6 +1,7 @@
 import GridCoordinates from "./GridCoordinates.js";
 import TileProject from "../tileProjects/TileProject.js";
 import TilePredicate from "../predicates/TilePredicate.js";
+import Conversion from "../resources/Conversion.js";
 
 /**
  * A tile is an object in the world that occupies a map square
@@ -13,6 +14,9 @@ import TilePredicate from "../predicates/TilePredicate.js";
 
     // projects that can be completed on tiles of this type
     abstract readonly possibleProjects: TileProject[];
+
+    // conversion from input resources to output resources that the tile can perform at the end of each turn
+    abstract resourceConversions: Conversion[];
 
     constructor(position: GridCoordinates) {
         this.position = position;
