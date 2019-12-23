@@ -20,11 +20,13 @@ export default class Mountain extends AbstractTile {
         ),
     ];
 
+    resourceConversions = [];
+
     getImgSrc(): string {
         return "assets/tiles/mountain.png";
     }
 
-    static readonly tileName: string = "Mountain"
+    static readonly tileName: string = "Mountain";
     getTileName(): string {
         return Mountain.tileName;
     }

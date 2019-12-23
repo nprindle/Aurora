@@ -7,6 +7,7 @@ import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import AbstractTile from "../../world/AbstractTile.js";
 import TilePredicate from "../../predicates/TilePredicate.js";
+import Conversion from "../../resources/Conversion.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
@@ -38,14 +39,26 @@ export default class TileSidebar {
             let tile = this.run.world.getTileAtCoordinates(this.position);
 
             let projectsHTML = UI.makeDiv();
+            if(tile.possibleProjects.length > 0) {
+                projectsHTML.appendChild(UI.makePara("Projects:"));
+            }
             tile.possibleProjects.forEach((project: TileProject) => {
                 projectsHTML.appendChild(this.makeProjectHTML(tile, project));
+            });
+
+            let conversionsHTML = UI.makeDiv();
+            if(tile.resourceConversions.length > 0) {
+                conversionsHTML.appendChild(UI.makePara("Production:"))
+            }
+            tile.resourceConversions.forEach((conversion: Conversion) => {
+                conversionsHTML.appendChild(this.makeConversionHTML(conversion));
             });
 
             UI.fillHTML(this.root, [
                 UI.makePara(`${tile.getTileName()}`),
                 UI.makePara(`Coordinates: ${this.position.x}, ${this.position.y}`),
                 projectsHTML,
+                conversionsHTML,
             ]);
         } else {
             UI.fillHTML(this.root, [
@@ -66,7 +79,7 @@ export default class TileSidebar {
         if (project.costs.length == 0) {
             projectHTML.appendChild(UI.makePara("Cost: Free"));
         } else {
-            let costDescriptions = project.costs.map((cost: Cost) => `${cost.resource.name} x${cost.quantity}`);
+            let costDescriptions = project.costs.map((cost: Cost) => `${cost.toString()}`);
             let costsString = "Cost: " + costDescriptions.join(', ');
             projectHTML.appendChild(UI.makePara(costsString));
         }
@@ -78,6 +91,17 @@ export default class TileSidebar {
 
 
         return projectHTML;
+    }
+
+    private makeConversionHTML(conversion: Conversion): HTMLElement {
+        let conversionHTML = UI.makeDiv();
+
+        let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
+        let outputDescription = conversion.outputs.map((output: Cost) => output.toString()).join(', ');
+
+        let description = (conversion.inputs.length == 0) ? `- Produce ${outputDescription}` : `- Convert ${inputDescription} into ${outputDescription}`
+
+        return UI.makePara(description);
     }
 
     private doProject(project: TileProject, tile: AbstractTile) {
