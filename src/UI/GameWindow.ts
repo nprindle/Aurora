@@ -5,6 +5,7 @@ import Game from "../Game.js";
 import Cheats from "../util/Cheats.js";
 import Resource from "../resources/Resource.js";
 import TransitionScreen from "./transitionScreen/TransitionScreen.js";
+import ProductionScreen from "./productionScreen/ProductionScreen.js";
 
 
 export default class GameWindow {
@@ -32,6 +33,13 @@ export default class GameWindow {
         document.onkeydown = (e: KeyboardEvent) => {
             worldScreen.handleKeyDown(e);
         };  
+    }
+
+    public static showProductionScreen() {
+        this.disableCheats();
+
+        let productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
+        UI.fillHTML(this.rootDiv, [productionScreen.getHTML()]);
     }
 
     public static transitionToNextTurn() {

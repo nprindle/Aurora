@@ -99,6 +99,7 @@ export default class TileSidebar {
         let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
         let outputDescription = conversion.outputs.map((output: Cost) => output.toString()).join(', ');
 
+        // TODO standardize conversion tostring
         let description = (conversion.inputs.length == 0) ? `- Produce ${outputDescription}` : `- Convert ${inputDescription} into ${outputDescription}`
 
         return UI.makePara(description);
