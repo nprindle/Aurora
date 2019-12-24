@@ -26,21 +26,42 @@ export default class ProductionScreen {
         let resourceStrings = this.run.inventory.getResourceList().map((res: Resource) => `${res.name}: ${this.run.inventory.getQuantity(res)}`);
         let initialInventorySummary = UI.makePara(resourceStrings.join("\n"));
 
+        // represents what the inventory will be after this turn's conversions are applied
+        let inventoryCopy = this.run.inventory.clone();
+
         let freeConversions = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length == 0));
-        let freeConversionsHTML = freeConversions.map((conversion: Conversion) => this.renderConversion(conversion));
+        let freeConversionsHTML = freeConversions.map((conversion: Conversion) => this.renderConversion(conversion, true, false));
+        
+        // apply free conversions to inventory copy
+        inventoryCopy.applyConversions(freeConversions);
 
         let costlyConversions = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length != 0));
-        let costlyConversionsHTML = costlyConversions.map((conversion: Conversion) => this.renderConversion(conversion));
+        let costlyConversionsHTML: HTMLElement[] = [];
+        costlyConversions.forEach((conversion: Conversion) => {
+            if (inventoryCopy.canAfford(conversion.inputs)) {
+                costlyConversionsHTML.push(this.renderConversion(conversion, true, true));
+                inventoryCopy.applyConversions([conversion]);
+            } else {
+                costlyConversionsHTML.push(this.renderConversion(conversion, false, true));
+            }
+        });
+
+        // TODO don't duplicate inventory rendering code
+        let finalResourceStrings = inventoryCopy.getResourceList().map((res: Resource) => `${res.name}: ${inventoryCopy.getQuantity(res)}`);
+        let finalInventorySummary = UI.makePara(finalResourceStrings.join("\n"));
         
         let exitButton = UI.makeButton("Back", () => {GameWindow.showWorldScreen();});
 
         UI.fillHTML(this.html, [
             title,
+            UI.makePara("Resources available at start of next production cycle:"),
             initialInventorySummary,
             UI.makePara("Resource generation in next production cycle:"),
             UI.makeDivContaining(freeConversionsHTML),
             UI.makePara("Resource conversion in next production cycle:"),
             UI.makeDivContaining(costlyConversionsHTML),
+            UI.makePara("Resources available at end of next production cycle:"),
+            finalInventorySummary,
             exitButton,
         ]);
     }
@@ -49,7 +70,7 @@ export default class ProductionScreen {
         return this.html;
     }
 
-    renderConversion(conversion: Conversion) {
+    renderConversion(conversion: Conversion, canAfford: boolean, showButtons: boolean) {
         let div = UI.makeDiv(['flex-horizontal']);
 
         let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
@@ -57,9 +78,27 @@ export default class ProductionScreen {
 
         // TODO standardize conversion tostring method
         let description = (conversion.inputs.length == 0) ? `Produce ${outputDescription}` : `Convert ${inputDescription} into ${outputDescription}`
-        div.appendChild(UI.makePara(description));
+        if (canAfford) {
+            div.appendChild(UI.makePara(description));
+        } else {
+            div.appendChild(UI.makePara(`${description} (cannot afford)`, ['conversion-description-cannot-afford']));
+        }
 
- 
+        if (showButtons) {
+            div.appendChild(UI.makeButton("Move Up", () => this.moveUp(conversion)));
+            div.appendChild(UI.makeButton("Move Down", () => this.moveDown(conversion)));
+        }
+
         return div;
+    }
+
+    moveUp(conversion: Conversion) {
+        this.run.increasePriority(conversion);
+        this.refresh();
+    }
+
+    moveDown(conversion: Conversion) {
+        this.run.decreasePriority(conversion);
+        this.refresh();
     }
 }

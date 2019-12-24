@@ -19,6 +19,10 @@ export default class MiningFacility extends AbstractTile {
         new Conversion(
             [new Cost(Resource.Metal, 300)],
             [new Cost(Resource.BuildingMaterials, 150)]
+        ),
+        new Conversion(
+            [new Cost(Resource.Metal, 100)],
+            [new Cost(Resource.Electronics, 50)]
         )
     ];
 

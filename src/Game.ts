@@ -37,4 +37,52 @@ export default class Game {
         console.log(`Finished turn ${this.turnNumber}`)
         this.turnNumber++;
     }
+
+    // moves a resource conversion up by 1 in the production order
+    increasePriority(conversion: Conversion) {
+        if (conversion.priority == 0) {
+            return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
+        }
+
+
+        let conversionsList = this.getResourceConversions();
+        let index = conversionsList.indexOf(conversion);
+
+        if (index == -1) {
+            return; // conversion not found in the current world
+        }
+        if (index == 0) {
+            return; // already first in line
+        }
+
+        // swap priority number with the previous conversion
+        let conversionAbove = conversionsList[index - 1];
+
+        if (conversion.priority == 0) {
+            return; // can't move into priority 0 because only conversions with no inputs should be priority 0
+        }
+        [conversion.priority, conversionAbove.priority] = [conversionAbove.priority, conversion.priority];
+        
+    }
+
+    // moves a resource conversion down by 1 in the production order
+    decreasePriority(conversion: Conversion) {
+        if (conversion.priority == 0) {
+            return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
+        }
+        
+        let conversionsList = this.getResourceConversions();
+        let index = conversionsList.indexOf(conversion);
+
+        if (index == -1) {
+            return; // conversion not found in the current world
+        }
+        if (index == (conversionsList.length - 1)) {
+            return; // already first last in line
+        }
+
+        // swap priority number with the next conversion
+        let conversionBelow = conversionsList[index + 1];
+        [conversion.priority, conversionBelow.priority] = [conversionBelow.priority, conversion.priority];
+    }
 }

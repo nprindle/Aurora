@@ -63,4 +63,14 @@ export default class Inventory {
             }
         });
     }
+
+    clone(): Inventory {
+        let clone = new Inventory();
+        this.getResourceList().forEach((resource: Resource) => {
+            let quantity = this.getQuantity(resource);
+            clone.addQuantity(resource, quantity);
+        });
+
+        return clone;
+    }
 }
