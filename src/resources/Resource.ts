@@ -4,6 +4,7 @@ export default class Resource {
     static readonly Colonists = new Resource("Human Colonists");
     static readonly Metal = new Resource("Metals");
     static readonly BuildingMaterials = new Resource("Construction Materials");
+    static readonly Electronics = new Resource("Electronics");
 
     // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
