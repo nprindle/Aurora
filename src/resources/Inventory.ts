@@ -52,7 +52,7 @@ export default class Inventory {
         return Array.from(costMap.keys()).every((resource: Resource) => {
             let costQuantity = costMap.get(resource)!;
             let availableQuantity = this.getQuantity(resource);
-            return costQuantity < availableQuantity;
+            return costQuantity <= availableQuantity;
         });
     }
 
