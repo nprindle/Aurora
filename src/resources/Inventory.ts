@@ -74,7 +74,6 @@ export default class Inventory {
             if (this.canAfford(conversion.inputs) && conversion.enabled) {
                 this.payCost(conversion.inputs);
                 conversion.outputs.forEach((output: Cost) => this.addQuantity(output.resource, output.quantity));
-                console.log(conversion);
             }
         });
     }

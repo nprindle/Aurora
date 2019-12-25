@@ -32,8 +32,6 @@ export default class Game {
     completeTurn() {
         // calculate resource production
         this.inventory.applyConversions(this.getResourceConversions());
-
-        console.log(`Finished turn ${this.turnNumber}`)
         this.turnNumber++;
     }
 

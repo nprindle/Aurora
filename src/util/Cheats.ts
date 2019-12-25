@@ -13,6 +13,5 @@ export default class Cheats {
     addResource(resource: Resource, quanity: number) {
         this.currentGame.inventory.addQuantity(resource, quanity);
         this.worldScreen.refreshComponents();
-        console.log(`Added ${quanity} ${resource.name}`);
     }
 }
