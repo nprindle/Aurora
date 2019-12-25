@@ -1,4 +1,5 @@
 import Cost from "./Cost";
+import { NonEmptyArray } from "../util/Util";
 
 // a conversion from input resources to output resources that can be performed between turns by a tile if its input respurces are available
 export default class Conversion {
@@ -13,13 +14,8 @@ export default class Conversion {
 
     constructor(
         public readonly inputs: Cost[],
-        public readonly outputs: Cost[],
+        public readonly outputs: NonEmptyArray<Cost>,
     ) {
-        if (outputs.length == 0) {
-            // TODO do something with types to get compile-time checking of this instead of needing a runtime exception?
-            throw "Tried to create a conversion that has no outputs. This should never exist.";
-        }
-
         if (inputs.length == 0) {
             this.priority = 0;
         } else {
