@@ -94,21 +94,11 @@ export default class TileSidebar {
     }
 
     private makeConversionHTML(conversion: Conversion): HTMLElement {
-        let conversionHTML = UI.makeDiv();
-
-        let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
-        let outputDescription = conversion.outputs.map((output: Cost) => output.toString()).join(', ');
-
-        // TODO standardize conversion tostring
-        let description = (conversion.inputs.length == 0) ? `- Produce ${outputDescription}` : `- Convert ${inputDescription} into ${outputDescription}`
-
-        return UI.makePara(description);
+        return UI.makePara(`- ${conversion.toString()}`);
     }
 
     private doProject(project: TileProject, tile: AbstractTile) {
         project.doAction(tile.position, this.run);
         this.parentScreen.refreshComponents();
     }
-
-
 }

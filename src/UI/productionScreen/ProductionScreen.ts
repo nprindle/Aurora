@@ -73,18 +73,13 @@ export default class ProductionScreen {
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
         let div = UI.makeDiv(['flex-horizontal']);
 
-        let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
-        let outputDescription = conversion.outputs.map((output: Cost) => output.toString()).join(', ');
-
-        // TODO standardize conversion tostring method
-        let description = (conversion.inputs.length == 0) ? `Produce ${outputDescription}` : `Convert ${inputDescription} into ${outputDescription}`;
-        let text = description;
+        let text = conversion.toString();
         let cssClass = 'conversion-description-normal';
         if (!conversion.enabled) {
-            text = `(disabled) ${description}`;
+            text = `(disabled) ${conversion.toString()}`;
             cssClass = 'conversion-description-disabled';
         } else if (!this.run.inventory.canAfford(conversion.inputs)) {
-            text = `(cannot afford) ${description}`;
+            text = `(cannot afford) ${conversion.toString()}`;
             cssClass = `conversion-description-cannot-afford`;
         }
         

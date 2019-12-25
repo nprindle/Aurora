@@ -15,8 +15,6 @@ export default class Conversion {
         public readonly inputs: Cost[],
         public readonly outputs: Cost[],
     ) {
-
-
         if (outputs.length == 0) {
             // TODO do something with types to get compile-time checking of this instead of needing a runtime exception?
             throw "Tried to create a conversion that has no outputs. This should never exist.";
@@ -27,6 +25,16 @@ export default class Conversion {
         } else {
             this.priority = Conversion.nextNumber;
             Conversion.nextNumber++;
+        }
+    }
+
+    toString() {
+        let inputDescription = this.inputs.map((input: Cost) => input.toString()).join(', ');
+        let outputDescription = this.outputs.map((output: Cost) => output.toString()).join(', ');
+        if (this.inputs.length == 0) {
+            return `Produce ${outputDescription}`;
+        } else {
+            return `Convert ${inputDescription} into ${outputDescription}`;
         }
     }
 }
