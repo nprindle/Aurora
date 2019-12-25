@@ -37,9 +37,22 @@ export default class Inventory {
     }
 
     canAfford(costs: Cost[]) {
-        // TODO fix bugs resulting from passing in a list where more than 1 cost is of the same resource type
-        return costs.every((cost: Cost) => {
-            return (this.getQuantity(cost.resource) >= cost.quantity);
+        /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs together
+         * to make sure that the entire set of costs can be afforded together
+         */
+        let costMap = new Map<Resource, number>();
+        costs.forEach((cost: Cost) => {
+            if (costMap.get(cost.resource) == undefined) {
+                costMap.set(cost.resource, cost.quantity);
+            } else {
+                costMap.set(cost.resource, cost.quantity + costMap.get(cost.resource)!);
+            }
+        });
+
+        return Array.from(costMap.keys()).every((resource: Resource) => {
+            let costQuantity = costMap.get(resource)!;
+            let availableQuantity = this.getQuantity(resource);
+            return costQuantity < availableQuantity;
         });
     }
 
