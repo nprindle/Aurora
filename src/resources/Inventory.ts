@@ -20,8 +20,10 @@ export default class Inventory {
     }
 
     removeQuantity(resource: Resource, quantity: number) {
-        // TODO prevent making inventory negative
         let oldQuantity = this.resourceQuantities.get(resource)!;
+        if ((oldQuantity - quantity) < 0) {
+            throw `Tried to set inventory ${resource.name} to negative value.`;
+        }
         this.resourceQuantities.set(resource, oldQuantity - quantity);
     }
 
