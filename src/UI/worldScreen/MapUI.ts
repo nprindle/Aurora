@@ -1,7 +1,7 @@
 import World from "../../world/World.js";
 import UI from "../UI.js";
 import AbstractTile from "../../world/AbstractTile.js";
-import Util from "../../util/Util.js";
+import {clamp} from "../../util/Util.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import WorldScreen from "./WorldScreen.js";
 
@@ -146,8 +146,8 @@ export default class MapUI {
         let oldPositionX = this.viewPositionX;
         let oldPositionY = this.viewPositionY;
 
-        this.viewPositionX = Util.clamp(0, this.viewPositionX + right, this.world.width - this.viewWidth);
-        this.viewPositionY = Util.clamp(0, this.viewPositionY + down, this.world.height - this.viewHeight);
+        this.viewPositionX = clamp(0, this.viewPositionX + right, this.world.width - this.viewWidth);
+        this.viewPositionY = clamp(0, this.viewPositionY + down, this.world.height - this.viewHeight);
 
         right = this.viewPositionX - oldPositionX;
         down = this.viewPositionY - oldPositionY;

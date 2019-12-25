@@ -1,5 +1,3 @@
-export default  class Util {
-    static clamp(min: number, value: number, max: number) {
-        return Math.max(Math.min(value, max), min);
-    }
+export function clamp(min: number, value: number, max: number) {
+    return Math.max(Math.min(value, max), min);
 }
