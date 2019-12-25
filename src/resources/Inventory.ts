@@ -56,7 +56,7 @@ export default class Inventory {
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
     applyConversions(conversions: Conversion[]) {
         conversions.forEach((conversion: Conversion) => {
-            if (this.canAfford(conversion.inputs)) {
+            if (this.canAfford(conversion.inputs) && conversion.enabled) {
                 this.payCost(conversion.inputs);
                 conversion.outputs.forEach((output: Cost) => this.addQuantity(output.resource, output.quantity));
                 console.log(conversion);

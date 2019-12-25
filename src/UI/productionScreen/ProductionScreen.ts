@@ -70,21 +70,28 @@ export default class ProductionScreen {
         return this.html;
     }
 
-    renderConversion(conversion: Conversion, canAfford: boolean, showButtons: boolean) {
+    renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
         let div = UI.makeDiv(['flex-horizontal']);
 
         let inputDescription = conversion.inputs.map((input: Cost) => input.toString()).join(', ');
         let outputDescription = conversion.outputs.map((output: Cost) => output.toString()).join(', ');
 
         // TODO standardize conversion tostring method
-        let description = (conversion.inputs.length == 0) ? `Produce ${outputDescription}` : `Convert ${inputDescription} into ${outputDescription}`
-        if (canAfford) {
-            div.appendChild(UI.makePara(description));
-        } else {
-            div.appendChild(UI.makePara(`${description} (cannot afford)`, ['conversion-description-cannot-afford']));
+        let description = (conversion.inputs.length == 0) ? `Produce ${outputDescription}` : `Convert ${inputDescription} into ${outputDescription}`;
+        let text = description;
+        let cssClass = 'conversion-description-normal';
+        if (!conversion.enabled) {
+            text = `(disabled) ${description}`;
+            cssClass = 'conversion-description-disabled';
+        } else if (!this.run.inventory.canAfford(conversion.inputs)) {
+            text = `(cannot afford) ${description}`;
+            cssClass = `conversion-description-cannot-afford`;
         }
+        
+        let conversionToggleButton = UI.makeButton(text, () => {this.toggle(conversion);}, [cssClass]);
+        div.appendChild(conversionToggleButton);
 
-        if (showButtons) {
+        if (showMoveButtons) {
             div.appendChild(UI.makeButton("Move Up", () => this.moveUp(conversion)));
             div.appendChild(UI.makeButton("Move Down", () => this.moveDown(conversion)));
         }
@@ -92,13 +99,18 @@ export default class ProductionScreen {
         return div;
     }
 
-    moveUp(conversion: Conversion) {
+    private moveUp(conversion: Conversion) {
         this.run.increasePriority(conversion);
         this.refresh();
     }
 
-    moveDown(conversion: Conversion) {
+    private moveDown(conversion: Conversion) {
         this.run.decreasePriority(conversion);
+        this.refresh();
+    }
+
+    private toggle(conversion: Conversion) {
+        conversion.enabled = !conversion.enabled;
         this.refresh();
     }
 }

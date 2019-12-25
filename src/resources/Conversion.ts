@@ -9,12 +9,16 @@ export default class Conversion {
      * lower numbered conversions are applied first; conversions with no imputs are priority 0
      */
     public priority: number;
+    public enabled: boolean = true; // conversion will be skipped when disabled
 
     constructor(
         public readonly inputs: Cost[],
         public readonly outputs: Cost[],
     ) {
+
+
         if (outputs.length == 0) {
+            // TODO do something with types to get compile-time checking of this instead of needing a runtime exception?
             throw "Tried to create a conversion that has no outputs. This should never exist.";
         }
 
