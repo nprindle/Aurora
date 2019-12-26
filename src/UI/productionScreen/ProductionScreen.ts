@@ -16,12 +16,12 @@ export default class ProductionScreen {
 
     constructor(run: Game) {
         this.run= run;
-        this.html = UI.makeDiv();
+        this.html = UI.makeDiv(['production-screen']);
         this.refresh();
     }
 
     refresh() {
-        let title = UI.makePara("Resource Production Report");
+        let title = UI.makePara("Resource Production Report", [`production-screen-label`]);
 
         // show inventory resources currently available
         let initialInventorySummary = this.renderInventory(this.run.inventory);
@@ -46,20 +46,19 @@ export default class ProductionScreen {
             }
         });
 
-        // TODO don't duplicate inventory rendering code
         let finalInventorySummary = this.renderInventory(inventoryCopy);
 
-        let exitButton = UI.makeButton("Back", () => {GameWindow.showWorldScreen();});
+        let exitButton = UI.makeButton("Back", () => {GameWindow.showWorldScreen();}, ['production-screen-back-button']);
 
         UI.fillHTML(this.html, [
             title,
-            UI.makePara("Resources available at start of next production cycle:"),
+            UI.makePara("Resources available at start of next production cycle:", [`production-screen-label`]),
             initialInventorySummary,
-            UI.makePara("Resource generation in next production cycle:"),
+            UI.makePara("Resource generation in next production cycle:", [`production-screen-label`]),
             UI.makeDivContaining(freeConversionsHTML),
-            UI.makePara("Resource conversion in next production cycle:"),
+            UI.makePara("Resource conversion in next production cycle:", [`production-screen-label`]),
             UI.makeDivContaining(costlyConversionsHTML),
-            UI.makePara("Resources available at end of next production cycle:"),
+            UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
             finalInventorySummary,
             exitButton,
         ]);
@@ -71,7 +70,7 @@ export default class ProductionScreen {
 
     private renderInventory(inventory: Inventory): HTMLElement {
         let resourceDescriptions = inventory.getInventoryStrings().map((resourceString: string) => UI.makePara(resourceString));
-        return UI.makeDivContaining(resourceDescriptions);
+        return UI.makeDivContaining(resourceDescriptions, ['production-screen-inventory']);
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
@@ -87,7 +86,7 @@ export default class ProductionScreen {
             cssClass = `conversion-description-cannot-afford`;
         }
         
-        let conversionToggleButton = UI.makeButton(text, () => {this.toggle(conversion);}, [cssClass]);
+        let conversionToggleButton = UI.makeButton(text, () => {this.toggle(conversion);}, [cssClass, `conversion-description`]);
         div.appendChild(conversionToggleButton);
 
         if (showMoveButtons) {
@@ -99,12 +98,16 @@ export default class ProductionScreen {
     }
 
     private moveUp(conversion: Conversion) {
+        console.log(`move up ${conversion.toString()}`)
         this.run.increasePriority(conversion);
+        console.log(`new priority: ${conversion.priority}`);
         this.refresh();
     }
 
     private moveDown(conversion: Conversion) {
+        console.log(`move down ${conversion.toString()}`)
         this.run.decreasePriority(conversion);
+        console.log(`new priority: ${conversion.priority}`);
         this.refresh();
     }
 
