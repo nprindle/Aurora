@@ -20,8 +20,7 @@ export default class InventorySidebar {
 
     refresh() {
         let resourceListHTML = UI.makeDiv();
-        this.inventory.getResourceList().forEach((resource: Resource) => {
-            let description = `${resource.name}: ${this.inventory.getQuantity(resource)}`;
+        this.inventory.getInventoryStrings().forEach((description: string) => {
             resourceListHTML.appendChild(UI.makePara(description));
         });
 

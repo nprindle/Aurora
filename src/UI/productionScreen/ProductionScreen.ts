@@ -4,6 +4,7 @@ import GameWindow from "../GameWindow.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
+import Inventory from "../../resources/Inventory.js";
 
 // the production screen is where the player selects the priority order for resource conversions
 
@@ -23,8 +24,7 @@ export default class ProductionScreen {
         let title = UI.makePara("Resource Production Report");
 
         // show inventory resources currently available
-        let resourceStrings = this.run.inventory.getResourceList().map((res: Resource) => `${res.name}: ${this.run.inventory.getQuantity(res)}`);
-        let initialInventorySummary = UI.makePara(resourceStrings.join("\n"));
+        let initialInventorySummary = this.renderInventory(this.run.inventory);
 
         // represents what the inventory will be after this turn's conversions are applied
         let inventoryCopy = this.run.inventory.clone();
@@ -47,9 +47,8 @@ export default class ProductionScreen {
         });
 
         // TODO don't duplicate inventory rendering code
-        let finalResourceStrings = inventoryCopy.getResourceList().map((res: Resource) => `${res.name}: ${inventoryCopy.getQuantity(res)}`);
-        let finalInventorySummary = UI.makePara(finalResourceStrings.join("\n"));
-        
+        let finalInventorySummary = this.renderInventory(inventoryCopy);
+
         let exitButton = UI.makeButton("Back", () => {GameWindow.showWorldScreen();});
 
         UI.fillHTML(this.html, [
@@ -68,6 +67,11 @@ export default class ProductionScreen {
 
     getHTML() {
         return this.html;
+    }
+
+    private renderInventory(inventory: Inventory): HTMLElement {
+        let resourceDescriptions = inventory.getInventoryStrings().map((resourceString: string) => UI.makePara(resourceString));
+        return UI.makeDivContaining(resourceDescriptions);
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
