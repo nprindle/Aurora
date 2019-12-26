@@ -1,3 +1,25 @@
+.production-screen {
+    padding-left: 10pt;
+}
+
+.production-screen-label {
+    font-size: 20pt;
+}
+
+.production-screen-inventory {
+    font-size: 16pt;
+    line-height: 0;
+    padding: 1pt;
+    outline: solid white;
+    width: 50%;
+}
+
+.conversion-description {
+    font-size: 16pt;
+    width: 50%;
+    text-align: left;
+}
+
 .conversion-description-normal {
     color: white;
 }
@@ -6,7 +28,10 @@
     color: tomato;
 }
 
-
 .conversion-description-disabled {
     color: yellow;
+}
+.production-screen-back-button {
+    font-size: 20pt;
+    margin-top: 20pt;
 }

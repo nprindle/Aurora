@@ -55,7 +55,7 @@ export default class Game {
         // swap priority number with the previous conversion
         let conversionAbove = conversionsList[index - 1];
 
-        if (conversion.priority == 0) {
+        if (conversionAbove.priority == 0) {
             return; // can't move into priority 0 because only conversions with no inputs should be priority 0
         }
         [conversion.priority, conversionAbove.priority] = [conversionAbove.priority, conversion.priority];
