@@ -13,8 +13,8 @@ export default class MapUI {
 
     private parentScreen: WorldScreen;
 
-    private viewWidth: number = 10;
-    private viewHeight: number = 6;
+    private viewWidth: number = 12;
+    private viewHeight: number = 8;
 
     private viewPositionX: number = 0; // x-coord of the top-left corner of the currently viewed area
     private viewPositionY: number = 0; // y-coord of the top-left corner of the currently viewed area
