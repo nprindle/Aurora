@@ -5,6 +5,7 @@ import Habitat from "./Tiles/Habitat.js";
 import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
+import WorldGenerationParameters from "./WorldGenerationParameters.js";
 
 export default class World {
     
@@ -14,38 +15,37 @@ export default class World {
     // world grid is indexed grid[row][column]
     grid: AbstractTile[][];
 
-    constructor(width: number, height: number) {
-        this.width = width;
-        this.height = height;
+    constructor(params: WorldGenerationParameters) {
+        this.width = params.worldWidth;
+        this.height = params.worldHeight;
 
         // generate empty map
-
-        this.grid = Arrays.generate(height, () => {
+        this.grid = Arrays.generate(this.height, () => {
             // populate row
-            return Arrays.generate(width, () => {
+            return Arrays.generate(this.width, () => {
                 return new Wasteland(new GridCoordinates(0, 0));
             });
         });
 
         // set correct coordinates for tiles
-        for (let row: number = 0; row < height; row++) {
-            for (let column: number = 0; column < width; column++) {
+        for (let row: number = 0; row < this.height; row++) {
+            for (let column: number = 0; column < this.width; column++) {
                 this.grid[row][column].position = new GridCoordinates(column, row);
             }
         }
 
-        // randomly place terrain
-        let mountainNumber = Random.intBetween(20, 25);
+        // place the tiles specified in the parameters
+        params.nonrandomTiles.forEach((tile: AbstractTile) => {
+            this.placeTile(tile);
+        });
+
+        // place random mountains
+        let mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
         for(let i = 0; i < mountainNumber; i++) {
-            let x = Random.intBetween(0, width);
-            let y = Random.intBetween(0, height);
-            
-            this.placeTile(new Mountain(new GridCoordinates(x, y)));
+            let wastelandTiles = this.getTiles().filter((tile: AbstractTile) => (tile instanceof Wasteland));
+            let position = Random.fromArray(wastelandTiles).position;
+            this.placeTile(new Mountain(position));
         }
-
-        // place starting tiles
-        this.placeTile(new Habitat(new GridCoordinates(1, 2)));
-
     }
 
     // place a tile into the grid in the position given by the tile's coordinates
