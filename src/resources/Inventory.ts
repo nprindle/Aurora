@@ -68,6 +68,11 @@ export default class Inventory {
         return Array.from(this.resourceQuantities.keys());
     }
 
+    // returns strings showing the resource type and amount for each resource in the inventory
+    getInventoryStrings(): string[] {
+        return this.getResourceList().map((resource: Resource) => `${resource.name}: ${this.getQuantity(resource)}`);
+    }
+
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
     applyConversions(conversions: Conversion[]) {
         conversions.forEach((conversion: Conversion) => {
