@@ -4,6 +4,7 @@ import Resource from "./resources/Resource.js";
 import AbstractTile from "./world/AbstractTile.js";
 import Arrays from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
+import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
 
 /* Holds the state of a run of the game, including the game world, inventory, and run statistics
  */
@@ -13,8 +14,7 @@ export default class Game {
     private turnNumber: number = 1;
 
     constructor() {
-        // TODO pass some sort of `WorldGenerationParameters` object to specify size, terrain frequency, etc
-        this.world = new World (20, 20);
+        this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory();
         // TODO set correct starting resources
         this.inventory.addQuantity(Resource.Colonists, 100);
