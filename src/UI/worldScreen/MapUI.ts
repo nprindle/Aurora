@@ -27,8 +27,6 @@ export default class MapUI {
         this.world = world;
         this.parentScreen = parent;
 
-        // TODO change viewable area dimensions to scale with screen size?
-
         this.worldCanvas = UI.makeCanvas(this.world.width * this.tileScale, this.world.height * this.tileScale);
         let worldContext = this.worldCanvas.getContext('2d')!;
 
