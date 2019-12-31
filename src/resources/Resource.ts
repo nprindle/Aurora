@@ -1,5 +1,5 @@
 export default class Resource {
-    // define all resources here
+    // all resource instances are defined here
     static readonly Energy = new Resource("Energy");
     static readonly Colonists = new Resource("Human Colonists");
     static readonly Metal = new Resource("Metals");

@@ -5,7 +5,6 @@ import GridCoordinates from "../../world/GridCoordinates.js";
 import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
 import WorldScreenHeader from "./WorldScreenHeader.js";
-import GameWindow from "../GameWindow.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -52,9 +51,7 @@ export default class WorldScreen {
         this.header.refresh();
     }
 
-
-
-    // keyboard events when on this page are passed to the map ui, which uses arrow keys or wasd to move around the map
+    // keyboard events for this page are passed to the map ui, which uses arrow keys or wasd to move around the map
     handleKeyDown(ev: KeyboardEvent) {
         this.mapUI.handleKeyDown(ev);
     }

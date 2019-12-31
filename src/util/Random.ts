@@ -13,6 +13,7 @@ export default class Random {
         return Math.floor(Random.realBetween(min, max));
     }
 
+    // randomly selected element from an array
     public static fromArray<T>(arr: T[]): T {
         return arr[Random.intBetween(0, arr.length)];
     }

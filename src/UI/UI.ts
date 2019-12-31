@@ -6,10 +6,7 @@
 
 export default class UI{
 
-    /**
-     * create an empty HTML div
-     * @param classes CSS classes to be apply style to this div
-     */
+    // makes an empty HTML div with the given css classes
     static makeDiv(classes?: string[]) {
         const div: HTMLElement = document.createElement('div');
         if(classes) {
@@ -33,6 +30,7 @@ export default class UI{
         }
         return e;
     }
+
     // creates an HTML pagragraph <p>
     static makePara(str: string, classes?: string[]): HTMLElement {
         return UI.makeElement('p', str, classes);
@@ -42,13 +40,7 @@ export default class UI{
         return UI.makeElement(`h${level}`, str, classes);
     }
 
-    /**
-     * creates a button
-     * @param text the text shown on the button 
-     * @param callback the function called when the button is clicked
-     * @param classes css classes to apply style to this button
-     * @param disabled whether to grey-out and disable the button (defaults to false)
-     */
+    // creates a button which executes the given callback function when clicked
     static makeButton(text: string, callback: Function, classes?: string[], disabled: boolean = false): HTMLButtonElement {
         const b: HTMLButtonElement = document.createElement('button');
         b.type = 'button';
@@ -74,6 +66,7 @@ export default class UI{
         return img;
     }
 
+    // creates an HTML canvas for drawing graphics
     static makeCanvas(width: number, height: number, classes?: string[]): HTMLCanvasElement {
         const canvas = document.createElement('canvas') as HTMLCanvasElement;
         canvas.width = width;
@@ -84,24 +77,7 @@ export default class UI{
         return canvas;
     }
 
-    /**
-     * creates a list of buttons
-     * @param options a list of [string, Function] tuples containing the label text and callback function for each button
-     */
-    static makeOptions(options: [string, Function][], classes?: string[]): HTMLElement {
-        const buttons = options.map((tuple: [string, Function]) => this.makeButton(tuple[0], tuple[1]));
-        return this.makeDivContaining(buttons, classes);
-    }
-
-    /**
-     * creates a slider
-     * @param label 
-     * @param min 
-     * @param max 
-     * @param value 
-     * @param callback function called whenever the slider is changed
-     * @param step optional, the stepping interval (e.g. set to 1 to only allow integer inputs)
-     */
+    // creates a slider input control
     static makeSlider(label: string, min: number, max: number, value: number, callback: Function, step?: number): HTMLElement {
         const input = document.createElement('input');
         input.type = 'range';
@@ -119,13 +95,9 @@ export default class UI{
         return para;
     }
 
-    /**
-     * clears the parent (usually a div) and fills it with new contents
-     * @param parent 
-     * @param elements 
-     */
+     // clears the parent (usually a div) and fills it with new contents
     static fillHTML(parent: HTMLElement, contents: HTMLElement[]) {
         parent.innerHTML = ''; // clear the parent
-        contents.forEach(element => parent.appendChild(element)); // add elements to the DOM
+        contents.forEach(element => parent.appendChild(element)); // add elements to the parent
     }
 }

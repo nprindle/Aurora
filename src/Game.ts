@@ -2,12 +2,11 @@ import World from "./world/World.js";
 import Inventory from "./resources/Inventory.js";
 import Resource from "./resources/Resource.js";
 import AbstractTile from "./world/AbstractTile.js";
-import Arrays from "./util/Arrays.js";
+import { Arrays } from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
 
-/* Holds the state of a run of the game, including the game world, inventory, and run statistics
- */
+// Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
     readonly world: World;
     readonly inventory: Inventory;
@@ -36,11 +35,10 @@ export default class Game {
     }
 
     // moves a resource conversion up by 1 in the production order
-    increasePriority(conversion: Conversion) {
+    increaseConversionPriority(conversion: Conversion) {
         if (conversion.priority == 0) {
             return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
         }
-
 
         let conversionsList = this.getResourceConversions();
         let index = conversionsList.indexOf(conversion);
@@ -48,7 +46,7 @@ export default class Game {
         if (index == -1) {
             return; // conversion not found in the current world
         }
-        if (index == 0) {
+        else if (index == 0) {
             return; // already first in line
         }
 
@@ -63,7 +61,7 @@ export default class Game {
     }
 
     // moves a resource conversion down by 1 in the production order
-    decreasePriority(conversion: Conversion) {
+    decreaseConversionPriority(conversion: Conversion) {
         if (conversion.priority == 0) {
             return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
         }
@@ -74,7 +72,7 @@ export default class Game {
         if (index == -1) {
             return; // conversion not found in the current world
         }
-        if (index == (conversionsList.length - 1)) {
+        else if (index == (conversionsList.length - 1)) {
             return; // already first last in line
         }
 

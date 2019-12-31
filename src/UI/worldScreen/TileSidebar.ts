@@ -4,29 +4,27 @@ import TileProject from "../../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
-import Resource from "../../resources/Resource.js";
 import AbstractTile from "../../world/AbstractTile.js";
 import TilePredicate from "../../predicates/TilePredicate.js";
 import Conversion from "../../resources/Conversion.js";
 
 export default class TileSidebar {
     position: GridCoordinates | null = null;
-    run: Game;
-    parentScreen: WorldScreen;
 
-    private root: HTMLElement;
+    private html: HTMLElement;
 
 
-    constructor(parentScreen: WorldScreen, run: Game) {
-        this.parentScreen = parentScreen;
-        this.run = run;
-        this.root = UI.makeDiv(['world-screen-sidebar']);
+    constructor(
+        private parentScreen: WorldScreen,
+        private run: Game
+    ) {
+        this.html = UI.makeDiv(['world-screen-sidebar']);
 
         this.refresh();
     }
 
     getHTML() {
-        return this.root;
+        return this.html;
     }
 
     changeTile(newPosition: GridCoordinates | null) {
@@ -35,34 +33,34 @@ export default class TileSidebar {
     }
 
     refresh() {
-        if (this.position != null) {
+        if (this.position == null) {
+            UI.fillHTML(this.html, [
+                UI.makePara(`No structure or terrain tile selected`),
+            ]);
+        } else {
             let tile = this.run.world.getTileAtCoordinates(this.position);
 
             let projectsHTML = UI.makeDiv();
             if(tile.possibleProjects.length > 0) {
                 projectsHTML.appendChild(UI.makePara("Projects:"));
+                tile.possibleProjects.forEach((project: TileProject) => {
+                    projectsHTML.appendChild(this.makeProjectHTML(tile, project));
+                });
             }
-            tile.possibleProjects.forEach((project: TileProject) => {
-                projectsHTML.appendChild(this.makeProjectHTML(tile, project));
-            });
 
             let conversionsHTML = UI.makeDiv();
             if(tile.resourceConversions.length > 0) {
                 conversionsHTML.appendChild(UI.makePara("Production:"))
+                tile.resourceConversions.forEach((conversion: Conversion) => {
+                    conversionsHTML.appendChild(this.makeConversionHTML(conversion));
+                });
             }
-            tile.resourceConversions.forEach((conversion: Conversion) => {
-                conversionsHTML.appendChild(this.makeConversionHTML(conversion));
-            });
 
-            UI.fillHTML(this.root, [
-                UI.makePara(`${tile.getTileName()}`),
+            UI.fillHTML(this.html, [
+                UI.makePara(tile.getTileName()),
                 UI.makePara(`Coordinates: ${this.position.x}, ${this.position.y}`),
                 projectsHTML,
                 conversionsHTML,
-            ]);
-        } else {
-            UI.fillHTML(this.root, [
-                UI.makePara(`No structure or terrain tile selected`),
             ]);
         }
     }

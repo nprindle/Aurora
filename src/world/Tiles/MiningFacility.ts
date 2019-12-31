@@ -1,9 +1,7 @@
 import AbstractTile from "../AbstractTile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
-import Wasteland from "./Wasteland.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 

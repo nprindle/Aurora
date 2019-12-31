@@ -16,9 +16,15 @@ export default class WorldGenerationParameters {
 
     static standardWorldParameters(): WorldGenerationParameters {
         let nonrandomTiles = [
-            new Wasteland(new GridCoordinates(0, 0)), new Mountain(new GridCoordinates(1, 0)), new Wasteland(new GridCoordinates(2, 0)),
-            new Wasteland(new GridCoordinates(0, 1)), new MiningFacility(new GridCoordinates(1, 1)), new Wasteland(new GridCoordinates(2, 1)),
-            new Wasteland(new GridCoordinates(0, 2)), new Habitat(new GridCoordinates(1, 2)), new Wasteland(new GridCoordinates(2, 2)),
+            new Wasteland(new GridCoordinates(0, 0)),
+            new Mountain(new GridCoordinates(1, 0)),
+            new Wasteland(new GridCoordinates(2, 0)),
+            new Wasteland(new GridCoordinates(0, 1)),
+            new MiningFacility(new GridCoordinates(1, 1)),
+            new Wasteland(new GridCoordinates(2, 1)),
+            new Wasteland(new GridCoordinates(0, 2)),
+            new Habitat(new GridCoordinates(1, 2)),
+            new Wasteland(new GridCoordinates(2, 2)),
         ];
 
         return new WorldGenerationParameters(

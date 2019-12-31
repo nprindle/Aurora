@@ -16,7 +16,9 @@ export default class Mountain extends AbstractTile {
             (position: GridCoordinates, run: Game) => {
                 run.inventory.addQuantity(Resource.Metal, 550);
                 run.world.placeTile(new Wasteland(position));
-            }, [], []
+            },
+            [],
+            [],
         ),
     ];
 

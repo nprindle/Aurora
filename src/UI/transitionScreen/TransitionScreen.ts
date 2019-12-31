@@ -19,7 +19,7 @@ export default class TransitionScreen {
 
     revealButton() {
         UI.fillHTML(this.html, [
-            UI.makeButton("Continue", () => {this.continueToNextTurn();})
+            UI.makeButton("Continue", this.continueToNextTurn)
         ]);
     }
 

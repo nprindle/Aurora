@@ -7,101 +7,90 @@ import WorldScreen from "./WorldScreen.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI {
+
+    private static pixelsPerTile: number = 64;
+
     private world: World;
+
     private worldCanvas: HTMLCanvasElement; // canvas containing the whole world (not shown directly to the user)
-    viewCanvas: HTMLCanvasElement; // the canvas we actually show, containing the currently viewed area
+    private viewCanvas: HTMLCanvasElement; // the canvas we actually show, containing the currently viewed subsection of the world
 
-    private parentScreen: WorldScreen;
+    private parentScreen: WorldScreen; // the WorldScreen instance that contains this MapUI
 
-    private viewWidth: number = 12;
-    private viewHeight: number = 8;
+    private viewWidth: number = 12; // width of viewable area in tiles
+    private viewHeight: number = 8; // height of viewable area in tiles
+    
 
-    private viewPositionX: number = 0; // x-coord of the top-left corner of the currently viewed area
-    private viewPositionY: number = 0; // y-coord of the top-left corner of the currently viewed area
-
-    private tileScale: number = 64; // pixels per tile (before being stretched)
-
-    private highlightedCoordinates: GridCoordinates | null = null;
+    private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
+    private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
     constructor(parent: WorldScreen, world: World) {
         this.world = world;
         this.parentScreen = parent;
 
-        this.worldCanvas = UI.makeCanvas(this.world.width * this.tileScale, this.world.height * this.tileScale);
+        this.worldCanvas = UI.makeCanvas(this.world.width * MapUI.pixelsPerTile, this.world.height * MapUI.pixelsPerTile);
         let worldContext = this.worldCanvas.getContext('2d')!;
 
-        // this is for debug reasons, to let us see when an area has failed to render
+        // we fill the canvas with placeholder color so that it will be obvious when an area fails to render
         worldContext.beginPath();
         worldContext.rect(0, 0, this.worldCanvas.width, this.worldCanvas.height);
         worldContext.fillStyle = "black";
         worldContext.fill();
 
-        this.viewCanvas = UI.makeCanvas(this.viewWidth * this.tileScale, this.viewHeight * this.tileScale, ['map-canvas']);
+        this.viewCanvas = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ['map-canvas']);
 
-        // attach click listener to for tile selection
-        this.viewCanvas.addEventListener('click', ev => {
-
-            let x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPositionX;
-            let y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPositionY;
-        
-            let targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
-            
-            this.selectTile(targetTile);
-        });
+        // attach click listener for tile selection
+        this.viewCanvas.addEventListener('click', ev => this.handleClick(ev));
 
         // render the starting area
         this.refreshViewableArea();
-
     }
 
     getViewCanvas(): HTMLCanvasElement {
         return this.viewCanvas;
     }
 
+    // copies the view area from the world canvas to the view canvas
     private updateViewCanvas() {
         let context = this.viewCanvas.getContext('2d')!;
-        let pixelWidth = this.viewWidth * this.tileScale;
-        let pixelHeight = this.viewHeight * this.tileScale;
-        context.drawImage(this.worldCanvas, this.viewPositionX * this.tileScale, this.viewPositionY * this.tileScale, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
+        let pixelWidth = this.viewWidth * MapUI.pixelsPerTile;
+        let pixelHeight = this.viewHeight * MapUI.pixelsPerTile;
+        let pixelPositionX = this.viewPosition.x * MapUI.pixelsPerTile;
+        let pixelPositionY = this.viewPosition.y * MapUI.pixelsPerTile;
+        context.drawImage(this.worldCanvas, pixelPositionX, pixelPositionY, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
     }
 
     public refreshViewableArea() {
-        let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPositionX, this.viewPositionY, this.viewWidth, this.viewHeight);
+        let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
         tilesInViewableArea.forEach((tile: AbstractTile) => {
             this.rerenderTile(tile, true);
         });
         this.updateViewCanvas();
     }
 
-
     private drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
         let context = this.worldCanvas.getContext('2d')!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
         let image = new Image();
         image.onload = () => {
-            context.drawImage(image,coordinates.x * this.tileScale, coordinates.y * this.tileScale, this.tileScale, this.tileScale);
+            context.drawImage(image, coordinates.x * MapUI.pixelsPerTile, coordinates.y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
             if(!skipViewUpdate) {
                 this.updateViewCanvas();
             }
         }
-
         image.src = src;
-        
     }
 
     // redraws the given tile at its selected location
     private rerenderTile(tile: AbstractTile, skipViewUpdate?: boolean) {
-        // draw tile
         this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
 
-        // draw highlight icon
         if (tile.position === this.highlightedCoordinates) {
             this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position, skipViewUpdate);
         }
     }
 
     private selectTile(tile: AbstractTile | null) {
-
         // deselect previous highlight
         if (this.highlightedCoordinates) {
             let prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
@@ -120,8 +109,43 @@ export default class MapUI {
         this.parentScreen.changeSidebarTile(this.highlightedCoordinates);
     }
 
-    getHighlightedCoordinates(): GridCoordinates | null {
-        return this.highlightedCoordinates;
+    private moveViewArea(right: number, down: number) {
+        let oldX = this.viewPosition.x;
+        let oldY = this.viewPosition.y;
+
+        let newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
+        let newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
+        this.viewPosition = new GridCoordinates(newX, newY);
+
+        right = this.viewPosition.x - oldX;
+        down = this.viewPosition.y - oldY;
+
+        // rerender newly visible tiles
+        if (right > 0) {
+            this.world.getTilesInRectangle((this.viewPosition.x + this.viewWidth - right), (this.viewPosition.y),  right, this.viewHeight)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+        if (right < 0) {
+            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  right * -1, this.viewHeight)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+        if (down > 0) {
+            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y + this.viewHeight - down),  this.viewWidth, down)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        } if (down < 0) {
+            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  this.viewWidth, down * -1)
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+        }
+
+        this.updateViewCanvas();
+    }
+
+    handleClick(ev: MouseEvent) {
+        let x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPosition.x;
+        let y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPosition.y;
+        
+        let targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
+        this.selectTile(targetTile);
     }
 
     handleKeyDown(ev: KeyboardEvent) {
@@ -139,34 +163,4 @@ export default class MapUI {
             this.moveViewArea(1, 0);
         }
     }
-
-    private moveViewArea(right: number, down: number) {
-        let oldPositionX = this.viewPositionX;
-        let oldPositionY = this.viewPositionY;
-
-        this.viewPositionX = clamp(0, this.viewPositionX + right, this.world.width - this.viewWidth);
-        this.viewPositionY = clamp(0, this.viewPositionY + down, this.world.height - this.viewHeight);
-
-        right = this.viewPositionX - oldPositionX;
-        down = this.viewPositionY - oldPositionY;
-
-        // make sure that the are we're moving into has been rendered
-        if (right > 0) {
-            this.world.getTilesInRectangle((this.viewPositionX + this.viewWidth - right), (this.viewPositionY),  right, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
-        }
-        if (right < 0) {
-            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY),  right * -1, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
-        }
-        if (down > 0) {
-            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY + this.viewHeight - down),  this.viewWidth, down)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
-        } if (down < 0) {
-            this.world.getTilesInRectangle((this.viewPositionX), (this.viewPositionY),  this.viewWidth, down * -1)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
-        }
-
-        this.updateViewCanvas();
-    }
-}   
+}

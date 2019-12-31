@@ -10,7 +10,7 @@ import ProductionScreen from "./productionScreen/ProductionScreen.js";
 
 export default class GameWindow {
 
-    private static rootDiv: HTMLElement = document.getElementById('rootdiv')!; // find the div that holds all graphical UI (see index.html)
+    private static rootDiv: HTMLElement = document.getElementById('rootdiv')!; // root div for all of our HTML
     private static currentRun: Game;
 
     public static showMainMenu() {

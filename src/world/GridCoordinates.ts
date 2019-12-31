@@ -1,15 +1,12 @@
-// grid coordinates
 export default class GridCoordinates {
-    readonly x: number;
-    readonly y: number;
 
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
+    constructor(
+        readonly x: number,
+        readonly y: number
+    ) {}
 
     toString() {
-        return `(${this.x}, ${this.y})`
+        return `(${this.x}, ${this.y})`;
     }
 
     distanceFrom(other: GridCoordinates): number {
