@@ -13,7 +13,6 @@ import Mountain from "./Mountain.js";
 
 
 export default class Wasteland extends AbstractTile {
-    
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -25,7 +24,7 @@ export default class Wasteland extends AbstractTile {
                 run.world.placeTile(new Habitat(position));
             },
             [new Cost(Resource.BuildingMaterials, 100)],
-            [new TileWithinDistancePredicate(1, Habitat)]
+            [new TileWithinDistancePredicate(1, Habitat)],
         ),
 
         new TileProject("Construct ore processing center", 

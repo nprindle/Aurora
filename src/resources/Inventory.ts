@@ -6,12 +6,11 @@ export default class Inventory {
 
     private resourceQuantities: Map<Resource, number> = new Map<Resource, number>([]);
 
-    constructor() {
-        
-    }
+    constructor(){}
 
+    // TODO make sure we can't get a negative resource value by adding a negative amount
     addQuantity(resource: Resource, quantity: number) {
-        let oldQuantity = this.resourceQuantities.get(resource)
+        let oldQuantity = this.resourceQuantities.get(resource);
         if (oldQuantity == undefined) {
             this.resourceQuantities.set(resource, quantity);
         } else {
@@ -27,26 +26,17 @@ export default class Inventory {
         this.resourceQuantities.set(resource, oldQuantity - quantity);
     }
 
-    getQuantity(resource: Resource) {
-        let quantity = this.resourceQuantities.get(resource);
-        if (quantity == undefined) {
-            return 0;
-        } else {
-            return quantity;
-        }
+    getQuantity(resource: Resource): number {
+        return this.resourceQuantities.get(resource) || 0;
     }
 
-    canAfford(costs: Cost[]) {
+    canAfford(costs: Cost[]): boolean {
         /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs together
          * to make sure that the entire set of costs can be afforded together
          */
         let costMap = new Map<Resource, number>();
         costs.forEach((cost: Cost) => {
-            if (costMap.get(cost.resource) == undefined) {
-                costMap.set(cost.resource, cost.quantity);
-            } else {
-                costMap.set(cost.resource, cost.quantity + costMap.get(cost.resource)!);
-            }
+            costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) || 0));
         });
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
@@ -86,10 +76,8 @@ export default class Inventory {
     clone(): Inventory {
         let clone = new Inventory();
         this.getResourceList().forEach((resource: Resource) => {
-            let quantity = this.getQuantity(resource);
-            clone.addQuantity(resource, quantity);
+            clone.addQuantity(resource, this.getQuantity(resource));
         });
-
         return clone;
     }
 }

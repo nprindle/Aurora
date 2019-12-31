@@ -1,7 +1,6 @@
 import AbstractTile from "./AbstractTile.js";
-import Arrays from "../util/Arrays.js"
+import { Arrays } from "../util/Arrays.js"
 import Wasteland from "./Tiles/Wasteland.js";
-import Habitat from "./Tiles/Habitat.js";
 import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
@@ -81,9 +80,6 @@ export default class World {
     }
 
     getTilesInCircle(center: GridCoordinates, radius: number) {
-        let tilesInRadius = this.getTiles().filter((tile: AbstractTile) => (center.distanceFrom(tile.position) <= radius));
-        return tilesInRadius;
+        return this.getTiles().filter(tile => (center.distanceFrom(tile.position) <= radius));
     }
-
-    
 }

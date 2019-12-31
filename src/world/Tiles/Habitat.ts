@@ -15,7 +15,8 @@ export default class Habitat extends AbstractTile {
 
     resourceConversions = [
         new Conversion(
-            [], [new Cost(Resource.Energy, 100)])
+            [], [new Cost(Resource.Energy, 100)]
+        ),
     ];
 
     getImgSrc(): string {
@@ -26,5 +27,4 @@ export default class Habitat extends AbstractTile {
     getTileName(): string {
         return Habitat.tileName;
     }
-
 }

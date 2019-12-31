@@ -8,7 +8,7 @@ export default class Cheats {
     constructor(
         private currentGame: Game,
         private worldScreen: WorldScreen // we need this to trigger UI updates when cheats change things
-        ){}
+    ){}
 
     addResource(resource: Resource, quanity: number) {
         this.currentGame.inventory.addQuantity(resource, quanity);
