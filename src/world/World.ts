@@ -19,17 +19,11 @@ export default class World {
         this.height = params.worldHeight;
 
         // generate empty map
-        this.grid = Arrays.generate(this.height, () => {
-            // populate row
-            return Arrays.generate(this.width, () => {
-                return new Wasteland(new GridCoordinates(0, 0));
-            });
-        });
-
-        // set correct coordinates for tiles
-        for (let row: number = 0; row < this.height; row++) {
-            for (let column: number = 0; column < this.width; column++) {
-                this.grid[row][column].position = new GridCoordinates(column, row);
+        this.grid = new Array(this.height);
+        for(let row = 0; row < this.height; row++) {
+            this.grid[row] = new Array(this.width);
+            for(let column = 0; column < this.width; column++) {
+                this.grid[row][column] = new Wasteland(new GridCoordinates(column, row));
             }
         }
 
