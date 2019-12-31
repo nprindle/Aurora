@@ -63,30 +63,27 @@ export default class MapUI {
     public refreshViewableArea() {
         let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
         tilesInViewableArea.forEach((tile: AbstractTile) => {
-            this.rerenderTile(tile, true);
+            this.rerenderTile(tile);
         });
-        this.updateViewCanvas();
     }
 
-    private drawImageAtCoordinates(src: string, coordinates: GridCoordinates, skipViewUpdate?: boolean) {
+    private drawImageAtCoordinates(src: string, coordinates: GridCoordinates) {
         let context = this.worldCanvas.getContext('2d')!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
         let image = new Image();
         image.onload = () => {
             context.drawImage(image, coordinates.x * MapUI.pixelsPerTile, coordinates.y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
-            if(!skipViewUpdate) {
-                this.updateViewCanvas();
-            }
+            this.updateViewCanvas();
         }
         image.src = src;
     }
 
     // redraws the given tile at its selected location
-    private rerenderTile(tile: AbstractTile, skipViewUpdate?: boolean) {
+    private rerenderTile(tile: AbstractTile) {
         this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
 
         if (tile.position === this.highlightedCoordinates) {
-            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position, skipViewUpdate);
+            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position);
         }
     }
 
@@ -123,21 +120,19 @@ export default class MapUI {
         // rerender newly visible tiles
         if (right > 0) {
             this.world.getTilesInRectangle((this.viewPosition.x + this.viewWidth - right), (this.viewPosition.y),  right, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
         }
         if (right < 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  right * -1, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
         }
         if (down > 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y + this.viewHeight - down),  this.viewWidth, down)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
         } if (down < 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  this.viewWidth, down * -1)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile, true));
+                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
         }
-
-        this.updateViewCanvas();
     }
 
     handleClick(ev: MouseEvent) {
