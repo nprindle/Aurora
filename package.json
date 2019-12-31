@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "(rm -r out/ || rmdir /S /Q out || true) && npx tsc && echo Build completed",
-    "start": "npx live-server -q"
+    "start": "npx live-server"
   },
   "homepage": "https://github.com/GRarer/Aurora#readme"
 }
