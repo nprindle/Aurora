@@ -8,22 +8,17 @@ export default class Inventory {
 
     constructor(){}
 
-    // TODO make sure we can't get a negative resource value by adding a negative amount
     addQuantity(resource: Resource, quantity: number) {
-        let oldQuantity = this.resourceQuantities.get(resource);
-        if (oldQuantity == undefined) {
-            this.resourceQuantities.set(resource, quantity);
-        } else {
-            this.resourceQuantities.set(resource, oldQuantity + quantity);
+        let oldQuantity = this.getQuantity(resource);
+        let newQuantity = oldQuantity + quantity;
+        if (newQuantity < 0) {
+            throw `Tried to set inventory ${resource.name} to negative value.`;
         }
+        this.resourceQuantities.set(resource, newQuantity);
     }
 
     removeQuantity(resource: Resource, quantity: number) {
-        let oldQuantity = this.resourceQuantities.get(resource)!;
-        if ((oldQuantity - quantity) < 0) {
-            throw `Tried to set inventory ${resource.name} to negative value.`;
-        }
-        this.resourceQuantities.set(resource, oldQuantity - quantity);
+        this.addQuantity(resource, quantity * -1);
     }
 
     getQuantity(resource: Resource): number {
