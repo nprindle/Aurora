@@ -77,24 +77,6 @@ export default class UI{
         return canvas;
     }
 
-    // creates a slider input control
-    static makeSlider(label: string, min: number, max: number, value: number, callback: Function, step?: number): HTMLElement {
-        const input = document.createElement('input');
-        input.type = 'range';
-        input.min = `${min}`;
-        input.max = `${max}`;
-        input.value = `${value}`;
-        if(step) {
-            input.step = `${step}`;
-        }
-        input.onchange = function (this: GlobalEventHandlers, ev: Event) {
-           callback(this);
-        }
-        const para = UI.makePara(`${label}: `, []);
-        para.appendChild(input);
-        return para;
-    }
-
      // clears the parent (usually a div) and fills it with new contents
     static fillHTML(parent: HTMLElement, contents: HTMLElement[]) {
         parent.innerHTML = ''; // clear the parent
