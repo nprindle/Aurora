@@ -12,6 +12,14 @@
   },
   "license": "Apache-2.0",
   "main": "out/App.js",
+  "scripts": {
+    "clean": "rm -r out || true",
+    "build": "npm run clean && npx tsc && echo Build completed",
+    "start": "npx live-server",
+    "build-watch": "npx tsc -w",
+    "minify": "npx webpack"
+  },
+  "homepage": "https://github.com/GRarer/Aurora#readme",
   "dependencies": {
     "live-server": "^1.2.1"
   },
@@ -30,11 +38,5 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-fix-style-only-entries": "^0.4.0"
-  },
-  "scripts": {
-    "build": "(rm -r out/ || rmdir /S /Q out || true) && npx tsc && echo Build completed",
-    "start": "npx live-server",
-    "minify": "npx webpack"
-  },
-  "homepage": "https://github.com/GRarer/Aurora#readme"
+  }
 }
