@@ -13,11 +13,7 @@ export default class Habitat extends AbstractTile {
 
     possibleProjects: TileProject[] = [];
 
-    resourceConversions = [
-        new Conversion(
-            [], [new Cost(Resource.Energy, 100)]
-        ),
-    ];
+    resourceConversions = [];
 
     getImgSrc(): string {
         return "assets/tiles/habitat.png";
