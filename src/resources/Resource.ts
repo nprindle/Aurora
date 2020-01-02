@@ -2,7 +2,7 @@ export default class Resource {
     // all resource instances are defined here
     static readonly Energy = new Resource("Energy");
     static readonly Colonists = new Resource("Human Colonists");
-    static readonly Metal = new Resource("Metals");
+    static readonly Metal = new Resource("Metal Ore");
     static readonly BuildingMaterials = new Resource("Construction Materials");
     static readonly Electronics = new Resource("Electronics");
 
