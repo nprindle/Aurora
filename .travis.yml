@@ -1,0 +1,28 @@
+language: node_js
+
+node_js:
+- '12'
+
+install:
+- npm install
+
+script:
+- npm run build
+
+before_deploy:
+- "scripts/before_deploy/make_dist.sh deploy_dist"
+
+deploy:
+  provider: pages
+  github_token: $GITHUB_TOKEN
+  project_name: Aurora
+  skip-cleanup: true
+  keep_history: true
+  on:
+    branch: master
+  target_branch: gh-pages
+  local_dir: deploy_dist
+
+env:
+  global:
+    - MINIFY=true
