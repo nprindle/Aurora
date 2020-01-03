@@ -8,7 +8,14 @@ fi
 
 mkdir -p "$target"
 
-cp -r out "$target"
 cp -r assets "$target"
-cp -r stylesheets "$target"
-cp *.html "$target"
+
+if [ "$MINIFY" = true ]; then
+  npm run minify
+  cp dist/index.html "$target"
+else
+  cp -r out "$target"
+  cp -r stylesheets "$target"
+  cp index.html "$target"
+fi
+
