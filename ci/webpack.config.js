@@ -10,8 +10,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './out/App.js',
-    styles: './stylesheets/styles.css',
+    main: path.resolve(__dirname, '../out/App.js'),
+    styles: path.resolve(__dirname, '../stylesheets/styles.css'),
   },
   mode: 'production',
   optimization: {
@@ -39,7 +39,7 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',
   },
   plugins: [
@@ -47,7 +47,7 @@ module.exports = {
     new FixStyleOnlyEntriesPlugin(),
     new OptimizeCssAssetsPlugin(),
     new HtmlWebpackPlugin({
-      template: './template.html',
+      template: path.resolve(__dirname, 'template.html'),
       inject: true,
       inlineSource: '.(js|css)$',
     }),
