@@ -11,8 +11,6 @@ export default class MiningFacility extends Tile {
         super(position);
     }
 
-    possibleProjects: TileProject[] = [];
-
     resourceConversions = [
         new Conversion(
             [new Cost(Resource.Metal, 100)],

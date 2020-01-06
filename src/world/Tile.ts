@@ -11,10 +11,10 @@ import Conversion from "../resources/Conversion.js";
  export default abstract class Tile {
 
     // projects that can be completed on tiles of this type
-    abstract readonly possibleProjects: TileProject[];
+    readonly possibleProjects: TileProject[] = [];
 
     // conversion from input resources to output resources that the tile can perform at the end of each turn
-    abstract resourceConversions: Conversion[];
+    resourceConversions: Conversion[] = [];
 
     constructor(
         public position: GridCoordinates

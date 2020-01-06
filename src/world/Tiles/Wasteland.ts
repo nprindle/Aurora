@@ -44,8 +44,6 @@ export default class Wasteland extends Tile {
         ),
     ];
 
-    resourceConversions = [];
-
     getImgSrc(): string {
         return "assets/tiles/wasteland.png";
     }

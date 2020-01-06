@@ -23,8 +23,6 @@ export default class Mountain extends Tile {
         ),
     ];
 
-    resourceConversions = [];
-
     getImgSrc(): string {
         return "assets/tiles/mountain.png";
     }

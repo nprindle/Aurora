@@ -11,8 +11,6 @@ export default class SolarPanels extends Tile {
         super(position);
     }
 
-    possibleProjects: TileProject[] = [];
-
     resourceConversions = [
         new Conversion(
             [], [new Cost(Resource.Energy, 100)]
