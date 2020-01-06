@@ -21,10 +21,10 @@ export default class WorldScreen {
         this.mapUI = new MapUI(this, run.world);
         this.tileSidebar = new TileSidebar(this, run);
 
-        let mapHTML = this.mapUI.getViewCanvas();
+        const mapHTML = this.mapUI.getViewCanvas();
         this.inventorySidebar = new InventorySidebar(run);
-        let tileSidebarHTML = this.tileSidebar.getHTML();
-        let inventoryHTML = this.inventorySidebar.getHTML();
+        const tileSidebarHTML = this.tileSidebar.getHTML();
+        const inventoryHTML = this.inventorySidebar.getHTML();
         this.header = new WorldScreenHeader(run);
 
         this.worldScreenHTML = UI.makeDivContaining([

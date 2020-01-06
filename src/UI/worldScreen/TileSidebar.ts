@@ -38,9 +38,9 @@ export default class TileSidebar {
                 UI.makePara(`No structure or terrain tile selected`),
             ]);
         } else {
-            let tile = this.run.world.getTileAtCoordinates(this.position);
+            const tile = this.run.world.getTileAtCoordinates(this.position);
 
-            let projectsHTML = UI.makeDiv();
+            const projectsHTML = UI.makeDiv();
             if(tile.possibleProjects.length > 0) {
                 projectsHTML.appendChild(UI.makePara("Projects:"));
                 tile.possibleProjects.forEach((project: TileProject) => {
@@ -48,7 +48,7 @@ export default class TileSidebar {
                 });
             }
 
-            let conversionsHTML = UI.makeDiv();
+            const conversionsHTML = UI.makeDiv();
             if(tile.resourceConversions.length > 0) {
                 conversionsHTML.appendChild(UI.makePara("Production:"))
                 tile.resourceConversions.forEach((conversion: Conversion) => {
@@ -66,10 +66,10 @@ export default class TileSidebar {
     }
 
     private makeProjectHTML(tile: Tile, project: TileProject): HTMLElement {
-        let projectHTML = UI.makeDiv();
+        const projectHTML = UI.makeDiv();
 
-        let disabled = !project.canDo(tile.position, this.run);
-        let button = UI.makeButton(project.title, () => {
+        const disabled = !project.canDo(tile.position, this.run);
+        const button = UI.makeButton(project.title, () => {
             this.doProject(project, tile);
         }, [], disabled);
         projectHTML.appendChild(button);
@@ -77,13 +77,13 @@ export default class TileSidebar {
         if (project.costs.length == 0) {
             projectHTML.appendChild(UI.makePara("Cost: Free"));
         } else {
-            let costDescriptions = project.costs.map((cost: Cost) => `${cost.toString()}`);
-            let costsString = "Cost: " + costDescriptions.join(', ');
+            const costDescriptions = project.costs.map((cost: Cost) => `${cost.toString()}`);
+            const costsString = "Cost: " + costDescriptions.join(', ');
             projectHTML.appendChild(UI.makePara(costsString));
         }
 
         if (project.completionRequirements.length > 0) {
-            let requirementsString = project.completionRequirements.map((req: TilePredicate) => `- ${req.toString()}\n`).join('');
+            const requirementsString = project.completionRequirements.map((req: TilePredicate) => `- ${req.toString()}\n`).join('');
             projectHTML.appendChild(UI.makePara(`Requirements:\n${requirementsString}`));
         }               
 

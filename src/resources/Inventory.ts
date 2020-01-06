@@ -9,8 +9,8 @@ export default class Inventory {
     constructor(){}
 
     addQuantity(resource: Resource, quantity: number) {
-        let oldQuantity = this.getQuantity(resource);
-        let newQuantity = oldQuantity + quantity;
+        const oldQuantity = this.getQuantity(resource);
+        const newQuantity = oldQuantity + quantity;
         if (newQuantity < 0) {
             throw `Tried to set inventory ${resource.name} to negative value.`;
         }
@@ -29,14 +29,14 @@ export default class Inventory {
         /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs together
          * to make sure that the entire set of costs can be afforded together
          */
-        let costMap = new Map<Resource, number>();
+        const costMap = new Map<Resource, number>();
         costs.forEach((cost: Cost) => {
             costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) || 0));
         });
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
-            let costQuantity = costMap.get(resource)!;
-            let availableQuantity = this.getQuantity(resource);
+            const costQuantity = costMap.get(resource)!;
+            const availableQuantity = this.getQuantity(resource);
             return costQuantity <= availableQuantity;
         });
     }
@@ -69,7 +69,7 @@ export default class Inventory {
     }
 
     clone(): Inventory {
-        let clone = new Inventory();
+        const clone = new Inventory();
         this.getResourceList().forEach((resource: Resource) => {
             clone.addQuantity(resource, this.getQuantity(resource));
         });

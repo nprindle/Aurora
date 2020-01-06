@@ -17,14 +17,14 @@ export default class ProductionScreen {
 
     refresh() {
         // clone of the inventory that represents what the inventory will be after this turn's conversions are applied
-        let inventoryCopy = this.run.inventory.clone();
+        const inventoryCopy = this.run.inventory.clone();
 
-        let freeConversions: Conversion[] = this.run.getResourceConversions().filter(conversion => (conversion.inputs.length == 0));
-        let freeConversionsHTML: HTMLElement[] = freeConversions.map(conversion => this.renderConversion(conversion, true, false));
+        const freeConversions: Conversion[] = this.run.getResourceConversions().filter(conversion => (conversion.inputs.length == 0));
+        const freeConversionsHTML: HTMLElement[] = freeConversions.map(conversion => this.renderConversion(conversion, true, false));
         inventoryCopy.applyConversions(freeConversions);
 
-        let costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length != 0));
-        let costlyConversionsHTML: HTMLElement[] = [];
+        const costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length != 0));
+        const costlyConversionsHTML: HTMLElement[] = [];
         costlyConversions.forEach((conversion: Conversion) => {
             if (inventoryCopy.canAfford(conversion.inputs)) {
                 costlyConversionsHTML.push(this.renderConversion(conversion, true, true));
@@ -53,12 +53,12 @@ export default class ProductionScreen {
     }
 
     private renderInventory(inventory: Inventory): HTMLElement {
-        let resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
+        const resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
         return UI.makeDivContaining(resourceDescriptions, ['production-screen-inventory']);
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
-        let div = UI.makeDiv(['flex-horizontal']);
+        const div = UI.makeDiv(['flex-horizontal']);
 
         let text = conversion.toString();
         let cssClass = 'conversion-description-normal'; // css class that changes to show the conversion's status

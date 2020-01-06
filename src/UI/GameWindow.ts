@@ -24,7 +24,7 @@ export default class GameWindow {
     }
 
     public static showWorldScreen() {
-        let worldScreen = new WorldScreen(this.currentRun);
+        const worldScreen = new WorldScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [worldScreen.getHTML()]);
 
         this.enableCheats(worldScreen); // cheats are available when on the world screen
@@ -38,13 +38,13 @@ export default class GameWindow {
     public static showProductionScreen() {
         this.disableCheats();
 
-        let productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
+        const productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [productionScreen.getHTML()]);
     }
 
     public static transitionToNextTurn() {
         this.disableCheats();
-        let transitionScreen = new TransitionScreen();
+        const transitionScreen = new TransitionScreen();
         UI.fillHTML(this.rootDiv, [transitionScreen.getHTML()]);
         
         this.currentRun.completeTurn(); // update game state
