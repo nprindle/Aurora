@@ -11,10 +11,6 @@ export default class Habitat extends Tile {
         super(position);
     }
 
-    possibleProjects: TileProject[] = [];
-
-    resourceConversions = [];
-
     getImgSrc(): string {
         return "assets/tiles/habitat.png";
     }
