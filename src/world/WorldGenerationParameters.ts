@@ -16,7 +16,7 @@ export default class WorldGenerationParameters {
     ) {}
 
     static standardWorldParameters(): WorldGenerationParameters {
-        let nonrandomTiles = [
+        const nonrandomTiles = [
             new Wasteland(new GridCoordinates(0, 0)),
             new Mountain(new GridCoordinates(1, 0)),
             new Wasteland(new GridCoordinates(2, 0)),

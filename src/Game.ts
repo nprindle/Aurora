@@ -21,7 +21,7 @@ export default class Game {
 
     // returns all available resource conversions in the order in which they will be applied
     getResourceConversions() {
-        let allConversions: Conversion[] = Arrays.flatten(this.world.getTiles().map((tile: Tile) => tile.resourceConversions));
+        const allConversions: Conversion[] = Arrays.flatten(this.world.getTiles().map((tile: Tile) => tile.resourceConversions));
         // sort by priority number
         allConversions.sort((a: Conversion, b: Conversion) => (a.priority - b.priority));
         return allConversions;
@@ -40,8 +40,8 @@ export default class Game {
             return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
         }
 
-        let conversionsList = this.getResourceConversions();
-        let index = conversionsList.indexOf(conversion);
+        const conversionsList = this.getResourceConversions();
+        const index = conversionsList.indexOf(conversion);
 
         if (index == -1) {
             return; // conversion not found in the current world
@@ -51,7 +51,7 @@ export default class Game {
         }
 
         // swap priority number with the previous conversion
-        let conversionAbove = conversionsList[index - 1];
+        const conversionAbove = conversionsList[index - 1];
 
         if (conversionAbove.priority == 0) {
             return; // can't move into priority 0 because only conversions with no inputs should be priority 0
@@ -66,8 +66,8 @@ export default class Game {
             return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
         }
         
-        let conversionsList = this.getResourceConversions();
-        let index = conversionsList.indexOf(conversion);
+        const conversionsList = this.getResourceConversions();
+        const index = conversionsList.indexOf(conversion);
 
         if (index == -1) {
             return; // conversion not found in the current world
@@ -77,7 +77,7 @@ export default class Game {
         }
 
         // swap priority number with the next conversion
-        let conversionBelow = conversionsList[index + 1];
+        const conversionBelow = conversionsList[index + 1];
         [conversion.priority, conversionBelow.priority] = [conversionBelow.priority, conversion.priority];
     }
 }

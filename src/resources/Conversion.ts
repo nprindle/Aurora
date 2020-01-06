@@ -26,11 +26,11 @@ export default class Conversion {
     }
 
     toString() {
-        let outputDescription = this.outputs.map((output: Cost) => output.toString()).join(', ');
+        const outputDescription = this.outputs.map((output: Cost) => output.toString()).join(', ');
         if (this.inputs.length == 0) {
             return `Produce ${outputDescription}`;
         } else {
-            let inputDescription = this.inputs.map((input: Cost) => input.toString()).join(', ');
+            const inputDescription = this.inputs.map((input: Cost) => input.toString()).join(', ');
             return `Convert ${inputDescription} into ${outputDescription}`;
         }
     }

@@ -33,10 +33,10 @@ export default class World {
         });
 
         // place random mountains
-        let mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
+        const mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
         for(let i = 0; i < mountainNumber; i++) {
-            let wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
-            let position = Random.fromArray(wastelandTiles).position;
+            const wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
+            const position = Random.fromArray(wastelandTiles).position;
             this.placeTile(new Mountain(position));
         }
     }
@@ -58,11 +58,11 @@ export default class World {
             leftX = 0;
         }
 
-        let tiles: Tile[] = [];
+        const tiles: Tile[] = [];
 
-        let rowsInRange = this.grid.slice(topY, topY + height);
+        const rowsInRange = this.grid.slice(topY, topY + height);
         rowsInRange.forEach((row: Tile[]) => {
-            let tilesInRange = row.slice(leftX, leftX + width);
+            const tilesInRange = row.slice(leftX, leftX + width);
             tilesInRange.forEach((tile: Tile) => tiles.push(tile));
         });
 

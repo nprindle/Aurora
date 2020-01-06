@@ -29,7 +29,7 @@ export default class MapUI {
         this.parentScreen = parent;
 
         this.worldCanvas = UI.makeCanvas(this.world.width * MapUI.pixelsPerTile, this.world.height * MapUI.pixelsPerTile);
-        let worldContext = this.worldCanvas.getContext('2d')!;
+        const worldContext = this.worldCanvas.getContext('2d')!;
 
         // we fill the canvas with placeholder color so that it will be obvious when an area fails to render
         worldContext.beginPath();
@@ -52,25 +52,25 @@ export default class MapUI {
 
     // copies the view area from the world canvas to the view canvas
     private updateViewCanvas() {
-        let context = this.viewCanvas.getContext('2d')!;
-        let pixelWidth = this.viewWidth * MapUI.pixelsPerTile;
-        let pixelHeight = this.viewHeight * MapUI.pixelsPerTile;
-        let pixelPositionX = this.viewPosition.x * MapUI.pixelsPerTile;
-        let pixelPositionY = this.viewPosition.y * MapUI.pixelsPerTile;
+        const context = this.viewCanvas.getContext('2d')!;
+        const pixelWidth = this.viewWidth * MapUI.pixelsPerTile;
+        const pixelHeight = this.viewHeight * MapUI.pixelsPerTile;
+        const pixelPositionX = this.viewPosition.x * MapUI.pixelsPerTile;
+        const pixelPositionY = this.viewPosition.y * MapUI.pixelsPerTile;
         context.drawImage(this.worldCanvas, pixelPositionX, pixelPositionY, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
     }
 
     public refreshViewableArea() {
-        let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
+        const tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
         tilesInViewableArea.forEach((tile: Tile) => {
             this.rerenderTile(tile);
         });
     }
 
     private drawImageAtCoordinates(src: string, coordinates: GridCoordinates) {
-        let context = this.worldCanvas.getContext('2d')!;
+        const context = this.worldCanvas.getContext('2d')!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
-        let image = new Image();
+        const image = new Image();
         image.onload = () => {
             context.drawImage(image, coordinates.x * MapUI.pixelsPerTile, coordinates.y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
             this.updateViewCanvas();
@@ -90,7 +90,7 @@ export default class MapUI {
     private selectTile(tile: Tile | null) {
         // deselect previous highlight
         if (this.highlightedCoordinates) {
-            let prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
+            const prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
             this.highlightedCoordinates = null;
             this.rerenderTile(prevSelection);
         }
@@ -107,11 +107,11 @@ export default class MapUI {
     }
 
     private moveViewArea(right: number, down: number) {
-        let oldX = this.viewPosition.x;
-        let oldY = this.viewPosition.y;
+        const oldX = this.viewPosition.x;
+        const oldY = this.viewPosition.y;
 
-        let newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
-        let newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
+        const newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
+        const newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
         this.viewPosition = new GridCoordinates(newX, newY);
 
         right = this.viewPosition.x - oldX;
@@ -136,15 +136,15 @@ export default class MapUI {
     }
 
     handleClick(ev: MouseEvent) {
-        let x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPosition.x;
-        let y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPosition.y;
+        const x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPosition.x;
+        const y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPosition.y;
         
-        let targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
+        const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);
     }
 
     handleKeyDown(ev: KeyboardEvent) {
-        let code = ev.code;
+        const code = ev.code;
         if(code === "ArrowUp" || code === "KeyW") {
             this.moveViewArea(0, -1);
         }
