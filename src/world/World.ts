@@ -1,4 +1,4 @@
-import AbstractTile from "./AbstractTile.js";
+import Tile from "./Tile.js";
 import { Arrays } from "../util/Arrays.js"
 import Wasteland from "./Tiles/Wasteland.js";
 import Mountain from "./Tiles/Mountain.js";
@@ -12,7 +12,7 @@ export default class World {
     height: number;
 
     // world grid is indexed grid[row][column]
-    grid: AbstractTile[][];
+    grid: Tile[][];
 
     constructor(params: WorldGenerationParameters) {
         this.width = params.worldWidth;
@@ -28,29 +28,29 @@ export default class World {
         }
 
         // place the tiles specified in the parameters
-        params.nonrandomTiles.forEach((tile: AbstractTile) => {
+        params.nonrandomTiles.forEach((tile: Tile) => {
             this.placeTile(tile);
         });
 
         // place random mountains
         let mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
         for(let i = 0; i < mountainNumber; i++) {
-            let wastelandTiles = this.getTiles().filter((tile: AbstractTile) => (tile instanceof Wasteland));
+            let wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             let position = Random.fromArray(wastelandTiles).position;
             this.placeTile(new Mountain(position));
         }
     }
 
     // place a tile into the grid in the position given by the tile's coordinates
-    placeTile(tile: AbstractTile) {
+    placeTile(tile: Tile) {
         this.grid[tile.position.y][tile.position.x] = tile;
     }
 
-    getTiles(): AbstractTile[] {
+    getTiles(): Tile[] {
         return Arrays.flatten(this.grid);
     }
 
-    getTilesInRectangle(leftX: number, topY: number, width: number, height: number): AbstractTile[] {
+    getTilesInRectangle(leftX: number, topY: number, width: number, height: number): Tile[] {
         if (topY < 0) {
             topY = 0;
         }
@@ -58,12 +58,12 @@ export default class World {
             leftX = 0;
         }
 
-        let tiles: AbstractTile[] = [];
+        let tiles: Tile[] = [];
 
         let rowsInRange = this.grid.slice(topY, topY + height);
-        rowsInRange.forEach((row: AbstractTile[]) => {
+        rowsInRange.forEach((row: Tile[]) => {
             let tilesInRange = row.slice(leftX, leftX + width);
-            tilesInRange.forEach((tile: AbstractTile) => tiles.push(tile));
+            tilesInRange.forEach((tile: Tile) => tiles.push(tile));
         });
 
         return tiles;

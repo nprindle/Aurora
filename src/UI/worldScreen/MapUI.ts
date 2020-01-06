@@ -1,6 +1,6 @@
 import World from "../../world/World.js";
 import UI from "../UI.js";
-import AbstractTile from "../../world/AbstractTile.js";
+import Tile from "../../world/Tile.js";
 import {clamp} from "../../util/Util.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import WorldScreen from "./WorldScreen.js";
@@ -62,7 +62,7 @@ export default class MapUI {
 
     public refreshViewableArea() {
         let tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
-        tilesInViewableArea.forEach((tile: AbstractTile) => {
+        tilesInViewableArea.forEach((tile: Tile) => {
             this.rerenderTile(tile);
         });
     }
@@ -79,7 +79,7 @@ export default class MapUI {
     }
 
     // redraws the given tile at its selected location
-    private rerenderTile(tile: AbstractTile) {
+    private rerenderTile(tile: Tile) {
         this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
 
         if (tile.position === this.highlightedCoordinates) {
@@ -87,7 +87,7 @@ export default class MapUI {
         }
     }
 
-    private selectTile(tile: AbstractTile | null) {
+    private selectTile(tile: Tile | null) {
         // deselect previous highlight
         if (this.highlightedCoordinates) {
             let prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
@@ -120,18 +120,18 @@ export default class MapUI {
         // rerender newly visible tiles
         if (right > 0) {
             this.world.getTilesInRectangle((this.viewPosition.x + this.viewWidth - right), (this.viewPosition.y),  right, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
+                .forEach((tile: Tile) => this.rerenderTile(tile));
         }
         if (right < 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  right * -1, this.viewHeight)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
+                .forEach((tile: Tile) => this.rerenderTile(tile));
         }
         if (down > 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y + this.viewHeight - down),  this.viewWidth, down)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
+                .forEach((tile: Tile) => this.rerenderTile(tile));
         } if (down < 0) {
             this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  this.viewWidth, down * -1)
-                .forEach((tile: AbstractTile) => this.rerenderTile(tile));
+                .forEach((tile: Tile) => this.rerenderTile(tile));
         }
     }
 

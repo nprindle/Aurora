@@ -1,4 +1,4 @@
-import AbstractTile from "../world/AbstractTile";
+import Tile from "../world/Tile";
 import GridCoordinates from "../world/GridCoordinates";
 import World from "../world/World";
 import Game from "../Game";
