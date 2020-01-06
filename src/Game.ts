@@ -1,7 +1,7 @@
 import World from "./world/World.js";
 import Inventory from "./resources/Inventory.js";
 import Resource from "./resources/Resource.js";
-import AbstractTile from "./world/AbstractTile.js";
+import Tile from "./world/Tile.js";
 import { Arrays } from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
@@ -21,7 +21,7 @@ export default class Game {
 
     // returns all available resource conversions in the order in which they will be applied
     getResourceConversions() {
-        let allConversions: Conversion[] = Arrays.flatten(this.world.getTiles().map((tile: AbstractTile) => tile.resourceConversions));
+        let allConversions: Conversion[] = Arrays.flatten(this.world.getTiles().map((tile: Tile) => tile.resourceConversions));
         // sort by priority number
         allConversions.sort((a: Conversion, b: Conversion) => (a.priority - b.priority));
         return allConversions;

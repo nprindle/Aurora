@@ -1,7 +1,7 @@
 import TilePredicate from "./TilePredicate.js";
 import GridCoordinates from "../world/GridCoordinates.js";
 import Game from "../Game.js";
-import AbstractTile from "../world/AbstractTile.js";
+import Tile from "../world/Tile.js";
 
 
 
@@ -11,13 +11,13 @@ import AbstractTile from "../world/AbstractTile.js";
 export class TileWithinDistancePredicate extends TilePredicate {
     constructor(
         public radius: number,
-        public targetType: typeof AbstractTile & { readonly tileName: string },
+        public targetType: typeof Tile & { readonly tileName: string },
     ) {
         super();
     }
 
     evaluate(run: Game, position: GridCoordinates): boolean {
-        let tilesInDistance: AbstractTile[] = run.world.getTilesInCircle(position, this.radius);
+        let tilesInDistance: Tile[] = run.world.getTilesInCircle(position, this.radius);
         
         let matchingTilesInDistance = tilesInDistance.filter(tile => (tile instanceof this.targetType));
         return (matchingTilesInDistance.length > 0);

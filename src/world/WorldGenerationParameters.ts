@@ -1,4 +1,4 @@
-import AbstractTile from "./AbstractTile.js";
+import Tile from "./Tile.js";
 import GridCoordinates from "./GridCoordinates.js";
 import Habitat from "./Tiles/Habitat.js";
 import Wasteland from "./Tiles/Wasteland.js";
@@ -8,7 +8,7 @@ import SolarPanels from "./Tiles/SolarArray.js";
 
 export default class WorldGenerationParameters {
     constructor(
-        public nonrandomTiles: AbstractTile[], // tiles which are set to always be in a certain position rather than randomized
+        public nonrandomTiles: Tile[], // tiles which are set to always be in a certain position rather than randomized
         public worldWidth: number,
         public worldHeight: number,
         public minMountains: number,

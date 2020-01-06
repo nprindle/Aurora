@@ -1,11 +1,11 @@
-import AbstractTile from "../AbstractTile.js";
+import Tile from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 
-export default class MiningFacility extends AbstractTile {
+export default class MiningFacility extends Tile {
 
     constructor(position: GridCoordinates) {
         super(position);

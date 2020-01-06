@@ -8,7 +8,7 @@ import Conversion from "../resources/Conversion.js";
  * or artificial constructions (habitat, factory, highway, etc)
  */
 
- export default abstract class AbstractTile {
+ export default abstract class Tile {
 
     // projects that can be completed on tiles of this type
     abstract readonly possibleProjects: TileProject[];

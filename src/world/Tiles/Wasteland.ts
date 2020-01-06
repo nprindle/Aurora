@@ -1,4 +1,4 @@
-import AbstractTile from "../AbstractTile.js";
+import Tile from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Habitat from "./Habitat.js";
@@ -12,7 +12,7 @@ import SolarPanels from "./SolarArray.js";
 
 
 
-export default class Wasteland extends AbstractTile {
+export default class Wasteland extends Tile {
 
     constructor(position: GridCoordinates) {
         super(position);

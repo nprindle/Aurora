@@ -4,7 +4,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import WorldScreen from "./WorldScreen.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
-import AbstractTile from "../../world/AbstractTile.js";
+import Tile from "../../world/Tile.js";
 import TilePredicate from "../../predicates/TilePredicate.js";
 import Conversion from "../../resources/Conversion.js";
 
@@ -65,7 +65,7 @@ export default class TileSidebar {
         }
     }
 
-    private makeProjectHTML(tile: AbstractTile, project: TileProject): HTMLElement {
+    private makeProjectHTML(tile: Tile, project: TileProject): HTMLElement {
         let projectHTML = UI.makeDiv();
 
         let disabled = !project.canDo(tile.position, this.run);
@@ -95,7 +95,7 @@ export default class TileSidebar {
         return UI.makePara(`- ${conversion.toString()}`);
     }
 
-    private doProject(project: TileProject, tile: AbstractTile) {
+    private doProject(project: TileProject, tile: Tile) {
         project.doAction(tile.position, this.run);
         this.parentScreen.refreshComponents();
     }
