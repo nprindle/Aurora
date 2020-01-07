@@ -1,24 +1,20 @@
 import Resource from "./Resource";
 import Cost from "./Cost";
 import Conversion from "./Conversion";
+import QuantityMap from "../util/QuantityMap";
 
 export default class Inventory {
 
-    private resourceQuantities: Map<Resource, number> = new Map<Resource, number>([]);
+    private resourceQuantities: QuantityMap<Resource> = new QuantityMap<Resource>();
 
     constructor(){}
 
     add(resource: Resource, quantity: number) {
-        const oldQuantity = this.getQuantity(resource);
-        const newQuantity = oldQuantity + quantity;
-        if (newQuantity < 0) {
-            throw `Tried to set inventory ${resource.name} to negative value.`;
-        }
-        this.resourceQuantities.set(resource, newQuantity);
+        this.resourceQuantities.add(resource, quantity);
     }
 
     remove(resource: Resource, quantity: number) {
-        this.add(resource, quantity * -1);
+        this.resourceQuantities.remove(resource, quantity);
     }
 
     getQuantity(resource: Resource): number {
@@ -50,7 +46,7 @@ export default class Inventory {
     }
 
     getResourceList(): Resource[] {
-        return Array.from(this.resourceQuantities.keys());
+        return this.resourceQuantities.getKeys();
     }
 
     // returns strings showing the resource type and amount for each resource in the inventory
