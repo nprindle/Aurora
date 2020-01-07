@@ -8,7 +8,7 @@ export default class Inventory {
 
     constructor(){}
 
-    addQuantity(resource: Resource, quantity: number) {
+    add(resource: Resource, quantity: number) {
         const oldQuantity = this.getQuantity(resource);
         const newQuantity = oldQuantity + quantity;
         if (newQuantity < 0) {
@@ -17,8 +17,8 @@ export default class Inventory {
         this.resourceQuantities.set(resource, newQuantity);
     }
 
-    removeQuantity(resource: Resource, quantity: number) {
-        this.addQuantity(resource, quantity * -1);
+    remove(resource: Resource, quantity: number) {
+        this.add(resource, quantity * -1);
     }
 
     getQuantity(resource: Resource): number {
@@ -43,7 +43,7 @@ export default class Inventory {
 
     payCost(costs: Cost[]) {
         if (this.canAfford(costs)) {
-            costs.forEach((cost: Cost) => this.removeQuantity(cost.resource, cost.quantity));
+            costs.forEach((cost: Cost) => this.remove(cost.resource, cost.quantity));
         } else {
             throw "Cannot afford to pay cost";
         }
@@ -63,7 +63,7 @@ export default class Inventory {
         conversions.forEach((conversion: Conversion) => {
             if (this.canAfford(conversion.inputs) && conversion.enabled) {
                 this.payCost(conversion.inputs);
-                conversion.outputs.forEach((output: Cost) => this.addQuantity(output.resource, output.quantity));
+                conversion.outputs.forEach((output: Cost) => this.add(output.resource, output.quantity));
             }
         });
     }
@@ -71,7 +71,7 @@ export default class Inventory {
     clone(): Inventory {
         const clone = new Inventory();
         this.getResourceList().forEach((resource: Resource) => {
-            clone.addQuantity(resource, this.getQuantity(resource));
+            clone.add(resource, this.getQuantity(resource));
         });
         return clone;
     }

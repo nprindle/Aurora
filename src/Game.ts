@@ -16,7 +16,7 @@ export default class Game {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory();
         // TODO set correct starting resources
-        this.inventory.addQuantity(Resource.Colonists, 100);
+        this.inventory.add(Resource.Colonists, 100);
     }
 
     // returns all available resource conversions in the order in which they will be applied
