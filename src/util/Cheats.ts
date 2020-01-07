@@ -11,7 +11,7 @@ export default class Cheats {
     ){}
 
     addResource(resource: Resource, quanity: number) {
-        this.currentGame.inventory.add(resource, quanity);
+        this.currentGame.inventory.addResource(resource, quanity);
         this.worldScreen.refreshComponents();
     }
 }

@@ -26,7 +26,7 @@ export default class ProductionScreen {
         const costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length != 0));
         const costlyConversionsHTML: HTMLElement[] = [];
         costlyConversions.forEach((conversion: Conversion) => {
-            if (inventoryCopy.canAfford(conversion.inputs)) {
+            if (inventoryCopy.canAfford(conversion.inputs) && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)) {
                 costlyConversionsHTML.push(this.renderConversion(conversion, true, true));
                 inventoryCopy.applyConversions([conversion]);
             } else {
@@ -53,8 +53,9 @@ export default class ProductionScreen {
     }
 
     private renderInventory(inventory: Inventory): HTMLElement {
+        const workerDescription = UI.makePara(`Unoccupied workers: ${inventory.getAvailableWorkers()}`);
         const resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
-        return UI.makeDivContaining(resourceDescriptions, ['production-screen-inventory']);
+        return UI.makeDivContaining([workerDescription, ...resourceDescriptions], ['production-screen-inventory']);
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {

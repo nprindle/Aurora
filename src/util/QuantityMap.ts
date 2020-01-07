@@ -20,8 +20,18 @@ export default class QuantityMap<T> {
         return this.map.get(key) || 0;
     }
 
+    getSum(): number {
+        return (Array.from(this.map.values())).reduce((sum: number, current: number) => (sum + current), 0);
+    }
+
     // returns all keys with nonzero quantities
     getKeys() {
         return Array.from(this.map.keys()).filter(key => (this.map.get(key)));
+    }
+
+    clone(): QuantityMap<T> {
+        const copy = new QuantityMap<T>();
+        this.getKeys().forEach(key => copy.add(key, this.get(key)));
+        return copy;
     }
 }

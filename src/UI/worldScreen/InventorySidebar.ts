@@ -18,13 +18,21 @@ export default class InventorySidebar {
     }
 
     refresh() {
+        const populationLabel = UI.makeHeader(`Workers: ${this.inventory.getTotalPopulation()}\n(${this.inventory.getAvailableWorkers()} available)`, 1);
+        const populationHTML = UI.makeDiv();
+        this.inventory.getPopulationStrings().forEach((description: string) => {
+            populationHTML.appendChild(UI.makePara(description));
+        });
+
         const resourceListHTML = UI.makeDiv();
         this.inventory.getInventoryStrings().forEach((description: string) => {
             resourceListHTML.appendChild(UI.makePara(description));
         });
 
         UI.fillHTML(this.html, [UI.makeDivContaining([
-            UI.makePara("Inventory:"),
+            populationLabel,
+            populationHTML,
+            UI.makeHeader("Inventory:", 1),
             resourceListHTML,
         ])]);
     }
