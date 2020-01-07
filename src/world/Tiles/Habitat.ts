@@ -4,8 +4,12 @@ import GridCoordinates from "../GridCoordinates.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
+import Species from "../../resources/Species.js";
+import Housing from "../../resources/Housing.js";
 
 export default class Habitat extends Tile {
+
+    populationCapacity: Housing = new Housing(Species.Human, 200);
 
     constructor(position: GridCoordinates) {
         super(position);

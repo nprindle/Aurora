@@ -20,6 +20,10 @@ export default class QuantityMap<T> {
         return this.map.get(key) || 0;
     }
 
+    set(key: T, quantity: number) {
+        this.map.set(key, quantity);
+    }
+
     getSum(): number {
         return (Array.from(this.map.values())).reduce((sum: number, current: number) => (sum + current), 0);
     }

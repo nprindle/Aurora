@@ -3,6 +3,8 @@ import Cost from "./Cost.js";
 import Conversion from "./Conversion.js";
 import QuantityMap from "../util/QuantityMap.js";
 import Species from "./Species.js";
+import World from "../world/World.js";
+import { clamp } from "../util/Util.js";
 
 export default class Inventory {
 
@@ -10,7 +12,9 @@ export default class Inventory {
     private population: QuantityMap<Species> = new QuantityMap<Species>(); // all workers (available + occupied)
     private availableWorkers: number = 0; // workers that have not been occupied for this turn yet
 
-    constructor(){}
+    constructor(
+        private world: World, // used to determine population size limits
+    ){}
 
     addResource(resource: Resource, quantity: number) {
         this.resourceQuantities.add(resource, quantity);
@@ -26,9 +30,8 @@ export default class Inventory {
 
     addWorkers(species: Species, quantity: number) {
         this.population.add(species, quantity);
+        this.population.set(species, clamp(0, this.population.get(species), this.world.getPopulationCapacity(species)));
     }
-
-    // TODO automatically cap population of each type
 
     // makes the entire population pool available as workers (makes all workers unoccupied)
     releaseWorkers() {
@@ -43,6 +46,13 @@ export default class Inventory {
             throw "tried to occupy a negative number of workers";
         }
         this.availableWorkers = this.availableWorkers - quantity;
+    }
+
+    doPopulationGrowth() {
+        this.population.getKeys().forEach(species => {
+            const growth = Math.floor(species.growthMultiplier * this.population.get(species));
+            this.addWorkers(species, growth);
+        });
     }
 
     getTotalPopulation(): number {
@@ -107,7 +117,7 @@ export default class Inventory {
     }
 
     clone(): Inventory {
-        const clone = new Inventory();
+        const clone = new Inventory(this.world);
         clone.resourceQuantities = this.resourceQuantities.clone();
         clone.population = this.population.clone();
         clone.availableWorkers = this.availableWorkers;
