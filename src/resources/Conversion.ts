@@ -12,11 +12,14 @@ export default class Conversion {
      */
     public priority: number;
     public enabled: boolean = true; // conversion will be skipped when disabled
+    public readonly requiredWorkers: number;
 
     constructor(
         public readonly inputs: Cost[],
         public readonly outputs: NonEmptyArray<Cost>,
+        workers?: number,
     ) {
+        this.requiredWorkers = workers || 0;
         if (inputs.length == 0) {
             this.priority = 0;
         } else {
@@ -27,11 +30,15 @@ export default class Conversion {
 
     toString() {
         const outputDescription = this.outputs.map((output: Cost) => output.toString()).join(', ');
-        if (this.inputs.length == 0) {
-            return `Produce ${outputDescription}`;
-        } else {
+        let description = `Produce ${outputDescription}`;
+        if (this.inputs.length > 0) {
             const inputDescription = this.inputs.map((input: Cost) => input.toString()).join(', ');
-            return `Convert ${inputDescription} into ${outputDescription}`;
+            description = `Convert ${inputDescription} into ${outputDescription}`;
         }
+        if (this.requiredWorkers != 0) {
+            description = description + ` using ${this.requiredWorkers} workers`;
+        }
+
+        return description;
     }
 }

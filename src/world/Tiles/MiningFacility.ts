@@ -14,11 +14,13 @@ export default class MiningFacility extends Tile {
     resourceConversions = [
         new Conversion(
             [new Cost(Resource.Metal, 100)],
-            [new Cost(Resource.BuildingMaterials, 100)]
+            [new Cost(Resource.BuildingMaterials, 100)],
+            60,
         ),
         new Conversion(
             [new Cost(Resource.Metal, 100)],
-            [new Cost(Resource.Electronics, 100)]
+            [new Cost(Resource.Electronics, 100)],
+            30,
         )
     ];
 

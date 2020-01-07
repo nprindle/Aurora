@@ -5,6 +5,7 @@ import Tile from "./world/Tile.js";
 import { Arrays } from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
+import Species from "./resources/Species.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
@@ -16,7 +17,8 @@ export default class Game {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory();
         // TODO set correct starting resources
-        this.inventory.add(Resource.Colonists, 100);
+        this.inventory.addWorkers(Species.human, 100);
+        this.inventory.releaseWorkers();
     }
 
     // returns all available resource conversions in the order in which they will be applied
@@ -31,6 +33,7 @@ export default class Game {
     completeTurn() {
         // calculate resource production
         this.inventory.applyConversions(this.getResourceConversions());
+        this.inventory.releaseWorkers();
         this.turnNumber++;
     }
 
