@@ -5,6 +5,7 @@ import Mountain from "./Tiles/Mountain.js";
 import Random from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
 import WorldGenerationParameters from "./WorldGenerationParameters.js";
+import Species from "../resources/Species.js";
 
 export default class World {
     
@@ -75,5 +76,17 @@ export default class World {
 
     getTilesInCircle(center: GridCoordinates, radius: number) {
         return this.getTiles().filter(tile => (center.distanceFrom(tile.position) <= radius));
+    }
+
+    getPopulationCapacity(species: Species): number {
+        let capacity = 0;
+
+        this.getTiles().forEach(tile => {
+            if (tile.populationCapacity && tile.populationCapacity.species == species) {
+                capacity = capacity + tile.populationCapacity.capacity;
+            }
+        });
+
+        return capacity;
     }
 }

@@ -15,9 +15,9 @@ export default class Game {
 
     constructor() {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
-        this.inventory = new Inventory();
+        this.inventory = new Inventory(this.world);
         // TODO set correct starting resources
-        this.inventory.addWorkers(Species.human, 100);
+        this.inventory.addWorkers(Species.Human, 100);
         this.inventory.releaseWorkers();
     }
 
@@ -33,7 +33,10 @@ export default class Game {
     completeTurn() {
         // calculate resource production
         this.inventory.applyConversions(this.getResourceConversions());
+
         this.inventory.releaseWorkers();
+        this.inventory.doPopulationGrowth();
+
         this.turnNumber++;
     }
 

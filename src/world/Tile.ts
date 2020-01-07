@@ -1,6 +1,8 @@
 import GridCoordinates from "./GridCoordinates.js";
 import TileProject from "../tileProjects/TileProject.js";
 import Conversion from "../resources/Conversion.js";
+import Species from "../resources/Species.js";
+import Housing from "../resources/Housing.js";
 
 /**
  * A tile is an object in the world that occupies a map square
@@ -15,6 +17,8 @@ import Conversion from "../resources/Conversion.js";
 
     // conversion from input resources to output resources that the tile can perform at the end of each turn
     resourceConversions: Conversion[] = [];
+
+    readonly populationCapacity: Housing | undefined = undefined;
 
     constructor(
         public position: GridCoordinates
