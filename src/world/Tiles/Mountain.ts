@@ -15,7 +15,7 @@ export default class Mountain extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject("Strip Mining", 
             (position: GridCoordinates, run: Game) => {
-                run.inventory.addQuantity(Resource.Metal, 150);
+                run.inventory.add(Resource.Metal, 150);
                 run.world.placeTile(new Wasteland(position));
             },
             [new Cost(Resource.Energy, 25)],
