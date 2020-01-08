@@ -19,11 +19,11 @@ export default class ProductionScreen {
         // clone of the inventory that represents what the inventory will be after this turn's conversions are applied
         const inventoryCopy = this.run.inventory.clone();
 
-        const freeConversions: Conversion[] = this.run.getResourceConversions().filter(conversion => (conversion.inputs.length == 0));
+        const freeConversions: Conversion[] = this.run.getResourceConversions().filter(conversion => (conversion.isFree()));
         const freeConversionsHTML: HTMLElement[] = freeConversions.map(conversion => this.renderConversion(conversion, true, false));
         inventoryCopy.applyConversions(freeConversions);
 
-        const costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (conversion.inputs.length != 0));
+        const costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (!conversion.isFree()));
         const costlyConversionsHTML: HTMLElement[] = [];
         costlyConversions.forEach((conversion: Conversion) => {
             if (inventoryCopy.canAfford(conversion.inputs) && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)) {
