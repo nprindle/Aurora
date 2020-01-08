@@ -36,6 +36,7 @@ export default class ProductionScreen {
 
         UI.fillHTML(this.html, [
             UI.makePara("Resource Production Report", [`production-screen-label`]),
+            UI.makePara(`Available workers at start of next production cycle: ${this.run.inventory.getAvailableWorkers()}`, [`production-screen-label`]),
             UI.makePara("Resources available at start of next production cycle:", [`production-screen-label`]),
             this.renderInventory(this.run.inventory),
             UI.makePara("Resource generation in next production cycle:", [`production-screen-label`]),
@@ -43,6 +44,7 @@ export default class ProductionScreen {
             UI.makePara("Resource conversion in next production cycle:", [`production-screen-label`]),
             UI.makeDivContaining(costlyConversionsHTML),
             UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
+            UI.makePara(`Unused workers at start of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
             this.renderInventory(inventoryCopy),
             UI.makeButton("Back", () => {GameWindow.showWorldScreen();}, ['production-screen-back-button']),
         ]);
@@ -53,9 +55,13 @@ export default class ProductionScreen {
     }
 
     private renderInventory(inventory: Inventory): HTMLElement {
-        const workerDescription = UI.makePara(`Unoccupied workers: ${inventory.getAvailableWorkers()}`);
         const resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
-        return UI.makeDivContaining([workerDescription, ...resourceDescriptions], ['production-screen-inventory']);
+
+        if (resourceDescriptions.length == 0) {
+            resourceDescriptions.push(UI.makePara("(none)"));
+        }
+
+        return UI.makeDivContaining(resourceDescriptions, ['production-screen-inventory']);
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean, showMoveButtons: boolean) {
