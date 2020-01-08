@@ -40,6 +40,11 @@ export default class TileSidebar {
         } else {
             const tile = this.run.world.getTileAtCoordinates(this.position);
 
+            const housingHTML = UI.makeDiv();
+            if (tile.populationCapacity) {
+                housingHTML.appendChild(UI.makePara(`Population capacity for ${tile.populationCapacity.capacity} ${tile.populationCapacity.species.name}`));
+            }
+
             const projectsHTML = UI.makeDiv();
             if(tile.possibleProjects.length > 0) {
                 projectsHTML.appendChild(UI.makePara("Projects:"));
@@ -59,6 +64,7 @@ export default class TileSidebar {
             UI.fillHTML(this.html, [
                 UI.makePara(tile.getTileName()),
                 UI.makePara(`Coordinates: ${this.position.x}, ${this.position.y}`),
+                housingHTML,
                 projectsHTML,
                 conversionsHTML,
             ]);
