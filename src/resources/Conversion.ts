@@ -20,7 +20,7 @@ export default class Conversion {
         workers?: number,
     ) {
         this.requiredWorkers = workers || 0;
-        if (inputs.length == 0) {
+        if (this.isFree()) {
             this.priority = 0;
         } else {
             this.priority = Conversion.nextNumber;
@@ -40,5 +40,9 @@ export default class Conversion {
         }
 
         return description;
+    }
+
+    isFree(): boolean {
+        return (this.inputs.length == 0) && (!this.requiredWorkers);
     }
 }
