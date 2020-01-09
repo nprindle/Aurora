@@ -1,15 +1,15 @@
 import Resource from "./Resource.js";
 import Cost from "./Cost.js";
 import Conversion from "./Conversion.js";
-import QuantityMap from "../util/QuantityMap.js";
+import Quantities from "../util/Quantities.js";
 import Species from "./Species.js";
 import World from "../world/World.js";
 import { clamp } from "../util/Util.js";
 
 export default class Inventory {
 
-    private resourceQuantities: QuantityMap<Resource> = new QuantityMap<Resource>();
-    private population: QuantityMap<Species> = new QuantityMap<Species>(); // all workers (available + occupied)
+    private resourceQuantities: Quantities<Resource> = new Quantities<Resource>();
+    private populationQuantities: Quantities<Species> = new Quantities<Species>(); // all workers (available + occupied)
     private availableWorkers: number = 0; // workers that have not been occupied for this turn yet
 
     constructor(
@@ -29,13 +29,13 @@ export default class Inventory {
     }
 
     addWorkers(species: Species, quantity: number) {
-        this.population.add(species, quantity);
-        this.population.set(species, clamp(0, this.population.get(species), this.world.getPopulationCapacity(species)));
+        this.populationQuantities.add(species, quantity);
+        this.populationQuantities.set(species, clamp(0, this.populationQuantities.get(species), this.world.getPopulationCapacity(species)));
     }
 
     // makes the entire population pool available as workers (makes all workers unoccupied)
     releaseWorkers() {
-        this.availableWorkers = this.population.getSum();
+        this.availableWorkers = this.populationQuantities.getSum();
     }
 
     occupyWorkers(quantity: number) {
@@ -49,14 +49,14 @@ export default class Inventory {
     }
 
     doPopulationGrowth() {
-        this.population.getKeys().forEach(species => {
-            const growth = Math.floor(species.growthMultiplier * this.population.get(species));
+        this.populationQuantities.positiveQuantityKeys().forEach(species => {
+            const growth = Math.floor(species.growthMultiplier * this.populationQuantities.get(species));
             this.addWorkers(species, growth);
         });
     }
 
     getTotalPopulation(): number {
-        return this.population.getSum();
+        return this.populationQuantities.getSum();
     }
 
     getAvailableWorkers(): number {
@@ -92,7 +92,7 @@ export default class Inventory {
     }
 
     getResourceList(): Resource[] {
-        return this.resourceQuantities.getKeys();
+        return this.resourceQuantities.positiveQuantityKeys();
     }
 
     // returns strings showing the resource type and amount for each resource in the inventory
@@ -102,7 +102,7 @@ export default class Inventory {
 
     // returns strings showing the ammounts of each population type
     getPopulationStrings(): string[] {
-        return this.population.getKeys().map(species => `${this.population.get(species)} ${species.name}`);
+        return this.populationQuantities.positiveQuantityKeys().map(species => `${this.populationQuantities.get(species)} ${species.name}`);
     }
 
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
@@ -119,7 +119,7 @@ export default class Inventory {
     clone(): Inventory {
         const clone = new Inventory(this.world);
         clone.resourceQuantities = this.resourceQuantities.clone();
-        clone.population = this.population.clone();
+        clone.populationQuantities = this.populationQuantities.clone();
         clone.availableWorkers = this.availableWorkers;
         return clone;
     }
