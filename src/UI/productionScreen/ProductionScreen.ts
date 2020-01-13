@@ -43,8 +43,8 @@ export default class ProductionScreen {
             UI.makeDivContaining(freeConversionsHTML),
             UI.makePara("Resource conversion in next production cycle:", [`production-screen-label`]),
             UI.makeDivContaining(costlyConversionsHTML),
+            UI.makePara(`Unused workers at end of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
             UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
-            UI.makePara(`Unused workers at start of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
             this.renderInventory(inventoryCopy),
             UI.makeButton("Back", () => {GameWindow.showWorldScreen();}, ['production-screen-back-button']),
         ]);
