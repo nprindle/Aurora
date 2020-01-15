@@ -1,7 +1,30 @@
 .main-menu {
-    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-menu h1 {
+    font-size: 40pt;
+    margin: 0;
+    padding: 0;
+}
+
+.main-menu-options button {
+    display: flex;
+    flex-direction: column;
 }
 
 .main-menu button {
-    font-size: 24px;
+    font-size: 24pt;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-menu button:hover {
+    font-size: 30pt;
+}
+
+.main-menu button:active {
+    color: gray;
 }

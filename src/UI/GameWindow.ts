@@ -6,6 +6,7 @@ import Cheats from "../util/Cheats.js";
 import Resource from "../resources/Resource.js";
 import TransitionScreen from "./transitionScreen/TransitionScreen.js";
 import ProductionScreen from "./productionScreen/ProductionScreen.js";
+import CreditsScreen from "./menu/CreditsScreen.js";
 
 
 export default class GameWindow {
@@ -16,6 +17,11 @@ export default class GameWindow {
     public static showMainMenu() {
         this.disableCheats();
         UI.fillHTML(this.rootDiv, [MainMenuUI.renderMainMenu()]);
+    }
+
+    public static showCredits() {
+        this.disableCheats();
+        UI.fillHTML(this.rootDiv, [CreditsScreen.render()]);
     }
 
     public static startGame() {
