@@ -48,17 +48,17 @@ export default class TileSidebar {
             const projectsHTML = UI.makeDiv();
             if(tile.possibleProjects.length > 0) {
                 projectsHTML.appendChild(UI.makePara("Projects:"));
-                tile.possibleProjects.forEach((project: TileProject) => {
+                for (const project of tile.possibleProjects) {
                     projectsHTML.appendChild(this.makeProjectHTML(tile, project));
-                });
+                }
             }
 
             const conversionsHTML = UI.makeDiv();
             if(tile.resourceConversions.length > 0) {
                 conversionsHTML.appendChild(UI.makePara("Production:"))
-                tile.resourceConversions.forEach((conversion: Conversion) => {
+                for (const conversion of tile.resourceConversions) {
                     conversionsHTML.appendChild(this.makeConversionHTML(conversion));
-                });
+                }
             }
 
             UI.fillHTML(this.html, [

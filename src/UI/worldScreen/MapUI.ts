@@ -62,9 +62,9 @@ export default class MapUI {
 
     public refreshViewableArea() {
         const tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
-        tilesInViewableArea.forEach((tile: Tile) => {
+        for (const tile of tilesInViewableArea)  {
             this.rerenderTile(tile);
-        });
+        }
     }
 
     private drawImageAtCoordinates(src: string, coordinates: GridCoordinates) {
@@ -119,19 +119,27 @@ export default class MapUI {
 
         // rerender newly visible tiles
         if (right > 0) {
-            this.world.getTilesInRectangle((this.viewPosition.x + this.viewWidth - right), (this.viewPosition.y),  right, this.viewHeight)
-                .forEach((tile: Tile) => this.rerenderTile(tile));
+            const newTiles = this.world.getTilesInRectangle((this.viewPosition.x + this.viewWidth - right), (this.viewPosition.y),  right, this.viewHeight);
+            for (const tile of newTiles) {
+                this.rerenderTile(tile);
+            }
         }
         if (right < 0) {
-            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  right * -1, this.viewHeight)
-                .forEach((tile: Tile) => this.rerenderTile(tile));
+            const newTiles = this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  right * -1, this.viewHeight);
+            for (const tile of newTiles) {
+                this.rerenderTile(tile);
+            }
         }
         if (down > 0) {
-            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y + this.viewHeight - down),  this.viewWidth, down)
-                .forEach((tile: Tile) => this.rerenderTile(tile));
+            const newTiles = this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y + this.viewHeight - down),  this.viewWidth, down);
+            for (const tile of newTiles) {
+                this.rerenderTile(tile);
+            }
         } if (down < 0) {
-            this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  this.viewWidth, down * -1)
-                .forEach((tile: Tile) => this.rerenderTile(tile));
+            const newTiles = this.world.getTilesInRectangle((this.viewPosition.x), (this.viewPosition.y),  this.viewWidth, down * -1);
+            for (const tile of newTiles) {
+                this.rerenderTile(tile);
+            }
         }
     }
 

@@ -25,14 +25,14 @@ export default class ProductionScreen {
 
         const costlyConversions: Conversion[] = this.run.getResourceConversions().filter((conversion: Conversion) => (!conversion.isFree()));
         const costlyConversionsHTML: HTMLElement[] = [];
-        costlyConversions.forEach((conversion: Conversion) => {
+        for (const conversion of costlyConversions) {
             if (inventoryCopy.canAfford(conversion.inputs) && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)) {
                 costlyConversionsHTML.push(this.renderConversion(conversion, true, true));
                 inventoryCopy.applyConversions([conversion]);
             } else {
                 costlyConversionsHTML.push(this.renderConversion(conversion, false, true));
             }
-        });
+        }
 
         UI.fillHTML(this.html, [
             UI.makePara("Resource Production Report", [`production-screen-label`]),

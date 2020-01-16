@@ -49,10 +49,11 @@ export default class Inventory {
     }
 
     doPopulationGrowth() {
-        this.populationQuantities.positiveQuantityKeys().forEach(species => {
+
+        for (const species of this.populationQuantities.positiveQuantityKeys()) {
             const growth = Math.floor(species.growthMultiplier * this.populationQuantities.get(species));
             this.addWorkers(species, growth);
-        });
+        }
     }
 
     getTotalPopulation(): number {
@@ -68,9 +69,9 @@ export default class Inventory {
          * to make sure that the entire set of costs can be afforded together
          */
         const costMap = new Map<Resource, number>();
-        costs.forEach((cost: Cost) => {
+        for (const cost of costs) {
             costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) || 0));
-        });
+        }
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
             const costQuantity = costMap.get(resource)!;
@@ -85,7 +86,9 @@ export default class Inventory {
 
     payCost(costs: Cost[]) {
         if (this.canAfford(costs)) {
-            costs.forEach((cost: Cost) => this.removeResource(cost.resource, cost.quantity));
+            for (const cost of costs) {
+                this.removeResource(cost.resource, cost.quantity);
+            }
         } else {
             throw "Cannot afford to pay cost";
         }
@@ -107,13 +110,15 @@ export default class Inventory {
 
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
     applyConversions(conversions: Conversion[]) {
-        conversions.forEach((conversion: Conversion) => {
+        for (const conversion of conversions){
             if (this.canAfford(conversion.inputs) && this.hasEnoughWorkers(conversion.requiredWorkers) && conversion.enabled) {
                 this.payCost(conversion.inputs);
                 this.occupyWorkers(conversion.requiredWorkers);
-                conversion.outputs.forEach((output: Cost) => this.addResource(output.resource, output.quantity));
+                for (const output of conversion.outputs) {
+                    this.addResource(output.resource, output.quantity);
+                }
             }
-        });
+        }
     }
 
     clone(): Inventory {

@@ -44,7 +44,9 @@ export default class Quantities<T> {
 
     clone(): Quantities<T> {
         const copy = new Quantities<T>();
-        this.positiveQuantityKeys().forEach(key => copy.add(key, this.get(key)));
+        for (const key of this.positiveQuantityKeys()) {
+            copy.add(key, this.get(key));
+        }
         return copy;
     }
 }

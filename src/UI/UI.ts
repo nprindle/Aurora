@@ -18,7 +18,9 @@ export default class UI{
     // makes a div containing the given HTML elements
     static makeDivContaining(contents: HTMLElement[], classes?: string[]) {
         const div = this.makeDiv(classes);
-        contents.forEach((element: HTMLElement) => div.appendChild(element));
+        for (const element of contents) {
+            div.appendChild(element);
+        }
         return div;
     }
 
@@ -80,6 +82,8 @@ export default class UI{
      // clears the parent (usually a div) and fills it with new contents
     static fillHTML(parent: HTMLElement, contents: HTMLElement[]) {
         parent.innerHTML = ''; // clear the parent
-        contents.forEach(element => parent.appendChild(element)); // add elements to the parent
+        for (const element of contents) {
+            parent.appendChild(element); // add elements to the parent
+        }
     }
 }
