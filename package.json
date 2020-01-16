@@ -17,7 +17,7 @@
     "build": "npm run clean && npx tsc && echo Build completed",
     "start": "npx live-server",
     "build-watch": "npx tsc -w",
-    "minify": "npx webpack"
+    "minify": "npx webpack --config ci/webpack.config.js"
   },
   "homepage": "https://github.com/GRarer/Aurora#readme",
   "dependencies": {
