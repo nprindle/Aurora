@@ -28,3 +28,34 @@
 .main-menu button:active {
     color: gray;
 }
+
+.credits h1 {
+    font-size: 24pt;
+    margin-bottom: 10pt;
+}
+
+.credits-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.credits-names-column {
+    margin-right: 24pt;
+}
+
+.credits-name {
+    font-size: 20pt;
+    margin-top: 0;
+    margin-bottom: 5pt;
+}
+
+.credits-roles {
+    font-size: 20pt;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.credits button {
+    margin-top: 10pt;
+    font-size: 20pt;
+}
