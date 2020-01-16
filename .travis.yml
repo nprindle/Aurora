@@ -10,7 +10,7 @@ script:
 - npm run build
 
 before_deploy:
-- "scripts/before_deploy/make_dist.sh deploy_dist"
+- "ci/scripts/before_deploy/make_dist.sh deploy_dist"
 
 deploy:
   provider: pages
