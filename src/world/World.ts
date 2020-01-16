@@ -29,9 +29,9 @@ export default class World {
         }
 
         // place the tiles specified in the parameters
-        params.nonrandomTiles.forEach((tile: Tile) => {
+        for (const tile of params.nonrandomTiles) {
             this.placeTile(tile);
-        });
+        }
 
         // place random mountains
         const mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
@@ -62,10 +62,12 @@ export default class World {
         const tiles: Tile[] = [];
 
         const rowsInRange = this.grid.slice(topY, topY + height);
-        rowsInRange.forEach((row: Tile[]) => {
+        for (const row of rowsInRange) {
             const tilesInRange = row.slice(leftX, leftX + width);
-            tilesInRange.forEach((tile: Tile) => tiles.push(tile));
-        });
+            for (const tile of tilesInRange) {
+                tiles.push(tile);
+            }
+        }
 
         return tiles;
     }
@@ -81,11 +83,11 @@ export default class World {
     getPopulationCapacity(species: Species): number {
         let capacity = 0;
 
-        this.getTiles().forEach(tile => {
+        for (const tile of this.getTiles()) {
             if (tile.populationCapacity && tile.populationCapacity.species == species) {
                 capacity = capacity + tile.populationCapacity.capacity;
             }
-        });
+        }
 
         return capacity;
     }

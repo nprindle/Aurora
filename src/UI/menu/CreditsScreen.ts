@@ -13,8 +13,6 @@ const credits: CreditsEntry[] = [
 
 export default class CreditsScreen {
     static render(): HTMLElement {
-
-        console.log(credits);
         const nameParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.name, ["credits-name"]));
         const roleParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.roles.join(", "), ["credits-roles"]));
 
