@@ -6,8 +6,9 @@ export default class MainMenuUI {
         return UI.makeDivContaining([
             UI.makeHeader("Aurora", 1),
             UI.makeDivContaining([
-                UI.makeButton("Start", () => GameWindow.startGame())
-            ]),
+                UI.makeButton("start_game", () => GameWindow.startGame()),
+                UI.makeButton("display_credits", () => GameWindow.showCredits()),
+            ], ["main-menu-options"]),
         ], ["main-menu"]);
     } 
 }
