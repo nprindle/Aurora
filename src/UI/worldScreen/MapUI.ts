@@ -12,15 +12,12 @@ export default class MapUI {
 
     private world: World;
 
-    private worldCanvas: HTMLCanvasElement; // canvas containing the whole world (not shown directly to the user)
-    private viewCanvas: HTMLCanvasElement; // the canvas we actually show, containing the currently viewed subsection of the world
-
+    private canvas: HTMLCanvasElement; // an html canvas that we draw tiles onto
     private parentScreen: WorldScreen; // the WorldScreen instance that contains this MapUI
 
     private viewWidth: number = 12; // width of viewable area in tiles
     private viewHeight: number = 8; // height of viewable area in tiles
     
-
     private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
@@ -28,36 +25,17 @@ export default class MapUI {
         this.world = world;
         this.parentScreen = parent;
 
-        this.worldCanvas = UI.makeCanvas(this.world.width * MapUI.pixelsPerTile, this.world.height * MapUI.pixelsPerTile);
-        const worldContext = this.worldCanvas.getContext('2d')!;
-
-        // we fill the canvas with placeholder color so that it will be obvious when an area fails to render
-        worldContext.beginPath();
-        worldContext.rect(0, 0, this.worldCanvas.width, this.worldCanvas.height);
-        worldContext.fillStyle = "black";
-        worldContext.fill();
-
-        this.viewCanvas = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ['map-canvas']);
+        this.canvas = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ['map-canvas']);
 
         // attach click listener for tile selection
-        this.viewCanvas.addEventListener('click', ev => this.handleClick(ev));
+        this.canvas.addEventListener('click', ev => this.handleClick(ev));
 
         // render the starting area
         this.refreshViewableArea();
     }
 
     getViewCanvas(): HTMLCanvasElement {
-        return this.viewCanvas;
-    }
-
-    // copies the view area from the world canvas to the view canvas
-    private updateViewCanvas() {
-        const context = this.viewCanvas.getContext('2d')!;
-        const pixelWidth = this.viewWidth * MapUI.pixelsPerTile;
-        const pixelHeight = this.viewHeight * MapUI.pixelsPerTile;
-        const pixelPositionX = this.viewPosition.x * MapUI.pixelsPerTile;
-        const pixelPositionY = this.viewPosition.y * MapUI.pixelsPerTile;
-        context.drawImage(this.worldCanvas, pixelPositionX, pixelPositionY, pixelWidth, pixelHeight, 0, 0, pixelWidth, pixelHeight);
+        return this.canvas;
     }
 
     public refreshViewableArea() {
@@ -67,27 +45,38 @@ export default class MapUI {
         }
     }
 
-    private drawImageAtCoordinates(src: string, coordinates: GridCoordinates) {
-        const context = this.worldCanvas.getContext('2d')!;
+    private drawSquareAtCoordinates(src: string, coordinates: GridCoordinates) {
+        const context = this.canvas.getContext('2d')!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
+
         const image = new Image();
-        image.onload = () => {
-            context.drawImage(image, coordinates.x * MapUI.pixelsPerTile, coordinates.y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
-            this.updateViewCanvas();
+
+        const x = coordinates.x - this.viewPosition.x;
+        const y = coordinates.y - this.viewPosition.y;
+
+        if ((x < 0) || (y<0) || (x >= this.viewWidth) || (y >= this.viewHeight)) {
+            return; // don't attempt to draw tiles outside the viewable area
         }
-        image.src = src;
+
+        image.onload = () => {
+            context.drawImage(image, x * MapUI.pixelsPerTile, y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
+        }
+        image.src = src; // setting this starts the image-loading process, which then causes image.onload() to execute
     }
 
-    // redraws the given tile at its selected location
+    // redraws the given tile at that tile's position
     private rerenderTile(tile: Tile) {
-        this.drawImageAtCoordinates(tile.getImgSrc(), tile.position);
-
+        this.drawSquareAtCoordinates(tile.getImgSrc(), tile.position);
         if (tile.position === this.highlightedCoordinates) {
-            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position);
+            this.drawSquareAtCoordinates("assets/ui/highlight.png", tile.position);
         }
     }
 
     private selectTile(tile: Tile | null) {
+        if (tile && tile.position === this.highlightedCoordinates) {
+            return; // ignore selecting a tile that is already selected
+        }
+
         // deselect previous highlight
         if (this.highlightedCoordinates) {
             const prevSelection = this.world.getTileAtCoordinates(this.highlightedCoordinates);
@@ -97,7 +86,7 @@ export default class MapUI {
 
         // highlight new tile
         if (tile) {
-            this.drawImageAtCoordinates("assets/ui/highlight.png", tile.position);
+            this.drawSquareAtCoordinates("assets/ui/highlight.png", tile.position);
             this.highlightedCoordinates = tile.position;
         } else {
             this.highlightedCoordinates = null;
@@ -109,13 +98,19 @@ export default class MapUI {
     private moveViewArea(right: number, down: number) {
         const oldX = this.viewPosition.x;
         const oldY = this.viewPosition.y;
-
+        
         const newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
         const newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
         this.viewPosition = new GridCoordinates(newX, newY);
 
         right = this.viewPosition.x - oldX;
         down = this.viewPosition.y - oldY;
+
+        // move existing canvas pixels
+        const translateX = right * MapUI.pixelsPerTile * -1;
+        const translateY = down * MapUI.pixelsPerTile * -1;
+        const context = this.canvas.getContext('2d')!;
+        context.drawImage(this.canvas, translateX, translateY);
 
         // rerender newly visible tiles
         if (right > 0) {
@@ -144,8 +139,8 @@ export default class MapUI {
     }
 
     handleClick(ev: MouseEvent) {
-        const x = Math.floor((ev.pageX - this.viewCanvas.offsetLeft) * (this.viewWidth / this.viewCanvas.clientWidth)) + this.viewPosition.x;
-        const y = Math.floor((ev.pageY - this.viewCanvas.offsetTop) * (this.viewHeight / this.viewCanvas.clientHeight)) + this.viewPosition.y;
+        const x = Math.floor((ev.pageX - this.canvas.offsetLeft) * (this.viewWidth / this.canvas.clientWidth)) + this.viewPosition.x;
+        const y = Math.floor((ev.pageY - this.canvas.offsetTop) * (this.viewHeight / this.canvas.clientHeight)) + this.viewPosition.y;
         
         const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);
