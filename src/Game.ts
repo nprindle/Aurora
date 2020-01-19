@@ -1,11 +1,9 @@
 import World from "./world/World.js";
 import Inventory from "./resources/Inventory.js";
-import Resource from "./resources/Resource.js";
 import Tile from "./world/Tile.js";
 import { Arrays } from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
-import Species from "./resources/Species.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
@@ -16,9 +14,6 @@ export default class Game {
     constructor() {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory(this.world);
-        // TODO set correct starting resources
-        this.inventory.addWorkers(Species.Human, 100);
-        this.inventory.releaseWorkers();
     }
 
     // returns all available resource conversions in the order in which they will be applied
