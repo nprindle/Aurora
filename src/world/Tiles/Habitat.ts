@@ -19,7 +19,7 @@ export default class Habitat extends Tile {
         return "assets/tiles/habitat.png";
     }
 
-    static readonly tileName: string = "Habitat Dome"
+    static readonly tileName: string = "Habitat Dome";
     getTileName(): string {
         return Habitat.tileName;
     }
