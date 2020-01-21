@@ -7,6 +7,7 @@ import Resource from "../resources/Resource.js";
 import TransitionScreen from "./transitionScreen/TransitionScreen.js";
 import ProductionScreen from "./productionScreen/ProductionScreen.js";
 import CreditsScreen from "./menu/CreditsScreen.js";
+import WorldScreenHeader from "./worldScreen/WorldScreenHeader.js";
 
 
 export default class GameWindow {
@@ -25,6 +26,7 @@ export default class GameWindow {
     }
 
     public static startGame() {
+        WorldScreenHeader.resetQuestDescriptionHistory();
         this.currentRun = new Game();
         this.showWorldScreen();
     }

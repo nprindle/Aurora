@@ -2,6 +2,19 @@
     display: flex;
     flex-direction: row;
     margin: 0px;
+    min-height: 60px;
+}
+
+.world-screen-quest-description {
+    font-size: 16px;
+    padding-right: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.quest-description-emphasis {
+    color: rgb(64, 128, 64);
+    font-weight: bold;
 }
 
 .world-screen-hbox {
