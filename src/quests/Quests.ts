@@ -4,9 +4,11 @@ import Resource from "../resources/Resource.js";
 import { MinResourcePredicate, MinTilePredicate } from "../predicates/WorldPredicates.js";
 import Habitat from "../world/Tiles/Habitat.js";
 import SolarPanels from "../world/Tiles/SolarArray.js";
+import Lander from "../world/Tiles/Lander.js";
 
 export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
-    `Deploy shelter for the colonists\n(Hint: select the Landing Pod)`,
+    "Deploy shelter for the colonists",
+    `select the ${Lander.tileName}`,
     [
         new QuestPath(
             new MinTilePredicate(Habitat, 1),
@@ -16,7 +18,8 @@ export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
 );
 
 export const TutorialQuestGetEnergy: QuestStage = new QuestStage(
-    `Build up at least 100 units of ${Resource.Energy.name}\n(Hint: the ${SolarPanels.tileName} can produce a fixed amount of energy per turn)`,
+    `Build up at least 100 units of ${Resource.Energy.name}`,
+    `the ${SolarPanels.tileName} produces ${Resource.Energy.name} each turn`,
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Energy, 100),
@@ -27,6 +30,7 @@ export const TutorialQuestGetEnergy: QuestStage = new QuestStage(
 
 export const TutorialQuestGetOre: QuestStage = new QuestStage(
     `Acquire ${Resource.Metal.name}`,
+    undefined,
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Metal, 1),
@@ -37,5 +41,6 @@ export const TutorialQuestGetOre: QuestStage = new QuestStage(
 
 export const UnwinnableQuestStage: QuestStage = new QuestStage(
     "[no current objective]",
+    undefined,
     [],
 );

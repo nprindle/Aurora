@@ -20,8 +20,12 @@ export default class Game {
         this.questStage = TutorialQuestUnpackLander;
     }
 
-    getCurrentQuestText(): string {
+    getCurrentQuestDescription(): string {
         return this.questStage.description;
+    }
+
+    getCurrentQuestHint(): string | undefined {
+        return this.questStage.hint
     }
 
     // returns all available resource conversions in the order in which they will be applied

@@ -25,14 +25,17 @@ export default class WorldScreenHeader {
         const quitButton = UI.makeButton("Quit Game", () => {GameWindow.showMainMenu();});
         const transitionButton = UI.makeButton("Next Turn", () => {GameWindow.transitionToNextTurn();});
         const productionScreenButton = UI.makeButton("Manage Production", () => {GameWindow.showProductionScreen()});
-        const questText = this.run.getCurrentQuestText();
-        let questDescription = UI.makePara(`Objective: ${questText}`, ["world-screen-quest-description"]);
+        
+        const questHint = this.run.getCurrentQuestHint();
+        const questDescription = this.run.getCurrentQuestDescription();
+        const questText = questHint? `${questDescription} (hint: ${questHint})` : questDescription;
+        let questHTML = UI.makePara(`Objective: ${questText}`, ["world-screen-quest-description"]);
 
         // show message after quest completion
         const prevQuestDescription = WorldScreenHeader.prevQuestDescription;
-        if (questText !== prevQuestDescription && prevQuestDescription !== "") {
+        if (questDescription !== prevQuestDescription && prevQuestDescription !== "") {
             console.log("set bold");
-            questDescription = UI.makePara(`Completed: ${prevQuestDescription}`, ["world-screen-quest-description", "quest-description-emphasis"]);
+            questHTML = UI.makePara(`Completed: ${prevQuestDescription}`, ["world-screen-quest-description", "quest-description-emphasis"]);
 
             // reset description after time has passed
             setTimeout(() => {
@@ -40,13 +43,13 @@ export default class WorldScreenHeader {
                 this.refresh();
             }, 1500);
         }
-        WorldScreenHeader.prevQuestDescription = questText;
+        WorldScreenHeader.prevQuestDescription = questDescription;
 
         UI.fillHTML(this.html, [
             quitButton,
             productionScreenButton,
             transitionButton,
-            questDescription,
+            questHTML,
         ]);
     }
 
