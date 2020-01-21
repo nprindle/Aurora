@@ -1,4 +1,4 @@
-import { QuestStage, QuestPath } from "./questStage.js";
+import { QuestStage, QuestPath } from "./QuestStage.js";
 import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
 import { MinResourcePredicate, MinTilePredicate } from "../predicates/WorldPredicates.js";
