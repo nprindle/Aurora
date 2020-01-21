@@ -103,6 +103,7 @@ export default class TileSidebar {
 
     private doProject(project: TileProject, tile: Tile) {
         project.doAction(tile.position, this.run);
+        this.run.updateQuestState(); // effects of project may cause a quest objective to be completed
         this.parentScreen.refreshComponents();
     }
 }

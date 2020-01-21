@@ -16,9 +16,11 @@ export default class WorldScreenHeader {
         const quitButton = UI.makeButton("Quit Game", () => {GameWindow.showMainMenu();});
         const transitionButton = UI.makeButton("Next Turn", () => {GameWindow.transitionToNextTurn();});
         const productionScreenButton = UI.makeButton("Manage Production", () => {GameWindow.showProductionScreen()});
+        const questDescription = UI.makePara(`Objective: ${this.run.getCurrentQuestText()}`);
 
         UI.fillHTML(this.html, [
             quitButton,
+            questDescription,
             productionScreenButton,
             transitionButton,
         ]);
