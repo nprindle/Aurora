@@ -28,3 +28,9 @@ import Housing from "../resources/Housing.js";
 
     abstract getImgSrc(): string; // returns the path to the map texture for this tile type
  }
+
+ /* used by predicates to allow statically accessing the name of a Tile subclass
+  * Tile subclasses that are used by pedicates in this way
+  * will need to declare a static readonly tileName string
+  */
+ export type NamedTileType = typeof Tile & { readonly tileName: string };
