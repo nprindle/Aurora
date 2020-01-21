@@ -3,9 +3,10 @@ import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
 import { MinResourcePredicate, MinTilePredicate } from "../predicates/WorldPredicates.js";
 import Habitat from "../world/Tiles/Habitat.js";
+import SolarPanels from "../world/Tiles/SolarArray.js";
 
 export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
-    `Deploy shelter for the colonists (Hint: select the Landing Pod)`,
+    `Deploy shelter for the colonists\n(Hint: select the Landing Pod)`,
     [
         new QuestPath(
             new MinTilePredicate(Habitat, 1),
@@ -15,7 +16,7 @@ export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
 );
 
 export const TutorialQuestGetEnergy: QuestStage = new QuestStage(
-    `Build up at least 100 units of ${Resource.Energy.name} (Hint: solar panels produce a fixed amount of energy per turn)`,
+    `Build up at least 100 units of ${Resource.Energy.name}\n(Hint: the ${SolarPanels.tileName} can produce a fixed amount of energy per turn)`,
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Energy, 100),
