@@ -28,17 +28,17 @@ export default class World {
             }
         }
 
-        // place the tiles specified in the parameters
-        for (const tile of params.nonrandomTiles) {
-            this.placeTile(tile);
-        }
-
         // place random mountains
         const mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
         for(let i = 0; i < mountainNumber; i++) {
             const wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             const position = Random.fromArray(wastelandTiles).position;
             this.placeTile(new Mountain(position));
+        }
+
+        // place the tiles specified in the parameters
+        for (const tile of params.nonrandomTiles) {
+            this.placeTile(tile);
         }
     }
 
