@@ -8,12 +8,6 @@ export default class WorldScreenHeader {
     /* This is used to determine when to apply "emphasis" css to newly-advanced quest objectives
      * It's tracked statically to persist when we leave the World Screen and then come back to a new world screen instance
      */
-    private static prevQuestDescription: string = "";
-
-    // this should be called at the start of each run to reset the static prevQuestDescription
-    static resetQuestDescriptionHistory() {
-        WorldScreenHeader.prevQuestDescription = "";
-    }
 
     constructor(run: Game) {
         this.html = UI.makeDiv(['world-screen-header']);
@@ -32,18 +26,16 @@ export default class WorldScreenHeader {
         let questHTML = UI.makePara(`Objective: ${questText}`, ["world-screen-quest-description"]);
 
         // show message after quest completion
-        const prevQuestDescription = WorldScreenHeader.prevQuestDescription;
-        if (questDescription !== prevQuestDescription && prevQuestDescription !== "") {
-            console.log("set bold");
+        const prevQuestDescription = this.run.getPreviousQuestDescription();
+        if (!this.run.questCompletionShown) {
             questHTML = UI.makePara(`Completed: ${prevQuestDescription}`, ["world-screen-quest-description", "quest-description-emphasis"]);
 
             // reset description after time has passed
             setTimeout(() => {
-                console.log("remove bold");
                 this.refresh();
             }, 1500);
         }
-        WorldScreenHeader.prevQuestDescription = questDescription;
+        this.run.questCompletionShown = true;
 
         UI.fillHTML(this.html, [
             quitButton,

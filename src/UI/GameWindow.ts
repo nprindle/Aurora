@@ -26,7 +26,6 @@ export default class GameWindow {
     }
 
     public static startGame() {
-        WorldScreenHeader.resetQuestDescriptionHistory();
         this.currentRun = new Game();
         this.showWorldScreen();
     }

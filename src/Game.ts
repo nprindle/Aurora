@@ -14,6 +14,9 @@ export default class Game {
     private questStage: QuestStage;
     private turnNumber: number = 1;
 
+    private prevQuestDescription = "";
+    public questCompletionShown: boolean = true;
+
     constructor() {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory(this.world);
@@ -28,6 +31,10 @@ export default class Game {
         return this.questStage.hint
     }
 
+    getPreviousQuestDescription(): string {
+        return this.prevQuestDescription;
+    }
+
     // returns all available resource conversions in the order in which they will be applied
     getResourceConversions() {
         const allConversions: Conversion[] = Arrays.flatten(this.world.getTiles().map((tile: Tile) => tile.resourceConversions));
@@ -37,7 +44,12 @@ export default class Game {
     }
 
     updateQuestState() {
-        this.questStage = this.questStage.updatedStage(this);
+        const nextStage = this.questStage.updatedStage(this);
+        if (nextStage != this.questStage) {
+            this.prevQuestDescription = this.questStage.description;
+            this.questCompletionShown = false;
+            this.questStage = nextStage;
+        }
     }
 
     // this is called at the end of each turn
