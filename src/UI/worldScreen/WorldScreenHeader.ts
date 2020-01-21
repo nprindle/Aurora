@@ -28,7 +28,7 @@ export default class WorldScreenHeader {
         
         const questHint = this.run.getCurrentQuestHint();
         const questDescription = this.run.getCurrentQuestDescription();
-        const questText = questHint? `${questDescription} (hint: ${questHint})` : questDescription;
+        const questText = questHint? `${questDescription}\n(hint: ${questHint})` : questDescription;
         let questHTML = UI.makePara(`Objective: ${questText}`, ["world-screen-quest-description"]);
 
         // show message after quest completion
