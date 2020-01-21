@@ -12,6 +12,7 @@ export class QuestPath {
 export class QuestStage {
     constructor(
         readonly description: string,
+        readonly hint: string | undefined,
         readonly paths: QuestPath[],
         readonly isWinState = false,
     ) {}
