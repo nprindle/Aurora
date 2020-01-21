@@ -81,7 +81,7 @@ export default class Inventory {
     }
 
     hasEnoughWorkers(requiredWorkers: number): boolean {
-        return this.availableWorkers > requiredWorkers;
+        return this.availableWorkers >= requiredWorkers;
     }
 
     payCost(costs: Cost[]) {
