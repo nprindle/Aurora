@@ -1,7 +1,7 @@
 import TilePredicate from "./TilePredicate.js";
 import GridCoordinates from "../world/GridCoordinates.js";
 import Game from "../Game.js";
-import Tile from "../world/Tile.js";
+import Tile, { NamedTileType } from "../world/Tile.js";
 
 
 
@@ -11,7 +11,7 @@ import Tile from "../world/Tile.js";
 export class TileWithinDistancePredicate extends TilePredicate {
     constructor(
         public radius: number,
-        public targetType: typeof Tile & { readonly tileName: string },
+        public targetType: NamedTileType,
     ) {
         super();
     }

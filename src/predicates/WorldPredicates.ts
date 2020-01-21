@@ -1,8 +1,7 @@
 import WorldPredicate from "./WorldPredicate.js";
 import Game from "../Game.js";
-import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
-import Tile from "../world/Tile.js";
+import Tile, { NamedTileType } from "../world/Tile.js";
 
 export class MinResourcePredicate extends WorldPredicate {
     constructor(
@@ -22,7 +21,7 @@ export class MinResourcePredicate extends WorldPredicate {
 
 export class MinTilePredicate extends WorldPredicate {
     constructor(
-        private tileType: typeof Tile & { readonly tileName: string },
+        private tileType: NamedTileType,
         private minQuantity: number,
     ){
         super();
