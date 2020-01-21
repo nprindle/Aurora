@@ -4,16 +4,24 @@ import Tile from "./world/Tile.js";
 import { Arrays } from "./util/Arrays.js";
 import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
+import { QuestStage } from "./quests/questStage.js";
+import { TutorialQuestUnpackLander } from "./quests/Quests.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
     readonly world: World;
     readonly inventory: Inventory;
+    private questStage: QuestStage;
     private turnNumber: number = 1;
 
     constructor() {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
         this.inventory = new Inventory(this.world);
+        this.questStage = TutorialQuestUnpackLander;
+    }
+
+    getCurrentQuestText(): string {
+        return this.questStage.description;
     }
 
     // returns all available resource conversions in the order in which they will be applied
@@ -22,6 +30,10 @@ export default class Game {
         // sort by priority number
         allConversions.sort((a: Conversion, b: Conversion) => (a.priority - b.priority));
         return allConversions;
+    }
+
+    updateQuestState() {
+        this.questStage = this.questStage.updatedStage(this);
     }
 
     // this is called at the end of each turn
@@ -33,6 +45,8 @@ export default class Game {
         this.inventory.doPopulationGrowth();
 
         this.turnNumber++;
+
+        this.updateQuestState();
     }
 
     // moves a resource conversion up by 1 in the production order
