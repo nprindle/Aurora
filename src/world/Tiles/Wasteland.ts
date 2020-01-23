@@ -19,7 +19,7 @@ export default class Wasteland extends Tile {
     }
 
     possibleProjects: TileProject[] = [
-        new TileProject("Construct habitat dome", 
+        new TileProject("Construct habitat dome",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Habitat(position));
             },
@@ -27,7 +27,7 @@ export default class Wasteland extends Tile {
             [new TileWithinDistancePredicate(1, Habitat)],
         ),
 
-        new TileProject("Construct ore processing center", 
+        new TileProject("Construct ore processing center",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new MiningFacility(position));
             },
@@ -35,7 +35,7 @@ export default class Wasteland extends Tile {
             [new TileWithinDistancePredicate(5, Mountain)]
         ),
 
-        new TileProject("Construct photovoltaic array", 
+        new TileProject("Construct photovoltaic array",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new SolarPanels(position));
             },

@@ -18,7 +18,7 @@ export class TileWithinDistancePredicate extends TilePredicate {
 
     evaluate(run: Game, position: GridCoordinates): boolean {
         const tilesInDistance: Tile[] = run.world.getTilesInCircle(position, this.radius);
-        
+
         const matchingTilesInDistance = tilesInDistance.filter(tile => (tile instanceof this.targetType));
         return (matchingTilesInDistance.length > 0);
     }

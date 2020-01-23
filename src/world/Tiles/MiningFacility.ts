@@ -28,7 +28,7 @@ export default class MiningFacility extends Tile {
         return "assets/tiles/mining_facility.png";
     }
 
-    static readonly tileName: string = "Ore Processing Center";  
+    static readonly tileName: string = "Ore Processing Center";
     getTileName(): string {
         return MiningFacility.tileName;
     }

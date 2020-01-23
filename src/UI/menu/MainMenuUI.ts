@@ -10,5 +10,5 @@ export default class MainMenuUI {
                 UI.makeButton("display_credits", () => GameWindow.showCredits()),
             ], ["main-menu-options"]),
         ], ["main-menu"]);
-    } 
+    }
 }
