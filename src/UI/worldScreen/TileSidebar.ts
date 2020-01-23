@@ -91,7 +91,7 @@ export default class TileSidebar {
         if (project.completionRequirements.length > 0) {
             const requirementsString = project.completionRequirements.map((req: TilePredicate) => `- ${req.toString()}\n`).join('');
             projectHTML.appendChild(UI.makePara(`Requirements:\n${requirementsString}`));
-        }               
+        }
 
 
         return projectHTML;

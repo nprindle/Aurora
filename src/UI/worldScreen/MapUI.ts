@@ -17,7 +17,7 @@ export default class MapUI {
 
     private viewWidth: number = 12; // width of viewable area in tiles
     private viewHeight: number = 8; // height of viewable area in tiles
-    
+
     private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
@@ -98,7 +98,7 @@ export default class MapUI {
     private moveViewArea(right: number, down: number) {
         const oldX = this.viewPosition.x;
         const oldY = this.viewPosition.y;
-        
+
         const newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
         const newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
         this.viewPosition = new GridCoordinates(newX, newY);
@@ -141,7 +141,7 @@ export default class MapUI {
     handleClick(ev: MouseEvent) {
         const x = Math.floor((ev.pageX - this.canvas.offsetLeft) * (this.viewWidth / this.canvas.clientWidth)) + this.viewPosition.x;
         const y = Math.floor((ev.pageY - this.canvas.offsetTop) * (this.viewHeight / this.canvas.clientHeight)) + this.viewPosition.y;
-        
+
         const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);
     }

@@ -19,7 +19,7 @@ export default class WorldScreenHeader {
         const quitButton = UI.makeButton("Quit Game", () => {GameWindow.showMainMenu();});
         const transitionButton = UI.makeButton("Next Turn", () => {GameWindow.transitionToNextTurn();});
         const productionScreenButton = UI.makeButton("Manage Production", () => {GameWindow.showProductionScreen()});
-        
+
         const questHint = this.run.getCurrentQuestHint();
         const questDescription = this.run.getCurrentQuestDescription();
         const questText = questHint? `${questDescription}\n(hint: ${questHint})` : questDescription;

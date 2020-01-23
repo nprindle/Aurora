@@ -88,7 +88,7 @@ export default class Game {
             return; // can't move into priority 0 because only conversions with no inputs should be priority 0
         }
         [conversion.priority, conversionAbove.priority] = [conversionAbove.priority, conversion.priority];
-        
+
     }
 
     // moves a resource conversion down by 1 in the production order
@@ -96,7 +96,7 @@ export default class Game {
         if (conversion.priority == 0) {
             return; // priority #0 is for the free conversions (conversions with no inputs), which should not be moved to any other priority
         }
-        
+
         const conversionsList = this.getResourceConversions();
         const index = conversionsList.indexOf(conversion);
 

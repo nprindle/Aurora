@@ -35,11 +35,11 @@ export default class GameWindow {
         UI.fillHTML(this.rootDiv, [worldScreen.getHTML()]);
 
         this.enableCheats(worldScreen); // cheats are available when on the world screen
-        
+
         // Attach keyboard input listener
         document.onkeydown = (e: KeyboardEvent) => {
             worldScreen.handleKeyDown(e);
-        };  
+        };
     }
 
     public static showProductionScreen() {
@@ -53,7 +53,7 @@ export default class GameWindow {
         this.disableCheats();
         const transitionScreen = new TransitionScreen();
         UI.fillHTML(this.rootDiv, [transitionScreen.getHTML()]);
-        
+
         this.currentRun.completeTurn(); // update game state
 
         transitionScreen.revealButton();

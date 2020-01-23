@@ -4,7 +4,7 @@ import GameWindow from "../GameWindow.js";
 // "loading" screen shown between turns
 export default class TransitionScreen {
     private html: HTMLElement;
-    
+
     constructor() {
         this.html = UI.makeDiv();
 
