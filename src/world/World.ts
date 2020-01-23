@@ -8,7 +8,7 @@ import WorldGenerationParameters from "./WorldGenerationParameters.js";
 import Species from "../resources/Species.js";
 
 export default class World {
-    
+
     width: number;
     height: number;
 

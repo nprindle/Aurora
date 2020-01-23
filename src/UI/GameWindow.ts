@@ -2,12 +2,13 @@ import MainMenuUI from "./menu/MainMenuUI.js";
 import UI from "./UI.js";
 import WorldScreen from "./worldScreen/WorldScreen.js";
 import Game from "../Game.js";
-import Cheats from "../util/Cheats.js";
+import { disableCheats, enableCheats } from "../util/Cheats.js";
 import Resource from "../resources/Resource.js";
 import TransitionScreen from "./transitionScreen/TransitionScreen.js";
 import ProductionScreen from "./productionScreen/ProductionScreen.js";
 import CreditsScreen from "./menu/CreditsScreen.js";
 import WorldScreenHeader from "./worldScreen/WorldScreenHeader.js";
+import Species from "../resources/Species.js";
 
 
 export default class GameWindow {
@@ -16,12 +17,12 @@ export default class GameWindow {
     private static currentRun: Game;
 
     public static showMainMenu() {
-        this.disableCheats();
+        disableCheats();
         UI.fillHTML(this.rootDiv, [MainMenuUI.renderMainMenu()]);
     }
 
     public static showCredits() {
-        this.disableCheats();
+        disableCheats();
         UI.fillHTML(this.rootDiv, [CreditsScreen.render()]);
     }
 
@@ -34,7 +35,7 @@ export default class GameWindow {
         const worldScreen = new WorldScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [worldScreen.getHTML()]);
 
-        this.enableCheats(worldScreen); // cheats are available when on the world screen
+        enableCheats(this.currentRun, worldScreen); // cheats are available when on the world screen
 
         // Attach keyboard input listener
         document.onkeydown = (e: KeyboardEvent) => {
@@ -43,32 +44,19 @@ export default class GameWindow {
     }
 
     public static showProductionScreen() {
-        this.disableCheats();
+        disableCheats();
 
         const productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [productionScreen.getHTML()]);
     }
 
     public static transitionToNextTurn() {
-        this.disableCheats();
+        disableCheats();
         const transitionScreen = new TransitionScreen();
         UI.fillHTML(this.rootDiv, [transitionScreen.getHTML()]);
 
         this.currentRun.completeTurn(); // update game state
 
         transitionScreen.revealButton();
-    }
-
-    // makes a 'cheats' object available from the bowser console when on the world screen
-    private static enableCheats(worldScreen: WorldScreen) {
-        (window as any).cheats = new Cheats(this.currentRun, worldScreen);
-        // the resource class also needs to be available globally so that resource types are selectable in cheats in the console
-        (window as any).Resources = Resource;
-    }
-
-    // removes cheats and associated attributes from globbal scope
-    private static disableCheats() {
-        (window as any).cheats = undefined;
-        (window as any).Resources = undefined;
     }
 }
