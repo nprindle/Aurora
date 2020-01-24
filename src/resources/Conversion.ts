@@ -1,13 +1,13 @@
 import Cost from "./Cost.js";
 import { NonEmptyArray } from "../util/Arrays.js";
 
-// a conversion from input resources to output resources that a tile can perform between turns if the conversion's input respurces are available
+// a conversion from input resources to output resources that a tile can perform between turns if the conversion's input resources are available
 export default class Conversion {
 
     private static nextNumber = 1; // the initial priority of the next non-free conversion that will be created
 
     /* conversions are sorted by priority to determine the order in which conversions are applied
-     * lower numbered conversions are applied first; conversions with no imputs are priority 0
+     * lower numbered conversions are applied first; conversions with no inputs are priority 0
      * because they should always be applied before any other conversions
      */
     public priority: number;
