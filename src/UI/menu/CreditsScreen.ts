@@ -8,7 +8,8 @@ class CreditsEntry {
 
 const credits: CreditsEntry[] = [
     new CreditsEntry("Grace Rarer", ["Team Lead", "Gameplay Programmer"]),
-    new CreditsEntry("Prindle", ["Tooling Programmer"]), // <3
+    new CreditsEntry("Prindle", ["DevOps"]), // <3
+    new CreditsEntry("May Lawver", ["Programmer (HTML Composition Code)"]),
 ]
 
 export default class CreditsScreen {
