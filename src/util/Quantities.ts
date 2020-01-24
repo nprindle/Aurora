@@ -1,9 +1,9 @@
 /* Counts positive quantities of instances of some type.
- * e.g. the ammounts of each resource in the inventory
+ * e.g. the amounts of each resource in the inventory
  *
  * Quantities that reach 0 are removed, so having 0 of something
  * and not having the thing at all are the same thing.
- * Setting negative quantities is dissallowed and will result in a runtime exception.
+ * Setting negative quantities is disallowed and will result in a runtime exception.
  */
 export default class Quantities<T> {
     private map: Map<T, number> = new Map<T, number>([]);

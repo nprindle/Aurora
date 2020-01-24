@@ -30,7 +30,7 @@ import Housing from "../resources/Housing.js";
  }
 
  /* used by predicates to allow statically accessing the name of a Tile subclass
-  * Tile subclasses that are used by pedicates in this way
+  * Tile subclasses that are used by predicates in this way
   * will need to declare a static readonly tileName string
   */
  export type NamedTileType = typeof Tile & { readonly tileName: string };
