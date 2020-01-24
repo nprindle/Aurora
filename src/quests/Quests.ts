@@ -1,10 +1,10 @@
 import { QuestStage, QuestPath } from "./QuestStage.js";
-import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
-import { MinResourcePredicate, MinTilePredicate } from "../predicates/WorldPredicates.js";
+import { MinResourcePredicate, MinTilePredicate, MinPopulationPredicate } from "../predicates/WorldPredicates.js";
 import Habitat from "../world/Tiles/Habitat.js";
 import SolarPanels from "../world/Tiles/SolarArray.js";
 import Lander from "../world/Tiles/Lander.js";
+import GridCoordinates from "../world/GridCoordinates.js";
 
 export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
     "Deploy shelter for the colonists",
@@ -34,6 +34,17 @@ export const TutorialQuestGetOre: QuestStage = new QuestStage(
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Metal, 1),
+            () => TutorialQuestPopulation200,
+        )
+    ],
+);
+
+export const TutorialQuestPopulation200: QuestStage = new QuestStage(
+    "Grow total worker population to 250",
+    `A ${Habitat.tileName} has capacity for ${new Habitat(new GridCoordinates(0,0)).populationCapacity.capacity} colonists`,
+    [
+        new QuestPath(
+            new MinPopulationPredicate(250),
             () => UnwinnableQuestStage,
         )
     ],

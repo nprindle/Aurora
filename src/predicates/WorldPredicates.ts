@@ -36,3 +36,21 @@ export class MinTilePredicate extends WorldPredicate {
         return `have at least ${this.minQuantity}  ${this.tileType.tileName} tile${plural}`;
     }
 }
+
+export class MinPopulationPredicate extends WorldPredicate {
+    constructor(
+        private minimumPopulation: number
+    ) {
+        super();
+    }
+
+    evaluate(run: Game): boolean {
+        return run.inventory.getTotalPopulation() >= this.minimumPopulation;
+    }
+
+    toString(): string {
+        return `have a total population of at least ${this.minimumPopulation}`;
+    }
+
+
+}
