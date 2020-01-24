@@ -26,7 +26,7 @@ export default class TileProject {
 
     doAction(position: GridCoordinates, run: Game) {
         if (!this.canDo(position, run)) {
-            throw `tried to do project ${this.title} without meeting requirments`;
+            throw `tried to do project ${this.title} without meeting requirements`;
         }
         run.inventory.payCost(this.costs);
         this.action(position, run);

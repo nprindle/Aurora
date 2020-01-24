@@ -33,7 +33,7 @@ export default class UI{
         return e;
     }
 
-    // creates an HTML pagragraph <p>
+    // creates an HTML paragraph <p>
     static makePara(str: string, classes?: string[]): HTMLElement {
         return UI.makeElement('p', str, classes);
     }

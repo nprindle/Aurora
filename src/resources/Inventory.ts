@@ -103,7 +103,7 @@ export default class Inventory {
         return this.getResourceList().map((resource: Resource) => `${resource.name}: ${this.getResourceQuantity(resource)}`);
     }
 
-    // returns strings showing the ammounts of each population type
+    // returns strings showing the amounts of each population type
     getPopulationStrings(): string[] {
         return this.populationQuantities.positiveQuantityKeys().map(species => `${this.populationQuantities.get(species)} ${species.name}`);
     }
