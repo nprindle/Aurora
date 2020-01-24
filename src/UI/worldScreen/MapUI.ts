@@ -21,6 +21,11 @@ export default class MapUI {
     private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
+    /* We keep track of whether the key is down to prevent moving when the player
+     * holds down a key, because otherwise the view would shift too quickly and images would be drawn in the wrong place
+     */
+    private keyDown: boolean = false;
+
     constructor(parent: WorldScreen, world: World) {
         this.world = world;
         this.parentScreen = parent;
@@ -147,6 +152,12 @@ export default class MapUI {
     }
 
     handleKeyDown(ev: KeyboardEvent) {
+        // reject held-down keys to prevent rapid view shifting
+        if(this.keyDown) {
+            return;
+        }
+        this.keyDown = true;
+
         const code = ev.code;
         if(code === "ArrowUp" || code === "KeyW") {
             this.moveViewArea(0, -1);
@@ -160,5 +171,9 @@ export default class MapUI {
         if(code === "ArrowRight" || code === "KeyD") {
             this.moveViewArea(1, 0);
         }
+    }
+
+    handleKeyUp(ev: KeyboardEvent) {
+        this.keyDown = false;
     }
 }

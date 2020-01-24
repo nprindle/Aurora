@@ -56,6 +56,10 @@ export default class WorldScreen {
         this.mapUI.handleKeyDown(ev);
     }
 
+    handleKeyUp(ev: KeyboardEvent) {
+        this.mapUI.handleKeyUp(ev);
+    }
+
     changeSidebarTile(position: GridCoordinates | null) {
         this.tileSidebar.changeTile(position);
     }
