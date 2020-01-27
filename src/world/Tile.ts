@@ -20,13 +20,15 @@ import Housing from "../resources/Housing.js";
 
     readonly populationCapacity: Housing | undefined = undefined;
 
+    // this provides a key into the ImageCache, which preloads all of the images so that we can synchronously draw them to the map canvas
+    abstract readonly texture: HTMLImageElement;
+
     constructor(
         public position: GridCoordinates
     ) {}
 
     abstract getTileName(): string; // returns the name of the tile type
 
-    abstract getImgSrc(): string; // returns the path to the map texture for this tile type
  }
 
  /* used by predicates to allow statically accessing the name of a Tile subclass

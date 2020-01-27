@@ -58,16 +58,6 @@ export default class UI{
         return b;
     }
 
-    // creates an image
-    static makeImg(src: string, classes?: string[]): HTMLImageElement {
-        const img: HTMLImageElement = document.createElement('img');
-        img.src = src;
-        if(classes) {
-            img.classList.add(...classes);
-        }
-        return img;
-    }
-
     // creates an HTML canvas for drawing graphics
     static makeCanvas(width: number, height: number, classes?: string[]): HTMLCanvasElement {
         const canvas = document.createElement('canvas') as HTMLCanvasElement;

@@ -4,11 +4,14 @@ import Tile from "../../world/Tile.js";
 import {clamp} from "../../util/Util.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import WorldScreen from "./WorldScreen.js";
+import { HighlightSelectionImage } from "../Images.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI {
 
     private static pixelsPerTile: number = 64;
+
+    private static highlightImage: HTMLImageElement = HighlightSelectionImage;
 
     private world: World;
 
@@ -20,11 +23,6 @@ export default class MapUI {
 
     private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
-
-    /* We keep track of whether the key is down to prevent moving when the player
-     * holds down a key, because otherwise the view would shift too quickly and images would be drawn in the wrong place
-     */
-    private keyDown: boolean = false;
 
     constructor(parent: WorldScreen, world: World) {
         this.world = world;
@@ -50,11 +48,9 @@ export default class MapUI {
         }
     }
 
-    private drawSquareAtCoordinates(src: string, coordinates: GridCoordinates) {
+    private drawSquareAtCoordinates(image: HTMLImageElement, coordinates: GridCoordinates) {
         const context = this.canvas.getContext('2d')!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
-
-        const image = new Image();
 
         const x = coordinates.x - this.viewPosition.x;
         const y = coordinates.y - this.viewPosition.y;
@@ -63,17 +59,14 @@ export default class MapUI {
             return; // don't attempt to draw tiles outside the viewable area
         }
 
-        image.onload = () => {
-            context.drawImage(image, x * MapUI.pixelsPerTile, y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
-        }
-        image.src = src; // setting this starts the image-loading process, which then causes image.onload() to execute
+        context.drawImage(image, x * MapUI.pixelsPerTile, y * MapUI.pixelsPerTile, MapUI.pixelsPerTile, MapUI.pixelsPerTile);
     }
 
     // redraws the given tile at that tile's position
     private rerenderTile(tile: Tile) {
-        this.drawSquareAtCoordinates(tile.getImgSrc(), tile.position);
+        this.drawSquareAtCoordinates(tile.texture, tile.position);
         if (tile.position === this.highlightedCoordinates) {
-            this.drawSquareAtCoordinates("assets/ui/highlight.png", tile.position);
+            this.drawSquareAtCoordinates(MapUI.highlightImage, tile.position);
         }
     }
 
@@ -91,7 +84,7 @@ export default class MapUI {
 
         // highlight new tile
         if (tile) {
-            this.drawSquareAtCoordinates("assets/ui/highlight.png", tile.position);
+            this.drawSquareAtCoordinates(MapUI.highlightImage, tile.position);
             this.highlightedCoordinates = tile.position;
         } else {
             this.highlightedCoordinates = null;
@@ -152,12 +145,6 @@ export default class MapUI {
     }
 
     handleKeyDown(ev: KeyboardEvent) {
-        // reject held-down keys to prevent rapid view shifting
-        if(this.keyDown) {
-            return;
-        }
-        this.keyDown = true;
-
         const code = ev.code;
         if(code === "ArrowUp" || code === "KeyW") {
             this.moveViewArea(0, -1);
@@ -171,9 +158,5 @@ export default class MapUI {
         if(code === "ArrowRight" || code === "KeyD") {
             this.moveViewArea(1, 0);
         }
-    }
-
-    handleKeyUp(ev: KeyboardEvent) {
-        this.keyDown = false;
     }
 }

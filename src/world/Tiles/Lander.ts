@@ -7,8 +7,10 @@ import Wasteland from "./Wasteland.js";
 import Habitat from "./Habitat.js";
 import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
+import { LanderTexture } from "../../UI/Images.js";
 
 export default class Lander extends Tile {
+    texture: HTMLImageElement = LanderTexture;
 
     possibleProjects: TileProject[] = [
         new TileProject(
@@ -34,10 +36,6 @@ export default class Lander extends Tile {
 
     constructor(position: GridCoordinates) {
         super(position);
-    }
-
-    getImgSrc(): string {
-        return "assets/tiles/lander.png";
     }
 
     static readonly tileName: string = "Landing Pod";
