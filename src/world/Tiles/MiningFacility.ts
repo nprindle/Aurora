@@ -4,8 +4,10 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
+import { MiningFacilityTexture } from "../../UI/Images.js";
 
 export default class MiningFacility extends Tile {
+    texture: HTMLImageElement = MiningFacilityTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -23,10 +25,6 @@ export default class MiningFacility extends Tile {
             30,
         )
     ];
-
-    getImgSrc(): string {
-        return "assets/tiles/mining_facility.png";
-    }
 
     static readonly tileName: string = "Ore Processing Center";
     getTileName(): string {

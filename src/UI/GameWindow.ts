@@ -41,9 +41,6 @@ export default class GameWindow {
         document.onkeydown = (e: KeyboardEvent) => {
             worldScreen.handleKeyDown(e);
         };
-        document.onkeyup = (e: KeyboardEvent) => {
-            worldScreen.handleKeyUp(e);
-        }
     }
 
     public static showProductionScreen() {

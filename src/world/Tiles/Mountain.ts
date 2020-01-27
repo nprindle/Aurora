@@ -5,8 +5,10 @@ import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Wasteland from "./Wasteland.js";
 import Cost from "../../resources/Cost.js";
+import { MountainTexture } from "../../UI/Images.js";
 
 export default class Mountain extends Tile {
+    texture: HTMLImageElement = MountainTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -22,10 +24,6 @@ export default class Mountain extends Tile {
             [],
         ),
     ];
-
-    getImgSrc(): string {
-        return "assets/tiles/mountain.png";
-    }
 
     static readonly tileName: string = "Mountain";
     getTileName(): string {

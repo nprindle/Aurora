@@ -9,10 +9,12 @@ import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js"
 import MiningFacility from "./MiningFacility.js";
 import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
+import { WastelandTexture } from "../../UI/Images.js";
 
 
 
 export default class Wasteland extends Tile {
+    texture: HTMLImageElement = WastelandTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -43,10 +45,6 @@ export default class Wasteland extends Tile {
             []
         ),
     ];
-
-    getImgSrc(): string {
-        return "assets/tiles/wasteland.png";
-    }
 
     static readonly tileName: string = "Wasteland"
     getTileName(): string {
