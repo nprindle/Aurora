@@ -31,18 +31,23 @@ class Cheats {
 export function enableCheats(run: Game, worldScreen: WorldScreen) {
 
     const cheatsObject = new Cheats(run, worldScreen);
-    (window as any).cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
-    (window as any).cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
+    const theWindow: any = window;
+    theWindow.cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
+    theWindow.cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
 
     // these classes also need to be made globally accessible so their instances can be used as parameters for cheats
-    // unfortunately this makes it possible for players to access and modify or multitons that are supposed to be constant
-    (window as any).Resources = Resource;
-    (window as any).Species = Species;
+    // we freeze the constructors so the existing instances can't be modified
+    // unfortunately, this still makes it possible for players to construct new instances of the multitons that are supposed to be constant
+    Object.freeze(Resource);
+    Object.freeze(Species);
+    theWindow.Resources = Resource;
+    theWindow.Species = Species;
 }
 
 // removes cheats and associated attributes from global scope
 export function disableCheats() {
-    (window as any).cheats = undefined;
-    (window as any).Resources = undefined;
-    (window as any).Species = undefined;
+    const theWindow: any = window;
+    theWindow.cheats = undefined;
+    theWindow.Resources = undefined;
+    theWindow.Species = undefined;
 }
