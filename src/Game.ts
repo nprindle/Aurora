@@ -6,6 +6,8 @@ import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
 import { QuestStage } from "./quests/QuestStage.js";
 import { TutorialQuestUnpackLander } from "./quests/Quests.js";
+import Technology from "./techTree/Technology.js";
+import { ResearchableTechnologies } from "./techTree/TechTree.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
@@ -16,6 +18,8 @@ export default class Game {
 
     private prevQuestDescription = "";
     public questCompletionShown: boolean = true;
+
+    private completedTechs: Technology[] = [];
 
     constructor() {
         this.world = new World (WorldGenerationParameters.standardWorldParameters());
@@ -50,6 +54,27 @@ export default class Game {
             this.questCompletionShown = false;
             this.questStage = nextStage;
         }
+    }
+
+    hasUnlockedTechnology(tech: Technology): boolean {
+        return this.completedTechs.includes(tech);
+    }
+
+    unlockTechnology(tech: Technology) {
+        if (!this.hasUnlockedTechnology(tech)) {
+            this.completedTechs.push(tech);
+        }
+    }
+
+    getUnlockedTechnologies(): Technology[] {
+        return this.completedTechs;
+    }
+
+    getResearchOptions(): Technology[] {
+        return ResearchableTechnologies
+            .filter(tech => tech.visible)
+            .filter(tech => tech.requiredTechs.every(prerequisite => this.completedTechs.includes(prerequisite)))
+            .filter(tech => !this.hasUnlockedTechnology(tech));
     }
 
     // this is called at the end of each turn
