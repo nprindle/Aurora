@@ -46,9 +46,10 @@ export default class TileSidebar {
             }
 
             const projectsHTML = UI.makeDiv();
-            if(tile.possibleProjects.length > 0) {
+            const visibleProjects = tile.possibleProjects.filter(project => project.isVisible(this.position!, this.run));
+            if(visibleProjects.length > 0) {
                 projectsHTML.appendChild(UI.makePara("Projects:"));
-                for (const project of tile.possibleProjects) {
+                for (const project of visibleProjects) {
                     projectsHTML.appendChild(this.makeProjectHTML(tile, project));
                 }
             }

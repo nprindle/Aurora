@@ -31,3 +31,18 @@ export class TileWithinDistancePredicate extends TilePredicate {
         }
     }
 }
+
+export class ConversionCountPredicate extends TilePredicate {
+    constructor(
+        private requiredCount: number
+    ) {
+        super()
+    };
+
+    evaluate(run: Game, position: GridCoordinates): boolean {
+        return (run.world.getTileAtCoordinates(position).resourceConversions.length === this.requiredCount);
+    }
+    toString(): string {
+        return `${this.requiredCount} resource conversions on this tile`;
+    }
+}
