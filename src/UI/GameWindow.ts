@@ -9,6 +9,7 @@ import ProductionScreen from "./productionScreen/ProductionScreen.js";
 import CreditsScreen from "./menu/CreditsScreen.js";
 import WorldScreenHeader from "./worldScreen/WorldScreenHeader.js";
 import Species from "../resources/Species.js";
+import ResearchScreen from "./ResearchScreen.js";
 
 
 export default class GameWindow {
@@ -48,6 +49,13 @@ export default class GameWindow {
 
         const productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
         UI.fillHTML(this.rootDiv, [productionScreen.getHTML()]);
+    }
+
+    public static showResearchScreen() {
+        disableCheats();
+
+        const researchScreen: ResearchScreen = new ResearchScreen(this.currentRun);
+        UI.fillHTML(this.rootDiv, [researchScreen.getHTML()]);
     }
 
     public static transitionToNextTurn() {
