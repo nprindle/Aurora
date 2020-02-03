@@ -36,8 +36,10 @@
 .world-screen-sidebar {
     background-color: black;
     width: 20%;
-    margin: 20px;
+    padding: 20px;
     font-size: 16px;
+    overflow-y: auto;
+    height: calc(100vh - 125px);
 }
 
 .world-screen-inventory {
