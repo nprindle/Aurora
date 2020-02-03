@@ -22,6 +22,7 @@ export default class Mountain extends Tile {
             },
             [new Cost(Resource.Energy, 25)],
             [],
+            [],
         ),
     ];
 

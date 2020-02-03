@@ -1,7 +1,8 @@
 import WorldPredicate from "./WorldPredicate.js";
 import Game from "../Game.js";
 import Resource from "../resources/Resource.js";
-import Tile, { NamedTileType } from "../world/Tile.js";
+import { NamedTileType } from "../world/Tile.js";
+import Technology from "../techTree/Technology.js";
 
 export class MinResourcePredicate extends WorldPredicate {
     constructor(
@@ -53,4 +54,19 @@ export class MinPopulationPredicate extends WorldPredicate {
     }
 
 
+}
+
+export class TechPredicate extends WorldPredicate {
+    constructor(
+        private tech: Technology,
+    ) {
+        super();
+    }
+
+    evaluate(run: Game): boolean {
+        return run.hasUnlockedTechnology(this.tech);
+    }
+    toString(): string {
+        return `have the ${this.tech.name} technology`;
+    }
 }

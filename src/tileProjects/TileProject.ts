@@ -1,9 +1,9 @@
-import Tile from "../world/Tile";
 import GridCoordinates from "../world/GridCoordinates";
 import World from "../world/World";
 import Game from "../Game";
 import Cost from "../resources/Cost";
 import TilePredicate from "../predicates/TilePredicate";
+import WorldPredicate from "../predicates/WorldPredicate";
 
 type tileAction = ((position: GridCoordinates, run: Game) => void);
 
@@ -16,12 +16,18 @@ export default class TileProject {
         readonly title: string,
         private action: tileAction,
         readonly costs: Cost[],
-        readonly completionRequirements: TilePredicate[]
+        readonly completionRequirements: (TilePredicate | WorldPredicate)[],
+        readonly visibilityRequirements: (TilePredicate | WorldPredicate)[]
     ){}
 
     canDo(position: GridCoordinates, run: Game): boolean {
         return run.inventory.canAfford(this.costs)
+            && this.isVisible(position, run)
             && this.completionRequirements.every(requirement => requirement.evaluate(run, position));
+    }
+
+    isVisible(position: GridCoordinates, run: Game): boolean {
+        return this.visibilityRequirements.every(requirement => requirement.evaluate(run, position));
     }
 
     doAction(position: GridCoordinates, run: Game) {
