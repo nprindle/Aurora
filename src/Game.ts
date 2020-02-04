@@ -6,8 +6,8 @@ import Conversion from "./resources/Conversion.js";
 import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
 import { QuestStage } from "./quests/QuestStage.js";
 import { TutorialQuestUnpackLander } from "./quests/Quests.js";
-import Technology from "./techTree/Technology.js";
-import { ResearchableTechnologies } from "./techTree/TechTree.js";
+import Technology from "./techtree/Technology.js";
+import { ResearchableTechnologies } from "./techtree/TechTree.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {

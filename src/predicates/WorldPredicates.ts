@@ -2,7 +2,7 @@ import WorldPredicate from "./WorldPredicate.js";
 import Game from "../Game.js";
 import Resource from "../resources/Resource.js";
 import { NamedTileType } from "../world/Tile.js";
-import Technology from "../techTree/Technology.js";
+import Technology from "../techtree/Technology.js";
 
 export class MinResourcePredicate extends WorldPredicate {
     constructor(

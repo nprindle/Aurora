@@ -7,7 +7,7 @@ import Cost from "../../resources/Cost.js";
 import { MiningFacilityTexture } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { IndustrialEngineeringTech } from "../../techTree/TechTree.js";
+import { IndustrialEngineeringTech } from "../../techtree/TechTree.js";
 import { ConversionCountPredicate } from "../../predicates/TilePredicates.js";
 
 export default class MiningFacility extends Tile {

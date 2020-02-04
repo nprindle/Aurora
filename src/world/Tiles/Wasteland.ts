@@ -11,7 +11,7 @@ import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import { WastelandTexture } from "../../UI/Images.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { StructureConstructionTech } from "../../techTree/TechTree.js";
+import { StructureConstructionTech } from "../../techtree/TechTree.js";
 
 
 
