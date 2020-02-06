@@ -17,7 +17,6 @@ export default class TransitionScreen {
             this.loadingBar
         ], ['transition-loading-area']);
         this.quote = Quote.getRandomQuote();
-        console.log(this.quote);
 
         UI.fillHTML(this.html, [
             UI.makeDivContaining([
