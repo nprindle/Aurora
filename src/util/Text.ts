@@ -8,6 +8,19 @@ export function indentWithNBS(str: string):  string {
     return str;
 }
 
+/*
+ * A tagged template literal function for processing indented multiline strings.
+ * This takes a template literal as an argument, called with the following
+ * syntax:
+ *
+ *     let str = stripIndent`
+ *         A multiline template string
+ *         Each line may be indented
+ *             This line will still be indented by four spaces`;
+ *
+ * Regular multiline templates do not remove any indentation. This will process
+ * the template and strip extra indentation from the beginning of each line.
+ */
 export function stripIndent(strings: TemplateStringsArray, ...placeholders: string[]): string {
     // Remove leading/trailing newlines and concatenate arguments, accounting
     // for tabs as indentation
