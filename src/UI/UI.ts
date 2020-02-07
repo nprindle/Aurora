@@ -3,6 +3,9 @@
  *
  * thank you to May Lawver for her UI code from last semester's game "Prototype Inheritance", which provided some helpful examples
  */
+
+// Emoji rendering is done using the twemoji library
+// (https://github.com/twitter/twemoji)
 import twemoji from "twemoji";
 import * as twemojiParser from "twemoji-parser";
 
