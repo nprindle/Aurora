@@ -14,9 +14,11 @@
   "main": "out/App.js",
   "scripts": {
     "clean": "rm -r out || true",
-    "build": "npm run clean && npx tsc && echo Build completed",
+    "compile": "npx tsc",
+    "bundle": "npx webpack --config bundle.config.js",
+    "build": "npm run clean && npm run compile && npm run bundle && echo Build completed",
     "start": "npx live-server",
-    "build-watch": "npx tsc -w",
+    "build-watch": "npx webpack --config bundle.config.js --watch | npx tsc --watch",
     "minify": "npx webpack --config ci/webpack.config.js"
   },
   "homepage": "https://github.com/GRarer/Aurora#readme",
