@@ -84,14 +84,18 @@ export default class TileSidebar {
         if (project.costs.length == 0) {
             projectHTML.appendChild(UI.makePara("Cost: Free"));
         } else {
+            const cssClass = this.run.inventory.canAfford(project.costs) ? "project-requirement-met" : "project-requirement-unmet";
             const costDescriptions = project.costs.map((cost: Cost) => `${cost.toString()}`);
             const costsString = "Cost: " + costDescriptions.join(', ');
-            projectHTML.appendChild(UI.makePara(costsString));
+            projectHTML.appendChild(UI.makePara(costsString, [cssClass]));
         }
 
         if (project.completionRequirements.length > 0) {
-            const requirementsString = project.completionRequirements.map((req: TilePredicate) => `- ${req.toString()}\n`).join('');
-            projectHTML.appendChild(UI.makePara(`Requirements:\n${requirementsString}`));
+            projectHTML.appendChild(UI.makePara("Requirements:"))
+        }
+        for (const requirement of project.completionRequirements) {
+            const cssClass = requirement.evaluate(this.run, this.position!) ? "project-requirement-met" : "project-requirement-unmet";
+            projectHTML.appendChild(UI.makePara(`- ${requirement.toString()}`, [cssClass]));
         }
 
 
