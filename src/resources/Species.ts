@@ -1,7 +1,7 @@
 export default class Species {
     // all species instances are defined here
-    static readonly Human = new Species("Human Colonists", 0.1);
-    static readonly Robot = new Species("Robotic Platform", 1);
+    static readonly Human = new Species("👩🏻‍🚀 Human Colonists", 0.1);
+    static readonly Robot = new Species("🤖 Robots", 1);
 
     // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
