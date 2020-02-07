@@ -17,11 +17,12 @@ export default class TransitionScreen {
             this.loadingBar
         ], ['transition-loading-area']);
         this.quote = Quote.getRandomQuote();
-        console.log(this.quote);
 
+        // Add in leading quote after leading whitespace
+        let quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
         UI.fillHTML(this.html, [
             UI.makeDivContaining([
-                UI.makePara(`“${indentWithNBS(this.quote.text)}”`),
+                UI.makePara(`${quotedText}`),
                 UI.makePara(`-${this.quote.attribution}`, ['transition-attribution'])
             ], ['transition-quote-panel']),
             this.loadingArea
