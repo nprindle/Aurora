@@ -9,6 +9,8 @@
     "experimentalDecorators": true,
     "module": "ES6",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
     "newLine": "LF"
   },
   "include": [

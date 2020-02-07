@@ -4,7 +4,12 @@
  * thank you to May Lawver for her UI code from last semester's game "Prototype Inheritance", which provided some helpful examples
  */
 
-export default class UI{
+// Emoji rendering is done using the twemoji library
+// (https://github.com/twitter/twemoji)
+import twemoji from "twemoji";
+import * as twemojiParser from "twemoji-parser";
+
+export default class UI {
 
     // makes an empty HTML div with the given css classes
     static makeDiv(classes?: string[]) {
@@ -33,13 +38,32 @@ export default class UI{
         return e;
     }
 
-    // creates an HTML paragraph <p>
-    static makePara(str: string, classes?: string[]): HTMLElement {
-        return UI.makeElement('p', str, classes);
+    // Modifies an element in-place to use Twitter emoji and returns it
+    static patchEmoji(el: HTMLElement): HTMLElement {
+        twemoji.parse(el, { folder: 'svg', ext: '.svg' });
+        return el;
     }
+
+    static containsEmoji(str: string): boolean {
+        return twemojiParser.parse(str).length > 0;
+    }
+
+    // creates an HTML paragraph <p>, supporting Twitter emoji
+    static makePara(str: string, classes?: string[]): HTMLElement {
+        const par = UI.makeElement('p', str, classes);
+        if (UI.containsEmoji(str)) {
+            UI.patchEmoji(par);
+        }
+        return par;
+    }
+
     // created an HTML header, e.g. <H1> or <H2>
     static makeHeader(str: string, level: number = 1, classes?: string[]): HTMLElement {
-        return UI.makeElement(`h${level}`, str, classes);
+        const header = UI.makeElement(`h${level}`, str, classes);
+        if (UI.containsEmoji(str)) {
+            UI.patchEmoji(header);
+        }
+        return header;
     }
 
     // creates a button which executes the given callback function when clicked
@@ -48,13 +72,16 @@ export default class UI{
         b.type = 'button';
         b.disabled = disabled;
         b.innerText = text;
-        if(classes) {
+        if (classes) {
             b.classList.add(...classes);
         }
         b.onclick = function (ev: MouseEvent) {
             ev.preventDefault;
             callback.call(this, ev);
         };
+        if (UI.containsEmoji(text)) {
+            UI.patchEmoji(b);
+        }
         return b;
     }
 
