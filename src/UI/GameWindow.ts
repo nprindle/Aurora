@@ -1,42 +1,33 @@
 import MainMenuUI from "./menu/MainMenuUI.js";
-import UI from "./UI.js";
+import { UI } from "./UI.js";
 import WorldScreen from "./worldScreen/WorldScreen.js";
 import Game from "../Game.js";
 import { disableCheats, enableCheats } from "../util/Cheats.js";
-import Resource from "../resources/Resource.js";
 import TransitionScreen from "./transitionScreen/TransitionScreen.js";
 import ProductionScreen from "./productionScreen/ProductionScreen.js";
 import CreditsScreen from "./menu/CreditsScreen.js";
-import WorldScreenHeader from "./worldScreen/WorldScreenHeader.js";
-import Species from "../resources/Species.js";
 import ResearchScreen from "./ResearchScreen.js";
 
+export namespace GameWindow {
 
-export default class GameWindow {
+    const rootDiv: HTMLElement = document.getElementById("rootdiv")!; // root div for all of our HTML
+    let currentRun: Game;
 
-    private static rootDiv: HTMLElement = document.getElementById('rootdiv')!; // root div for all of our HTML
-    private static currentRun: Game;
-
-    public static showMainMenu() {
+    export function showMainMenu(): void {
         disableCheats();
-        UI.fillHTML(this.rootDiv, [MainMenuUI.renderMainMenu()]);
+        UI.fillHTML(rootDiv, [MainMenuUI.renderMainMenu()]);
     }
 
-    public static showCredits() {
+    export function showCredits(): void {
         disableCheats();
-        UI.fillHTML(this.rootDiv, [CreditsScreen.render()]);
+        UI.fillHTML(rootDiv, [CreditsScreen.render()]);
     }
 
-    public static startGame() {
-        this.currentRun = new Game();
-        this.showWorldScreen();
-    }
+    export function showWorldScreen(): void {
+        const worldScreen = new WorldScreen(currentRun);
+        UI.fillHTML(rootDiv, [worldScreen.getHTML()]);
 
-    public static showWorldScreen() {
-        const worldScreen = new WorldScreen(this.currentRun);
-        UI.fillHTML(this.rootDiv, [worldScreen.getHTML()]);
-
-        enableCheats(this.currentRun, worldScreen); // cheats are available when on the world screen
+        enableCheats(currentRun, worldScreen); // cheats are available when on the world screen
 
         // Attach keyboard input listener
         document.onkeydown = (e: KeyboardEvent) => {
@@ -44,27 +35,32 @@ export default class GameWindow {
         };
     }
 
-    public static showProductionScreen() {
-        disableCheats();
-
-        const productionScreen: ProductionScreen = new ProductionScreen(this.currentRun);
-        UI.fillHTML(this.rootDiv, [productionScreen.getHTML()]);
+    export function startGame(): void {
+        currentRun = new Game();
+        showWorldScreen();
     }
 
-    public static showResearchScreen() {
+    export function showProductionScreen(): void {
         disableCheats();
 
-        const researchScreen: ResearchScreen = new ResearchScreen(this.currentRun);
-        UI.fillHTML(this.rootDiv, [researchScreen.getHTML()]);
+        const productionScreen: ProductionScreen = new ProductionScreen(currentRun);
+        UI.fillHTML(rootDiv, [productionScreen.getHTML()]);
     }
 
-    public static transitionToNextTurn() {
+    export function showResearchScreen(): void {
+        disableCheats();
+
+        const researchScreen: ResearchScreen = new ResearchScreen(currentRun);
+        UI.fillHTML(rootDiv, [researchScreen.getHTML()]);
+    }
+
+    export function transitionToNextTurn(): void {
         disableCheats();
         const transitionScreen = new TransitionScreen();
-        UI.fillHTML(this.rootDiv, [transitionScreen.getHTML()]);
+        UI.fillHTML(rootDiv, [transitionScreen.getHTML()]);
 
         transitionScreen.startLoading();
-        this.currentRun.completeTurn(); // update game state
+        currentRun.completeTurn(); // update game state
         transitionScreen.revealButton();
     }
 }

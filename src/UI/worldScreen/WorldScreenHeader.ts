@@ -1,6 +1,6 @@
 import Game from "../../Game.js";
-import UI from "../UI.js";
-import GameWindow from "../GameWindow.js";
+import { UI } from "../UI.js";
+import { GameWindow } from "../GameWindow.js";
 
 export default class WorldScreenHeader {
     private html: HTMLElement;
@@ -10,16 +10,16 @@ export default class WorldScreenHeader {
      */
 
     constructor(run: Game) {
-        this.html = UI.makeDiv(['world-screen-header']);
+        this.html = UI.makeDiv(["world-screen-header"]);
         this.run = run;
         this.refresh();
     }
 
-    refresh() {
+    refresh(): void {
         const quitButton = UI.makeButton("Quit Game", () => {GameWindow.showMainMenu();});
         const transitionButton = UI.makeButton("Next Turn", () => {GameWindow.transitionToNextTurn();});
-        const productionScreenButton = UI.makeButton("Manage Production", () => {GameWindow.showProductionScreen()});
-        const researchScreenButton = UI.makeButton("Research Projects", () => {GameWindow.showResearchScreen()});
+        const productionScreenButton = UI.makeButton("Manage Production", () => {GameWindow.showProductionScreen();});
+        const researchScreenButton = UI.makeButton("Research Projects", () => {GameWindow.showResearchScreen();});
 
         const questHint = this.run.getCurrentQuestHint();
         const questDescription = this.run.getCurrentQuestDescription();
