@@ -65,7 +65,7 @@ export default class ResearchScreen {
             this.run.unlockTechnology(tech);
             this.refresh();
         };
-        div.appendChild(UI.makeButton("Conduct Research", unlockCallback, [], !canUnlock));
+        div.appendChild(UI.makeButton("Conduct Research", unlockCallback, [], canUnlock ? "enabled" : "disabled"));
 
         return div;
     }

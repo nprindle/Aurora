@@ -75,10 +75,12 @@ export default class TileSidebar {
     private makeProjectHTML(tile: Tile, project: TileProject): HTMLElement {
         const projectHTML = UI.makeDiv();
 
-        const disabled = !project.canDo(tile.position, this.run);
-        const button = UI.makeButton(project.title, () => {
-            this.doProject(project, tile);
-        }, [], disabled);
+        const button = UI.makeButton(
+            project.title,
+            () => { this.doProject(project, tile);},
+            [],
+            project.canDo(tile.position, this.run) ? "enabled" : "disabled",
+        );
         projectHTML.appendChild(button);
 
         if (project.costs.length == 0) {

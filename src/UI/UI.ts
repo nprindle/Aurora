@@ -67,10 +67,12 @@ export default class UI {
     }
 
     // creates a button which executes the given callback function when clicked
-    static makeButton(text: string, callback: Function, classes?: string[], disabled: boolean = false): HTMLButtonElement {
+    static makeButton(text: string, callback: Function, classes?: string[], buttonEnabled: "enabled" | "disabled" = "enabled"): HTMLButtonElement {
         const b: HTMLButtonElement = document.createElement('button');
         b.type = 'button';
-        b.disabled = disabled;
+        if (buttonEnabled == "disabled") {
+            b.disabled = true;
+        }
         b.innerText = text;
         if (classes) {
             b.classList.add(...classes);
