@@ -1,7 +1,7 @@
 import Game from "../Game.js";
-import UI from "./UI.js";
+import { UI } from "./UI.js";
 import Technology from "../techtree/Technology.js";
-import GameWindow from "./GameWindow.js";
+import { GameWindow } from "./GameWindow.js";
 
 export default class ResearchScreen {
 
@@ -18,7 +18,7 @@ export default class ResearchScreen {
         return this.html;
     }
 
-    private refresh() {
+    private refresh(): void {
         let researchHeader = UI.makeHeader("Available Research Projects");
 
 
@@ -61,7 +61,7 @@ export default class ResearchScreen {
             }
         }
         const canUnlock = (unmetPrereqs == 0) && this.run.inventory.canAfford([tech.researchCost]);
-        const unlockCallback = () => {
+        const unlockCallback: () => void = () => {
             this.run.unlockTechnology(tech);
             this.refresh();
         };

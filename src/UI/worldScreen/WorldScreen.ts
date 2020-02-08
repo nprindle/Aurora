@@ -1,4 +1,4 @@
-import UI from "../UI.js";
+import { UI } from "../UI.js";
 import MapUI from "./MapUI.js";
 import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
@@ -33,18 +33,18 @@ export default class WorldScreen {
 
             UI.makeDivContaining([
                 inventoryHTML,
-                UI.makeDivContaining([mapHTML], ['world-screen-map-box']),
+                UI.makeDivContaining([mapHTML], ["world-screen-map-box"]),
                 tileSidebarHTML,
-            ], ['world-screen-hbox']),
+            ], ["world-screen-hbox"]),
 
-        ], ['flex-vertical']);
+        ], ["flex-vertical"]);
     }
 
     public getHTML(): HTMLElement {
         return this.worldScreenHTML;
     }
 
-    refreshComponents() {
+    refreshComponents(): void {
         this.mapUI.refreshViewableArea();
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
@@ -52,11 +52,11 @@ export default class WorldScreen {
     }
 
     // keyboard events for this page are passed to the map ui, which uses arrow keys or wasd to move around the map
-    handleKeyDown(ev: KeyboardEvent) {
+    handleKeyDown(ev: KeyboardEvent): void {
         this.mapUI.handleKeyDown(ev);
     }
 
-    changeSidebarTile(position: GridCoordinates | null) {
+    changeSidebarTile(position: GridCoordinates | null): void {
         this.tileSidebar.changeTile(position);
     }
 }

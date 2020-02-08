@@ -11,24 +11,24 @@ class Cheats {
     ){}
 
     // call this to update game and ui after each cheat's effect
-    refresh() {
+    refresh(): void {
         this.currentGame.updateQuestState();
         this.worldScreen.refreshComponents();
     }
 
-    addResource(resource: Resource, quantity: number) {
+    addResource(resource: Resource, quantity: number): void {
         this.currentGame.inventory.addResource(resource, quantity);
         this.refresh();
     }
 
-    addPopulation(species: Species, quantity: number) {
+    addPopulation(species: Species, quantity: number): void {
         this.currentGame.inventory.addWorkers(species, quantity);
         this.refresh();
     }
 }
 
 // makes cheat methods available from the console (should be enabled whenever on the world screen)
-export function enableCheats(run: Game, worldScreen: WorldScreen) {
+export function enableCheats(run: Game, worldScreen: WorldScreen): void {
 
     const cheatsObject = new Cheats(run, worldScreen);
     const theWindow: any = window;
@@ -45,7 +45,7 @@ export function enableCheats(run: Game, worldScreen: WorldScreen) {
 }
 
 // removes cheats and associated attributes from global scope
-export function disableCheats() {
+export function disableCheats(): void {
     const theWindow: any = window;
     theWindow.cheatsAddResource = undefined;
     theWindow.cheatsAddPopulation = undefined;

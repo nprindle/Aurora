@@ -1,5 +1,5 @@
-import UI from "../UI.js";
-import GameWindow from "../GameWindow.js";
+import { UI } from "../UI.js";
+import { GameWindow } from "../GameWindow.js";
 import Quote from "./Quote.js";
 import { indentWithNBS } from "../../util/Text.js";
 
@@ -12,10 +12,10 @@ export default class TransitionScreen {
 
     constructor() {
         this.html = UI.makeDiv();
-        this.loadingBar = UI.makeDiv(['transition-loading-bar']);
+        this.loadingBar = UI.makeDiv(["transition-loading-bar"]);
         this.loadingArea = UI.makeDivContaining([
             this.loadingBar
-        ], ['transition-loading-area']);
+        ], ["transition-loading-area"]);
         this.quote = Quote.getRandomQuote();
 
         // Add in leading quote after leading whitespace
@@ -23,30 +23,30 @@ export default class TransitionScreen {
         UI.fillHTML(this.html, [
             UI.makeDivContaining([
                 UI.makePara(`${quotedText}`),
-                UI.makePara(`-${this.quote.attribution}`, ['transition-attribution'])
-            ], ['transition-quote-panel']),
+                UI.makePara(`-${this.quote.attribution}`, ["transition-attribution"])
+            ], ["transition-quote-panel"]),
             this.loadingArea
         ]);
     }
 
-    getHTML() {
+    getHTML(): HTMLElement {
         return this.html;
     }
 
-    startLoading() {
-        setTimeout(() => this.loadingArea.classList.add('loading'));
+    startLoading(): void {
+        setTimeout(() => this.loadingArea.classList.add("loading"));
     }
 
-    revealButton() {
-        setTimeout(() => this.loadingArea.classList.add('loaded'));
+    revealButton(): void {
+        setTimeout(() => this.loadingArea.classList.add("loaded"));
         setTimeout(() => {
             UI.fillHTML(this.loadingArea, [
-                UI.makeButton("Continue", this.continueToNextTurn)
+                UI.makeButton("Continue", () => { this.continueToNextTurn(); })
             ]);
         }, 750);
     }
 
-    private continueToNextTurn() {
+    private continueToNextTurn(): void {
         GameWindow.showWorldScreen();
     }
 }
