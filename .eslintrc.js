@@ -107,6 +107,12 @@ const styleRules = {
     "allowSingleLine": true,
   }],
 
+  // Prefer `{ ... }` over `{...}`
+  "object-curly-spacing": ["warn", "always"],
+
+  // Prefer `[...]` over `[ ... ]`
+  "array-bracket-spacing": ["warn", "never"],
+
   // Always prefer a semicolon
   "semi": "off",
   "@typescript-eslint/semi": ["warn", "always"],
@@ -124,6 +130,16 @@ const styleRules = {
   "@typescript-eslint/quotes": ["warn", "double", {
     "allowTemplateLiterals": true,
     "avoidEscape": true,
+  }],
+
+  // Prefer `// foo` over `//foo`
+  "spaced-comment": ["warn", "always", {
+    "line": {
+      "markers": ["/"],
+    },
+    "block": {
+      "balanced": true,
+    },
   }],
 
   // Prefer `function foo() { ... }` over `function foo () { ... }`
