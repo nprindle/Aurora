@@ -1,5 +1,6 @@
-import { UI } from "../UI.js";
-import { GameWindow } from "../GameWindow.js";
+import { UI} from "../UI.js";
+import { GameWindow, Page } from "../GameWindow.js";
+import MainMenu from "./MainMenu.js";
 
 
 class CreditsEntry {
@@ -14,18 +15,25 @@ const credits: CreditsEntry[] = [
 
 // this may need to become a real class in the future
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-export default class CreditsScreen {
-    static render(): HTMLElement {
+export default class CreditsScreen implements Page {
+
+    readonly html: HTMLElement;
+    constructor() {
+        this.html = UI.makeDiv(["credits"]);
+        this.refresh();
+    }
+
+    refresh(): void {
         const nameParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.name, ["credits-name"]));
         const roleParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.roles.join(", "), ["credits-roles"]));
 
-        return UI.makeDivContaining([
+        UI.fillHTML(this.html, [
             UI.makeHeader("Credits", 1),
             UI.makeDivContaining([
                 UI.makeDivContaining(nameParas, ["credits-names-column"]),
                 UI.makeDivContaining(roleParas),
             ], ["credits-container"]),
-            UI.makeButton("Back", () => GameWindow.showMainMenu()),
-        ], ["credits"]);
+            UI.makeButton("Back", () => GameWindow.show(new MainMenu())),
+        ]);
     }
 }
