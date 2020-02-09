@@ -135,6 +135,9 @@ const styleRules = {
     "asyncArrow": "always"
   }],
 
+  // Prefer "if (" over "if("
+  "keyword-spacing": "warn",
+
   // Prefer `foo(args)` over `foo (args)`
   "func-call-spacing": "off",
   "@typescript-eslint/func-call-spacing": "warn",
@@ -175,6 +178,10 @@ const styleRules = {
   "@typescript-eslint/prefer-includes": "warn",
 };
 
+const disabledRules = {
+  "no-inner-declarations": "off",
+};
+
 module.exports = {
   "env": {
     "browser": true,
@@ -200,5 +207,6 @@ module.exports = {
   "rules": {
     ...possibleErrorRules,
     ...styleRules,
+    ...disabledRules,
   },
 };
