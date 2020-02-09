@@ -1,66 +1,44 @@
-import MainMenuUI from "./menu/MainMenuUI.js";
-import { UI } from "./UI.js";
-import WorldScreen from "./worldScreen/WorldScreen.js";
-import Game from "../Game.js";
-import { disableCheats, enableCheats } from "../util/Cheats.js";
-import TransitionScreen from "./transitionScreen/TransitionScreen.js";
-import ProductionScreen from "./productionScreen/ProductionScreen.js";
-import CreditsScreen from "./menu/CreditsScreen.js";
-import ResearchScreen from "./ResearchScreen.js";
+import { UI} from "./UI.js";
+
+export interface Page {
+    // root element containing this page's HTML
+    readonly html: HTMLElement;
+    // updates the information shown on the page (may be a no-op for pages that don't show changing information)
+    refresh(): void;
+
+    // pages make optionally implement one or both of these methods in order to receive keyboard input
+    handleKeyDown?(event: KeyboardEvent): void;
+    handleKeyUp?(event: KeyboardEvent): void;
+}
 
 export namespace GameWindow {
 
-    const rootDiv: HTMLElement = document.getElementById("rootdiv")!; // root div for all of our HTML
-    let currentRun: Game;
+    // root div for all of our HTML
+    const rootDiv: HTMLElement = document.getElementById("rootdiv")!;
 
-    export function showMainMenu(): void {
-        disableCheats();
-        UI.fillHTML(rootDiv, [MainMenuUI.renderMainMenu()]);
-    }
+    // currently-displayed page
+    let currentPage: Page | undefined = undefined;
 
-    export function showCredits(): void {
-        disableCheats();
-        UI.fillHTML(rootDiv, [CreditsScreen.render()]);
-    }
+    export function show(page: Page): void {
+        currentPage = page;
+        UI.fillHTML(rootDiv, [page.html]);
 
-    export function showWorldScreen(): void {
-        const worldScreen = new WorldScreen(currentRun);
-        UI.fillHTML(rootDiv, [worldScreen.getHTML()]);
-
-        enableCheats(currentRun, worldScreen); // cheats are available when on the world screen
-
-        // Attach keyboard input listener
-        document.onkeydown = (e: KeyboardEvent) => {
-            worldScreen.handleKeyDown(e);
+        // keyboard handlers will only be called on pages that include them
+        document.onkeydown = (ev: KeyboardEvent) => {
+            if (page.handleKeyDown) {
+                page.handleKeyDown(ev);
+            }
+        };
+        document.onkeyup = (ev: KeyboardEvent) => {
+            if (page.handleKeyUp) {
+                page.handleKeyUp(ev);
+            }
         };
     }
 
-    export function startGame(): void {
-        currentRun = new Game();
-        showWorldScreen();
-    }
-
-    export function showProductionScreen(): void {
-        disableCheats();
-
-        const productionScreen: ProductionScreen = new ProductionScreen(currentRun);
-        UI.fillHTML(rootDiv, [productionScreen.getHTML()]);
-    }
-
-    export function showResearchScreen(): void {
-        disableCheats();
-
-        const researchScreen: ResearchScreen = new ResearchScreen(currentRun);
-        UI.fillHTML(rootDiv, [researchScreen.getHTML()]);
-    }
-
-    export function transitionToNextTurn(): void {
-        disableCheats();
-        const transitionScreen = new TransitionScreen();
-        UI.fillHTML(rootDiv, [transitionScreen.getHTML()]);
-
-        transitionScreen.startLoading();
-        currentRun.completeTurn(); // update game state
-        transitionScreen.revealButton();
+    export function refreshCurrentPage(): void {
+        if (currentPage) {
+            currentPage.refresh();
+        }
     }
 }

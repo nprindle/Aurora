@@ -1,16 +1,20 @@
-import { UI } from "../UI.js";
-import { GameWindow } from "../GameWindow.js";
+import { UI} from "../UI.js";
+import { GameWindow, Page } from "../GameWindow.js";
 import Quote from "./Quote.js";
 import { indentWithNBS } from "../../util/Text.js";
+import WorldScreen from "../worldScreen/WorldScreen.js";
+import Game from "../../Game.js";
 
 // "loading" screen shown between turns
-export default class TransitionScreen {
-    private html: HTMLElement;
+export default class TransitionScreen implements Page {
+    readonly html: HTMLElement;
     private loadingArea: HTMLElement;
     private loadingBar: HTMLElement;
     private quote: Quote;
 
-    constructor() {
+    constructor(
+        private run: Game
+    ) {
         this.html = UI.makeDiv();
         this.loadingBar = UI.makeDiv(["transition-loading-bar"]);
         this.loadingArea = UI.makeDivContaining([
@@ -29,15 +33,12 @@ export default class TransitionScreen {
         ]);
     }
 
-    getHTML(): HTMLElement {
-        return this.html;
-    }
+    refresh(): void {}
 
     startLoading(): void {
         setTimeout(() => this.loadingArea.classList.add("loading"));
-    }
+        this.run.completeTurn();
 
-    revealButton(): void {
         setTimeout(() => this.loadingArea.classList.add("loaded"));
         setTimeout(() => {
             UI.fillHTML(this.loadingArea, [
@@ -47,6 +48,6 @@ export default class TransitionScreen {
     }
 
     private continueToNextTurn(): void {
-        GameWindow.showWorldScreen();
+        GameWindow.show(new WorldScreen(this.run));
     }
 }

@@ -1,21 +1,22 @@
-import { UI } from "../UI.js";
+import { UI} from "../UI.js";
 import MapUI from "./MapUI.js";
 import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
 import WorldScreenHeader from "./WorldScreenHeader.js";
+import { Page } from "../GameWindow.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
  */
-export default class WorldScreen {
+export default class WorldScreen implements Page {
 
     private mapUI: MapUI;
     private inventorySidebar: InventorySidebar;
     private tileSidebar: TileSidebar;
     private header: WorldScreenHeader;
-    private worldScreenHTML: HTMLElement;
+    readonly html: HTMLElement;
 
     constructor(run: Game) {
         this.mapUI = new MapUI(this, run.world);
@@ -27,7 +28,7 @@ export default class WorldScreen {
         const inventoryHTML = this.inventorySidebar.getHTML();
         this.header = new WorldScreenHeader(run);
 
-        this.worldScreenHTML = UI.makeDivContaining([
+        this.html = UI.makeDivContaining([
 
             this.header.getHTML(),
 
@@ -40,11 +41,7 @@ export default class WorldScreen {
         ], ["flex-vertical"]);
     }
 
-    public getHTML(): HTMLElement {
-        return this.worldScreenHTML;
-    }
-
-    refreshComponents(): void {
+    refresh(): void {
         this.mapUI.refreshViewableArea();
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();

@@ -1,12 +1,13 @@
 import Game from "../../Game.js";
-import { UI } from "../UI.js";
-import { GameWindow } from "../GameWindow.js";
+import { UI} from "../UI.js";
+import { GameWindow, Page } from "../GameWindow.js";
 import Conversion from "../../resources/Conversion.js";
 import Inventory from "../../resources/Inventory.js";
+import WorldScreen from "../worldScreen/WorldScreen.js";
 
 // the production screen is where the player selects the priority order for resource conversions
-export default class ProductionScreen {
-    private html: HTMLElement;
+export default class ProductionScreen implements Page {
+    readonly html: HTMLElement;
     private run: Game;
 
     constructor(run: Game) {
@@ -46,7 +47,7 @@ export default class ProductionScreen {
             UI.makePara(`Unused workers at end of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
             UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
             this.renderInventory(inventoryCopy),
-            UI.makeButton("Back", () => {GameWindow.showWorldScreen();}, ["production-screen-back-button"]),
+            UI.makeButton("Back", () => {GameWindow.show(new WorldScreen(this.run));}, ["production-screen-back-button"]),
         ]);
     }
 

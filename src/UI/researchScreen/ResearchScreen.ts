@@ -1,12 +1,13 @@
-import Game from "../Game.js";
-import { UI } from "./UI.js";
-import Technology from "../techtree/Technology.js";
-import { GameWindow } from "./GameWindow.js";
+import Game from "../../Game.js";
+import { UI} from "../UI.js";
+import Technology from "../../techtree/Technology.js";
+import { GameWindow, Page } from "../GameWindow.js";
+import WorldScreen from "../worldScreen/WorldScreen.js";
 
-export default class ResearchScreen {
+export default class ResearchScreen implements Page {
 
     private run: Game;
-    private html: HTMLElement;
+    readonly html: HTMLElement;
 
     constructor(run: Game) {
         this.run = run;
@@ -18,7 +19,7 @@ export default class ResearchScreen {
         return this.html;
     }
 
-    private refresh(): void {
+    refresh(): void {
         let researchHeader = UI.makeHeader("Available Research Projects");
 
 
@@ -36,7 +37,9 @@ export default class ResearchScreen {
             historyHeader = UI.makeDiv();
         }
 
-        const backButton = UI.makeButton("Back", () => {GameWindow.showWorldScreen();}, []);
+        const backButton = UI.makeButton("Back", () => {
+            GameWindow.show(new WorldScreen(this.run));
+        }, []);
 
         UI.fillHTML(this.html, [
             researchHeader,
