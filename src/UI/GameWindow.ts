@@ -1,4 +1,4 @@
-import { UI} from "./UI.js";
+import { UI } from "./UI.js";
 
 export interface Page {
     // root element containing this page's HTML
