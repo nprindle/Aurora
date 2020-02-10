@@ -21,7 +21,7 @@ export default class MapUI {
     private viewWidth: number = 12; // width of viewable area in tiles
     private viewHeight: number = 8; // height of viewable area in tiles
 
-    private viewPosition: GridCoordinates = new GridCoordinates(0, 0); //coordinates of the current view area's top-left tile
+    private viewPosition: GridCoordinates = new GridCoordinates(0, 0); // coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
     constructor(parent: WorldScreen, world: World) {

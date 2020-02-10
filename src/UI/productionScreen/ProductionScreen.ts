@@ -1,5 +1,5 @@
 import Game from "../../Game.js";
-import { UI} from "../UI.js";
+import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import Conversion from "../../resources/Conversion.js";
 import Inventory from "../../resources/Inventory.js";

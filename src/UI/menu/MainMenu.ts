@@ -1,4 +1,4 @@
-import { UI} from "../UI.js";
+import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import CreditsScreen from "./CreditsScreen.js";
 import { enableCheats } from "../../util/Cheats.js";
