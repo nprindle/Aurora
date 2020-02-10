@@ -1,4 +1,4 @@
-import { UI} from "../UI.js";
+import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import Quote from "./Quote.js";
 import { indentWithNBS } from "../../util/Text.js";

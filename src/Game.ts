@@ -7,7 +7,7 @@ import { QuestStage } from "./quests/QuestStage.js";
 import { TutorialQuestUnpackLander } from "./quests/Quests.js";
 import Technology from "./techtree/Technology.js";
 import { ResearchableTechnologies } from "./techtree/TechTree.js";
-import {Arrays} from "./util/Arrays.js";
+import { Arrays } from "./util/Arrays.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {

@@ -1,5 +1,5 @@
 import Game from "../../Game.js";
-import { UI} from "../UI.js";
+import { UI } from "../UI.js";
 import Technology from "../../techtree/Technology.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
