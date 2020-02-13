@@ -17,7 +17,7 @@ export default class TileProject {
         readonly costs: Cost[],
         readonly completionRequirements: (TilePredicate | WorldPredicate)[],
         readonly visibilityRequirements: (TilePredicate | WorldPredicate)[]
-    ){}
+    ) {}
 
     canDo(position: GridCoordinates, run: Game): boolean {
         return run.inventory.canAfford(this.costs)

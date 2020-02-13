@@ -8,7 +8,7 @@ export default class Technology {
         public readonly requiredTechs: Technology[],
         public readonly researchCost: Cost,
         public readonly visible: boolean = true,
-    ){}
+    ) {}
 
     static makeUnlockableTechnology(name: string, description: string, requiredTechs: Technology[], researchCost: Cost): Technology {
         const newTech = new Technology(name, description, requiredTechs, researchCost, true);

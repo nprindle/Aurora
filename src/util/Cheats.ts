@@ -7,7 +7,7 @@ import { GameWindow } from "../UI/GameWindow.js";
 class Cheats {
     constructor(
         private currentGame: Game,
-    ){}
+    ) {}
 
     // call this to update game and ui after each cheat's effect
     refresh(): void {
