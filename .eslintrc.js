@@ -38,6 +38,11 @@ const possibleErrorRules = {
     "checkArrayPredicates": true,
   }],
 
+  // Prefer things like `x || y` over `x ? x : y` or `!x` over `x ? false : true`
+  "no-unneeded-ternary": ["error", {
+    "defaultAssignment": false,
+  }],
+
   // Disallow calling methods without the original class scope
   "@typescript-eslint/unbound-method": ["error", {
     "ignoreStatic": true,
@@ -45,6 +50,17 @@ const possibleErrorRules = {
 
   // Prefer arrow lambdas over aliasing `this`
   "@typescript-eslint/no-this-alias": "error",
+
+  // Prefer `const`
+  "prefer-const": ["warn", {
+    "destructuring": "all",
+  }],
+
+  // Don't use `var`
+  "no-var": "error",
+
+  // Disallow fallthrough in switches
+  "no-fallthrough": "error",
 
   // Prefer `for..of` loops when index is not being used
   "@typescript-eslint/prefer-for-of": "warn",
@@ -91,6 +107,9 @@ const possibleErrorRules = {
 
   // Enforce that optional or default parameters come last
   "@typescript-eslint/default-param-last": "error",
+
+  // Disallow comparing to NaN, prefer `Number.isNaN()`
+  "use-isnan": "error",
 };
 
 // Rules that enforce consistent code style
@@ -110,6 +129,9 @@ const styleRules = {
   // Prefer `{ ... }` over `{...}`
   "object-curly-spacing": ["warn", "always"],
 
+  // Prefer `{ ... }` over `{...}` for blocks
+  "block-spacing": ["warn", "always"],
+
   // Prefer `[...]` over `[ ... ]`
   "array-bracket-spacing": ["warn", "never"],
 
@@ -120,6 +142,9 @@ const styleRules = {
   // Disallow redundant semicolons
   "no-extra-semi": "off",
   "@typescript-eslint/no-extra-semi": "warn",
+
+  // Disallow space before semicolon
+  "semi-spacing": "warn",
 
   // Enforce consistent spacing around commas
   "comma-spacing": "off",
@@ -158,6 +183,9 @@ const styleRules = {
   "func-call-spacing": "off",
   "@typescript-eslint/func-call-spacing": "warn",
 
+  // Prefer `(...) {` over `(...){`
+  "space-before-blocks": ["warn", "always"],
+
   // Prefer `let x: string` over `let x:string`
   "@typescript-eslint/type-annotation-spacing": "warn",
 
@@ -192,6 +220,9 @@ const styleRules = {
   // Prefer Array.prototype.includes over Array.prototype.indexOf for
   // inclusion checks
   "@typescript-eslint/prefer-includes": "warn",
+
+  // Prefer object spreads to `Object.assign()`
+  "prefer-object-spread": "warn",
 };
 
 const disabledRules = {
