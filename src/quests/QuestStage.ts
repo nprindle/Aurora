@@ -5,7 +5,7 @@ export class QuestPath {
     constructor(
         readonly requirement: WorldPredicate,
         readonly nextStage: () => QuestStage,
-    ){}
+    ) {}
 }
 
 export class QuestStage {

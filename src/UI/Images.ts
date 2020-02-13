@@ -1,7 +1,7 @@
 /* All images should be declared here so that they start loading as soon as the application starts
  */
 
-let imageQueue: Promise<HTMLImageElement>[] = [];
+const imageQueue: Promise<HTMLImageElement>[] = [];
 
 function makeImage(src: string): HTMLImageElement {
     const img = new Image();

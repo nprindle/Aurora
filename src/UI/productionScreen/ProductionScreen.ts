@@ -62,7 +62,7 @@ export default class ProductionScreen implements Page {
             UI.makePara(`Unused workers at end of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
             UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
             this.renderInventory(inventoryCopy),
-            UI.makeButton("Back", () => {GameWindow.show(new WorldScreen(this.run));}, ["production-screen-back-button"]),
+            UI.makeButton("Back", () => { GameWindow.show(new WorldScreen(this.run)); }, ["production-screen-back-button"]),
         ]);
     }
 
