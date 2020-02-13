@@ -1,13 +1,13 @@
 import Game from "../../Game.js";
 import { UI } from "../UI.js";
-import { GameWindow } from "../GameWindow.js";
+import { GameWindow, Page } from "../GameWindow.js";
 import MainMenu from "../menu/MainMenu.js";
 import TransitionScreen from "../transitionScreen/TransitionScreen.js";
 import ProductionScreen from "../productionScreen/ProductionScreen.js";
 import ResearchScreen from "../researchScreen/ResearchScreen.js";
 
-export default class WorldScreenHeader {
-    private html: HTMLElement;
+export default class WorldScreenHeader implements Page {
+    readonly html: HTMLElement;
     private run: Game;
     /* This is used to determine when to apply "emphasis" css to newly-advanced quest objectives
      * It's tracked statically to persist when we leave the World Screen and then come back to a new world screen instance
@@ -59,9 +59,5 @@ export default class WorldScreenHeader {
             transitionButton,
             questHTML,
         ]);
-    }
-
-    getHTML(): HTMLElement {
-        return this.html;
     }
 }

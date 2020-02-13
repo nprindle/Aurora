@@ -21,28 +21,24 @@ export default class WorldScreen implements Page {
     constructor(run: Game) {
         this.mapUI = new MapUI(this, run.world);
         this.tileSidebar = new TileSidebar(this, run);
-
-        const mapHTML = this.mapUI.getViewCanvas();
         this.inventorySidebar = new InventorySidebar(run);
-        const tileSidebarHTML = this.tileSidebar.getHTML();
-        const inventoryHTML = this.inventorySidebar.getHTML();
         this.header = new WorldScreenHeader(run);
 
         this.html = UI.makeDivContaining([
 
-            this.header.getHTML(),
+            this.header.html,
 
             UI.makeDivContaining([
-                inventoryHTML,
-                UI.makeDivContaining([mapHTML], ["world-screen-map-box"]),
-                tileSidebarHTML,
+                this.inventorySidebar.html,
+                UI.makeDivContaining([this.mapUI.html], ["world-screen-map-box"]),
+                this.tileSidebar.html,
             ], ["world-screen-hbox"]),
 
         ], ["flex-vertical"]);
     }
 
     refresh(): void {
-        this.mapUI.refreshViewableArea();
+        this.mapUI.refresh();
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
         this.header.refresh();

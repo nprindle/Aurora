@@ -1,20 +1,17 @@
 import { UI } from "../UI.js";
 import Inventory from "../../resources/Inventory.js";
 import Game from "../../Game.js";
+import { Page } from "../GameWindow.js";
 
-export default class InventorySidebar {
+export default class InventorySidebar implements Page {
 
-    private html: HTMLElement;
+    readonly html: HTMLElement;
     private inventory: Inventory;
 
     constructor(game: Game) {
         this.inventory = game.inventory;
         this.html = UI.makeDiv(["world-screen-inventory"]);
         this.refresh();
-    }
-
-    getHTML(): HTMLElement {
-        return this.html;
     }
 
     refresh(): void {

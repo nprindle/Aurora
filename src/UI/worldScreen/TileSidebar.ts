@@ -6,11 +6,12 @@ import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Tile from "../../world/Tile.js";
 import Conversion from "../../resources/Conversion.js";
+import { Page } from "../GameWindow.js";
 
-export default class TileSidebar {
+export default class TileSidebar implements Page {
     position: GridCoordinates | null = null;
 
-    private html: HTMLElement;
+    readonly html: HTMLElement;
 
 
     constructor(
@@ -22,9 +23,7 @@ export default class TileSidebar {
         this.refresh();
     }
 
-    getHTML(): HTMLElement {
-        return this.html;
-    }
+
 
     changeTile(newPosition: GridCoordinates | null): void {
         this.position = newPosition;
