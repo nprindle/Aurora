@@ -51,10 +51,6 @@ export default class ProductionScreen implements Page {
         ]);
     }
 
-    getHTML(): HTMLElement {
-        return this.html;
-    }
-
     private renderInventory(inventory: Inventory): HTMLElement {
         const resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
 
