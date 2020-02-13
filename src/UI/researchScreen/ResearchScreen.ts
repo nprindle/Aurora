@@ -15,10 +15,6 @@ export default class ResearchScreen implements Page {
         this.refresh();
     }
 
-    getHTML(): HTMLElement {
-        return this.html;
-    }
-
     refresh(): void {
         let researchHeader = UI.makeHeader("Available Research Projects");
 
