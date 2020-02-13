@@ -14,7 +14,7 @@ export default class Inventory {
 
     constructor(
         private world: World, // used to determine population size limits
-    ){}
+    ) {}
 
     addResource(resource: Resource, quantity: number): void {
         this.resourceQuantities.add(resource, quantity);
@@ -110,7 +110,7 @@ export default class Inventory {
 
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
     applyConversions(conversions: Conversion[]): void {
-        for (const conversion of conversions){
+        for (const conversion of conversions) {
             if (this.canAfford(conversion.inputs) && this.hasEnoughWorkers(conversion.requiredWorkers) && conversion.enabled) {
                 this.payCost(conversion.inputs);
                 this.occupyWorkers(conversion.requiredWorkers);

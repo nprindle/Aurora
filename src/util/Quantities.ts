@@ -8,7 +8,7 @@
 export default class Quantities<T> {
     private map: Map<T, number> = new Map<T, number>([]);
 
-    constructor(){}
+    constructor() {}
 
     add(key: T, quantity: number): void {
         this.set(key, this.get(key) + quantity);

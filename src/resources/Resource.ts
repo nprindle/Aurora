@@ -14,7 +14,7 @@ export default class Resource {
     // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
         public readonly name: string,
-    ){}
+    ) {}
 
     // returns a list of all resource instances
     static values(): Resource[] {
