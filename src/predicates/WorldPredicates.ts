@@ -8,7 +8,7 @@ export class MinResourcePredicate extends WorldPredicate {
     constructor(
         private resource: Resource,
         private minQuantity: number,
-    ){
+    ) {
         super();
     }
 
@@ -24,7 +24,7 @@ export class MinTilePredicate extends WorldPredicate {
     constructor(
         private tileType: NamedTileType,
         private minQuantity: number,
-    ){
+    ) {
         super();
     }
 

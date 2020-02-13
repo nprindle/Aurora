@@ -4,7 +4,7 @@ import MainMenu from "./MainMenu.js";
 
 
 class CreditsEntry {
-    constructor(public name: string, public roles: string[]){}
+    constructor(public name: string, public roles: string[]) {}
 }
 
 const credits: CreditsEntry[] = [

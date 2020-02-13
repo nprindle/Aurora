@@ -7,7 +7,7 @@ export default class Species {
     private constructor(
         public readonly name: string,
         public readonly growthMultiplier: number, // % increase in population per turn
-    ){}
+    ) {}
 
     // returns a list of all species instances
     static values(): Species[] {

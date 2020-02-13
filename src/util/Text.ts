@@ -24,7 +24,7 @@ export function indentWithNBS(str: string):  string {
 export function stripIndent(strings: TemplateStringsArray, ...placeholders: string[]): string {
     // Remove leading/trailing newlines and concatenate arguments, accounting
     // for tabs as indentation
-    let str = strings
+    const str = strings
         .reduce((acc, s, i) => acc + s + (placeholders[i] || ""))
         .replace(/\t/, "    ")
         .replace(/^(?:\r?\n)+|(?:\r?\n)+$/g, "");
