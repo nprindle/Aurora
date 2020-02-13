@@ -1,4 +1,4 @@
-import { UI} from "../UI.js";
+import { UI } from "../UI.js";
 import MapUI from "./MapUI.js";
 import TileSidebar from "./TileSidebar.js";
 import GridCoordinates from "../../world/GridCoordinates.js";

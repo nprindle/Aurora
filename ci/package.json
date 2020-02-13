@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/GRarer/Aurora#readme",
   "dependencies": {
+    "@types/sortablejs": "^1.10.2",
     "@types/twemoji": "^12.1.0",
     "live-server": "^1.2.1",
+    "sortablejs": "^1.10.2",
     "twemoji": "^12.1.5",
     "twemoji-parser": "^12.1.3"
   },
