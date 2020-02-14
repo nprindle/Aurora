@@ -8,6 +8,7 @@ import Habitat from "./Habitat.js";
 import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import { LanderTexture } from "../../UI/Images.js";
+import Resource from "../../resources/Resource.js";
 
 export default class Lander extends Tile {
     texture: HTMLImageElement = LanderTexture;
@@ -25,6 +26,9 @@ export default class Lander extends Tile {
 
                 // remove pod
                 world.placeTile(new Wasteland(position));
+
+                // provide initial supplies
+                run.inventory.addResource(Resource.Food, 1000);
 
                 // create initial population
                 run.inventory.addWorkers(Species.Human, 100);

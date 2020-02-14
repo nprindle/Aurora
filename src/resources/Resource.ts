@@ -2,6 +2,7 @@ export default class Resource {
     // all resource instances are defined here
 
     static readonly Energy = new Resource("⚡ Energy");
+    static readonly Food = new Resource("🌯 Food");
     static readonly Metal = new Resource("⛏ Metal Ore");
     static readonly BuildingMaterials = new Resource("🔩 Construction Parts");
     static readonly Electronics = new Resource("💡 Electronics");
