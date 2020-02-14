@@ -51,6 +51,20 @@ export default class Inventory {
     doPopulationGrowth(): void {
 
         for (const species of this.populationQuantities.positiveQuantityKeys()) {
+            // population resource consumption
+            const upkeepResource = species.survivalCost.resource;
+            const consumptionPerWorker = species.survivalCost.quantity;
+
+            const requiredQuantity = consumptionPerWorker * this.populationQuantities.get(species);
+            const providedQuantity = Math.min(requiredQuantity, this.getResourceQuantity(upkeepResource));
+
+            this.payCost([new Cost(upkeepResource, providedQuantity)]);
+
+            const survivingPopulation = providedQuantity / consumptionPerWorker;
+            // we don't need to do a housing-capacity check here because it's impossible for the population to increase in this step
+            this.populationQuantities.set(species, survivingPopulation);
+
+            // exponential population growth
             const growth = Math.floor(species.growthMultiplier * this.populationQuantities.get(species));
             this.addWorkers(species, growth);
         }
