@@ -12,6 +12,7 @@ import SolarPanels from "./SolarArray.js";
 import { WastelandTexture } from "../../UI/Images.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
+import Greenhouse from "./Greenhouse.js";
 
 
 
@@ -49,6 +50,15 @@ export default class Wasteland extends Tile {
                 run.world.placeTile(new SolarPanels(position));
             },
             [new Cost(Resource.Electronics, 200)],
+            [],
+            [],
+        ),
+
+        new TileProject("Construct Greenhouse",
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new Greenhouse(position));
+            },
+            [new Cost(Resource.BuildingMaterials, 25)],
             [],
             [],
         ),

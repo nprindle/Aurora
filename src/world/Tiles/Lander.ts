@@ -9,6 +9,7 @@ import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import { LanderTexture } from "../../UI/Images.js";
 import Resource from "../../resources/Resource.js";
+import Greenhouse from "./Greenhouse.js";
 
 export default class Lander extends Tile {
     texture: HTMLImageElement = LanderTexture;
@@ -23,6 +24,7 @@ export default class Lander extends Tile {
                 world.placeTile(new Habitat(new GridCoordinates(position.x + 1, position.y)));
                 world.placeTile(new MiningFacility(new GridCoordinates(position.x, position.y - 1)));
                 world.placeTile(new SolarPanels(new GridCoordinates(position.x + 1, position.y - 1)));
+                world.placeTile(new Greenhouse(new GridCoordinates(position.x -1, position.y)));
 
                 // remove pod
                 world.placeTile(new Wasteland(position));
@@ -32,6 +34,8 @@ export default class Lander extends Tile {
 
                 // create initial population
                 run.inventory.addWorkers(Species.Human, 100);
+                // make workers available on first turn
+                run.inventory.releaseWorkers();
             },
             [],
             [],
