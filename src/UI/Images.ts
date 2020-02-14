@@ -25,6 +25,7 @@ export const SolarPanelsTexture = makeImage("assets/tiles/solar_panels.png");
 export const MountainTexture = makeImage("assets/tiles/mountain.png");
 export const MiningFacilityTexture = makeImage("assets/tiles/mining_facility.png");
 export const LanderTexture = makeImage("assets/tiles/lander.png");
+export const GreenhouseTexture = makeImage("assets/tiles/greenhouse.png");
 
 export async function preloadImages(): Promise<HTMLImageElement[]> {
     return Promise.all(imageQueue);
