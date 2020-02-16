@@ -3,6 +3,7 @@ import { UI } from "../UI.js";
 import Technology from "../../techtree/Technology.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
+import Resource from "../../resources/Resource.js";
 
 export default class ResearchScreen implements Page {
 
@@ -18,8 +19,17 @@ export default class ResearchScreen implements Page {
     refresh(): void {
         let researchHeader = UI.makeHeader("Available Research Projects");
 
-
         const possibleTechs: Technology[] = this.run.getResearchOptions();
+        const researchResources: Resource[] = Resource.values().filter(resource => possibleTechs.some((tech) => tech.researchCost.resource == resource));
+
+        const researchResourcesHTML: HTMLElement = UI.makeDiv();
+        if (researchResources.length != 0) {
+            researchResourcesHTML.appendChild(UI.makeHeader("Available Research Resources"));
+            researchResources.forEach(resource => researchResourcesHTML.appendChild(
+                UI.makePara(`${resource.name}: ${this.run.inventory.getResourceQuantity(resource)}`)
+            ));
+        }
+
         const researchOptionsHTML = UI.makeDivContaining(possibleTechs.map(tech => this.renderTechOption(tech)));
 
         if (possibleTechs.length == 0) {
@@ -38,6 +48,7 @@ export default class ResearchScreen implements Page {
         }, []);
 
         UI.fillHTML(this.html, [
+            researchResourcesHTML,
             researchHeader,
             researchOptionsHTML,
             historyHeader,
@@ -50,7 +61,7 @@ export default class ResearchScreen implements Page {
         const div = UI.makeDivContaining([
             UI.makePara(tech.name),
             UI.makePara(tech.description),
-            UI.makePara(`Development cost: ${tech.researchCost}`),
+            UI.makePara(`Development cost: ${tech.researchCost}`)
         ]);
         let unmetPrereqs: number = 0;
         for (const prereq of tech.requiredTechs) {
