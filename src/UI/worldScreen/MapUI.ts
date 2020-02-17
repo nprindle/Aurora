@@ -10,9 +10,9 @@ import { Page } from "../GameWindow.js";
 // class to manage the UI canvas that shows the map
 export default class MapUI implements Page {
 
-    private static pixelsPerTile: number = 64;
+    private static readonly pixelsPerTile: number = 64;
 
-    private static highlightImage: HTMLImageElement = HighlightSelectionImage;
+    private static readonly highlightImage: HTMLImageElement = HighlightSelectionImage;
 
     private world: World;
 
