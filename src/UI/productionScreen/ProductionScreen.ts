@@ -6,6 +6,7 @@ import Inventory from "../../resources/Inventory.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
 
 import Sortable from "sortablejs";
+import Species from "../../resources/Species.js";
 
 // the production screen is where the player selects the priority order for resource conversions
 export default class ProductionScreen implements Page {
@@ -50,6 +51,57 @@ export default class ProductionScreen implements Page {
             }
         });
 
+        const populationConsumptionHtml = UI.makeDiv();
+        if (this.run.inventory.getSpeciesList().length != 0) {
+
+            // make another clone so that we can step through each species' resource consumption
+            // but still be able to run the actual populationGrowth method on inventoryClone afterwards
+            const consumptionInventoryCopy = inventoryCopy.clone();
+
+            populationConsumptionHtml.appendChild(UI.makeHeader("Resources required for worker upkeep:"));
+            for (const species of consumptionInventoryCopy.getSpeciesList()) {
+                const provided = consumptionInventoryCopy.getProvidedWorkerConsumption(species).quantity;
+                const required = consumptionInventoryCopy.getProvidedWorkerConsumption(species).quantity;
+                const resource = species.survivalCost.resource;
+
+                const consumptionDescription = `${species.name}: ${provided}/${required} ${resource.name}`;
+
+                const cssClass = (required > provided) ? "population-consumption-unmet" : "population-consumption-met";
+                populationConsumptionHtml.appendChild(UI.makePara(consumptionDescription, [cssClass]));
+
+                consumptionInventoryCopy.payCost([consumptionInventoryCopy.getProvidedWorkerConsumption(species)]);
+            }
+        }
+
+        // list deaths if any workers have died
+        const workerDeathHtml = UI.makeDiv();
+        const speciesList = inventoryCopy.getSpeciesList();
+        const initialPopulation: Map<Species, number> = new Map();
+        for (const species of speciesList) {
+            initialPopulation.set(species, inventoryCopy.getPopulation(species));
+        }
+        inventoryCopy.doPopulationGrowth();
+        const finalPopulation: Map<Species, number> = new Map();
+        for (const species of speciesList) {
+            finalPopulation.set(species, inventoryCopy.getPopulation(species));
+        }
+
+        if (speciesList.some(species => (initialPopulation.get(species)! > finalPopulation.get(species)!))) {
+            workerDeathHtml.appendChild(UI.makeHeader("Predicted Population Decline:"));
+        }
+
+        for (const species of speciesList) {
+            const initial = initialPopulation.get(species)!;
+            const final = finalPopulation.get(species)!;
+            const deaths = initial - final;
+
+            if (deaths > 0) {
+                workerDeathHtml.appendChild(UI.makePara(`${deaths} ${species.name} will die from lack of ${species.survivalCost.resource.name}!`, ["population-death-label"]));
+            }
+        }
+
+
+
         UI.fillHTML(this.html, [
             UI.makePara("Resource Production Report", [`production-screen-label`]),
             UI.makePara(`Available workers at start of next production cycle: ${this.run.inventory.getAvailableWorkers()}`, [`production-screen-label`]),
@@ -60,6 +112,8 @@ export default class ProductionScreen implements Page {
             UI.makePara("Resource conversion in next production cycle:", [`production-screen-label`]),
             costlyConversionsDiv,
             UI.makePara(`Unused workers at end of next production cycle: ${inventoryCopy.getAvailableWorkers()}`, [`production-screen-label`]),
+            populationConsumptionHtml,
+            workerDeathHtml,
             UI.makePara("Resources available at end of next production cycle:", [`production-screen-label`]),
             this.renderInventory(inventoryCopy),
             UI.makeButton("Back", () => { GameWindow.show(new WorldScreen(this.run)); }, ["production-screen-back-button"]),
