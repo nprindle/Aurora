@@ -8,7 +8,7 @@ export default class Quote {
         readonly attribution: string
     ) {}
 
-    private static QuotesList = [
+    private static readonly QuotesList = [
         new Quote("I am an example quote", "Person McQuoteFace"),
         new Quote("Lorem ipsum dolor sit amet", "Mx. Example"),
         new Quote(
