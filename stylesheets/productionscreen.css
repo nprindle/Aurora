@@ -36,6 +36,21 @@
 .conversion-description-disabled {
     color: yellow;
 }
+
+.population-consumption-met {
+    font-size: 16pt;
+}
+
+.population-consumption-unmet {
+    font-size: 16pt;
+    color: tomato;
+}
+
+.population-death-label {
+    font-size: 16pt;
+    color: tomato;
+}
+
 .production-screen-back-button {
     font-size: 20pt;
     margin-top: 20pt;

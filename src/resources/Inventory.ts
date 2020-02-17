@@ -48,19 +48,35 @@ export default class Inventory {
         this.availableWorkers = this.availableWorkers - quantity;
     }
 
+    getSpeciesList(): Species[] {
+        return this.populationQuantities.positiveQuantityKeys();
+    }
+
+    getPopulation(species: Species): number {
+        return this.populationQuantities.get(species);
+    }
+
+    // the total resources needed for this species to prevent worker deaths
+    getRequiredWorkerConsumption(species: Species): Cost {
+        const totalQuantity = species.survivalCost.quantity * this.populationQuantities.get(species);
+        return new Cost(species.survivalCost.resource, totalQuantity);
+    }
+
+    // the upkeep resources that will actually be provided for this species
+    // if there are not enough resources, this will be less than what is required, resulting in worker deaths
+    getProvidedWorkerConsumption(species: Species): Cost {
+        const required = this.getRequiredWorkerConsumption(species).quantity;
+        const available = this.getResourceQuantity(species.survivalCost.resource);
+        const quantity = Math.min(required, available);
+        return new Cost(species.survivalCost.resource, quantity);
+    }
+
     doPopulationGrowth(): void {
+        for (const species of this.getSpeciesList()) {
+            const providedUpkeepCost = this.getProvidedWorkerConsumption(species);
+            this.payCost([providedUpkeepCost]);
 
-        for (const species of this.populationQuantities.positiveQuantityKeys()) {
-            // population resource consumption
-            const upkeepResource = species.survivalCost.resource;
-            const consumptionPerWorker = species.survivalCost.quantity;
-
-            const requiredQuantity = consumptionPerWorker * this.populationQuantities.get(species);
-            const providedQuantity = Math.min(requiredQuantity, this.getResourceQuantity(upkeepResource));
-
-            this.payCost([new Cost(upkeepResource, providedQuantity)]);
-
-            const survivingPopulation = providedQuantity / consumptionPerWorker;
+            const survivingPopulation = Math.floor(providedUpkeepCost.quantity / species.survivalCost.quantity);
             // we don't need to do a housing-capacity check here because it's impossible for the population to increase in this step
             this.populationQuantities.set(species, survivingPopulation);
 
