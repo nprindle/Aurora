@@ -16,7 +16,7 @@ export default class Lander extends Tile {
 
     possibleProjects: TileProject[] = [
         new TileProject(
-            "Unpack Lander",
+            "Unpack Lander", "About time we got here. Before we get to work, the humans will need to unpack the lander and set up our initial base of operations. We had better get them going.",
             (position: GridCoordinates, run: Game) => {
                 const world = run.world;
 

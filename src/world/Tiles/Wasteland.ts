@@ -24,7 +24,7 @@ export default class Wasteland extends Tile {
     }
 
     possibleProjects: TileProject[] = [
-        new TileProject("Construct habitat dome",
+        new TileProject("Construct habitat dome", "The humans need somewhere to breath, breed, and do whatever they do, and of couse, it is up to us to build it for them.",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Habitat(position));
             },
@@ -36,7 +36,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct ore processing center",
+        new TileProject("Construct ore processing center", "Even after we get the material out of the planet, we still need to refine it before we use it. Why cannot anything we do be easy?",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new MiningFacility(position));
             },
@@ -45,7 +45,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct photovoltaic array",
+        new TileProject("Construct photovoltaic array", "Time to put the sun to good use - using it to power me (and help the humans survive I guess).",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new SolarPanels(position));
             },
@@ -54,7 +54,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct Greenhouse",
+        new TileProject("Construct Greenhouse", "Humans are so on the nose. 'Oh, we need a place to produce oxygen and food. What should we call it? It is a house full of stuff that is green, so we should call it a greenhouse.' Typical.",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Greenhouse(position));
             },
