@@ -32,7 +32,7 @@ export default class MiningFacility extends Tile {
 
     possibleProjects = [
         new TileProject(
-            "Double Production Lines",
+            "Double Production Lines", "The humans dug up some ore from the planet. We should probably make sure they can actually use it.",
             (position: GridCoordinates, run: Game) => {
                 // find this tile
                 const thisTile = run.world.getTileAtCoordinates(position);
