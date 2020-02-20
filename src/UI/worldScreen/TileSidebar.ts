@@ -85,6 +85,8 @@ export default class TileSidebar implements Page {
         );
         projectHTML.appendChild(button);
 
+        projectHTML.appendChild(UI.makePara(project.projectDescription));
+
         if (project.costs.length === 0) {
             projectHTML.appendChild(UI.makePara("Cost: Free"));
         } else {
