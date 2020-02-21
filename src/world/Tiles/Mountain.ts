@@ -15,7 +15,7 @@ export default class Mountain extends Tile {
     }
 
     possibleProjects: TileProject[] = [
-        new TileProject("Strip Mining", "Why does this planet need to hide its resources in giant spikes. We had better start digging to get some material out of this planet.",
+        new TileProject("Strip Mining", `Destroy the mountain to produce ${Resource.Metal.name}`,
             (position: GridCoordinates, run: Game) => {
                 run.inventory.addResource(Resource.Metal, 150);
                 run.world.placeTile(new Wasteland(position));
@@ -27,7 +27,7 @@ export default class Mountain extends Tile {
     ];
 
     static readonly tileName: string = "Mountain";
-    static readonly tileDescription: string = "A large geological formation containing useful mineral resources.";
+    static readonly tileDescription: string = "A large geological formation containing useful mineral resources";
     getTileName(): string {
         return Mountain.tileName;
     }
