@@ -32,7 +32,7 @@ export default class MiningFacility extends Tile {
 
     possibleProjects = [
         new TileProject(
-            "Double Production Lines", "The humans dug up some ore from the planet. We should probably make sure they can actually use it.",
+            "Double Production Lines", "Add a second production line to increase resource throughput in this facility",
             (position: GridCoordinates, run: Game) => {
                 // find this tile
                 const thisTile = run.world.getTileAtCoordinates(position);
@@ -54,7 +54,7 @@ export default class MiningFacility extends Tile {
     ];
 
     static readonly tileName: string = "Ore Processing Center";
-    static readonly tileDescription: string = "A facility used to process ore obtained from mining into useful materials.";
+    static readonly tileDescription: string = "A facility used to process ore into useful materials";
     getTileName(): string {
         return MiningFacility.tileName;
     }

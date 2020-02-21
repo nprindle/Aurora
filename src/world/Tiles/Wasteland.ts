@@ -33,7 +33,7 @@ export default class Wasteland extends Tile {
     }
 
     possibleProjects: TileProject[] = [
-        new TileProject("Construct habitat dome", "The humans need somewhere to breath, breed, and do whatever they do, and of couse, it is up to us to build it for them.",
+        new TileProject("Construct habitat dome", "Assemble a pressurized structure that provides housing, services, and life support for colonists",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Habitat(position));
             },
@@ -45,7 +45,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct ore processing center", "Even after we get the material out of the planet, we still need to refine it before we use it. Why cannot anything we do be easy?",
+        new TileProject("Construct ore processing center", `Assemble a factory that converts ore into useful materials`,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new MiningFacility(position));
             },
@@ -54,7 +54,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct photovoltaic array", "Time to put the sun to good use - using it to power me (and help the humans survive I guess).",
+        new TileProject("Construct photovoltaic array", "Assemble an array of solar panels to produce energy",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new SolarPanels(position));
             },
@@ -63,7 +63,7 @@ export default class Wasteland extends Tile {
             [],
         ),
 
-        new TileProject("Construct Greenhouse", "Humans are so on the nose. 'Oh, we need a place to produce oxygen and food. What should we call it? It is a house full of stuff that is green, so we should call it a greenhouse.' Typical.",
+        new TileProject("Construct Greenhouse", "Assemble a building where colonists can grow food and produce oxygen using genetically engineered plants",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Greenhouse(position));
             },
@@ -74,7 +74,7 @@ export default class Wasteland extends Tile {
     ];
 
     static readonly tileName: string = "Wasteland";
-    static readonly tileDescription: string = "Nothing of note here.";
+    static readonly tileDescription: string = "Nothing of note here";
     getTileName(): string {
         return Wasteland.tileName;
     }

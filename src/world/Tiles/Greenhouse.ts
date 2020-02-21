@@ -20,7 +20,7 @@ export default class Greenhouse extends Tile {
     ];
 
     static readonly tileName: string = "Greenhouse";
-    static readonly tileDescription: string = `Produces food for ${Species.Human.name}`;
+    static readonly tileDescription: string = `Produces ${Resource.Food.name} for ${Species.Human.name}`;
     getTileName(): string {
         return Greenhouse.tileName;
     }
