@@ -14,18 +14,17 @@ import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import { Random } from "../../util/Random.js";
 import { WastelandTexture1, WastelandTexture2, WastelandTexture3, WastelandTexture4, WastelandTexture5 } from "../../UI/Images.js";
-import { Arrays } from "../../util/Arrays.js";
 
 
 
 export default class Wasteland extends Tile {
 
-    texture: HTMLImageElement = Random.fromArray([
-        WastelandTexture1,
-        WastelandTexture2,
-        WastelandTexture3,
-        WastelandTexture4,
-        ...Arrays.repeat(WastelandTexture5, 4)
+    texture: HTMLImageElement = Random.fromWeightedArray([
+        [1 / 8, WastelandTexture1],
+        [1 / 8, WastelandTexture2],
+        [1 / 8, WastelandTexture3],
+        [1 / 8, WastelandTexture4],
+        [4 / 8, WastelandTexture5],
     ]);
 
     constructor(position: GridCoordinates) {
