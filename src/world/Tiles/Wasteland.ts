@@ -9,15 +9,24 @@ import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js"
 import MiningFacility from "./MiningFacility.js";
 import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
-import { WastelandTexture } from "../../UI/Images.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
+import { Random } from "../../util/Random.js";
+import { WastelandTexture1, WastelandTexture2, WastelandTexture3, WastelandTexture4, WastelandTexture5 } from "../../UI/Images.js";
+import { Arrays } from "../../util/Arrays.js";
 
 
 
 export default class Wasteland extends Tile {
-    texture: HTMLImageElement = WastelandTexture;
+
+    texture: HTMLImageElement = Random.fromArray([
+        WastelandTexture1,
+        WastelandTexture2,
+        WastelandTexture3,
+        WastelandTexture4,
+        ...Arrays.repeat(WastelandTexture5, 4)
+    ]);
 
     constructor(position: GridCoordinates) {
         super(position);

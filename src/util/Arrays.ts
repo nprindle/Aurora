@@ -30,4 +30,13 @@ export namespace Arrays {
         }
         return { yes, no };
     }
+
+    // create an array containing the same item repeated
+    export function repeat<T>(item: T, count: number): T[] {
+        const array = new Array(count);
+        for (let i = 0; i < count; i++) {
+            array[i] = item;
+        }
+        return array;
+    }
 }
