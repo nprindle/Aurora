@@ -41,7 +41,7 @@ export default class MapUI implements Page {
     // re-draws all tiles in the viewable area
     public refresh(): void {
         const tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
-        for (const tile of tilesInViewableArea)  {
+        for (const tile of tilesInViewableArea) {
             this.drawSquareAtCoordinates(tile.texture, tile.position);
         }
         // render the highlight reticle thing
