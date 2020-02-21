@@ -20,7 +20,11 @@ export const HighlightSelectionImage = makeImage("assets/ui/highlight.png");
 
 // tile textures
 export const HabitatTexture = makeImage("assets/tiles/habitat.png");
-export const WastelandTexture = makeImage("assets/tiles/wasteland.png");
+export const WastelandTexture1 = makeImage("assets/tiles/wasteland1.png");
+export const WastelandTexture2 = makeImage("assets/tiles/wasteland2.png");
+export const WastelandTexture3 = makeImage("assets/tiles/wasteland3.png");
+export const WastelandTexture4 = makeImage("assets/tiles/wasteland4.png");
+export const WastelandTexture5 = makeImage("assets/tiles/wasteland5.png");
 export const SolarPanelsTexture = makeImage("assets/tiles/solar_panels.png");
 export const MountainTexture = makeImage("assets/tiles/mountain.png");
 export const MiningFacilityTexture = makeImage("assets/tiles/mining_facility.png");
