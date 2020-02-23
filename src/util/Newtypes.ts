@@ -70,3 +70,19 @@ export function newtype<N extends Newtype<any, any>>(): NewtypeWrapper<N> {
     };
 }
 
+/**
+ * Lift a function on a representation type to a function on a newtype that
+ * wraps it.
+ */
+export function liftN<N extends Newtype<any, any>>(f: (x: NewtypeRepr<N>) => NewtypeRepr<N>): (x: N) => N {
+    return f as unknown as (x: N) => N;
+}
+
+/**
+ * Lift a function of two arguments on a representation type to a function on a
+ * newtype that wraps it.
+ */
+export function liftN2<N extends Newtype<any, any>>(f: (x: NewtypeRepr<N>, y: NewtypeRepr<N>) => NewtypeRepr<N>): (x: N, y: N) => N {
+    return f as unknown as (x: N, y: N) => N;
+}
+
