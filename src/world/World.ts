@@ -4,9 +4,9 @@ import Wasteland from "./Tiles/Wasteland.js";
 import Mountain from "./Tiles/Mountain.js";
 import { Random } from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
-import WorldGenerationParameters from "./WorldGenerationParameters.js";
 import Species from "../resources/Species.js";
 import Ruins from "./Tiles/Ruins.js";
+import { WorldGenerationParameters } from "./WorldGenerationParameters.js";
 
 export default class World {
 
@@ -16,9 +16,9 @@ export default class World {
     // world grid is indexed grid[row][column]
     grid: Tile[][];
 
-    constructor(params: WorldGenerationParameters) {
-        this.width = params.worldWidth;
-        this.height = params.worldHeight;
+    constructor() {
+        this.width = WorldGenerationParameters.width;
+        this.height = WorldGenerationParameters.height;
 
         // generate empty map
         this.grid = new Array(this.height);
@@ -29,8 +29,13 @@ export default class World {
             }
         }
 
+        // place the tiles specified in the parameters
+        for (const tile of WorldGenerationParameters.nonrandomTiles) {
+            this.placeTile(tile);
+        }
+
         // place random mountains
-        const mountainNumber = Random.intBetween(params.minMountains, params.maxMountains);
+        const mountainNumber = Random.intBetween(...WorldGenerationParameters.mountainRange);
         for (let i = 0; i < mountainNumber; i++) {
             const wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             if (Arrays.isNonEmpty(wastelandTiles)) {
@@ -40,18 +45,13 @@ export default class World {
         }
 
         // place random alien ruins
-        const ruinsNumber = Random.intBetween(params.minRuins, params.maxRuins);
+        const ruinsNumber = Random.intBetween(...WorldGenerationParameters.ruinRange);
         for (let i = 0; i < ruinsNumber; i++) {
             const wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             if (Arrays.isNonEmpty(wastelandTiles)) {
                 const position = Random.fromArray(wastelandTiles).position;
                 this.placeTile(new Ruins(position));
             }
-        }
-
-        // place the tiles specified in the parameters
-        for (const tile of params.nonrandomTiles) {
-            this.placeTile(tile);
         }
     }
 

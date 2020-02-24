@@ -1,7 +1,6 @@
 import World from "./world/World.js";
 import Inventory from "./resources/Inventory.js";
 import Conversion from "./resources/Conversion.js";
-import WorldGenerationParameters from "./world/WorldGenerationParameters.js";
 import { QuestStage } from "./quests/QuestStage.js";
 import { TutorialQuestUnpackLander } from "./quests/Quests.js";
 import Technology from "./techtree/Technology.js";
@@ -23,7 +22,7 @@ export default class Game {
     private completedTechs: Technology[] = [];
 
     constructor() {
-        this.world = new World(WorldGenerationParameters.standardWorldParameters());
+        this.world = new World();
         this.inventory = new Inventory(this.world);
         this.questStage = TutorialQuestUnpackLander;
     }
