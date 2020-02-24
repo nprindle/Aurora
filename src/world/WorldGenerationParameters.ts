@@ -37,5 +37,5 @@ export namespace WorldGenerationParameters {
     export const height: number = 20;
 
     export const mountainRange: [number, number] = [20, 25];
-    export const ruinRange: [number, number] = [20, 25];
+    export const ruinRange: [number, number] = [5, 7];
 }
