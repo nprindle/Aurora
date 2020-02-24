@@ -3,6 +3,7 @@ import GridCoordinates from "./GridCoordinates.js";
 import Wasteland from "./Tiles/Wasteland.js";
 import Mountain from "./Tiles/Mountain.js";
 import Lander from "./Tiles/Lander.js";
+import Monolith from "./Tiles/Monolith.js";
 
 export default class WorldGenerationParameters {
     constructor(
@@ -11,6 +12,8 @@ export default class WorldGenerationParameters {
         public worldHeight: number,
         public minMountains: number,
         public maxMountains: number,
+        public minRuins: number,
+        public maxRuins: number,
     ) {}
 
     static standardWorldParameters(): WorldGenerationParameters {
@@ -34,12 +37,16 @@ export default class WorldGenerationParameters {
             new Wasteland(new GridCoordinates(0, 4)),
             new Wasteland(new GridCoordinates(1, 4)),
             new Wasteland(new GridCoordinates(2, 4)),
+
+
+            new Monolith(new GridCoordinates(13, 15)),
         ];
 
         return new WorldGenerationParameters(
             nonrandomTiles,
             20, 20, // world width and height
             20, 25, // min and max number of randomly-placed mountains
+            5, 7 // min and max number of ruins
         );
     }
 }

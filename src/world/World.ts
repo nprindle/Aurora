@@ -6,6 +6,7 @@ import { Random } from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
 import WorldGenerationParameters from "./WorldGenerationParameters.js";
 import Species from "../resources/Species.js";
+import Ruins from "./Tiles/Ruins.js";
 
 export default class World {
 
@@ -35,6 +36,16 @@ export default class World {
             if (Arrays.isNonEmpty(wastelandTiles)) {
                 const position = Random.fromArray(wastelandTiles).position;
                 this.placeTile(new Mountain(position));
+            }
+        }
+
+        // place random alien ruins
+        const ruinsNumber = Random.intBetween(params.minRuins, params.maxRuins);
+        for (let i = 0; i < ruinsNumber; i++) {
+            const wastelandTiles = this.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
+            if (Arrays.isNonEmpty(wastelandTiles)) {
+                const position = Random.fromArray(wastelandTiles).position;
+                this.placeTile(new Ruins(position));
             }
         }
 
