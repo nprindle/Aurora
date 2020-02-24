@@ -22,7 +22,7 @@ export const BehaviorModelingTech = Technology.makeUnlockableTechnology(
     "Colonist Behavior Modeling",
     "Simulations of human behavior in the isolated conditions of a deep space colony",
     [],
-    new Cost(Resource.SocialKnowledge, 30),
+    new Cost(Resource.PsychKnowledge, 30),
 );
 
 export const UrbanPlanningTech = Technology.makeUnlockableTechnology(
