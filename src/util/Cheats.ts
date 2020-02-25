@@ -26,6 +26,12 @@ class Cheats {
         this.refresh();
     }
 
+    freeResources(): void {
+        for (const resource of Resource.values()) {
+            this.addResource(resource, 1000000);
+        }
+    }
+
     loseGame(): void {
         this.currentGame.setQuestStage(GameOverStage);
     }
@@ -42,6 +48,7 @@ export function enableCheats(run: Game): void {
     const theWindow: any = window;
     theWindow.cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
     theWindow.cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
+    theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
     theWindow.cheatsLoseGame = () => cheatsObject.loseGame();
     theWindow.cheatsWinGame = () => cheatsObject.winGame();
 
