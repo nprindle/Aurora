@@ -10,6 +10,11 @@ import PsychLab from "./PsychLab.js";
 import XenoLab from "./XenoLab.js";
 import AlignmentLab from "./AlignmentLab.js";
 import Wasteland from "./Wasteland.js";
+import { TileWithinDistancePredicate, SpeciesPopulationPredicate } from "../../predicates/TilePredicates.js";
+import Ruins from "./Ruins.js";
+import { RationalityTech, StructureConstructionTech, SurveyTech } from "../../techtree/TechTree.js";
+import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import Species from "../../resources/Species.js";
 
 export default class ConstructionLaboratory extends Tile {
 
@@ -52,8 +57,8 @@ export default class ConstructionLaboratory extends Tile {
                 run.world.placeTile(new XenoLab(position));
             },
             [new Cost(Resource.BuildingMaterials, 40)],
-            [],
-            [],
+            [new TileWithinDistancePredicate(1, Ruins), new TechPredicate(SurveyTech)],
+            [new TechPredicate(StructureConstructionTech)],
         ),
 
         new TileProject("Construct AI Alignment Lab",
@@ -62,8 +67,8 @@ export default class ConstructionLaboratory extends Tile {
                 run.world.placeTile(new AlignmentLab(position));
             },
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
-            [],
-            [],
+            [new SpeciesPopulationPredicate(Species.Human, 200)],
+            [new TechPredicate(RationalityTech)],
         ),
     ];
 

@@ -2,6 +2,7 @@ import TilePredicate from "./TilePredicate.js";
 import GridCoordinates from "../world/GridCoordinates.js";
 import Game from "../Game.js";
 import Tile, { NamedTileType } from "../world/Tile.js";
+import Species from "../resources/Species.js";
 
 
 
@@ -44,5 +45,22 @@ export class ConversionCountPredicate extends TilePredicate {
     }
     toString(): string {
         return `${this.requiredCount} resource conversions on this tile`;
+    }
+}
+
+
+export class SpeciesPopulationPredicate extends TilePredicate {
+    constructor(
+        private species: Species,
+        private minCount: number,
+    ) {
+        super();
+    }
+
+    evaluate(run: Game, position: GridCoordinates): boolean {
+        return (run.inventory.getPopulation(this.species) >= this.minCount);
+    }
+    toString(): string {
+        return `have at least ${this.minCount} ${this.species.name}`;
     }
 }
