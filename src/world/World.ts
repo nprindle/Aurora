@@ -13,6 +13,12 @@ export default class World {
     width: number;
     height: number;
 
+    /* this is used to track the past texture of a given tile type at a given position
+     * this lets tiles that have different random textures keep the same texture over the course of the run
+     * even if the individual tile is replaced with another of the same type
+     */
+    private pastTextureMap: Map<string, HTMLImageElement> = new Map();
+
     // world grid is indexed grid[row][column]
     grid: Tile[][];
 
@@ -106,5 +112,15 @@ export default class World {
         }
 
         return capacity;
+    }
+
+    getPastTexture(tileType: typeof Tile, position: GridCoordinates): HTMLImageElement | undefined {
+        const key: string = `${[tileType, position]}`;
+        return this.pastTextureMap.get(key);
+    }
+
+    storePastTexture(tileType: typeof Tile, position: GridCoordinates, texture: HTMLImageElement): void {
+        const key: string = `${[tileType, position]}`;
+        this.pastTextureMap.set(key, texture);
     }
 }
