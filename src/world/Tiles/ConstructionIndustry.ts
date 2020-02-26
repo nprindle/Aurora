@@ -5,7 +5,7 @@ import { IndustryConstructionTexture } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js";
+import { TileWithinDistancePredicate, adjacentToRoad } from "../../predicates/TilePredicates.js";
 import MiningFacility from "./MiningFacility.js";
 import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
@@ -16,7 +16,7 @@ import { TechPredicate } from "../../predicates/WorldPredicates.js";
 
 export default class ConstructionIndustry extends Tile {
 
-    texture: HTMLImageElement = IndustryConstructionTexture;
+    protected texture: HTMLImageElement = IndustryConstructionTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -45,7 +45,7 @@ export default class ConstructionIndustry extends Tile {
                 run.world.placeTile(new MiningFacility(position));
             },
             [new Cost(Resource.Energy, 200), new Cost(Resource.Metal, 300)],
-            [new TileWithinDistancePredicate(5, Mountain)],
+            [new TileWithinDistancePredicate(5, Mountain), adjacentToRoad],
             [],
         ),
 
@@ -54,7 +54,7 @@ export default class ConstructionIndustry extends Tile {
                 run.world.placeTile(new NuclearPlant(position));
             },
             [new Cost(Resource.BuildingMaterials, 100), new Cost(Resource.Electronics, 100)],
-            [new TechPredicate(NuclearTech)],
+            [new TechPredicate(NuclearTech), adjacentToRoad],
             [new TechPredicate(StructureConstructionTech)],
         ),
     ];

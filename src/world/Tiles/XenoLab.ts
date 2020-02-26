@@ -7,7 +7,7 @@ import { XenoLabTexture } from "../../UI/Images.js";
 
 
 export default class XenoLab extends Tile {
-    texture: HTMLImageElement = XenoLabTexture;
+    protected texture: HTMLImageElement = XenoLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

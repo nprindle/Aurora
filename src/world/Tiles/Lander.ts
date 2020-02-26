@@ -3,16 +3,16 @@ import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Game from "../../Game.js";
-import Wasteland from "./Wasteland.js";
 import Habitat from "./Habitat.js";
 import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import { LanderTexture } from "../../UI/Images.js";
 import Resource from "../../resources/Resource.js";
 import Greenhouse from "./Greenhouse.js";
+import Road from "./Road.js";
 
 export default class Lander extends Tile {
-    texture: HTMLImageElement = LanderTexture;
+    protected texture: HTMLImageElement = LanderTexture;
 
     possibleProjects: TileProject[] = [
         new TileProject(
@@ -25,9 +25,8 @@ export default class Lander extends Tile {
                 world.placeTile(new MiningFacility(new GridCoordinates(position.x, position.y - 1)));
                 world.placeTile(new SolarPanels(new GridCoordinates(position.x + 1, position.y - 1)));
                 world.placeTile(new Greenhouse(new GridCoordinates(position.x - 1, position.y)));
-
-                // remove pod
-                world.placeTile(new Wasteland(position));
+                world.placeTile(new Road(position));
+                world.placeTile(new Road(new GridCoordinates(position.x, position.y + 1)));
 
                 // provide initial supplies
                 run.inventory.addResource(Resource.Food, 1000);

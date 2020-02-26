@@ -7,7 +7,7 @@ import Species from "../../resources/Species.js";
 import { GreenhouseTexture } from "../../UI/Images.js";
 
 export default class Greenhouse extends Tile {
-    texture: HTMLImageElement = GreenhouseTexture;
+    protected texture: HTMLImageElement = GreenhouseTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

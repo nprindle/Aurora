@@ -10,12 +10,13 @@ import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
+import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 
 
 
 export default class Wasteland extends Tile {
 
-    texture: HTMLImageElement = Random.fromWeightedArray([
+    protected texture: HTMLImageElement = Random.fromWeightedArray([
         [1 / 8, WastelandTexture1],
         [1 / 8, WastelandTexture2],
         [1 / 8, WastelandTexture3],
@@ -52,7 +53,7 @@ export default class Wasteland extends Tile {
                 run.world.placeTile(new Road(position));
             },
             [new Cost(Resource.BuildingMaterials, 10)],
-            [],
+            [adjacentToRoad],
             [],
         ),
     ];

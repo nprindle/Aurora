@@ -7,7 +7,7 @@ import { AlignmentLabTexture } from "../../UI/Images.js";
 
 
 export default class AlignmentLab extends Tile {
-    texture: HTMLImageElement = AlignmentLabTexture;
+    protected texture: HTMLImageElement = AlignmentLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

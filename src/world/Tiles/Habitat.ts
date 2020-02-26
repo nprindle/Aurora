@@ -6,7 +6,7 @@ import { HabitatTexture } from "../../UI/Images.js";
 
 export default class Habitat extends Tile {
 
-    texture: HTMLImageElement = HabitatTexture;
+    protected texture: HTMLImageElement = HabitatTexture;
 
     populationCapacity: Housing = new Housing(Species.Human, 200);
 

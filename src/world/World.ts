@@ -85,7 +85,10 @@ export default class World {
         return tiles;
     }
 
-    getTileAtCoordinates(coordinates: GridCoordinates): Tile {
+    getTileAtCoordinates(coordinates: GridCoordinates): Tile | undefined {
+        if (coordinates.x < 0 || coordinates.x >= this.width || coordinates.y < 0 || coordinates.y >= this.height) {
+            return undefined;
+        }
         return this.grid[coordinates.y][coordinates.x];
     }
 

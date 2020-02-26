@@ -38,7 +38,18 @@ export const SolarPanelsTexture = makeImage("assets/tiles/colony/solar_panels.pn
 export const MiningFacilityTexture = makeImage("assets/tiles/colony/mining_facility.png");
 export const LanderTexture = makeImage("assets/tiles/colony/lander.png");
 export const GreenhouseTexture = makeImage("assets/tiles/colony/greenhouse.png");
-export const RoadTexture = makeImage("assets/tiles/colony/roads.png");
+
+export const RoadTextureCross = makeImage("assets/tiles/roads/cross.png");
+export const RoadTextureHorizontal = makeImage("assets/tiles/roads/horizontal.png");
+export const RoadTextureVertical = makeImage("assets/tiles/roads/vertical.png");
+export const RoadTextureCornerBottomLeft = makeImage("assets/tiles/roads/corner_bottom_left.png");
+export const RoadTextureCornerBottomRight = makeImage("assets/tiles/roads/corner_bottom_right.png");
+export const RoadTextureCornerTopLeft = makeImage("assets/tiles/roads/corner_top_left.png");
+export const RoadTextureCornerTopRight = makeImage("assets/tiles/roads/corner_top_right.png");
+export const RoadTextureTSouth = makeImage("assets/tiles/roads/t_south.png");
+export const RoadTextureTNorth = makeImage("assets/tiles/roads/t_north.png");
+export const RoadTextureTEast = makeImage("assets/tiles/roads/t_east.png");
+export const RoadTextureTWest = makeImage("assets/tiles/roads/t_west.png");
 
 export const ArcologyTexture = makeImage("assets/tiles/colony/arcology.png");
 export const NuclearPlantTexture = makeImage("assets/tiles/colony/nuclear_plant.png");

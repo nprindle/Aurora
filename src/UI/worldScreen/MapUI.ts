@@ -42,7 +42,7 @@ export default class MapUI implements Page {
     public refresh(): void {
         const tilesInViewableArea = this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
         for (const tile of tilesInViewableArea) {
-            this.drawSquareAtCoordinates(tile.texture, tile.position);
+            this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);
         }
         // render the highlight reticle thing
         if (this.highlightedCoordinates !== null) {
@@ -90,7 +90,7 @@ export default class MapUI implements Page {
         const x = Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth)) + this.viewPosition.x;
         const y = Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight)) + this.viewPosition.y;
 
-        const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
+        const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y))!;
         this.selectTile(targetTile);
     }
 

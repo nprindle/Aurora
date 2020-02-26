@@ -6,7 +6,7 @@ import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js";
+import { TileWithinDistancePredicate, adjacentToRoad } from "../../predicates/TilePredicates.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech, UrbanPlanningTech } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
@@ -15,7 +15,7 @@ import Wasteland from "./Wasteland.js";
 
 export default class ConstructionHabitat extends Tile {
 
-    texture: HTMLImageElement = HabConstructionTexture;
+    protected texture: HTMLImageElement = HabConstructionTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -36,8 +36,8 @@ export default class ConstructionHabitat extends Tile {
             },
             [new Cost(Resource.BuildingMaterials, 100)],
             [
-                new TileWithinDistancePredicate(1, Habitat),
                 new TechPredicate(StructureConstructionTech),
+                adjacentToRoad,
             ],
             [],
         ),
@@ -47,7 +47,7 @@ export default class ConstructionHabitat extends Tile {
                 run.world.placeTile(new Arcology(position));
             },
             [new Cost(Resource.BuildingMaterials, 250)],
-            [new TechPredicate(UrbanPlanningTech)],
+            [new TechPredicate(UrbanPlanningTech), adjacentToRoad],
             [new TechPredicate(StructureConstructionTech)],
         ),
 
@@ -56,7 +56,7 @@ export default class ConstructionHabitat extends Tile {
                 run.world.placeTile(new Greenhouse(position));
             },
             [new Cost(Resource.BuildingMaterials, 25)],
-            [],
+            [adjacentToRoad],
             [],
         ),
     ];
