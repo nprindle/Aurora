@@ -11,6 +11,8 @@ import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
+import { StructureConstructionTech, NuclearTech } from "../../techtree/TechTree.js";
+import { TechPredicate } from "../../predicates/WorldPredicates.js";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -38,15 +40,6 @@ export default class ConstructionIndustry extends Tile {
             [],
         ),
 
-        new TileProject("Construct Nuclear Plant", "Construct a nuclear power plant",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new NuclearPlant(position));
-            },
-            [new Cost(Resource.BuildingMaterials, 100), new Cost(Resource.Electronics, 100)],
-            [],
-            [],
-        ),
-
         new TileProject("Construct ore processing center", `Assemble a factory that converts ore into useful materials`,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new MiningFacility(position));
@@ -54,6 +47,15 @@ export default class ConstructionIndustry extends Tile {
             [new Cost(Resource.Energy, 200), new Cost(Resource.Metal, 300)],
             [new TileWithinDistancePredicate(5, Mountain)],
             [],
+        ),
+
+        new TileProject("Construct Nuclear Plant", "Construct a nuclear power plant",
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new NuclearPlant(position));
+            },
+            [new Cost(Resource.BuildingMaterials, 100), new Cost(Resource.Electronics, 100)],
+            [new TechPredicate(NuclearTech)],
+            [new TechPredicate(StructureConstructionTech)],
         ),
     ];
 
