@@ -114,13 +114,13 @@ export default class World {
         return capacity;
     }
 
-    getPastTexture(tileType: typeof Tile, position: GridCoordinates): HTMLImageElement | undefined {
-        const key: string = `${[tileType, position]}`;
+    getPastTexture(tileType: typeof Tile & { name: string; }, position: GridCoordinates): HTMLImageElement | undefined {
+        const key: string = `${[tileType.name, position]}`;
         return this.pastTextureMap.get(key);
     }
 
-    storePastTexture(tileType: typeof Tile, position: GridCoordinates, texture: HTMLImageElement): void {
-        const key: string = `${[tileType, position]}`;
+    storePastTexture(tileType: typeof Tile & { name: string; }, position: GridCoordinates, texture: HTMLImageElement): void {
+        const key: string = `${[tileType.name, position]}`;
         this.pastTextureMap.set(key, texture);
     }
 }
