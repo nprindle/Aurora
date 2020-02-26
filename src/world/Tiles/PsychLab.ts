@@ -7,7 +7,7 @@ import { PsychLabTexture } from "../../UI/Images.js";
 
 
 export default class PsychLab extends Tile {
-    texture: HTMLImageElement = PsychLabTexture;
+    protected texture: HTMLImageElement = PsychLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

@@ -36,7 +36,7 @@ export default class TileSidebar implements Page {
                 UI.makePara(`No structure or terrain tile selected`),
             ]);
         } else {
-            const tile = this.run.world.getTileAtCoordinates(this.position);
+            const tile = this.run.world.getTileAtCoordinates(this.position)!;
 
             const descriptionHTML = UI.makeDiv();
             descriptionHTML.appendChild(UI.makePara(tile.getTileDescription()));

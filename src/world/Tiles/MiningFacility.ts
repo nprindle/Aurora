@@ -11,7 +11,7 @@ import { IndustrialEngineeringTech } from "../../techtree/TechTree.js";
 import { ConversionCountPredicate } from "../../predicates/TilePredicates.js";
 
 export default class MiningFacility extends Tile {
-    texture: HTMLImageElement = MiningFacilityTexture;
+    protected texture: HTMLImageElement = MiningFacilityTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
@@ -35,7 +35,7 @@ export default class MiningFacility extends Tile {
             "Double Production Lines", "Add a second production line to increase resource throughput in this facility",
             (position: GridCoordinates, run: Game) => {
                 // find this tile
-                const thisTile = run.world.getTileAtCoordinates(position);
+                const thisTile = run.world.getTileAtCoordinates(position)!;
                 // duplicate the same conversions that a newly build instance has
                 for (const conversion of new MiningFacility(new GridCoordinates(0, 0)).resourceConversions) {
                     thisTile.resourceConversions.push(conversion);

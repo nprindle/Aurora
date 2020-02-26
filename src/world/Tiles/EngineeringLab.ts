@@ -7,7 +7,7 @@ import { EngineeringLabTexture } from "../../UI/Images.js";
 
 
 export default class EngineeringLab extends Tile {
-    texture: HTMLImageElement = EngineeringLabTexture;
+    protected texture: HTMLImageElement = EngineeringLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

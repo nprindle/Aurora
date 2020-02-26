@@ -8,7 +8,7 @@ import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
 
 export default class Mountain extends Tile {
-    texture: HTMLImageElement = MountainTexture;
+    protected texture: HTMLImageElement = MountainTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

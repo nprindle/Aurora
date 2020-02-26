@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import { MonolithTexture } from "../../UI/Images.js";
 
 export default class Monolith extends Tile {
-    texture: HTMLImageElement = MonolithTexture;
+    protected texture: HTMLImageElement = MonolithTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

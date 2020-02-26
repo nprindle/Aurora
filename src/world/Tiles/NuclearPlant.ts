@@ -7,7 +7,7 @@ import { NuclearPlantTexture } from "../../UI/Images.js";
 
 
 export default class NuclearPlant extends Tile {
-    texture: HTMLImageElement = NuclearPlantTexture;
+    protected texture: HTMLImageElement = NuclearPlantTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

@@ -6,7 +6,7 @@ import Resource from "../../resources/Resource.js";
 import { SolarPanelsTexture } from "../../UI/Images.js";
 
 export default class SolarPanels extends Tile {
-    texture: HTMLImageElement = SolarPanelsTexture;
+    protected texture: HTMLImageElement = SolarPanelsTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

@@ -6,7 +6,7 @@ import { ArcologyTexture } from "../../UI/Images.js";
 
 export default class Arcology extends Tile {
 
-    texture: HTMLImageElement = ArcologyTexture;
+    protected texture: HTMLImageElement = ArcologyTexture;
 
     populationCapacity: Housing = new Housing(Species.Human, 2000);
 

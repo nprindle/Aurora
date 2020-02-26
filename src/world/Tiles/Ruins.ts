@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import { RuinsTexture } from "../../UI/Images.js";
 
 export default class Ruins extends Tile {
-    texture: HTMLImageElement = RuinsTexture;
+    protected texture: HTMLImageElement = RuinsTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
