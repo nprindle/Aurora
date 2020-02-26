@@ -11,6 +11,7 @@ import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
+import World from "../World.js";
 
 
 
@@ -65,5 +66,16 @@ export default class Wasteland extends Tile {
     }
     getTileDescription(): string {
         return Wasteland.tileDescription;
+    }
+
+    // we overload this to avoid having different wasteland textures in the same place in the same run
+    getTexture(world: World): HTMLImageElement {
+        const history = world.getPastTexture(Wasteland, this.position);
+        if (history) {
+            return history;
+        } else {
+            world.storePastTexture(Wasteland, this.position, this.texture);
+            return this.texture;
+        }
     }
 }

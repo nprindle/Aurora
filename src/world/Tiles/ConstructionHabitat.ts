@@ -6,7 +6,7 @@ import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { TileWithinDistancePredicate, adjacentToRoad } from "../../predicates/TilePredicates.js";
+import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech, UrbanPlanningTech } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
