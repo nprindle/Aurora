@@ -35,11 +35,6 @@ export default class World {
             }
         }
 
-        // place the tiles specified in the parameters
-        for (const tile of WorldGenerationParameters.nonrandomTiles) {
-            this.placeTile(tile);
-        }
-
         // place random mountains
         const mountainNumber = Random.intBetween(...WorldGenerationParameters.mountainRange);
         for (let i = 0; i < mountainNumber; i++) {
@@ -58,6 +53,11 @@ export default class World {
                 const position = Random.fromArray(wastelandTiles).position;
                 this.placeTile(new Ruins(position));
             }
+        }
+
+        // place the tiles specified in the parameters
+        for (const tile of WorldGenerationParameters.nonrandomTiles) {
+            this.placeTile(tile);
         }
     }
 
