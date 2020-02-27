@@ -6,6 +6,9 @@ import Resource from "../../resources/Resource.js";
 import Wasteland from "./Wasteland.js";
 import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
+import Mineshaft from "./Mineshaft.js";
+import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import { StructureConstructionTech } from "../../techtree/TechTree.js";
 
 export default class Mountain extends Tile {
     protected texture: HTMLImageElement = MountainTexture;
@@ -22,6 +25,15 @@ export default class Mountain extends Tile {
             },
             [new Cost(Resource.Energy, 25)],
             [],
+            [],
+        ),
+
+        new TileProject("Construct Mineshaft", "Create a mineshaft to allow long-term ore extraction",
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new Mineshaft(position));
+            },
+            [new Cost(Resource.Energy, 300), new Cost(Resource.BuildingMaterials, 50)],
+            [new TechPredicate(StructureConstructionTech)],
             [],
         ),
     ];

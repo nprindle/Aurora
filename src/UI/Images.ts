@@ -38,6 +38,7 @@ export const SolarPanelsTexture = makeImage("assets/tiles/colony/solar_panels.pn
 export const MiningFacilityTexture = makeImage("assets/tiles/colony/mining_facility.png");
 export const LanderTexture = makeImage("assets/tiles/colony/lander.png");
 export const GreenhouseTexture = makeImage("assets/tiles/colony/greenhouse.png");
+export const MineshaftTexture = makeImage("assets/tiles/colony/mineshaft.png");
 
 export const RoadTextureCross = makeImage("assets/tiles/roads/cross.png");
 export const RoadTextureHorizontal = makeImage("assets/tiles/roads/horizontal.png");
