@@ -23,7 +23,6 @@ export default class ConstructionHabitat extends Tile {
 
     possibleProjects: TileProject[] = [
 
-        // TODO creating a construction site and then reverting it can result in a different random wasteland texture, which could look weird
         new TileProject("Break down construction site", "Revert this location to wasteland",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Wasteland(position));
