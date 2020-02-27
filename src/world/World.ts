@@ -56,7 +56,7 @@ export default class World {
         }
 
         // place the tiles specified in the parameters
-        for (const tile of WorldGenerationParameters.nonrandomTiles) {
+        for (const tile of WorldGenerationParameters.nonrandomTiles()) {
             this.placeTile(tile);
         }
     }
