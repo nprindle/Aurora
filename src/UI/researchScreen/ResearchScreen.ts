@@ -74,6 +74,7 @@ export default class ResearchScreen implements Page {
         const unlockCallback: () => void = () => {
             this.run.unlockTechnology(tech);
             this.refresh();
+            this.run.updateQuestState();
         };
         div.appendChild(UI.makeButton("Conduct Research", unlockCallback, [], canUnlock ? "enabled" : "disabled"));
 

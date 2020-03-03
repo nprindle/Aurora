@@ -6,8 +6,7 @@ import { TutorialQuestUnpackLander } from "./quests/Quests.js";
 import Technology from "./techtree/Technology.js";
 import { ResearchableTechnologies } from "./techtree/TechTree.js";
 import { Arrays } from "./util/Arrays.js";
-import { GameWindow } from "./UI/GameWindow.js";
-import EndScreen from "./UI/endScreen/EndScreen.js";
+import Ending from "./quests/Ending.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
@@ -33,6 +32,10 @@ export default class Game {
 
     getCurrentQuestHint(): string | undefined {
         return this.questStage.hint;
+    }
+
+    getQuestEndState(): Ending | undefined {
+        return this.questStage.endState;
     }
 
     getPreviousQuestDescription(): string {
@@ -75,9 +78,6 @@ export default class Game {
             this.prevQuestDescription = this.questStage.description;
             this.questCompletionShown = false;
             this.questStage = nextStage;
-        }
-        if (this.questStage.endState) {
-            GameWindow.show(new EndScreen(this.questStage.endState));
         }
     }
 
