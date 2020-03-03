@@ -6,6 +6,7 @@ import GridCoordinates from "../../world/GridCoordinates.js";
 import WorldScreen from "./WorldScreen.js";
 import { HighlightSelectionImage } from "../Images.js";
 import { Page } from "../GameWindow.js";
+import { Settings } from "../../persistence/Settings.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI implements Page {
@@ -19,8 +20,8 @@ export default class MapUI implements Page {
     readonly html: HTMLCanvasElement; // the html for this component is an html canvas that we draw tiles onto
     private parentScreen: WorldScreen; // the WorldScreen instance that contains this MapUI
 
-    private viewWidth: number = 12; // width of viewable area in tiles
-    private viewHeight: number = 8; // height of viewable area in tiles
+    private viewWidth: number = Settings.currentOptions.viewWidth; // width of viewable area in tiles
+    private viewHeight: number = Settings.currentOptions.viewHeight; // height of viewable area in tiles
 
     private viewPosition: GridCoordinates = new GridCoordinates(0, 0); // coordinates of the current view area's top-left tile
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
