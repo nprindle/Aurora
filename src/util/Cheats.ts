@@ -3,6 +3,7 @@ import Game from "../Game.js";
 import Species from "../resources/Species.js";
 import { GameWindow } from "../UI/GameWindow.js";
 import { GameOverStage, VictoryStage } from "../quests/Quests.js";
+import Cost from "../resources/Cost.js";
 
 // container for cheat methods for debugging/testing via the browser console
 class Cheats {
@@ -18,6 +19,11 @@ class Cheats {
 
     addResource(resource: Resource, quantity: number): void {
         this.currentGame.inventory.addResource(resource, quantity);
+        this.refresh();
+    }
+
+    removeResource(resource: Resource, quantity: number): void {
+        this.currentGame.inventory.payCost([new Cost(resource, quantity)]);
         this.refresh();
     }
 
@@ -47,6 +53,7 @@ export function enableCheats(run: Game): void {
     const cheatsObject = new Cheats(run);
     const theWindow: any = window;
     theWindow.cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
+    theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) => cheatsObject.removeResource(resource, quantity);
     theWindow.cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
     theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
     theWindow.cheatsLoseGame = () => cheatsObject.loseGame();
