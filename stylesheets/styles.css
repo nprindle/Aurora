@@ -4,10 +4,18 @@
 @import 'transitionscreen.css';
 @import 'researchscreen.css';
 
+/* IBMPlexMono is open-source under the Open Font License */
+@font-face {
+    font-family: IBMPlexMono;
+    src: url(../assets/fonts/IBMPlexMono-Regular.ttf)
+  }
+
 :root {
+    --mono-font: IBMPlexMono, monospace;
+
     background-color: black;
     color: white;
-    font-family: monospace;
+    font-family: var(--mono-font);
 }
 
 button {
@@ -16,7 +24,7 @@ button {
      * would overwrite the color and font of buttons */
     background-color: black;
     color: white;
-    font-family: monospace;
+    font-family: var(--mono-font);
 }
 
 button:focus {
