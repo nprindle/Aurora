@@ -62,7 +62,6 @@ export default class TileSidebar implements Page {
 
             UI.fillHTML(this.html, [
                 UI.makePara(tile.getTileName()),
-                UI.makePara(`Coordinates: ${this.position.x}, ${this.position.y}`),
                 descriptionHTML,
                 housingHTML,
                 conversionsHTML,
