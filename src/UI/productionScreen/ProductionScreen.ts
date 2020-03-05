@@ -134,7 +134,7 @@ export default class ProductionScreen implements Page {
     }
 
     renderConversion(conversion: Conversion, canAfford: boolean): HTMLElement {
-        const div = UI.makeDiv(["flex-horizontal"]);
+        const div = UI.makeDiv(["conversion"]);
 
         let text = conversion.toString();
         let cssClass = "conversion-description-normal"; // css class that changes to show the conversion's status

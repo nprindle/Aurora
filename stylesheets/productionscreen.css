@@ -21,7 +21,7 @@
 
 .production-screen-inventory {
     outline: solid white;
-    width: 50%;
+    width: min(100%, max(50%, 7in));
 }
 
 .production-screen-inventory p {
@@ -46,6 +46,13 @@
     margin-bottom: 16pt;
 }
 
+.conversion {
+    width: min(100%, max(50%, 7in));
+    display: flex;
+    flex-direction: row;
+
+}
+
 .conversion-description {
     margin: 0pt; /* remove margin between description and surrounding box */
     font-size: 16pt;
@@ -53,8 +60,8 @@
 }
 
 .conversion-description-box {
-    width: 50%;
     border: 2px solid white;
+    width: 100%;
 }
 
 .conversion-description-normal {
