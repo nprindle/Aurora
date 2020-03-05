@@ -5,8 +5,8 @@ import { Random } from "../../util/Random.js";
 
 export default class Ruins extends Tile {
     protected texture: HTMLImageElement = Random.fromWeightedArray([
-        [1/2, RuinsTexture1],
-        [1/2, RuinsTexture2],
+        [1 / 2, RuinsTexture1],
+        [1 / 2, RuinsTexture2],
     ]);
 
     constructor(position: GridCoordinates) {
