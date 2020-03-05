@@ -48,11 +48,8 @@ export default class TileSidebar implements Page {
 
             const projectsHTML = UI.makeDiv();
             const visibleProjects = tile.possibleProjects.filter(project => project.isVisible(this.position!, this.run));
-            if (visibleProjects.length > 0) {
-                projectsHTML.appendChild(UI.makePara("Projects:"));
-                for (const project of visibleProjects) {
-                    projectsHTML.appendChild(this.makeProjectHTML(tile, project));
-                }
+            for (const project of visibleProjects) {
+                projectsHTML.appendChild(this.makeProjectHTML(tile, project));
             }
 
             const conversionsHTML = UI.makeDiv();
@@ -68,14 +65,14 @@ export default class TileSidebar implements Page {
                 UI.makePara(`Coordinates: ${this.position.x}, ${this.position.y}`),
                 descriptionHTML,
                 housingHTML,
-                projectsHTML,
                 conversionsHTML,
+                projectsHTML,
             ]);
         }
     }
 
     private makeProjectHTML(tile: Tile, project: TileProject): HTMLElement {
-        const projectHTML = UI.makeDiv();
+        const projectHTML = UI.makeDiv(["tile-project"]);
 
         const button = UI.makeButton(
             project.title,
