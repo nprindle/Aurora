@@ -1,9 +1,13 @@
 import Tile from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { RuinsTexture } from "../../UI/Images.js";
+import { RuinsTexture1, RuinsTexture2 } from "../../UI/Images.js";
+import { Random } from "../../util/Random.js";
 
 export default class Ruins extends Tile {
-    protected texture: HTMLImageElement = RuinsTexture;
+    protected texture: HTMLImageElement = Random.fromWeightedArray([
+        [1/2, RuinsTexture1],
+        [1/2, RuinsTexture2],
+    ]);
 
     constructor(position: GridCoordinates) {
         super(position);
