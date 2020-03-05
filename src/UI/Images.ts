@@ -26,7 +26,8 @@ export const WastelandTexture4 = makeImage("assets/tiles/environment/wasteland4.
 export const WastelandTexture5 = makeImage("assets/tiles/environment/wasteland5.png");
 export const MountainTexture = makeImage("assets/tiles/environment/mountain.png");
 
-export const RuinsTexture = makeImage("assets/tiles/alien/ruins.png");
+export const RuinsTexture1 = makeImage("assets/tiles/alien/ruins1.png");
+export const RuinsTexture2 = makeImage("assets/tiles/alien/ruins2.png");
 export const MonolithTexture = makeImage("assets/tiles/alien/monolith.png");
 
 export const HabConstructionTexture = makeImage("assets/tiles/construction/hab_site.png");
