@@ -1,3 +1,7 @@
+.world-screen {
+    overflow: hidden; /* hide scrollbar */
+}
+
 .world-screen-header {
     display: flex;
     flex-direction: row;
@@ -36,6 +40,7 @@
 .world-screen-sidebar {
     background-color: black;
     width: 20%;
+    min-width: 2in;
     padding: 10px;
     font-size: 16px;
     overflow-y: auto;
@@ -49,7 +54,6 @@
 
 .tile-project button {
     width: 100%;
-
 }
 
 .tile-project p {
@@ -67,7 +71,18 @@
 }
 
 .world-screen-inventory {
-    width: 20%;
+    width: 4in;
     margin: 10px;
     font-size: 16px;
+    white-space: nowrap;
+}
+
+.world-screen-inventory h1 {
+    margin-bottom: 0;
+    margin-top: 0.25em;
+}
+
+.world-screen-inventory p {
+    margin-top: 2pt;
+    margin-bottom: 0;
 }

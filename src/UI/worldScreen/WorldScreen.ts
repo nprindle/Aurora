@@ -34,7 +34,7 @@ export default class WorldScreen implements Page {
                 this.tileSidebar.html,
             ], ["world-screen-hbox"]),
 
-        ], ["flex-vertical"]);
+        ], ["flex-vertical", "world-screen"]);
     }
 
     refresh(): void {
