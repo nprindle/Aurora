@@ -1,3 +1,5 @@
+import { Objects } from "../util/Objects.js";
+
 export default class Resource {
     // all resource instances are defined here
     static readonly Energy = new Resource("⚡ Energy");
@@ -25,8 +27,7 @@ export default class Resource {
 
     // returns a list of all resource instances
     static values(): Resource[] {
-        const safeKeys = <T>(x: T): (keyof T)[] => Object.keys(x) as (keyof T)[];
-        return safeKeys(Resource)
+        return Objects.safeKeys(Resource)
             .map(k => Resource[k])
             .filter((v): v is Resource => v instanceof Resource);
     }
