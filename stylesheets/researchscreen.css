@@ -2,6 +2,14 @@
     outline: solid white;
     width: min(100%, max(50%, 7in));
     padding: 0;
+    width: 7in;
+    min-width: 50%;
+}
+
+@media (max-width: 7in) {
+    .tech-option {
+        width: 100%;
+    }
 }
 
 .tech-option p {
@@ -25,10 +33,6 @@
     margin-top: 10pt;
     margin-bottom: -2px;
     margin-left: -2px;
-}
-
-.research-resources {
-    width: min(100%, max(50%, 7in));
 }
 
 .research-resources p {

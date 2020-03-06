@@ -21,7 +21,14 @@
 
 .production-screen-inventory {
     outline: solid white;
-    width: min(100%, max(50%, 7in));
+    width: 7in;
+    min-width: 50%;
+}
+
+@media (max-width: 7in) {
+    .production-screen-inventory {
+        width: 100%;
+    }
 }
 
 .production-screen-inventory p {
@@ -47,10 +54,17 @@
 }
 
 .conversion {
-    width: min(100%, max(50%, 7in));
+    width: 7in;
+    min-width: 50%;
     display: flex;
     flex-direction: row;
 
+}
+
+@media (max-width: 7in) {
+    .conversion {
+        width: 100%;
+    }
 }
 
 .conversion-description {
