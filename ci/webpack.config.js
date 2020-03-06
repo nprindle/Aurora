@@ -26,6 +26,10 @@ module.exports = {
         use: [ MiniCssExtractPlugin.loader, "css-loader" ]
       },
       {
+        test: /\.ttf$/i,
+        use: "url-loader?limit=100000&name=./assets/fonts/[name].[ext]",
+      },
+      {
         test: /\.html$/i,
         use: [
           {
