@@ -1,5 +1,6 @@
 import Cost from "./Cost";
 import Resource from "./Resource";
+import { Objects } from "../util/Objects.js";
 
 export default class Species {
     // all species instances are defined here
@@ -15,6 +16,8 @@ export default class Species {
 
     // returns a list of all species instances
     static values(): Species[] {
-        return Object.keys(Species).map((k: string) => ((Species as { [key: string]: any;})[k] as Species));
+        return Objects.safeKeys(Species)
+            .map(k => Species[k])
+            .filter((v): v is Species => v instanceof Species);
     }
 }
