@@ -25,6 +25,9 @@ export default class Resource {
 
     // returns a list of all resource instances
     static values(): Resource[] {
-        return Object.keys(Resource).map((k: string) => ((Resource as { [key: string]: any;})[k] as Resource));
+        const safeKeys = <T>(x: T): (keyof T)[] => Object.keys(x) as (keyof T)[];
+        return safeKeys(Resource)
+            .map(k => Resource[k])
+            .filter((v): v is Resource => v instanceof Resource);
     }
 }
