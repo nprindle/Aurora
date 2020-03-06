@@ -38,6 +38,7 @@
     "closure-webpack-plugin": "^2.2.1",
     "css-loader": "^3.4.0",
     "eslint": "^6.8.0",
+    "file-loader": "^5.1.0",
     "google-closure-compiler": "^20191111.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-inline-source-plugin": "0.0.10",
@@ -47,6 +48,7 @@
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.1.2",
     "typescript": "^3.6.4",
+    "url-loader": "^3.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-fix-style-only-entries": "^0.4.0"
