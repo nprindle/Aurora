@@ -8,9 +8,14 @@ class CreditsEntry {
 }
 
 const credits: CreditsEntry[] = [
-    new CreditsEntry("Grace Rarer", ["Team Lead", "Gameplay Programmer"]),
-    new CreditsEntry("Prindle", ["DevOps"]), // <3
-    new CreditsEntry("May Lawver", ["Programmer (HTML Composition Code)"]),
+    new CreditsEntry("Grace Rarer", ["Team Lead", "Game Designer", "Programmer"]),
+    new CreditsEntry("Prindle", ["Programmer", "DevOps"]), // <3
+    new CreditsEntry("Seong Ryoo", ["Environment Artist"]),
+    new CreditsEntry("May Lawver", ["Programmer"]),
+    new CreditsEntry("Mitchell Philipp", ["UI Programmer"]),
+    new CreditsEntry("Brad Baker", ["Gameplay Programmer"]),
+    new CreditsEntry("Will Cooper", ["UI Programmer"]),
+
 ];
 
 // this may need to become a real class in the future
@@ -24,16 +29,16 @@ export default class CreditsScreen implements Page {
     }
 
     refresh(): void {
-        const nameParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.name, ["credits-name"]));
-        const roleParas: HTMLElement[] = credits.map(entry => UI.makePara(entry.roles.join(", "), ["credits-roles"]));
-
         UI.fillHTML(this.html, [
-            UI.makeHeader("Credits", 1),
-            UI.makeDivContaining([
-                UI.makeDivContaining(nameParas, ["credits-names-column"]),
-                UI.makeDivContaining(roleParas),
-            ], ["credits-container"]),
+            ...credits.map(entry => this.renderCreditsEntry(entry)),
             UI.makeButton("Back", () => GameWindow.show(new MainMenu())),
         ]);
+    }
+
+    private renderCreditsEntry(entry: CreditsEntry): HTMLElement {
+        return UI.makeDivContaining([
+            UI.makeHeader(entry.name, 1),
+            ...entry.roles.map(role => UI.makePara(role)),
+        ], ["credits-entry"]);
     }
 }

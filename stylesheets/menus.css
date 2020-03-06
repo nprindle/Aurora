@@ -29,30 +29,27 @@
     color: gray;
 }
 
-.credits h1 {
-    font-size: 24pt;
-    margin-bottom: 10pt;
+.credits {
+    margin-right: auto;
+    margin-left: auto;
+    margin-left: 5px;
 }
 
-.credits-container {
-    display: flex;
-    flex-direction: row;
+
+.credits-entry {
+    margin-top: 20px;
 }
 
-.credits-names-column {
-    margin-right: 24pt;
+.credits-entry h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 30pt;
 }
 
-.credits-name {
-    font-size: 20pt;
+.credits-entry p {
     margin-top: 0;
-    margin-bottom: 5pt;
-}
-
-.credits-roles {
+    margin-bottom: 0;
     font-size: 20pt;
-    margin-top: 0;
-    margin-bottom: 5pt;
 }
 
 .credits button {

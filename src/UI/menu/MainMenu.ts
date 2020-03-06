@@ -21,13 +21,13 @@ export default class MainMenu implements Page {
         UI.fillHTML(this.html, [
             UI.makeHeader("Aurora", 1),
             UI.makeDivContaining([
-                UI.makeButton("start_game", () => {
+                UI.makeButton("new game", () => {
                     const newGame = new Game();
                     enableCheats(newGame);
                     GameWindow.show(new WorldScreen(newGame));
                 }),
-                UI.makeButton("display_credits", () => GameWindow.show(new CreditsScreen())),
                 UI.makeButton("settings", () => GameWindow.show(new SettingsScreen())),
+                UI.makeButton("credits", () => GameWindow.show(new CreditsScreen())),
             ], ["main-menu-options"]),
         ]);
     }
