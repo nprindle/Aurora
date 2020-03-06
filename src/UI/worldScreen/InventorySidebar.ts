@@ -15,8 +15,7 @@ export default class InventorySidebar implements Page {
     }
 
     refresh(): void {
-        const populationLabel = UI.makeHeader(`Population: ${this.inventory.getTotalPopulation()}`, 1);
-        const availableWorkerLabel = UI.makePara(`Available workers: ${this.inventory.getAvailableWorkers()}`);
+
         const populationHTML = UI.makeDiv();
         for (const description of this.inventory.getPopulationStrings()) {
             populationHTML.appendChild(UI.makePara(description));
@@ -26,12 +25,16 @@ export default class InventorySidebar implements Page {
         for (const description of this.inventory.getInventoryStrings()) {
             resourceListHTML.appendChild(UI.makePara(description));
         }
+        if (this.inventory.getResourceList().length === 0) {
+            resourceListHTML.appendChild(UI.makePara("(none)"));
+        }
 
         UI.fillHTML(this.html, [UI.makeDivContaining([
-            populationLabel,
-            availableWorkerLabel,
+            UI.makeHeader("Population"),
+            UI.makePara(`Available workers: ${this.inventory.getAvailableWorkers()}`),
+            UI.makePara("Total population:"),
             populationHTML,
-            UI.makeHeader("Inventory:", 1),
+            UI.makeHeader("Inventory", 1),
             resourceListHTML,
         ])]);
     }
