@@ -15,6 +15,9 @@ export default class Species {
 
     // returns a list of all species instances
     static values(): Species[] {
-        return Object.keys(Species).map((k: string) => ((Species as { [key: string]: any;})[k] as Species));
+        const safeKeys = <T>(x: T): (keyof T)[] => Object.keys(x) as (keyof T)[];
+        return safeKeys(Species)
+            .map(k => Species[k])
+            .filter((v): v is Species => v instanceof Species);
     }
 }
