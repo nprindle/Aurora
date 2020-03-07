@@ -6,6 +6,7 @@ import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
 import WorldScreenHeader from "./WorldScreenHeader.js";
 import { Page } from "../GameWindow.js";
+import QuestIndicator from "./QuestIndicator.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure
@@ -16,6 +17,7 @@ export default class WorldScreen implements Page {
     private inventorySidebar: InventorySidebar;
     private tileSidebar: TileSidebar;
     private header: WorldScreenHeader;
+    private questIndicator: QuestIndicator;
     readonly html: HTMLElement;
 
     constructor(run: Game) {
@@ -23,10 +25,12 @@ export default class WorldScreen implements Page {
         this.tileSidebar = new TileSidebar(this, run);
         this.inventorySidebar = new InventorySidebar(run);
         this.header = new WorldScreenHeader(run);
+        this.questIndicator = new QuestIndicator(run);
 
         this.html = UI.makeDivContaining([
 
             this.header.html,
+            this.questIndicator.html,
 
             UI.makeDivContaining([
                 this.inventorySidebar.html,
@@ -42,6 +46,7 @@ export default class WorldScreen implements Page {
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
         this.header.refresh();
+        this.questIndicator.refresh();
     }
 
     // keyboard events for this page are passed to the map ui, which uses arrow keys or wasd to move around the map

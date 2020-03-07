@@ -3,17 +3,21 @@
 }
 
 .world-screen-header {
-    display: flex;
-    flex-direction: row;
     margin: 0px;
-    min-height: 60px;
+    text-align: center;
 }
 
 .world-screen-quest-description {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.world-screen-quest-description p {
     font-size: 16px;
-    padding-right: 10px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    margin: 0;
+    text-align: center;
+    vertical-align: center;
+    min-height: 2.75em;
 }
 
 .quest-description-emphasis {
