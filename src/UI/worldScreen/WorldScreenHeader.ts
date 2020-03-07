@@ -5,15 +5,10 @@ import MainMenu from "../menu/MainMenu.js";
 import TransitionScreen from "../transitionScreen/TransitionScreen.js";
 import ProductionScreen from "../productionScreen/ProductionScreen.js";
 import ResearchScreen from "../researchScreen/ResearchScreen.js";
-import EndScreen from "../endScreen/EndScreen.js";
-import Ending from "../../quests/Ending.js";
 
 export default class WorldScreenHeader implements Page {
     readonly html: HTMLElement;
     private run: Game;
-    /* This is used to determine when to apply "emphasis" css to newly-advanced quest objectives
-     * It's tracked statically to persist when we leave the World Screen and then come back to a new world screen instance
-     */
 
     constructor(run: Game) {
         this.html = UI.makeDiv(["world-screen-header"]);
@@ -37,34 +32,11 @@ export default class WorldScreenHeader implements Page {
             GameWindow.show(new ResearchScreen(this.run));
         });
 
-        const questHint = this.run.getCurrentQuestHint();
-        const questDescription = this.run.getCurrentQuestDescription();
-        const questText = questHint ? `${questDescription}\n(hint: ${questHint})` : questDescription;
-        let questHTML = UI.makePara(`Objective: ${questText}`, ["world-screen-quest-description"]);
-
-        // show message after quest completion
-        const prevQuestDescription = this.run.getPreviousQuestDescription();
-        if (!this.run.questCompletionShown) {
-            questHTML = UI.makePara(`Completed: ${prevQuestDescription}`, ["world-screen-quest-description", "quest-description-emphasis"]);
-
-            // reset description after time has passed
-            setTimeout(() => {
-                const endState: Ending | undefined = this.run.getQuestEndState();
-                if (endState) {
-                    GameWindow.show(new EndScreen(endState));
-                } else {
-                    this.refresh();
-                }
-            }, 1500);
-        }
-        this.run.questCompletionShown = true;
-
         UI.fillHTML(this.html, [
             quitButton,
             productionScreenButton,
             researchScreenButton,
             transitionButton,
-            questHTML,
         ]);
     }
 }
