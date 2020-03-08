@@ -30,7 +30,7 @@ export default class InventorySidebar implements Page {
         }
 
         UI.fillHTML(this.html, [UI.makeDivContaining([
-            UI.makeHeader("Population"),
+            UI.makeDivContaining([UI.makeHeader("Population", 1, [])], ["world-screen-population-header"]),
             UI.makePara(`Available workers: ${this.inventory.getAvailableWorkers()}`),
             UI.makePara(`Total population:${(this.inventory.getTotalPopulation() === 0) ? " 0" : ""}`),
             populationHTML,

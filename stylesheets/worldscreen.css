@@ -45,10 +45,28 @@
     background-color: black;
     width: 20%;
     min-width: 2in;
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
     font-size: 16px;
     overflow-y: auto;
     height: calc(100vh - 125px);
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.world-screen-sidebar p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.sidebar-tile-name {
+    font-weight: bold;
+    font-size: 14pt;;
 }
 
 .tile-project {
@@ -76,7 +94,10 @@
 
 .world-screen-inventory {
     width: 4in;
-    margin: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 10px;
+    margin-right: 10px;
     font-size: 16px;
     white-space: nowrap;
 }
@@ -89,4 +110,8 @@
 .world-screen-inventory p {
     margin-top: 2pt;
     margin-bottom: 0;
+}
+
+.world-screen-population-header h1 {
+    margin-top: 0;
 }
