@@ -55,6 +55,7 @@ export const RoadTextureTWest = makeImage("assets/tiles/roads/t_west.png");
 
 export const ArcologyTexture = makeImage("assets/tiles/colony/arcology.png");
 export const NuclearPlantTexture = makeImage("assets/tiles/colony/nuclear_plant.png");
+export const RobotHiveTexture = makeImage("assets/tiles/colony/hive.png");
 
 export const AlignmentLabTexture = makeImage("assets/tiles/colony/lab_alignment.png");
 export const EngineeringLabTexture = makeImage("assets/tiles/colony/lab_engineering.png");
