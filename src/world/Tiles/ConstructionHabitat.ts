@@ -8,10 +8,11 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { StructureConstructionTech, UrbanPlanningTech } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, UrbanPlanningTech, RobotTech, IndustrialEngineeringTech } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
+import RobotHive from "./RobotHive.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -27,6 +28,19 @@ export default class ConstructionHabitat extends Tile {
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Wasteland(position));
             }, [], [], [],
+        ),
+
+        new TileProject("Construct robot hive", "Assemble a facility for manufacturing, storing, and maintaining mobile robotic worker drones",
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new RobotHive(position));
+            },
+            [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
+            [
+                new TechPredicate(StructureConstructionTech),
+                new TechPredicate(RobotTech),
+                adjacentToRoad,
+            ],
+            [new TechPredicate(IndustrialEngineeringTech)],
         ),
 
         new TileProject("Construct habitat dome", "Assemble a pressurized structure that provides housing, services, and life support for colonists",

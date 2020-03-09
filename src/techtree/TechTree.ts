@@ -18,6 +18,13 @@ export const StructureConstructionTech = Technology.makeUnlockableTechnology(
     new Cost(Resource.EngineeringKnowledge, 10),
 );
 
+export const RobotTech = Technology.makeUnlockableTechnology(
+    "Distributed Robotics",
+    "Autonomous robotic worker drones capable of performing the same jobs as human workers",
+    [IndustrialEngineeringTech],
+    new Cost(Resource.EngineeringKnowledge, 100),
+);
+
 export const BehaviorModelingTech = Technology.makeUnlockableTechnology(
     "Colonist Behavior Modeling",
     "Simulations of human behavior in the isolated conditions of a deep space colony",
