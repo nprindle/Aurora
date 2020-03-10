@@ -5,9 +5,7 @@ import Housing from "../../resources/Housing.js";
 import { RobotHiveTexture } from "../../UI/Images.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import Cost from "../../resources/Cost.js";
-import { ResolvePlugin } from "webpack";
 import Resource from "../../resources/Resource.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import Game from "../../Game.js";
 
 export default class RobotHive extends Tile {
