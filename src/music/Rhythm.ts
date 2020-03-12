@@ -41,9 +41,10 @@ export default class Rhythm {
         while (beats >= min) {
             // Beats must be larger than the minimum of divisions, so this cast
             // is safe
-            const current: number = Random.fromArray(Rhythm.divisions.filter(num => num <= beats) as NonEmptyArray<number>);
-            beats -= current;
-            this.subdivision.push(current);
+            const validDivisions = Rhythm.divisions.filter(num => num <= beats) as NonEmptyArray<number>;
+            const currentDivision = Random.fromArray(validDivisions);
+            beats -= currentDivision;
+            this.subdivision.push(currentDivision);
         }
         if (beats > 0) {
             this.subdivision.push(beats);
