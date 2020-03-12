@@ -20,6 +20,11 @@ export namespace Random {
         return arr[intBetween(0, arr.length)];
     }
 
+    // return true with a chance probability and false with a (1 - chance) probability
+    export function bool(chance: number = 0.5): boolean {
+        return Math.random() < chance;
+    }
+
     // Randomly select an element from an array, with selection biased based on
     // a weight for each element.
     export function fromWeightedArray<T>(weightedElems: NonEmptyArray<[number, T]>): T {
