@@ -95,8 +95,19 @@ export namespace Scales {
         return r;
     }
 
+    /**
+     * Get the number of notes that are in a scale. This is the same as counting
+     * the number of set bits in its bit vector representation.
+     */
     export function getNumberOfNotes(scale: Scale): number {
-        return getPitchClass(scale).length;
+        let vec = unwrap(scale);
+        // Treat as a 16-bit number and divide-and-conquer, counting the 1s in
+        // each bit pair, then each pair of pairs, and so on.
+        vec = (vec & 0x555) + ((vec >>> 1) & 0x555);
+        vec = (vec & 0x333) + ((vec >>> 2) & 0x333);
+        vec = (vec & 0xF0F) + ((vec >>> 4) & 0xF0F);
+        vec = (vec & 0x0FF) + ((vec >>> 8) & 0x0FF);
+        return vec;
     }
 
     // Rotate a scale left if amount is positive and right if amount is negative
