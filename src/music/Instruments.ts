@@ -2,6 +2,7 @@ import Instrument from "./Instrument.js";
 import { Envelopes, AdsrConfig } from "./Envelopes.js";
 import { Note, Notes } from "./Notes.js";
 import { SampleData } from "./Samples.js";
+import { unwrap } from "../util/Newtypes.js";
 
 type OscType = OscillatorNode["type"];
 
@@ -30,9 +31,9 @@ export class OscillatorInstrument extends Instrument {
     }
 
     scheduleNote(context: AudioContext, note: Note): AudioNode {
-        const freqs: number[] = Notes.detuneWithCoeff(note.midiNumber, this._detune);
+        const freqs = Notes.detuneWithCoeff(note.midiNumber, this._detune);
         // note ending frequencies are either where they started or at the endNote
-        const endfreqs: number[] = (note.endNote === undefined) ? freqs : Notes.detuneWithCoeff(note.endNote, this._detune);
+        const endfreqs = (note.endNote === undefined) ? freqs : Notes.detuneWithCoeff(note.endNote, this._detune);
         // volume scaling so multiple oscillators from detune don't result in louder sounds
         const volume = Math.min(1 / freqs.length, 1) * this.volume;
         // create envelope
@@ -43,8 +44,8 @@ export class OscillatorInstrument extends Instrument {
         freqs.forEach((freq, i) => {
             const osc = context.createOscillator();
             osc.type = this.type;
-            osc.frequency.setValueAtTime(freq, note.start);
-            osc.frequency.linearRampToValueAtTime(endfreqs[i], end);
+            osc.frequency.setValueAtTime(unwrap(freq), note.start);
+            osc.frequency.linearRampToValueAtTime(unwrap(endfreqs[i]), end);
             osc.start(note.start);
             osc.stop(end);
             osc.connect(gain);
@@ -70,18 +71,22 @@ export class SampleInstrument extends Instrument {
     }
 
     scheduleNote(context: AudioContext, note: Note): AudioNode {
-        const freq: number = Notes.midiNumberToFrequency(note.midiNumber);
+        const freq = Notes.midiNumberToFrequency(note.midiNumber);
         const bufferNode = context.createBufferSource();
         bufferNode.buffer = this.buffer.buffer;
         bufferNode.loop = this.buffer.shouldLoop;
         // since samples have a frequency already, we have to change playback rate to change pitch
         // if we want to play an 880Hz note, we need to play a 440Hz sample twice as fast, etc.
-        bufferNode.playbackRate.setValueAtTime(freq / this.buffer.freq, note.start);
+        const freqRatio = unwrap(freq) / unwrap(this.buffer.freq);
+        bufferNode.playbackRate.setValueAtTime(freqRatio, note.start);
+
         const endtime: number = note.start + note.duration + (this.env.sustain || 0);
         if (note.endNote !== undefined) {
-            const endfreq: number = Notes.midiNumberToFrequency(note.endNote);
-            bufferNode.playbackRate.linearRampToValueAtTime(endfreq / this.buffer.freq, endtime);
+            const endFreq = Notes.midiNumberToFrequency(note.endNote);
+            const endFreqRatio = unwrap(endFreq) / unwrap(this.buffer.freq);
+            bufferNode.playbackRate.linearRampToValueAtTime(endFreqRatio, endtime);
         }
+
         bufferNode.start(note.start);
         bufferNode.stop(endtime);
         const gain: GainNode = Envelopes.createAdsrEnvelope(context, note.start, note.duration, this.env, this.volume);

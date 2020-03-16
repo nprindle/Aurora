@@ -1,3 +1,5 @@
+import { Frequency } from "./Notes.js";
+
 // TODO: do this better
 // This is necessary for decoding sample data, but there has to be a better way to do this.
 const tempAudioContext = new AudioContext();
@@ -5,7 +7,7 @@ const tempAudioContext = new AudioContext();
 export interface SampleData {
     buffer: AudioBuffer;
     shouldLoop: boolean;
-    freq: number; // frequency of sample for pitchshifting reasons
+    freq: Frequency; // frequency of sample for pitchshifting reasons
 }
 
 export enum SampleNames {
@@ -45,14 +47,17 @@ export namespace SampleUtils {
 export const Samples: Record<SampleNames, SampleData> = {
     "white_noise": {
         buffer: SampleUtils.createBufferFromGenerator(44100, () => 2 * Math.random() - 1),
-        shouldLoop: true, freq: 440
+        shouldLoop: true,
+        freq: Frequency(440),
     },
     "snare": {
         buffer: SampleUtils.createBufferFromAudioData(22050, "samples/snare.ogg"),
-        shouldLoop: false, freq: 440
+        shouldLoop: false,
+        freq: Frequency(440),
     },
     "kick": {
         buffer: SampleUtils.createBufferFromAudioData(22050, "samples/kick.ogg"),
-        shouldLoop: false, freq: 440
+        shouldLoop: false,
+        freq: Frequency(440),
     }
 };
