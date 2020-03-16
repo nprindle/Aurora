@@ -1,12 +1,13 @@
-import { Note } from "./Notes.js";
+import { Note, MidiNumber } from "./Notes.js";
 import Instrument from "./Instrument.js";
 import { OscillatorInstrument } from "./Instruments.js";
 import { Random } from "../util/Random.js";
-import { Scales, Scale, ScaleQuery } from "./Scales.js";
+import { Scales, Scale, Chord, Pitch, offsetPitch, Degree, ScaleQuery } from "./Scales.js";
 import Rhythm from "./Rhythm.js";
 import { Drumkit, Drums } from "./Drums.js";
 import { Arrays, NonEmptyArray } from "../util/Arrays.js";
 import { mod, impossible } from "../util/Util.js";
+import { unwrap } from "../util/Newtypes.js";
 
 enum MeasureContents {
     DRUMS, CHORDS
@@ -15,9 +16,9 @@ enum MeasureContents {
 interface MusicState {
     beatsPerMinute: number;
     rhythm: Rhythm;
-    root: number; // the root of the current key. (0 is C, 1 is C#, ..., 11 is B)
+    root: Pitch; // the root of the current key. (0 is C, 1 is C#, ..., 11 is B)
     scale: Scale;
-    progression: number[][]; // current chord progression
+    progression: Pitch[][]; // current chord progression
     drumLoop: Drums[];
     chordIndex: number; // index of current chord
     queue: MeasureContents[][];
@@ -54,8 +55,8 @@ export namespace MusicManager {
     const state: MusicState = {
         beatsPerMinute: 220,
         rhythm: new Rhythm(),
-        root: 0, // middle C
-        scale: 2741, // major
+        root: Pitch(0), // middle C
+        scale: Scale(0x741), // major
         progression: [],
         chordIndex: 0,
         drumLoop: [],
@@ -71,24 +72,24 @@ export namespace MusicManager {
         [ChordFunction.SUBDOMINANT, ChordFunction.DOMINANT, ChordFunction.AMBIGUOUS]
     ];
 
-    const functionDegrees: Record<ChordFunction, NonEmptyArray<number>> = {
-        "tonic": [0, 5], // I and VI
-        "subdominant": [1, 3], // II and IV
-        "dominant": [4, 6], // V and VII
-        "ambiguous": [2] // III
+    const functionDegrees: Record<ChordFunction, NonEmptyArray<Degree>> = {
+        "tonic": [Degree(0), Degree(5)], // I and VI
+        "subdominant": [Degree(1), Degree(3)], // II and IV
+        "dominant": [Degree(4), Degree(6)], // V and VII
+        "ambiguous": [Degree(2)] // III
     };
 
-    function generateChordProgression(scale: Scale, root: number, extensions: number = 4): number[][] {
-        const pitchClass: number[] = Scales.getPitchClass(scale);
-        const chordDegrees: number[] = Random.fromArray(backHalves) // take one of the valid chord patterns
+    function generateChordProgression(scale: Scale, root: Pitch, extensions: number = 4): Pitch[][] {
+        const pitchClass = Scales.getPitchClass(scale);
+        const chordDegrees = Random.fromArray(backHalves) // take one of the valid chord patterns
             // replace functions like "dominant" "subdominant" etc with degrees
             .map(f => Random.fromArray(functionDegrees[f]));
-        chordDegrees.unshift(0); // make sure it starts with the tonic
+        chordDegrees.unshift(Degree(0)); // make sure it starts with the tonic
         // convert degrees to full diatonic chords
-        return chordDegrees.map(degree => Arrays.generate(
-            extensions, (i: number) =>
-                Scales.indexIntoPitchClass(pitchClass, degree + 2 * i) + root)
-        );
+        return chordDegrees.map(degree => Arrays.generate(extensions, i => {
+            const pitchOffset = Scales.indexIntoPitchClass(pitchClass, unwrap(degree) + 2 * i);
+            return offsetPitch(root, pitchOffset);
+        }));
     }
 
     function generateDrumLoop(): Drums[] {
@@ -118,8 +119,8 @@ export namespace MusicManager {
         instOut.connect(masterGain);
     }
 
-    function octave(root: number, octave: number): number {
-        return mod(root, 12) + octave * 12;
+    function octave(root: Pitch, octave: number): MidiNumber {
+        return MidiNumber(mod(unwrap(root), 12) + octave * 12);
     }
 
     // Change key, time signature, etc. and fill state.queue with music to schedule.
@@ -130,7 +131,7 @@ export namespace MusicManager {
         // Query all greek modes (only one imperfection) with a perfect fifth
         // above the tonic
         const query: ScaleQuery = {
-            chord: 1 << 7,
+            chord: Chord(1 << 7),
             imperfections: [1, 1]
         };
         const matchingScales = Scales.getAllScalesMatchingQuery(query);

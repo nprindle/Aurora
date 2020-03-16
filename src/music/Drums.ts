@@ -1,5 +1,6 @@
 import { SampleInstrument } from "./Instruments.js";
 import { Samples, SampleNames } from "./Samples.js";
+import { MidiNumber } from "./Notes.js";
 import { impossible } from "../util/Util.js";
 
 export enum Drums {
@@ -20,13 +21,13 @@ export namespace Drumkit {
         switch (drum) {
         case Drums.KICK:
             return kick.scheduleNote(context, {
-                midiNumber: 69,
+                midiNumber: MidiNumber(69),
                 start: start,
                 duration: 1
             });
         case Drums.SNARE:
             return snare.scheduleNote(context, {
-                midiNumber: 69,
+                midiNumber: MidiNumber(69),
                 start: start,
                 duration: 1
             });
@@ -34,7 +35,7 @@ export namespace Drumkit {
             noise.env.decay = 0.05;
             noise.volume = 0.5;
             return noise.scheduleNote(context, {
-                midiNumber: 70,
+                midiNumber: MidiNumber(70),
                 start: start,
                 duration: 0.05
             });
@@ -42,7 +43,7 @@ export namespace Drumkit {
             noise.env.decay = 0.2;
             noise.volume = 0.5;
             return noise.scheduleNote(context, {
-                midiNumber: 70,
+                midiNumber: MidiNumber(70),
                 start: start,
                 duration: 0.2
             });
