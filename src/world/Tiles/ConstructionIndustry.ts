@@ -11,8 +11,9 @@ import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import RobotHive from "./RobotHive.js";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -31,7 +32,20 @@ export default class ConstructionIndustry extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject("Construct photovoltaic array", "Assemble an array of solar panels to produce energy",
+        new TileProject(`Construct ${RobotHive.tileName}`, RobotHive.tileDescription,
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new RobotHive(position));
+            },
+            [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
+            [
+                new TechPredicate(StructureConstructionTech),
+                new TechPredicate(RobotTech),
+                adjacentToRoad,
+            ],
+            [new TechPredicate(IndustrialEngineeringTech)],
+        ),
+
+        new TileProject(`Construct ${SolarPanels.tileName}`, SolarPanels.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new SolarPanels(position));
             },
@@ -40,7 +54,7 @@ export default class ConstructionIndustry extends Tile {
             [],
         ),
 
-        new TileProject("Construct ore processing center", `Assemble a factory that converts ore into useful materials`,
+        new TileProject(`Construct ${MiningFacility.tileName}`, MiningFacility.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new MiningFacility(position));
             },
@@ -49,7 +63,7 @@ export default class ConstructionIndustry extends Tile {
             [],
         ),
 
-        new TileProject("Construct Nuclear Plant", "Construct a nuclear power plant",
+        new TileProject(`Construct ${NuclearPlant.tileDescription}`, NuclearPlant.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new NuclearPlant(position));
             },

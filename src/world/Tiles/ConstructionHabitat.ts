@@ -12,7 +12,6 @@ import { StructureConstructionTech, UrbanPlanningTech, RobotTech, IndustrialEngi
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
-import RobotHive from "./RobotHive.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -30,20 +29,7 @@ export default class ConstructionHabitat extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject("Construct robot hive", "Assemble a facility for manufacturing, storing, and maintaining mobile robotic worker drones",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new RobotHive(position));
-            },
-            [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
-            [
-                new TechPredicate(StructureConstructionTech),
-                new TechPredicate(RobotTech),
-                adjacentToRoad,
-            ],
-            [new TechPredicate(IndustrialEngineeringTech)],
-        ),
-
-        new TileProject("Construct habitat dome", "Assemble a pressurized structure that provides housing, services, and life support for colonists",
+        new TileProject(`Construct ${Habitat.tileName}`, Habitat.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Habitat(position));
             },
@@ -55,7 +41,7 @@ export default class ConstructionHabitat extends Tile {
             [],
         ),
 
-        new TileProject("Construct Arcology", "Construct a tower that can efficiently house a large number of humans",
+        new TileProject(`Construct ${Arcology.tileName}`, Arcology.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Arcology(position));
             },
@@ -64,7 +50,7 @@ export default class ConstructionHabitat extends Tile {
             [new TechPredicate(StructureConstructionTech)],
         ),
 
-        new TileProject("Construct Greenhouse", "Assemble a building where colonists can grow food and produce oxygen using genetically engineered plants",
+        new TileProject(`Construct ${Greenhouse.tileName}`, Greenhouse.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Greenhouse(position));
             },
