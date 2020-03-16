@@ -31,8 +31,7 @@ export default class ConstructionLaboratory extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject("Construct Engineering Lab",
-            "Assemble an engineering laboratory that can produce data points necessary for scientific and technological advancement",
+        new TileProject(`Construct ${EngineeringLab.tileName}`, EngineeringLab.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new EngineeringLab(position));
             },
@@ -41,8 +40,7 @@ export default class ConstructionLaboratory extends Tile {
             [],
         ),
 
-        new TileProject("Construct Psych Lab",
-            "Assemble a laboratory that can produce data points about human psychology and behavior",
+        new TileProject(`Construct ${PsychLab.tileName}`, PsychLab.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new PsychLab(position));
             },
@@ -51,8 +49,7 @@ export default class ConstructionLaboratory extends Tile {
             [],
         ),
 
-        new TileProject("Construct Xenoarchaeology Lab",
-            "Construct a laboratory for studying the alien ruins",
+        new TileProject(`Construct ${XenoLab.tileName}`, XenoLab.tileName,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new XenoLab(position));
             },
@@ -61,8 +58,7 @@ export default class ConstructionLaboratory extends Tile {
             [new TechPredicate(StructureConstructionTech)],
         ),
 
-        new TileProject("Construct AI Alignment Lab",
-            "Construct a research center for developing techniques that could allow humans to control an artificial intelligence or modify its goal programming",
+        new TileProject(`Construct ${AlignmentLab.tileName}`, AlignmentLab.tileDescription,
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new AlignmentLab(position));
             },
