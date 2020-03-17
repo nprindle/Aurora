@@ -8,10 +8,11 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { StructureConstructionTech, UrbanPlanningTech, RobotTech, IndustrialEngineeringTech } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, UrbanPlanningTech, } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
+import { constructionProject } from "../../tileProjects/TileProject.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -29,10 +30,7 @@ export default class ConstructionHabitat extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject(`Construct ${Habitat.tileName}`, Habitat.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Habitat(position));
-            },
+        constructionProject(Habitat,
             [new Cost(Resource.BuildingMaterials, 100)],
             [
                 new TechPredicate(StructureConstructionTech),
@@ -41,19 +39,13 @@ export default class ConstructionHabitat extends Tile {
             [],
         ),
 
-        new TileProject(`Construct ${Arcology.tileName}`, Arcology.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Arcology(position));
-            },
+        constructionProject(Arcology,
             [new Cost(Resource.BuildingMaterials, 250)],
             [new TechPredicate(UrbanPlanningTech), adjacentToRoad],
             [new TechPredicate(StructureConstructionTech)],
         ),
 
-        new TileProject(`Construct ${Greenhouse.tileName}`, Greenhouse.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Greenhouse(position));
-            },
+        constructionProject(Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
             [adjacentToRoad],
             [],
