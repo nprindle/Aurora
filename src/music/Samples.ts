@@ -10,12 +10,6 @@ export interface SampleData {
     freq: Frequency; // frequency of sample for pitchshifting reasons
 }
 
-export enum SampleNames {
-    WHITE_NOISE = "white_noise",
-    SNARE = "snare",
-    KICK = "kick"
-}
-
 export namespace SampleUtils {
 
     export function createBufferFromGenerator(length: number, func: (i: number) => number): AudioBuffer {
@@ -28,36 +22,40 @@ export namespace SampleUtils {
         return buffer;
     }
 
-    export function createBufferFromAudioData(length: number, filename: string): AudioBuffer {
+    export async function createBufferFromAudioData(length: number, filename: string): Promise<AudioBuffer> {
         const buffer = new AudioBuffer({ numberOfChannels: 1, sampleRate: 44100, length: length });
-        fetch(`assets/${filename}`, {
+        const response = await fetch(`assets/${filename}`, {
             headers: new Headers({
                 "Content-Type": "audio/ogg"
             })
-        }).then(async (value: Response) => {
-            const arr = await value.arrayBuffer();
-            const tempBuffer = await tempAudioContext.decodeAudioData(arr);
-            buffer.copyToChannel(tempBuffer.getChannelData(0), 0);
-        }, () => {});
+        });
+        const arr = await response.arrayBuffer();
+        const tempBuffer = await tempAudioContext.decodeAudioData(arr);
+        buffer.copyToChannel(tempBuffer.getChannelData(0), 0);
         return buffer;
+    }
+
+    export async function makeSampleData(args: { buffer: Promise<AudioBuffer>; shouldLoop: boolean; freq: Frequency; }): Promise<SampleData> {
+        const { buffer, shouldLoop, freq } = args;
+        return { buffer: await buffer, shouldLoop, freq };
     }
 
 }
 
-export const Samples: Record<SampleNames, SampleData> = {
-    "white_noise": {
-        buffer: SampleUtils.createBufferFromGenerator(44100, () => 2 * Math.random() - 1),
+export const Samples = {
+    "white_noise": SampleUtils.makeSampleData({
+        buffer: Promise.resolve(SampleUtils.createBufferFromGenerator(44100, () => 2 * Math.random() - 1)),
         shouldLoop: true,
         freq: Frequency(440),
-    },
-    "snare": {
+    }),
+    "snare": SampleUtils.makeSampleData({
         buffer: SampleUtils.createBufferFromAudioData(22050, "samples/snare.ogg"),
         shouldLoop: false,
         freq: Frequency(440),
-    },
-    "kick": {
+    }),
+    "kick": SampleUtils.makeSampleData({
         buffer: SampleUtils.createBufferFromAudioData(22050, "samples/kick.ogg"),
         shouldLoop: false,
         freq: Frequency(440),
-    }
+    }),
 };
