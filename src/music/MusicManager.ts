@@ -8,6 +8,7 @@ import { Drumkit, Drums } from "./Drums.js";
 import { Arrays, NonEmptyArray } from "../util/Arrays.js";
 import { mod, impossible } from "../util/Util.js";
 import { unwrap } from "../util/Newtypes.js";
+import { makeSamples, SampleNames, SampleData } from "./Samples.js";
 
 enum MeasureContents {
     DRUMS, CHORDS
@@ -34,6 +35,10 @@ enum ChordFunction {
 export namespace MusicManager {
 
     export const context: AudioContext = new AudioContext();
+
+    export const samples: Record<SampleNames, Promise<SampleData>> = makeSamples(context);
+
+    export const drumkit: Drumkit = new Drumkit(samples);
 
     export const instruments = {
         arp: new OscillatorInstrument(
@@ -110,7 +115,7 @@ export namespace MusicManager {
     }
 
     async function scheduleDrum(start: number, drum: Drums): Promise<void> {
-        const drumOut: AudioNode = await Drumkit.scheduleHit(context, start, drum);
+        const drumOut: AudioNode = await drumkit.scheduleHit(context, start, drum);
         drumOut.connect(masterGain);
     }
 
