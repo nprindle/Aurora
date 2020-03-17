@@ -30,7 +30,7 @@ export class OscillatorInstrument extends Instrument {
         this._detune = Math.pow(2, n / 1200);
     }
 
-    scheduleNote(context: AudioContext, note: Note): AudioNode {
+    async scheduleNote(context: AudioContext, note: Note): Promise<AudioNode> {
         const freqs = Notes.detuneWithCoeff(note.midiNumber, this._detune);
         // note ending frequencies are either where they started or at the endNote
         const endfreqs = (note.endNote === undefined) ? freqs : Notes.detuneWithCoeff(note.endNote, this._detune);
@@ -61,16 +61,15 @@ export class OscillatorInstrument extends Instrument {
 // An instrument that uses an audio sample, speeding it up or slowing it down to play different notes.
 export class SampleInstrument extends Instrument {
 
-    buffer: SampleData;
-    env: AdsrConfig;
-
-    constructor(buffer: SampleData, env: AdsrConfig, volume: number = 1) {
+    private constructor(public buffer: SampleData, public env: AdsrConfig, volume: number = 1) {
         super(volume);
-        this.buffer = buffer;
-        this.env = env;
     }
 
-    scheduleNote(context: AudioContext, note: Note): AudioNode {
+    static async fromSample(buffer: Promise<SampleData>, env: AdsrConfig, volume: number = 1): Promise<SampleInstrument> {
+        return new SampleInstrument(await buffer, env, volume);
+    }
+
+    async scheduleNote(context: AudioContext, note: Note): Promise<AudioNode> {
         const freq = Notes.midiNumberToFrequency(note.midiNumber);
         const bufferNode = context.createBufferSource();
         bufferNode.buffer = this.buffer.buffer;

@@ -1,5 +1,5 @@
 import { SampleInstrument } from "./Instruments.js";
-import { Samples, SampleNames } from "./Samples.js";
+import { Samples } from "./Samples.js";
 import { MidiNumber } from "./Notes.js";
 import { impossible } from "../util/Util.js";
 
@@ -9,40 +9,41 @@ export enum Drums {
 
 export namespace Drumkit {
 
-    // The parameters here aren't important, since decay and volume get overwritten in scheduleHit().
-    const noise: SampleInstrument = new SampleInstrument(Samples[SampleNames.WHITE_NOISE], { attack: 0.01, decay: 0.1 }, 1.5);
+    const closedHiHat: Promise<SampleInstrument> = SampleInstrument.fromSample(Samples.white_noise, {
+        attack: 0.01, decay: 0.05
+    }, 0.5);
+
+    const openHiHat: Promise<SampleInstrument> = SampleInstrument.fromSample(Samples.white_noise, {
+        attack: 0.01, decay: 0.2
+    }, 0.5);
 
     // TODO: generalize sampling
-    const snare: SampleInstrument = new SampleInstrument(Samples[SampleNames.SNARE], { sustain: 1 }, 1.5);
-    const kick: SampleInstrument = new SampleInstrument(Samples[SampleNames.KICK], { sustain: 1 }, 1.5);
+    const snare: Promise<SampleInstrument> = SampleInstrument.fromSample(Samples.snare, { sustain: 1 }, 1.5);
+    const kick: Promise<SampleInstrument> = SampleInstrument.fromSample(Samples.kick, { sustain: 1 }, 1.5);
 
     // TODO: make these sound good
-    export function scheduleHit(context: AudioContext, start: number, drum: Drums): AudioNode {
+    export async function scheduleHit(context: AudioContext, start: number, drum: Drums): Promise<AudioNode> {
         switch (drum) {
         case Drums.KICK:
-            return kick.scheduleNote(context, {
+            return (await kick).scheduleNote(context, {
                 midiNumber: MidiNumber(69),
                 start: start,
                 duration: 1
             });
         case Drums.SNARE:
-            return snare.scheduleNote(context, {
+            return (await snare).scheduleNote(context, {
                 midiNumber: MidiNumber(69),
                 start: start,
                 duration: 1
             });
         case Drums.CLOSED_HI_HAT:
-            noise.env.decay = 0.05;
-            noise.volume = 0.5;
-            return noise.scheduleNote(context, {
+            return (await closedHiHat).scheduleNote(context, {
                 midiNumber: MidiNumber(70),
                 start: start,
                 duration: 0.05
             });
         case Drums.OPEN_HI_HAT:
-            noise.env.decay = 0.2;
-            noise.volume = 0.5;
-            return noise.scheduleNote(context, {
+            return (await openHiHat).scheduleNote(context, {
                 midiNumber: MidiNumber(70),
                 start: start,
                 duration: 0.2
