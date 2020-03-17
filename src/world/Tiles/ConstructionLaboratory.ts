@@ -15,6 +15,7 @@ import Ruins from "./Ruins.js";
 import { RationalityTech, StructureConstructionTech, SurveyTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import Species from "../../resources/Species.js";
+import { constructionProject } from "../../tileProjects/TileProject.js";
 
 export default class ConstructionLaboratory extends Tile {
 
@@ -31,37 +32,25 @@ export default class ConstructionLaboratory extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject(`Construct ${EngineeringLab.tileName}`, EngineeringLab.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new EngineeringLab(position));
-            },
+        constructionProject(EngineeringLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 20)],
             [adjacentToRoad],
             [],
         ),
 
-        new TileProject(`Construct ${PsychLab.tileName}`, PsychLab.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new PsychLab(position));
-            },
+        constructionProject(PsychLab,
             [new Cost(Resource.BuildingMaterials, 30)],
             [adjacentToRoad],
             [],
         ),
 
-        new TileProject(`Construct ${XenoLab.tileName}`, XenoLab.tileName,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new XenoLab(position));
-            },
+        constructionProject(XenoLab,
             [new Cost(Resource.BuildingMaterials, 40)],
             [new TileWithinDistancePredicate(3, Ruins), adjacentToRoad, new TechPredicate(SurveyTech)],
             [new TechPredicate(StructureConstructionTech)],
         ),
 
-        new TileProject(`Construct ${AlignmentLab.tileName}`, AlignmentLab.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new AlignmentLab(position));
-            },
+        constructionProject(AlignmentLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
             [new SpeciesPopulationPredicate(Species.Human, 200), adjacentToRoad],
             [new TechPredicate(RationalityTech)],

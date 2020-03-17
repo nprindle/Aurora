@@ -3,6 +3,7 @@ import Game from "../Game";
 import Cost from "../resources/Cost";
 import TilePredicate from "../predicates/TilePredicate";
 import WorldPredicate from "../predicates/WorldPredicate";
+import Tile, { NamedTileType } from "../world/Tile";
 
 type tileAction = ((position: GridCoordinates, run: Game) => void);
 
@@ -37,4 +38,11 @@ export default class TileProject {
         run.inventory.payCost(this.costs);
         this.action(position, run);
     }
+}
+
+export function constructionProject(tile: NamedTileType, costs: Cost[], completionRequirements: TilePredicate[], visibilityRequirements: TilePredicate[]): TileProject {
+    return new TileProject(
+        `Construct ${tile.tileName}`, tile.tileDescription,
+        (position: GridCoordinates, game: Game) => game.world.placeTile(new tile(position)),
+        costs, completionRequirements, visibilityRequirements);
 }

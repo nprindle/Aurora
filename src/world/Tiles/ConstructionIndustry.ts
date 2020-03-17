@@ -14,6 +14,7 @@ import Wasteland from "./Wasteland.js";
 import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import RobotHive from "./RobotHive.js";
+import { constructionProject } from "../../tileProjects/TileProject.js";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -32,10 +33,7 @@ export default class ConstructionIndustry extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject(`Construct ${RobotHive.tileName}`, RobotHive.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new RobotHive(position));
-            },
+        constructionProject(RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
                 new TechPredicate(StructureConstructionTech),
@@ -45,28 +43,19 @@ export default class ConstructionIndustry extends Tile {
             [new TechPredicate(IndustrialEngineeringTech)],
         ),
 
-        new TileProject(`Construct ${SolarPanels.tileName}`, SolarPanels.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new SolarPanels(position));
-            },
+        constructionProject(SolarPanels,
             [new Cost(Resource.Electronics, 200)],
             [],
             [],
         ),
 
-        new TileProject(`Construct ${MiningFacility.tileName}`, MiningFacility.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new MiningFacility(position));
-            },
+        constructionProject(MiningFacility,
             [new Cost(Resource.Energy, 200), new Cost(Resource.Metal, 300)],
             [new TileWithinDistancePredicate(5, Mountain), adjacentToRoad],
             [],
         ),
 
-        new TileProject(`Construct ${NuclearPlant.tileDescription}`, NuclearPlant.tileDescription,
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new NuclearPlant(position));
-            },
+        constructionProject(NuclearPlant,
             [new Cost(Resource.BuildingMaterials, 100), new Cost(Resource.Electronics, 100)],
             [new TechPredicate(NuclearTech), adjacentToRoad],
             [new TechPredicate(StructureConstructionTech)],
