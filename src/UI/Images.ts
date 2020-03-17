@@ -69,6 +69,8 @@ export const EngineeringLabTexture = makeImage("assets/tiles/colony/lab_engineer
 export const PsychLabTexture = makeImage("assets/tiles/colony/lab_psych.png");
 export const XenoLabTexture = makeImage("assets/tiles/colony/lab_xeno.png");
 
+export const RecyclerTexture1 = makeImage("assets/tiles/colony/recycler1.png");
+export const RecyclerTexture2 = makeImage("assets/tiles/colony/recycler2.png");
 export const NanotechFoundryTexture = makeImage("assets/tiles/colony/nanotech_foundry.png");
 
 export async function preloadImages(): Promise<HTMLImageElement[]> {
