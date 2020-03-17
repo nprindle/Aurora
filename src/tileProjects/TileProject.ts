@@ -3,7 +3,7 @@ import Game from "../Game";
 import Cost from "../resources/Cost";
 import TilePredicate from "../predicates/TilePredicate";
 import WorldPredicate from "../predicates/WorldPredicate";
-import Tile, { NamedTileType } from "../world/Tile";
+import { NamedTileType } from "../world/Tile";
 
 type tileAction = ((position: GridCoordinates, run: Game) => void);
 

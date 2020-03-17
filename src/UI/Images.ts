@@ -39,7 +39,12 @@ export const SolarPanelsTexture = makeImage("assets/tiles/colony/solar_panels.pn
 export const MiningFacilityTexture = makeImage("assets/tiles/colony/mining_facility.png");
 export const LanderTexture = makeImage("assets/tiles/colony/lander.png");
 export const GreenhouseTexture = makeImage("assets/tiles/colony/greenhouse.png");
+export const HydroponicsTexture = makeImage("assets/tiles/colony/hydroponics.png");
 export const MineshaftTexture = makeImage("assets/tiles/colony/mineshaft.png");
+
+export const ElectronicsFactoryTexture = makeImage("assets/tiles/colony/electronics factory.png");
+export const ConstructionFactoryTexture = makeImage("assets/tiles/colony/construction factory.png");
+export const XenoFactoryTexture = makeImage("assets/tiles/colony/xenofactory.png");
 
 export const RoadTextureCross = makeImage("assets/tiles/roads/cross.png");
 export const RoadTextureHorizontal = makeImage("assets/tiles/roads/horizontal.png");
@@ -57,10 +62,14 @@ export const ArcologyTexture = makeImage("assets/tiles/colony/arcology.png");
 export const NuclearPlantTexture = makeImage("assets/tiles/colony/nuclear_plant.png");
 export const RobotHiveTexture = makeImage("assets/tiles/colony/hive.png");
 
+export const ZeroPointPlantTexture = makeImage("assets/tiles/colony/zero_point.png");
+
 export const AlignmentLabTexture = makeImage("assets/tiles/colony/lab_alignment.png");
 export const EngineeringLabTexture = makeImage("assets/tiles/colony/lab_engineering.png");
 export const PsychLabTexture = makeImage("assets/tiles/colony/lab_psych.png");
 export const XenoLabTexture = makeImage("assets/tiles/colony/lab_xeno.png");
+
+export const NanotechFoundryTexture = makeImage("assets/tiles/colony/nanotech_foundry.png");
 
 export async function preloadImages(): Promise<HTMLImageElement[]> {
     return Promise.all(imageQueue);
