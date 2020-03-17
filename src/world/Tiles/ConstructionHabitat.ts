@@ -13,6 +13,7 @@ import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
+import Hydroponics from "./Hydroponics.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -49,6 +50,12 @@ export default class ConstructionHabitat extends Tile {
             [new Cost(Resource.BuildingMaterials, 25)],
             [adjacentToRoad],
             [],
+        ),
+
+        constructionProject(Hydroponics,
+            [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
+            [adjacentToRoad],
+            []
         ),
     ];
 
