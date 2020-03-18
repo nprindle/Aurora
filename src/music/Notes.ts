@@ -1,5 +1,5 @@
 import { mod } from "../util/Util.js";
-import { Newtype, newtype, unwrap } from "../util/Newtypes.js";
+import { Newtype, newtype, unwrap } from "@nprindle/minewt";
 
 /**
  * A number representing an absolute note, as defined by MIDI.
