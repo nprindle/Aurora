@@ -1,19 +1,9 @@
 import { Frequency } from "./Notes.js";
 
-// TODO: do this better
-// This is necessary for decoding sample data, but there has to be a better way to do this.
-const tempAudioContext = new AudioContext();
-
 export interface SampleData {
     buffer: AudioBuffer;
     shouldLoop: boolean;
     freq: Frequency; // frequency of sample for pitchshifting reasons
-}
-
-export enum SampleNames {
-    WHITE_NOISE = "white_noise",
-    SNARE = "snare",
-    KICK = "kick"
 }
 
 export namespace SampleUtils {
@@ -28,36 +18,48 @@ export namespace SampleUtils {
         return buffer;
     }
 
-    export function createBufferFromAudioData(length: number, filename: string): AudioBuffer {
+    export async function createBufferFromAudioData(context: AudioContext, length: number, filename: string): Promise<AudioBuffer> {
         const buffer = new AudioBuffer({ numberOfChannels: 1, sampleRate: 44100, length: length });
-        fetch(`assets/${filename}`, {
+        const response = await fetch(`assets/${filename}`, {
             headers: new Headers({
                 "Content-Type": "audio/ogg"
             })
-        }).then(async (value: Response) => {
-            const arr = await value.arrayBuffer();
-            const tempBuffer = await tempAudioContext.decodeAudioData(arr);
-            buffer.copyToChannel(tempBuffer.getChannelData(0), 0);
-        }, () => {});
+        });
+        const arr = await response.arrayBuffer();
+        const tempBuffer = await context.decodeAudioData(arr);
+        buffer.copyToChannel(tempBuffer.getChannelData(0), 0);
         return buffer;
+    }
+
+    export async function makeSampleData(args: { buffer: Promise<AudioBuffer>; shouldLoop: boolean; freq: Frequency; }): Promise<SampleData> {
+        const { buffer, shouldLoop, freq } = args;
+        return { buffer: await buffer, shouldLoop, freq };
     }
 
 }
 
-export const Samples: Record<SampleNames, SampleData> = {
-    "white_noise": {
-        buffer: SampleUtils.createBufferFromGenerator(44100, () => 2 * Math.random() - 1),
-        shouldLoop: true,
-        freq: Frequency(440),
-    },
-    "snare": {
-        buffer: SampleUtils.createBufferFromAudioData(22050, "samples/snare.ogg"),
-        shouldLoop: false,
-        freq: Frequency(440),
-    },
-    "kick": {
-        buffer: SampleUtils.createBufferFromAudioData(22050, "samples/kick.ogg"),
-        shouldLoop: false,
-        freq: Frequency(440),
-    }
-};
+export type SampleNames = "white_noise" | "snare" | "kick";
+
+/**
+ * Given an AudioContext, use it to construct all available samples.
+ */
+export function makeSamples(context: AudioContext): Record<SampleNames, Promise<SampleData>> {
+    return {
+        white_noise: SampleUtils.makeSampleData({
+            buffer: Promise.resolve(SampleUtils.createBufferFromGenerator(44100, () => 2 * Math.random() - 1)),
+            shouldLoop: true,
+            freq: Frequency(440),
+        }),
+        snare: SampleUtils.makeSampleData({
+            buffer: SampleUtils.createBufferFromAudioData(context, 22050, "samples/snare.ogg"),
+            shouldLoop: false,
+            freq: Frequency(440),
+        }),
+        kick: SampleUtils.makeSampleData({
+            buffer: SampleUtils.createBufferFromAudioData(context, 22050, "samples/kick.ogg"),
+            shouldLoop: false,
+            freq: Frequency(440),
+        }),
+    };
+}
+
