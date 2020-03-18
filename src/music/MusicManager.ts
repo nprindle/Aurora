@@ -8,6 +8,7 @@ import { Drumkit, Drums } from "./Drums.js";
 import { Arrays, NonEmptyArray } from "../util/Arrays.js";
 import { mod, impossible } from "../util/Util.js";
 import { unwrap } from "../util/Newtypes.js";
+import { makeSamples, SampleNames, SampleData } from "./Samples.js";
 
 enum MeasureContents {
     DRUMS, CHORDS
@@ -34,6 +35,10 @@ enum ChordFunction {
 export namespace MusicManager {
 
     export const context: AudioContext = new AudioContext();
+
+    export const samples: Record<SampleNames, Promise<SampleData>> = makeSamples(context);
+
+    export const drumkit: Drumkit = new Drumkit(samples);
 
     export const instruments = {
         arp: new OscillatorInstrument(
@@ -109,13 +114,13 @@ export namespace MusicManager {
         }));
     }
 
-    function scheduleDrum(start: number, drum: Drums): void {
-        const drumOut: AudioNode = Drumkit.scheduleHit(context, start, drum);
+    async function scheduleDrum(start: number, drum: Drums): Promise<void> {
+        const drumOut: AudioNode = await drumkit.scheduleHit(context, start, drum);
         drumOut.connect(masterGain);
     }
 
-    function scheduleNote(note: Note, inst: Instrument): void {
-        const instOut: AudioNode = inst.scheduleNote(context, note);
+    async function scheduleNote(note: Note, inst: Instrument): Promise<void> {
+        const instOut: AudioNode = await inst.scheduleNote(context, note);
         instOut.connect(masterGain);
     }
 
@@ -153,11 +158,11 @@ export namespace MusicManager {
         ];
     }
 
-    function queueChord(startingTime: number): void {
+    async function queueChord(startingTime: number): Promise<void> {
         const curChord = state.progression[mod(state.chordIndex, state.progression.length)];
         const beatLength: number = 60 / state.beatsPerMinute;
         for (const val of curChord) {
-            scheduleNote({
+            await scheduleNote({
                 midiNumber: octave(val, 5),
                 start: startingTime,
                 duration: beatLength * state.rhythm.beats
@@ -166,16 +171,16 @@ export namespace MusicManager {
         state.chordIndex++;
     }
 
-    function queueDrumLoop(startingTime: number): void {
+    async function queueDrumLoop(startingTime: number): Promise<void> {
         const beatLength: number = 60 / state.beatsPerMinute;
         let offsetTime = 0;
         for (const drum of state.drumLoop) {
-            scheduleDrum(startingTime + offsetTime, drum);
+            await scheduleDrum(startingTime + offsetTime, drum);
             offsetTime += beatLength;
         }
     }
 
-    function queueNextMeasure(startingTime: number): void {
+    async function queueNextMeasure(startingTime: number): Promise<void> {
         const beatLength: number = 60 / state.beatsPerMinute;
         if (state.queue.length === 0) {
             fillQueue();
@@ -186,26 +191,31 @@ export namespace MusicManager {
             for (const k of currentContents) {
                 switch (k) {
                 case MeasureContents.DRUMS:
-                    queueDrumLoop(startingTime);
+                    await queueDrumLoop(startingTime);
                     break;
                 case MeasureContents.CHORDS:
-                    queueChord(startingTime);
+                    await queueChord(startingTime);
                     break;
                 default: impossible();
                 }
             }
         }
         const nextMeasureStartTime: number = startingTime + measureLength;
-        window.setTimeout(() => {
-            queueNextMeasure(nextMeasureStartTime); // schedule next measure for after this one
-            // compute next measure 100ms (0.1s) before it needs to start
-        }, (nextMeasureStartTime - context.currentTime - 0.1) * 1000);
+        // compute next measure 100ms (0.1s) before it needs to start
+        await new Promise(resolve => {
+            window.setTimeout(resolve, (nextMeasureStartTime - context.currentTime - 0.1) * 1000);
+        });
+        return queueNextMeasure(nextMeasureStartTime); // schedule next measure for after this one
     }
 
     export function initialize(): void {
         masterGain.gain.value = 0.25;
         masterGain.connect(context.destination);
-        queueNextMeasure(context.currentTime);
+        queueNextMeasure(context.currentTime).catch((reason: any) => {
+            if (reason) {
+                console.error(reason);
+            }
+        });
     }
 
     export function setVolume(volume: number): void {
