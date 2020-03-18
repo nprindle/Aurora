@@ -1,6 +1,6 @@
 import { mod } from "../util/Util.js";
 import { Arrays } from "../util/Arrays.js";
-import { Newtype, newtype, unwrap } from "../util/Newtypes.js";
+import { Newtype, newtype, unwrap } from "@nprindle/minewt";
 
 /**
  * Describe the degrees in a scale, encoded in Ian Ring's format as a 12-bit bit

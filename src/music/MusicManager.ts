@@ -7,7 +7,7 @@ import Rhythm from "./Rhythm.js";
 import { Drumkit, Drums } from "./Drums.js";
 import { Arrays, NonEmptyArray } from "../util/Arrays.js";
 import { mod, impossible } from "../util/Util.js";
-import { unwrap } from "../util/Newtypes.js";
+import { unwrap } from "@nprindle/minewt";
 import { makeSamples, SampleNames, SampleData } from "./Samples.js";
 
 enum MeasureContents {
