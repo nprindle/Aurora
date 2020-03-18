@@ -74,3 +74,18 @@ export class SpeciesPopulationPredicate extends TilePredicate {
         return `have at least ${this.minCount} ${this.species.name}`;
     }
 }
+
+export class NotTilePredicate extends TilePredicate {
+    constructor(
+        private inverse: TilePredicate
+    ) {
+        super();
+    }
+
+    evaluate(run: Game, position: GridCoordinates): boolean {
+        return !this.inverse.evaluate(run, position);
+    }
+    toString(): string {
+        return `not ${this.inverse.toString()}`;
+    }
+}

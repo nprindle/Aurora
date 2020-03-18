@@ -1,5 +1,6 @@
 import Cost from "../resources/Cost.js";
 import { ResearchableTechnologies } from "./TechTree.js";
+import Resource from "../resources/Resource.js";
 
 export default class Technology {
     private constructor(
@@ -17,7 +18,7 @@ export default class Technology {
     }
 
     // hidden technologies cannot be unlocked through the tech tree, but can be used for scripted actions
-    static makeHiddenTechnology(name: string, description: string, researchCost: Cost, visible: boolean = false): Technology {
-        return new Technology(name, description, [], researchCost, visible);
+    static makeHiddenTechnology(name: string, description: string, visible: boolean = false): Technology {
+        return new Technology(name, description, [], new Cost(Resource.EngineeringKnowledge, 0), visible);
     }
 }
