@@ -1,9 +1,9 @@
 import Tile from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { NanotechFoundryTexture } from "../../UI/Images.js";
+import { NanotechFoundryTexture, NeuralEmulatorTexture } from "../../UI/Images.js";
 
 export default class NeuralEmulator extends Tile {
-    protected texture: HTMLImageElement = NanotechFoundryTexture;
+    protected texture: HTMLImageElement = NeuralEmulatorTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
