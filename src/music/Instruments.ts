@@ -2,7 +2,7 @@ import Instrument from "./Instrument.js";
 import { Envelopes, AdsrConfig } from "./Envelopes.js";
 import { Note, Notes } from "./Notes.js";
 import { SampleData } from "./Samples.js";
-import { unwrap } from "../util/Newtypes.js";
+import { unwrap } from "@nprindle/minewt";
 
 type OscType = OscillatorNode["type"];
 
