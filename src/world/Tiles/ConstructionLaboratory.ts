@@ -47,7 +47,7 @@ export default class ConstructionLaboratory extends Tile {
         constructionProject(XenoLab,
             [new Cost(Resource.BuildingMaterials, 40)],
             [new TileWithinDistancePredicate(3, Ruins), adjacentToRoad, new TechPredicate(SurveyTech)],
-            [new TechPredicate(StructureConstructionTech)],
+            [],
         ),
 
         constructionProject(AlignmentLab,

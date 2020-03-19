@@ -8,7 +8,7 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { StructureConstructionTech, UrbanPlanningTech, } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
@@ -49,13 +49,13 @@ export default class ConstructionHabitat extends Tile {
         constructionProject(Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
             [adjacentToRoad],
-            [],
+            [new TechPredicate(StructureConstructionTech)],
         ),
 
         constructionProject(Hydroponics,
             [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
-            [adjacentToRoad],
-            []
+            [adjacentToRoad, new TechPredicate(IndustrialEngineeringTech)],
+            [new TechPredicate(StructureConstructionTech)]
         ),
     ];
 
