@@ -172,11 +172,9 @@ export const ZeroPointTech = Technology.makeUnlockableTechnology(
     new Cost(Resource.EngineeringKnowledge, 100),
 );
 
-export const MonolithSurveyTech = Technology.makeUnlockableTechnology(
+export const MonolithSurveyTech = Technology.makeHiddenTechnology(
     "Monolith Surveying",
-    "The monolith appears some sort of supercomputer that was left unfinished when the alien civilization collapsed. Some archaeological evidence suggests that the monolith's construction caused the war in which the aliens destroyed each other. Studying it in detail may reveal its true purpose.",
-    [AlienHistoryTech],
-    new Cost(Resource.AlienKnowledge, 30)
+    "The monolith appears to be some sort of supercomputer that was left unfinished when the alien civilization collapsed. Some archaeological evidence suggests that the monolith's construction caused the war in which the aliens destroyed each other. Studying it in detail may reveal its true purpose.",
 );
 
 export const HypercomputingTech = Technology.makeUnlockableTechnology(

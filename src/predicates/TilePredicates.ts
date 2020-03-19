@@ -4,6 +4,7 @@ import Game from "../Game.js";
 import Tile, { NamedTileType } from "../world/Tile.js";
 import Species from "../resources/Species.js";
 import Road from "../world/Tiles/Road.js";
+import { NonEmptyArray } from "../util/Arrays.js";
 
 
 
@@ -88,4 +89,22 @@ export class NotTilePredicate extends TilePredicate {
     toString(): string {
         return `not ${this.inverse.toString()}`;
     }
+}
+
+export class OrTilePredicate extends TilePredicate {
+
+    constructor(
+        private possibilities: [TilePredicate, TilePredicate, ...TilePredicate[]]
+    ) {
+        super();
+    }
+
+    evaluate(run: Game, position: GridCoordinates): boolean {
+        return this.possibilities.some((predicate: TilePredicate) => predicate.evaluate(run, position));
+    }
+
+    toString(): string {
+        return this.possibilities.map(predicate => predicate.toString()).join(" or ");
+    }
+
 }
