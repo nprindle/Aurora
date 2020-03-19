@@ -12,6 +12,9 @@ import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
 import World from "../World.js";
+import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import { MonolithSurveyTech } from "../../techtree/TechTree.js";
+import ConstructionVictory from "./ConstructionVictory.js";
 
 
 
@@ -37,16 +40,22 @@ export default class Wasteland extends Tile {
             }, [], [], [],
         ),
 
+        new TileProject("Create industry construction site", "Designate this location for construction of industrial facilities and infrastructure",
+            (position: GridCoordinates, run: Game) => {
+                run.world.placeTile(new ConstructionIndustry(position));
+            }, [], [], [],
+        ),
+
         new TileProject("Create laboratory construction site", "Designate this location for construction of research laboratories",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new ConstructionLaboratory(position));
             }, [], [], [],
         ),
 
-        new TileProject("Create industry construction site", "Designate this location for construction of industrial facilities and infrastructure",
+        new TileProject("Create xenoengineering construction site", "Designate this location for construction of advanced technologies",
             (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new ConstructionIndustry(position));
-            }, [], [], [],
+                run.world.placeTile(new ConstructionVictory(position));
+            }, [], [], [new TechPredicate(MonolithSurveyTech)],
         ),
 
         new TileProject("Construct Road", "Construct roads to extend the reach of the colony's logistics",
