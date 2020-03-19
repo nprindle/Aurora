@@ -4,10 +4,9 @@ import MainMenuUI from "./UI/menu/MainMenu.js";
 import { MusicManager } from "./music/MusicManager.js";
 
 // this is the entrypoint to the program.
-window.onload = function() {
+window.onload = async function() {
     console.log("Script Loaded");
-    preloadImages().then(() => {
-        MusicManager.initialize();
-        GameWindow.show(new MainMenuUI());
-    }, () => {});
+    await preloadImages();
+    MusicManager.initialize();
+    GameWindow.show(new MainMenuUI());
 };

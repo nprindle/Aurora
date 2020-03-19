@@ -4,6 +4,6 @@ export default abstract class Instrument {
 
     constructor(public volume: number) {}
 
-    abstract scheduleNote(context: AudioContext, note: Note): AudioNode;
+    abstract async scheduleNote(context: AudioContext, note: Note): Promise<AudioNode>;
 
 }
