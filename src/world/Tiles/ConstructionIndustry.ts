@@ -11,15 +11,13 @@ import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech, MonolithSurveyTech, NanoTech } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import RobotHive from "./RobotHive.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
-import NanotechFoundry from "./NanotechFoundry.js";
-import Monolith from "./Monolith.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
 
 export default class ConstructionIndustry extends Tile {
@@ -39,6 +37,12 @@ export default class ConstructionIndustry extends Tile {
             }, [], [], [],
         ),
 
+        constructionProject(SolarPanels,
+            [new Cost(Resource.Electronics, 200)],
+            [],
+            [],
+        ),
+
         constructionProject(RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
@@ -47,12 +51,6 @@ export default class ConstructionIndustry extends Tile {
                 adjacentToRoad,
             ],
             [new TechPredicate(IndustrialEngineeringTech)],
-        ),
-
-        constructionProject(SolarPanels,
-            [new Cost(Resource.Electronics, 200)],
-            [],
-            [],
         ),
 
         constructionProject(MiningFacility,
@@ -89,12 +87,6 @@ export default class ConstructionIndustry extends Tile {
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Electronics, 100), new Cost(Resource.Superconductor, 1000)],
             [new TechPredicate(ZeroPointTech)],
             [new TechPredicate(XenoarchaeologyTech)],
-        ),
-
-        constructionProject(NanotechFoundry,
-            [new Cost(Resource.SmartMatter, 1000), new Cost(Resource.BuildingMaterials, 500), new Cost(Resource.Electronics, 200)],
-            [adjacentToRoad, new TileWithinDistancePredicate(3, Monolith), new TechPredicate(NanoTech)],
-            [new TechPredicate(MonolithSurveyTech)],
         ),
     ];
 
