@@ -35,7 +35,7 @@ export function stripIndent(strings: TemplateStringsArray, ...placeholders: stri
     // Remove leading/trailing newlines and concatenate arguments, accounting
     // for tabs as indentation
     const str = strings
-        .reduce((acc, s, i) => acc + s + (placeholders[i] || ""))
+        .reduce((acc, s, i) => acc + s + (placeholders[i] || ""), "")
         .replace(/\t/, "    ")
         .replace(/^(?:\r?\n)+|(?:\r?\n)+ *$/g, "");
     // Split into lines and find the indentation levels of all nonempty ones
@@ -45,7 +45,7 @@ export function stripIndent(strings: TemplateStringsArray, ...placeholders: stri
         .map(line => line.match(/^\s*/)![0].length); // regex can't fail to match
     // Find the minimum indentation across all nonempty lines
     let minIndent = 0;
-    if (lines.length > 0) {
+    if (indentLevels.length > 0) {
         minIndent = indentLevels.reduce((min, len) => Math.min(min, len));
     }
     // Drop the minimum indent size from every line and join them back
