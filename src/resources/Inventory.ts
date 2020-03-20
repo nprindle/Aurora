@@ -86,6 +86,15 @@ export default class Inventory {
         }
     }
 
+    // reduces population of any species that has inadequate housing capacity
+    applyPopulationCaps(): void {
+        for (const species of this.getSpeciesList()) {
+            this.populationQuantities.set(species,
+                clamp(0, this.populationQuantities.get(species), this.world.getPopulationCapacity(species)));
+        }
+        this.availableWorkers = clamp(0, this.availableWorkers, this.getTotalPopulation());
+    }
+
     getTotalPopulation(): number {
         return this.populationQuantities.getSum();
     }

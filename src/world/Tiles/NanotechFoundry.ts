@@ -1,6 +1,5 @@
 import Tile from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import Monolith from "./Monolith.js";
 import { NanotechFoundryTexture } from "../../UI/Images.js";
 
 export default class NanotechFoundry extends Tile {
@@ -12,7 +11,7 @@ export default class NanotechFoundry extends Tile {
 
     static readonly tileName: string = "Nanotech Foundry";
     static readonly tileDescription: string =
-        `A nanotechnology manufacturing facility capable of completing the aliens' unfinished ${Monolith.tileName} machine.`;
+        `A nanotechnology manufacturing facility capable of completing the unfinished alien Monolith device`;
     getTileName(): string {
         return NanotechFoundry.tileName;
     }

@@ -13,6 +13,10 @@ export default class World {
     width: number;
     height: number;
 
+    // coordinates of the view area's top-left tile, used by MapUI
+    // this is stored as part of the world so that the current position persists between screens
+    viewPosition: GridCoordinates = new GridCoordinates(0, 0);
+
     /* this is used to track the past texture of a given tile type at a given position
      * this lets tiles that have different random textures keep the same texture over the course of the run
      * even if the individual tile is replaced with another of the same type

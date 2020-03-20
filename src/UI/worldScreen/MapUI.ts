@@ -3,7 +3,6 @@ import { UI } from "../UI.js";
 import Tile from "../../world/Tile.js";
 import { clamp } from "../../util/Util.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
-import WorldScreen from "./WorldScreen.js";
 import { HighlightSelectionImage } from "../Images.js";
 import { Page } from "../GameWindow.js";
 import { Settings } from "../../persistence/Settings.js";
@@ -15,21 +14,18 @@ export default class MapUI implements Page {
 
     private static readonly highlightImage: HTMLImageElement = HighlightSelectionImage;
 
-    private world: World;
-
     readonly html: HTMLCanvasElement; // the html for this component is an html canvas that we draw tiles onto
-    private parentScreen: WorldScreen; // the WorldScreen instance that contains this MapUI
 
     private viewWidth: number = Settings.currentOptions.viewWidth; // width of viewable area in tiles
     private viewHeight: number = Settings.currentOptions.viewHeight; // height of viewable area in tiles
 
-    private viewPosition: GridCoordinates = new GridCoordinates(0, 0); // coordinates of the current view area's top-left tile
+
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
-    constructor(parent: WorldScreen, world: World) {
-        this.world = world;
-        this.parentScreen = parent;
-
+    constructor(
+        private parentScreen: {changeSidebarTile(position: GridCoordinates | null): void;},
+        private world: World
+    ) {
         this.html = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ["map-canvas"]);
 
         // attach click listener for tile selection
@@ -42,7 +38,7 @@ export default class MapUI implements Page {
     // re-draws all tiles in the viewable area
     public refresh(): void {
         const tilesInViewableArea =
-        this.world.getTilesInRectangle(this.viewPosition.x, this.viewPosition.y, this.viewWidth, this.viewHeight);
+        this.world.getTilesInRectangle(this.world.viewPosition.x, this.world.viewPosition.y, this.viewWidth, this.viewHeight);
 
         for (const tile of tilesInViewableArea) {
             this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);
@@ -57,8 +53,8 @@ export default class MapUI implements Page {
         const context = this.html.getContext("2d")!;
         context.imageSmoothingEnabled = false; // disable antialiasing to allow crispy pixel art
 
-        const x = coordinates.x - this.viewPosition.x;
-        const y = coordinates.y - this.viewPosition.y;
+        const x = coordinates.x - this.world.viewPosition.x;
+        const y = coordinates.y - this.world.viewPosition.y;
 
         if ((x < 0) || (y < 0) || (x >= this.viewWidth) || (y >= this.viewHeight)) {
             return; // don't attempt to draw tiles outside the viewable area
@@ -82,16 +78,16 @@ export default class MapUI implements Page {
     }
 
     private moveViewArea(right: number, down: number): void {
-        const newX = clamp(0, this.viewPosition.x + right, this.world.width - this.viewWidth);
-        const newY = clamp(0, this.viewPosition.y + down, this.world.height - this.viewHeight);
-        this.viewPosition = new GridCoordinates(newX, newY);
+        const newX = clamp(0, this.world.viewPosition.x + right, this.world.width - this.viewWidth);
+        const newY = clamp(0, this.world.viewPosition.y + down, this.world.height - this.viewHeight);
+        this.world.viewPosition = new GridCoordinates(newX, newY);
 
         this.refresh();
     }
 
     handleClick(ev: MouseEvent): void {
-        const x = Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth)) + this.viewPosition.x;
-        const y = Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight)) + this.viewPosition.y;
+        const x = Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth)) + this.world.viewPosition.x;
+        const y = Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight)) + this.world.viewPosition.y;
 
         const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y))!;
         this.selectTile(targetTile);
