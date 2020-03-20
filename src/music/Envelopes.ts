@@ -9,7 +9,9 @@ export interface AdsrConfig {
 
 export namespace Envelopes {
 
-    export function createAdsrEnvelope(context: AudioContext, start: number, duration: number, env: AdsrConfig, volume: number = 1): GainNode {
+    export function createAdsrEnvelope(context: AudioContext, start: number, duration: number,
+        env: AdsrConfig, volume: number = 1): GainNode {
+
         // these are all optional, so make sure they're not undefined
         const { attack = 0, sustain = 0, decay = 0, release = 0 } = env;
         const gainNode: GainNode = context.createGain();

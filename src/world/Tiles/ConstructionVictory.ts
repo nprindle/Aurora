@@ -36,14 +36,25 @@ export default class ConstructionVictory extends Tile {
         ),
 
         constructionProject(NeuralEmulator,
-            [new Cost(Resource.BuildingMaterials, 300), new Cost(Resource.Electronics, 1000), new Cost(Resource.Superconductor, 1000), new Cost(Resource.SmartMatter, 500)],
-            [adjacentToRoad, new TileWithinDistancePredicate(2, Monolith), new TechPredicate(NeuralUploadingTech)],
+            [
+                new Cost(Resource.BuildingMaterials, 300),
+                new Cost(Resource.Electronics, 1000),
+                new Cost(Resource.Superconductor, 1000),
+                new Cost(Resource.SmartMatter, 500)
+            ],
+            [
+                adjacentToRoad,
+                new TileWithinDistancePredicate(2, Monolith),
+                new TechPredicate(NeuralUploadingTech)
+            ],
             [new TechPredicate(MonolithSurveyTech)],
         ),
     ];
 
     static readonly tileName: string = "Construction Site - Hyperengineering";
-    static readonly tileDescription: string = "An area designated for construction of advanced technologies necessary for completing the mission";
+    static readonly tileDescription: string =
+    "An area designated for construction of advanced technologies necessary for completing the mission";
+
     getTileName(): string {
         return ConstructionVictory.tileName;
     }

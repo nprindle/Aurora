@@ -20,7 +20,8 @@ export default class Hydroponics extends Tile {
     ];
 
     static readonly tileName: string = "Hydroponics Greenhouse";
-    static readonly tileDescription: string = `Produces ${Resource.Food.name} for ${Species.Human.name} more efficiently than a standard greenhouse`;
+    static readonly tileDescription: string =
+        `Produces ${Resource.Food.name} for ${Species.Human.name} more efficiently than a standard greenhouse`;
     getTileName(): string {
         return Hydroponics.tileName;
     }

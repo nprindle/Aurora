@@ -188,7 +188,10 @@ export namespace Schemas {
         S extends {
             [K in keyof Structure]: Structure[K] extends Schema<any, infer B> ? B : never;
         }
-    >(structure: Structure, reconstruct: (data: { [K in keyof Structure]: Structure[K] extends Schema<infer A, any> ? A : never; }) => T): Schema<T, S> {
+    >(
+        structure: Structure,
+        reconstruct: (data: { [K in keyof Structure]: Structure[K] extends Schema<infer A, any> ? A : never; }) => T
+    ): Schema<T, S> {
         const { encode, decode, validate } = recordOf<Structure, T, S>(structure);
         return {
             encode,
@@ -275,7 +278,12 @@ export namespace Schemas {
      * instead. Note that this is left-biased; if both types are the same, for
      * example, the schema on the left will be tried first.
      */
-    export function unionOf<TL, SL, TR, SR>(isLeft: (x: TL | TR) => x is TL, isRight: (x: TL | TR) => x is TR, left: Schema<TL, SL>, right: Schema<TR, SR>): Schema<TL | TR, SL | SR> {
+    export function unionOf<TL, SL, TR, SR>(
+        isLeft: (x: TL | TR) => x is TL,
+        isRight: (x: TL | TR) => x is TR,
+        left: Schema<TL, SL>,
+        right: Schema<TR, SR>
+    ): Schema<TL | TR, SL | SR> {
         return {
             encode: (x: TL | TR) => {
                 if (isLeft(x)) {

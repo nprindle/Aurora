@@ -20,7 +20,8 @@ export default class ResearchScreen implements Page {
         let researchHeader = UI.makeHeader("Available Research Projects");
 
         const possibleTechs: Technology[] = this.run.getResearchOptions();
-        const researchResources: Resource[] = Resource.values().filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
+        const researchResources: Resource[] =
+        Resource.values().filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
 
         const researchResourcesHTML: HTMLElement = UI.makeDiv(["research-resources"]);
         if (researchResources.length !== 0) {
@@ -37,7 +38,8 @@ export default class ResearchScreen implements Page {
         }
 
         let historyHeader = UI.makeHeader("Previous Research Projects", 1, ["previous-research-header"]);
-        const techHistory = this.run.getUnlockedTechnologies().filter(tech => tech.visible).map(tech => UI.makePara(`• ${tech.name}`, ["previous-research"]));
+        const techHistory =
+        this.run.getUnlockedTechnologies().filter(tech => tech.visible).map(tech => UI.makePara(`• ${tech.name}`, ["previous-research"]));
 
         if (techHistory.length === 0) {
             historyHeader = UI.makeDiv();

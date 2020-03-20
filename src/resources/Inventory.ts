@@ -95,8 +95,8 @@ export default class Inventory {
     }
 
     canAfford(costs: Cost[]): boolean {
-        /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs together
-         * to make sure that the entire set of costs can be afforded together
+        /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs
+         * together to make sure that the entire set of costs can be afforded together
          */
         const costMap = new Map<Resource, number>();
         for (const cost of costs) {
@@ -138,7 +138,7 @@ export default class Inventory {
         return this.populationQuantities.positiveQuantityKeys().map(species => `${this.populationQuantities.get(species)} ${species.name}`);
     }
 
-    // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable at that point in the process
+    // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable
     applyConversions(conversions: Conversion[]): void {
         for (const conversion of conversions) {
             if (this.canAfford(conversion.inputs) && this.hasEnoughWorkers(conversion.requiredWorkers) && conversion.enabled) {

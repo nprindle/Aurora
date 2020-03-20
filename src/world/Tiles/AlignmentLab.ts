@@ -4,6 +4,7 @@ import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { AlignmentLabTexture } from "../../UI/Images.js";
+import { stripIndent } from "../../util/Text.js";
 
 
 export default class AlignmentLab extends Tile {
@@ -22,7 +23,9 @@ export default class AlignmentLab extends Tile {
     ];
 
     static readonly tileName: string = "AI Alignment Lab";
-    static readonly tileDescription: string = "A research center for developing techniques that could allow humans to control an artificial intelligence or modify its goal programming";
+    static readonly tileDescription: string = stripIndent`
+        A research center for developing techniques that could allow humans to control an
+        artificial intelligence or modify its goal programming`;
     getTileName(): string {
         return AlignmentLab.tileName;
     }

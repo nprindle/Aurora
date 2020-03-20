@@ -11,7 +11,8 @@ export default class NanotechFoundry extends Tile {
     }
 
     static readonly tileName: string = "Nanotech Foundry";
-    static readonly tileDescription: string = `A nanotechnology manufacturing facility capable of completing the aliens' unfinished ${Monolith.tileName} machine.`;
+    static readonly tileDescription: string =
+        `A nanotechnology manufacturing facility capable of completing the aliens' unfinished ${Monolith.tileName} machine.`;
     getTileName(): string {
         return NanotechFoundry.tileName;
     }

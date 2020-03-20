@@ -10,7 +10,8 @@ import PsychLab from "./PsychLab.js";
 import XenoLab from "./XenoLab.js";
 import AlignmentLab from "./AlignmentLab.js";
 import Wasteland from "./Wasteland.js";
-import { TileWithinDistancePredicate, SpeciesPopulationPredicate, adjacentToRoad, OrTilePredicate } from "../../predicates/TilePredicates.js";
+import { TileWithinDistancePredicate, SpeciesPopulationPredicate, adjacentToRoad,
+    OrTilePredicate } from "../../predicates/TilePredicates.js";
 import Ruins from "./Ruins.js";
 import { SurveyTech, AiResearchTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
@@ -47,7 +48,11 @@ export default class ConstructionLaboratory extends Tile {
 
         constructionProject(XenoLab,
             [new Cost(Resource.BuildingMaterials, 40)],
-            [new OrTilePredicate([new TileWithinDistancePredicate(3, Ruins), new TileWithinDistancePredicate(3, Monolith)]), adjacentToRoad, new TechPredicate(SurveyTech)],
+            [
+                new OrTilePredicate([new TileWithinDistancePredicate(3, Ruins), new TileWithinDistancePredicate(3, Monolith)]),
+                adjacentToRoad,
+                new TechPredicate(SurveyTech)
+            ],
             [],
         ),
 

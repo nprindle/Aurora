@@ -40,7 +40,9 @@ export default class TileSidebar implements Page {
 
             const housingHTML = UI.makeDiv();
             if (tile.populationCapacity) {
-                housingHTML.appendChild(UI.makePara(`Population capacity for ${tile.populationCapacity.capacity} ${tile.populationCapacity.species.name}`));
+                housingHTML.appendChild(UI.makePara(
+                    `Population capacity for ${tile.populationCapacity.capacity} ${tile.populationCapacity.species.name}`
+                ));
             }
 
             const projectsHTML = UI.makeDiv();

@@ -22,7 +22,9 @@ export default class ZeroPointPlant extends Tile {
     ];
 
     static readonly tileName: string = "Zero Point Energy Plant";
-    static readonly tileDescription: string = `A power plant that exploits exotic physics and alien science to produce vast amounts of ${Resource.Energy}.`;
+    static readonly tileDescription: string =
+        `A power plant that exploits exotic physics and alien science to produce vast amounts of ${Resource.Energy.name}.`;
+
     getTileName(): string {
         return ZeroPointPlant.tileName;
     }

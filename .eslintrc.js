@@ -114,6 +114,10 @@ const possibleErrorRules = {
 
 // Rules that enforce consistent code style
 const styleRules = {
+
+  // Limit line length
+  "max-len": ["Warn", 140],
+
   // Indent with 4 spaces
   "indent": "off",
   "@typescript-eslint/indent": ["warn", 4, {

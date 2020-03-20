@@ -10,6 +10,7 @@ import { LanderTexture } from "../../UI/Images.js";
 import Resource from "../../resources/Resource.js";
 import Greenhouse from "./Greenhouse.js";
 import Road from "./Road.js";
+import { stripIndent } from "../../util/Text.js";
 
 export default class Lander extends Tile {
     protected texture: HTMLImageElement = LanderTexture;
@@ -47,7 +48,9 @@ export default class Lander extends Tile {
     }
 
     static readonly tileName: string = "Landing Pod";
-    static readonly tileDescription: string = "A spacecraft responsible for the final entry-descent-landing phase of the interstellar journey; not equipped to ascend back to space";
+    static readonly tileDescription: string = stripIndent`
+        A spacecraft responsible for the final entry-descent-landing phase of the interstellar journey;
+        not equipped to ascend back to space`;
     getTileName(): string {
         return Lander.tileName;
     }

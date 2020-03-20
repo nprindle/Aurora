@@ -31,7 +31,9 @@ export namespace SampleUtils {
         return buffer;
     }
 
-    export async function makeSampleData(args: { buffer: Promise<AudioBuffer>; shouldLoop: boolean; freq: Frequency; }): Promise<SampleData> {
+    export async function makeSampleData(
+        args: { buffer: Promise<AudioBuffer>; shouldLoop: boolean; freq: Frequency; }
+    ): Promise<SampleData> {
         const { buffer, shouldLoop, freq } = args;
         return { buffer: await buffer, shouldLoop, freq };
     }
