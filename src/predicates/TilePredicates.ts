@@ -4,9 +4,6 @@ import Game from "../Game.js";
 import Tile, { NamedTileType } from "../world/Tile.js";
 import Species from "../resources/Species.js";
 import Road from "../world/Tiles/Road.js";
-import { NonEmptyArray } from "../util/Arrays.js";
-
-
 
 // file for implementations of TilePredicate
 

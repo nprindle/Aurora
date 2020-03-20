@@ -40,7 +40,8 @@ export default class TileProject {
     }
 }
 
-export function constructionProject(tile: NamedTileType, costs: Cost[], completionRequirements: TilePredicate[], visibilityRequirements: TilePredicate[]): TileProject {
+export function constructionProject(tile: NamedTileType, costs: Cost[],
+    completionRequirements: TilePredicate[], visibilityRequirements: TilePredicate[]): TileProject {
     return new TileProject(
         `Construct ${tile.tileName}`, tile.tileDescription,
         (position: GridCoordinates, game: Game) => game.world.placeTile(new tile(position)),

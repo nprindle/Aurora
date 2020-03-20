@@ -34,13 +34,17 @@ export default class Wasteland extends Tile {
 
     possibleProjects: TileProject[] = [
 
-        new TileProject("Create habitat construction site", "Designate this location for construction of habitation and life support facilities",
+        new TileProject(
+            "Create habitat construction site",
+            "Designate this location for construction of habitation and life support facilities",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new ConstructionHabitat(position));
             }, [], [], [],
         ),
 
-        new TileProject("Create industry construction site", "Designate this location for construction of industrial facilities and infrastructure",
+        new TileProject(
+            "Create industry construction site",
+            "Designate this location for construction of industrial facilities and infrastructure",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new ConstructionIndustry(position));
             }, [], [], [],

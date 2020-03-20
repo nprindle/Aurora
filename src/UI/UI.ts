@@ -67,7 +67,8 @@ export namespace UI {
     }
 
     // creates a button which executes the given callback function when clicked
-    export function makeButton(text: string, callback: Function, classes?: string[], buttonEnabled: "enabled" | "disabled" = "enabled"): HTMLButtonElement {
+    export function makeButton(text: string, callback: Function, classes?: string[],
+        buttonEnabled: "enabled" | "disabled" = "enabled"): HTMLButtonElement {
         const b: HTMLButtonElement = document.createElement("button");
         b.type = "button";
         if (buttonEnabled === "disabled") {
@@ -89,7 +90,8 @@ export namespace UI {
 
     // Creates a slider with an inclusive range and a default value, with the
     // appropriate callback when the slider value changes
-    export function makeSlider(label: string, min: number, max: number, value: number, callback: (value: number) => void, step?: number): HTMLElement {
+    export function makeSlider(label: string, min: number, max: number, value: number,
+        callback: (value: number) => void, step?: number): HTMLElement {
         const input = document.createElement("input");
         input.type = "range";
         input.min = min.toString();

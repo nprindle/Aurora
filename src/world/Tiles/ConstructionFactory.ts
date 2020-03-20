@@ -21,7 +21,7 @@ export default class ConstructionFactory extends Tile {
     ];
 
     static readonly tileName: string = "Construction Materials Factory";
-    static readonly tileDescription: string = `A facility for producing ${Resource.BuildingMaterials}`;
+    static readonly tileDescription: string = `A facility for producing ${Resource.BuildingMaterials.name}`;
     getTileName(): string {
         return ConstructionFactory.tileName;
     }

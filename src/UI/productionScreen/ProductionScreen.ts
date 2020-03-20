@@ -65,7 +65,9 @@ export default class ProductionScreen implements Page {
             // but still be able to run the actual populationGrowth method on inventoryClone afterwards
             const consumptionInventoryCopy = inventoryCopy.clone();
 
-            populationConsumptionHtml.appendChild(UI.makePara("Resources required for worker upkeep:", ["production-screen-worker-consumption-label"]));
+            populationConsumptionHtml.appendChild(
+                UI.makePara("Resources required for worker upkeep:", ["production-screen-worker-consumption-label"])
+            );
             for (const species of consumptionInventoryCopy.getSpeciesList()) {
                 const provided = consumptionInventoryCopy.getProvidedWorkerConsumption(species).quantity;
                 const required = consumptionInventoryCopy.getRequiredWorkerConsumption(species).quantity;
@@ -74,7 +76,9 @@ export default class ProductionScreen implements Page {
                 const consumptionDescription = `${species.name}: ${provided}/${required} ${resource.name}`;
 
                 const cssClass = (required > provided) ? "population-consumption-unmet" : "population-consumption-met";
-                populationConsumptionHtml.appendChild(UI.makePara(consumptionDescription, [cssClass, "production-screen-worker-consumption"]));
+                populationConsumptionHtml.appendChild(
+                    UI.makePara(consumptionDescription, [cssClass, "production-screen-worker-consumption"])
+                );
 
                 consumptionInventoryCopy.payCost([consumptionInventoryCopy.getProvidedWorkerConsumption(species)]);
             }

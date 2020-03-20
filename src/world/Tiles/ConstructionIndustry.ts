@@ -11,7 +11,8 @@ import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech,
+    XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import RobotHive from "./RobotHive.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";

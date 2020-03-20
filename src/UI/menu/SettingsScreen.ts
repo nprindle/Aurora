@@ -19,7 +19,8 @@ export default class SettingsScreen implements Page {
 
     refresh(): void {
         // Make a slider with an adjacent label displaying its current value
-        const makeTrackedSlider = (label: string, min: number, max: number, def: number, callback: (value: number) => void, step?: number): HTMLElement => {
+        const makeTrackedSlider = (label: string, min: number, max: number, def: number,
+            callback: (value: number) => void, step?: number): HTMLElement => {
             const tracker = UI.makePara(def.toString());
             const slider = UI.makeSlider(label, min, max, def, (value: number) => {
                 callback(value);
