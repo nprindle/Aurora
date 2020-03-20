@@ -1,7 +1,6 @@
 import GridCoordinates from "../../world/GridCoordinates.js";
 import { UI } from "../UI.js";
 import TileProject from "../../tileProjects/TileProject.js";
-import WorldScreen from "./WorldScreen.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Tile from "../../world/Tile.js";
@@ -15,7 +14,7 @@ export default class TileSidebar implements Page {
 
 
     constructor(
-        private parentScreen: WorldScreen,
+        private parentScreen: Page,
         private run: Game
     ) {
         this.html = UI.makeDiv(["world-screen-sidebar"]);

@@ -30,6 +30,12 @@ export const RuinsTexture1 = makeImage("assets/tiles/alien/ruins1.png");
 export const RuinsTexture2 = makeImage("assets/tiles/alien/ruins2.png");
 export const MonolithTexture = makeImage("assets/tiles/alien/monolith.png");
 
+export const HumanMonolithTexture = makeImage("assets/tiles/end/reprogrammed monolith.png");
+export const AlienSeedCoreTexture = makeImage("assets/tiles/end/seed core alien.png");
+export const HumanSeedCoreTexture = makeImage("assets/tiles/end/seed core human.png");
+export const AlienCircuitsTexture = makeImage("assets/tiles/end/circuits alien.png");
+export const HumanCircuitsTexture = makeImage("assets/tiles/end/circuits human.png");
+
 export const HabConstructionTexture = makeImage("assets/tiles/construction/hab_site.png");
 export const LabConstructionTexture = makeImage("assets/tiles/construction/lab_site.png");
 export const IndustryConstructionTexture = makeImage("assets/tiles/construction/industry_site.png");
