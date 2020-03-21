@@ -5,7 +5,8 @@ import { IndustryConstructionTexture } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { TileWithinDistancePredicate, adjacentToRoad, NotTilePredicate } from "../../predicates/TilePredicates.js";
+import { TileWithinDistancePredicate, adjacentToRoad,
+    NotTilePredicate, HiddenAlternateTilePredicate } from "../../predicates/TilePredicates.js";
 import Wasteland from "./Wasteland.js";
 import { MonolithSurveyTech, NanoTech, NeuralUploadingTech } from "../../techtree/TechTree.js";
 import { TechPredicate, TileExistsPredicate } from "../../predicates/WorldPredicates.js";
@@ -13,6 +14,7 @@ import { constructionProject } from "../../tileProjects/TileProject.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import Monolith from "./Monolith.js";
 import NeuralEmulator from "./NeuralEmulator.js";
+import HumanMonolith from "./HumanMonolith.js";
 
 export default class ConstructionVictory extends Tile {
 
@@ -31,7 +33,15 @@ export default class ConstructionVictory extends Tile {
 
         constructionProject(NanotechFoundry,
             [new Cost(Resource.SmartMatter, 1000), new Cost(Resource.BuildingMaterials, 500), new Cost(Resource.Electronics, 200)],
-            [adjacentToRoad, new TileWithinDistancePredicate(3, Monolith), new TechPredicate(NanoTech)],
+            [
+                adjacentToRoad,
+                new HiddenAlternateTilePredicate(
+                    [
+                        new TileWithinDistancePredicate(3, Monolith),
+                        new TileWithinDistancePredicate(3, HumanMonolith)
+                    ]),
+                new TechPredicate(NanoTech)
+            ],
             [new TechPredicate(MonolithSurveyTech), new NotTilePredicate(new TileExistsPredicate(NanotechFoundry))],
         ),
 
