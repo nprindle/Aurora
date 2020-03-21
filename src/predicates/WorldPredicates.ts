@@ -70,3 +70,18 @@ export class TechPredicate extends WorldPredicate {
         return `have the ${this.tech.name} technology`;
     }
 }
+
+export class TileExistsPredicate extends WorldPredicate {
+    constructor(
+        private tileType: NamedTileType
+    ) {
+        super();
+    }
+
+    evaluate(run: Game): boolean {
+        return run.world.getTiles().some(tile => tile instanceof this.tileType);
+    }
+    toString(): string {
+        return `at least one ${this.tileType.tileName}`;
+    }
+}

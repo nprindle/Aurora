@@ -10,11 +10,13 @@ import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
-import { adjacentToRoad } from "../../predicates/TilePredicates.js";
+import { adjacentToRoad, NotTilePredicate, OrTilePredicate } from "../../predicates/TilePredicates.js";
 import World from "../World.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import { TechPredicate, TileExistsPredicate } from "../../predicates/WorldPredicates.js";
 import { MonolithSurveyTech } from "../../techtree/TechTree.js";
 import ConstructionVictory from "./ConstructionVictory.js";
+import NeuralEmulator from "./NeuralEmulator.js";
+import NanotechFoundry from "./NanotechFoundry.js";
 
 
 
@@ -59,7 +61,18 @@ export default class Wasteland extends Tile {
         new TileProject("Create xenoengineering construction site", "Designate this location for construction of advanced technologies",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new ConstructionVictory(position));
-            }, [], [], [new TechPredicate(MonolithSurveyTech)],
+            },
+            [],
+            [],
+            [
+                new TechPredicate(MonolithSurveyTech),
+                new OrTilePredicate(
+                    [
+                        new NotTilePredicate(new TileExistsPredicate(NeuralEmulator)),
+                        new NotTilePredicate(new TileExistsPredicate(NanotechFoundry))
+                    ]
+                ),
+            ]
         ),
 
         new TileProject("Construct Road", "Construct roads to extend the reach of the colony's logistics",
