@@ -105,3 +105,23 @@ export class OrTilePredicate extends TilePredicate {
     }
 
 }
+
+/* like the OrTilePredicate, except that only the first option is visible in the toString()
+ * this is used to hide possible alternate versions; for example a Nanotech Foundry
+ * can be constructed near a Reprogrammed Monolith tile and not just a normal monolith tile
+ */
+export class HiddenAlternateTilePredicate extends TilePredicate {
+    constructor(
+        private possibilities: [TilePredicate, TilePredicate, ...TilePredicate[]]
+    ) {
+        super();
+    }
+
+    evaluate(run: Game, position: GridCoordinates): boolean {
+        return this.possibilities.some((predicate: TilePredicate) => predicate.evaluate(run, position));
+    }
+
+    toString(): string {
+        return this.possibilities[0].toString();
+    }
+}
