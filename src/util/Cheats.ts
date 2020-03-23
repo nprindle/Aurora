@@ -2,8 +2,9 @@ import Resource from "../resources/Resource.js";
 import Game from "../Game.js";
 import Species from "../resources/Species.js";
 import { GameWindow } from "../UI/GameWindow.js";
-import { GameOverStage, VictoryStage } from "../quests/Quests.js";
 import Cost from "../resources/Cost.js";
+import { HumanEnding, AlienEnding } from "../quests/Quests.js";
+import EndScreen from "../UI/endScreen/EndScreen.js";
 
 // container for cheat methods for debugging/testing via the browser console
 class Cheats {
@@ -32,18 +33,14 @@ class Cheats {
         this.refresh();
     }
 
+    showEnding(human: boolean = false): void {
+        GameWindow.show(new EndScreen(human ? HumanEnding : AlienEnding));
+    }
+
     freeResources(): void {
         for (const resource of Resource.values()) {
             this.addResource(resource, 1000000);
         }
-    }
-
-    loseGame(): void {
-        this.currentGame.setQuestStage(GameOverStage);
-    }
-
-    winGame(): void {
-        this.currentGame.setQuestStage(VictoryStage);
     }
 }
 
@@ -56,8 +53,7 @@ export function enableCheats(run: Game): void {
     theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) => cheatsObject.removeResource(resource, quantity);
     theWindow.cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
     theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
-    theWindow.cheatsLoseGame = () => cheatsObject.loseGame();
-    theWindow.cheatsWinGame = () => cheatsObject.winGame();
+    theWindow.cheatsShowEnding = (human: boolean = false) => cheatsObject.showEnding(human);
 
     // these classes also need to be made globally accessible so their instances can be used as parameters for cheats
     // we freeze the constructors so the existing instances can't be modified

@@ -42,11 +42,6 @@ export default class Game {
         return this.prevQuestDescription;
     }
 
-    // this method violates the privacy of quest-stage, but is needed for cheats to set quest stages
-    setQuestStage(questStage: QuestStage): void {
-        this.questStage = questStage;
-    }
-
     private getUnorderedConversions(): Conversion[] {
         return Arrays.flatten(this.world.getTiles().map(tile => tile.resourceConversions));
     }

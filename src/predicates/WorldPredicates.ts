@@ -85,3 +85,26 @@ export class TileExistsPredicate extends WorldPredicate {
         return `at least one ${this.tileType.tileName}`;
     }
 }
+
+
+export class AllTypesElemOfPredicate extends WorldPredicate {
+
+    constructor(
+        private tileTypes: NamedTileType[]
+    ) {
+        super();
+    }
+
+    evaluate(run: Game): boolean {
+        for (const tile of run.world.getTiles()) {
+            if (!this.tileTypes.some(tileType => tile instanceof tileType)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    toString(): string {
+        return `All world tiles are ${this.tileTypes.join(" or ")}`;
+    }
+
+}
