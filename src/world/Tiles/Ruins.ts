@@ -6,7 +6,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Game from "../../Game.js";
 import Recycler from "./Recycler.js";
 import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { SurveyTech } from "../../techtree/TechTree.js";
+import { SurveyTech, XenoarchaeologyTech } from "../../techtree/TechTree.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { adjacentToRoad } from "../../predicates/TilePredicates.js";
@@ -24,7 +24,7 @@ export default class Ruins extends Tile {
         new TileProject("Excavate", "Construct a facility to harvest exotic alien resources from the ruins",
             (position: GridCoordinates, game: Game) => game.world.placeTile(new Recycler(position, this.textureVariant)),
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Energy, 100)],
-            [adjacentToRoad],
+            [adjacentToRoad, new TechPredicate(XenoarchaeologyTech)],
             [new TechPredicate(SurveyTech)],
         )
     ];
