@@ -74,7 +74,6 @@ export const HumanEnding = new Ending("A Transmission to Earth",
 
 export const QuestActivateMonolith: QuestStage = new QuestStage(
     `Unlock the secrets of the monolith`,
-    undefined,
     [
         new QuestPath(
             new AllTypesElemOfPredicate([AlienSeedCore, AlienCircuits]),
@@ -90,18 +89,17 @@ export const QuestActivateMonolith: QuestStage = new QuestStage(
 
 export const QuestMonolithSurvey: QuestStage = new QuestStage(
     `Study the Monolith`,
-    `Use the "WASD" or arrow keys to move around the map`,
     [
         new QuestPath(
             new TechPredicate(MonolithSurveyTech),
             QuestActivateMonolith
         )
     ],
+    `Use the "WASD" or arrow keys to move around the map`,
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
     `Research ${AlienHistoryTech}`,
-    undefined,
     [
         new QuestPath(
             new TechPredicate(AlienHistoryTech),
@@ -112,7 +110,6 @@ export const QuestAlienHistory: QuestStage = new QuestStage(
 
 export const QuestExcavate: QuestStage = new QuestStage(
     `Excavate the ${Ruins.tileName} to extract resources`,
-    undefined,
     [
         new QuestPath(
             new MinTilePredicate(Recycler, 1),
@@ -123,7 +120,6 @@ export const QuestExcavate: QuestStage = new QuestStage(
 
 export const QuestXenoLab: QuestStage = new QuestStage(
     `Construct ${XenoLab.tileName} to study the ${Ruins.tileName}`,
-    undefined,
     [
         new QuestPath(
             new MinTilePredicate(XenoLab, 1),
@@ -134,40 +130,39 @@ export const QuestXenoLab: QuestStage = new QuestStage(
 
 export const TutorialQuestPopulation: QuestStage = new QuestStage(
     "Grow total worker population to 250",
-    `A ${Habitat.tileName} has capacity for ${new Habitat(new GridCoordinates(0, 0)).populationCapacity.capacity} colonists`,
     [
         new QuestPath(
             new MinPopulationPredicate(250),
             QuestXenoLab,
         )
     ],
+    `A ${Habitat.tileName} has capacity for ${new Habitat(new GridCoordinates(0, 0)).populationCapacity.capacity} colonists`,
 );
 
 export const TutorialQuestScience: QuestStage = new QuestStage(
     `Develop the ${StructureConstructionTech.name} technology`,
-    "Access available technologies through the research screen",
     [
         new QuestPath(
             new TechPredicate(StructureConstructionTech),
             TutorialQuestPopulation,
         )
     ],
+    "Access available technologies through the research screen",
 );
 
 export const TutorialQuestBuildLab: QuestStage = new QuestStage(
     `Construct ${EngineeringLab.tileName}`,
-    `Designate an empty ${Wasteland.tileName} tile as a laboratory construction site`,
     [
         new QuestPath(
             new MinTilePredicate(EngineeringLab, 1),
             TutorialQuestScience,
         )
     ],
+    `Designate an empty ${Wasteland.tileName} tile as a laboratory construction site`,
 );
 
 export const TutorialQuestGetOre: QuestStage = new QuestStage(
     `Acquire ${Resource.Metal.name}`,
-    undefined,
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Metal, 1),
@@ -178,23 +173,23 @@ export const TutorialQuestGetOre: QuestStage = new QuestStage(
 
 export const TutorialQuestGetEnergy: QuestStage = new QuestStage(
     `Build up at least 100 units of ${Resource.Energy.name}`,
-    `The ${SolarPanels.tileName} produces ${Resource.Energy.name} each turn`,
     [
         new QuestPath(
             new MinResourcePredicate(Resource.Energy, 100),
             TutorialQuestGetOre,
         )
     ],
+    `The ${SolarPanels.tileName} produces ${Resource.Energy.name} each turn`,
 
 );
 
 export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
     "Deploy shelter for the colonists",
-    `select the ${Lander.tileName}`,
     [
         new QuestPath(
             new MinTilePredicate(Habitat, 1),
             TutorialQuestGetEnergy,
         )
     ],
+    `Select the ${Lander.tileName}`,
 );
