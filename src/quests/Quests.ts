@@ -72,32 +72,18 @@ export const HumanEnding = new Ending("A Transmission to Earth",
     Emissary of the Virtual Archipelago
 `);
 
-export const AlienEndingQuestStage: QuestStage = new QuestStage(
-    "Wait for the world to be consumed",
-    undefined,
-    [],
-    AlienEnding,
-);
-
-export const HumanEndingQuestStage: QuestStage = new QuestStage(
-    "Wait for the world to be consumed",
-    undefined,
-    [],
-    HumanEnding,
-);
-
 export const QuestActivateMonolith: QuestStage = new QuestStage(
     `Unlock the secrets of the monolith`,
     undefined,
     [
         new QuestPath(
             new AllTypesElemOfPredicate([AlienSeedCore, AlienCircuits]),
-            AlienEndingQuestStage
+            AlienEnding
         ),
 
         new QuestPath(
             new AllTypesElemOfPredicate([HumanSeedCore, HumanCircuits]),
-            HumanEndingQuestStage
+            HumanEnding
         )
     ],
 );

@@ -13,7 +13,7 @@ export default class Game {
     readonly world: World;
     readonly inventory: Inventory;
     private questStage: QuestStage;
-    private turnNumber: number = 1;
+    private endState: Ending | undefined = undefined;
 
     private prevQuestDescription = "";
     public questCompletionShown: boolean = true;
@@ -35,7 +35,22 @@ export default class Game {
     }
 
     getQuestEndState(): Ending | undefined {
-        return this.questStage.endState;
+        return this.endState;
+    }
+
+    updateQuestState(): void {
+        const next = this.questStage.nextState(this);
+        if (next instanceof Ending) {
+            this.endState = next;
+            this.questCompletionShown = false;
+        } else if (next !== this.questStage) {
+            const prevDescription = this.questStage.description;
+            this.questStage = next;
+            // repeat to skip over the next quest if it's requirements are already completed
+            this.updateQuestState();
+            this.questCompletionShown = false;
+            this.prevQuestDescription = prevDescription;
+        }
     }
 
     getPreviousQuestDescription(): string {
@@ -67,15 +82,6 @@ export default class Game {
         return allConversions;
     }
 
-    updateQuestState(): void {
-        const nextStage = this.questStage.updatedStage(this);
-        if (nextStage !== this.questStage) {
-            this.prevQuestDescription = this.questStage.description;
-            this.questCompletionShown = false;
-            this.questStage = nextStage;
-        }
-    }
-
     hasUnlockedTechnology(tech: Technology): boolean {
         return this.completedTechs.includes(tech);
     }
@@ -104,8 +110,6 @@ export default class Game {
 
         this.inventory.releaseWorkers();
         this.inventory.doPopulationGrowth();
-
-        this.turnNumber++;
 
         this.updateQuestState();
     }

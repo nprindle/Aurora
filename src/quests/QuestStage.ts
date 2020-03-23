@@ -5,7 +5,7 @@ import Ending from "./Ending.js";
 export class QuestPath {
     constructor(
         readonly requirement: WorldPredicate,
-        readonly next: QuestStage,
+        readonly next: QuestStage | Ending,
     ) { }
 }
 
@@ -14,14 +14,13 @@ export class QuestStage {
         readonly description: string,
         readonly hint: string | undefined,
         readonly paths: QuestPath[],
-        readonly endState: Ending | undefined = undefined,
     ) { }
 
-    // returns the next stage if an advancement path requirement is met, otherwise returns this stage
-    updatedStage(run: Game): QuestStage {
+    // returns the next quest-stage or ending if an advancement path requirement is met, otherwise returns this stage
+    nextState(run: Game): QuestStage | Ending {
         for (const path of this.paths) {
             if (path.requirement.evaluate(run)) {
-                return path.next.updatedStage(run); // recursion to automatically skip over stages whose requirements are already met
+                return path.next;
             }
         }
         return this;
