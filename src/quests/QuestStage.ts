@@ -12,8 +12,8 @@ export class QuestPath {
 export class QuestStage {
     constructor(
         readonly description: string,
-        readonly hint: string | undefined,
         readonly paths: QuestPath[],
+        readonly hint?: string
     ) { }
 
     // returns the next quest-stage or ending if an advancement path requirement is met, otherwise returns this stage
