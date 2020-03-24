@@ -1,19 +1,19 @@
 import Tile from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { HabConstructionTexture } from "../../UI/Images.js";
+import { HabConstructionTexture, } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { adjacentToRoad } from "../../predicates/TilePredicates.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import Hydroponics from "./Hydroponics.js";
+import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -34,28 +34,28 @@ export default class ConstructionHabitat extends Tile {
         constructionProject(Habitat,
             [new Cost(Resource.BuildingMaterials, 100)],
             [
-                new TechPredicate(StructureConstructionTech),
-                adjacentToRoad,
+                techRequirement(StructureConstructionTech),
+                roadRequirement,
             ],
             [],
         ),
 
         constructionProject(Arcology,
             [new Cost(Resource.BuildingMaterials, 250)],
-            [new TechPredicate(UrbanPlanningTech), adjacentToRoad],
-            [new TechPredicate(StructureConstructionTech)],
+            [techRequirement(UrbanPlanningTech), roadRequirement],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
-            [adjacentToRoad],
-            [new TechPredicate(StructureConstructionTech)],
+            [roadRequirement],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(Hydroponics,
             [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
-            [adjacentToRoad, new TechPredicate(IndustrialEngineeringTech)],
-            [new TechPredicate(StructureConstructionTech)]
+            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
+            [hasTech(StructureConstructionTech)]
         ),
     ];
 

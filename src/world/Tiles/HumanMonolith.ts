@@ -10,8 +10,7 @@ import HumanSeedCore from "./HumanSeedCore.js";
 import { SingularityEngineeringTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
-import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
+import { techRequirement, tileWithinDistanceRequirement } from "../../predicates/DescribedTilePredicate.js";
 
 export default class HumanMonolith extends Tile {
     protected texture: HTMLImageElement = HumanMonolithTexture;
@@ -35,11 +34,11 @@ export default class HumanMonolith extends Tile {
                 new Cost(Resource.Energy, 100000)
             ],
             [
-                new TileWithinDistancePredicate(3, NanotechFoundry),
-                new TileWithinDistancePredicate(2, NeuralEmulator),
-                new TechPredicate(SingularityEngineeringTech)],
+                tileWithinDistanceRequirement(NanotechFoundry, 3),
+                tileWithinDistanceRequirement(NeuralEmulator, 2),
+                techRequirement(SingularityEngineeringTech),
+            ],
             []
-
         )
     ];
 

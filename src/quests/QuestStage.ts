@@ -1,6 +1,6 @@
-import WorldPredicate from "../predicates/WorldPredicate.js";
 import Game from "../Game.js";
 import Ending from "./Ending.js";
+import { WorldPredicate } from "../predicates/predicates.js";
 
 export class QuestPath {
     constructor(
@@ -17,9 +17,9 @@ export class QuestStage {
     ) { }
 
     // returns the next quest-stage or ending if an advancement path requirement is met, otherwise returns this stage
-    nextState(run: Game): QuestStage | Ending {
+    nextState(game: Game): QuestStage | Ending {
         for (const path of this.paths) {
-            if (path.requirement.evaluate(run)) {
+            if (path.requirement(game)) {
                 return path.next;
             }
         }
