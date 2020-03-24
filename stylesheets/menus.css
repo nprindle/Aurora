@@ -64,17 +64,25 @@
 
 .settings h1 {
     font-size: 24pt;
-    margin-bottom: 10pt;
+    margin-bottom: 0pt;
+    margin-left: 5pt;
 }
 
 .settings-slider {
     display: flex;
     font-size: 15pt;
-    margin: 5pt;
+    margin: 0;
+    margin-left: 5pt;
+}
+
+.settings-slider p {
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 .settings button {
-    margin-top: 15pt;
+    margin-top: 5pt;
+    margin-bottom: 5pt;
 }
 
 
