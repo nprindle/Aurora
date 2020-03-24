@@ -5,16 +5,16 @@ import TileProject, { MonolithCompletionProject } from "../../tileProjects/TileP
 import { stripIndent } from "../../util/Text.js";
 import AlienSeedCore from "./AlienSeedCore.js";
 import AlienCircuits from "./AlienCircuits.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { MonolithSurveyTech, SingularityEngineeringTech,
     CooperativeReprogrammingTech, NeuralUploadingTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
-import { TileWithinDistancePredicate } from "../../predicates/TilePredicates.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Game from "../../Game.js";
 import HumanMonolith from "./HumanMonolith.js";
+import { tileWithinDistanceRequirement, techRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { hasTech } from "../../predicates/predicates.js";
 
 export default class Monolith extends Tile {
     protected texture: HTMLImageElement = MonolithTexture;
@@ -34,10 +34,10 @@ export default class Monolith extends Tile {
             (position: GridCoordinates, game: Game) => { game.world.placeTile(new HumanMonolith(position)); },
             [new Cost(Resource.Energy, 1000), new Cost(Resource.SmartMatter, 500)],
             [
-                new TileWithinDistancePredicate(2, NeuralEmulator),
-                new TechPredicate(NeuralUploadingTech),
+                tileWithinDistanceRequirement(NeuralEmulator, 2),
+                techRequirement(NeuralUploadingTech),
             ],
-            [new TechPredicate(CooperativeReprogrammingTech), new TechPredicate(MonolithSurveyTech)]
+            [hasTech(CooperativeReprogrammingTech), hasTech(MonolithSurveyTech)]
         ),
 
         new MonolithCompletionProject(
@@ -58,12 +58,12 @@ export default class Monolith extends Tile {
                 new Cost(Resource.Energy, 100000)
             ],
             [
-                new TileWithinDistancePredicate(3, NanotechFoundry),
-                new TileWithinDistancePredicate(2, NeuralEmulator),
-                new TechPredicate(SingularityEngineeringTech),
+                tileWithinDistanceRequirement(NanotechFoundry, 3),
+                tileWithinDistanceRequirement(NeuralEmulator, 2),
+                techRequirement(SingularityEngineeringTech),
             ],
             [
-                new TechPredicate(MonolithSurveyTech)
+                hasTech(MonolithSurveyTech)
             ]
 
         )

@@ -7,8 +7,8 @@ import Wasteland from "./Wasteland.js";
 import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
 import Mineshaft from "./Mineshaft.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
+import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
 
 export default class Mountain extends Tile {
     protected texture: HTMLImageElement = MountainTexture;
@@ -33,7 +33,7 @@ export default class Mountain extends Tile {
                 run.world.placeTile(new Mineshaft(position));
             },
             [new Cost(Resource.Energy, 300), new Cost(Resource.BuildingMaterials, 50)],
-            [new TechPredicate(StructureConstructionTech)],
+            [techRequirement(StructureConstructionTech)],
             [],
         ),
     ];
