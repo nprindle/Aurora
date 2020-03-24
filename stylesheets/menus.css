@@ -76,3 +76,32 @@
 .settings button {
     margin-top: 15pt;
 }
+
+
+.ending-page {
+    width: 33%;
+    min-width: 7in;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (max-width: 7in) {
+    .ending-page {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.ending-page h1 {
+    margin-bottom: 0;
+}
+
+.ending-page p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ending-page button {
+    width: 100%;
+}
