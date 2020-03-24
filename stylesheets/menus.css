@@ -64,15 +64,52 @@
 
 .settings h1 {
     font-size: 24pt;
-    margin-bottom: 10pt;
+    margin-bottom: 0pt;
+    margin-left: 5pt;
 }
 
 .settings-slider {
     display: flex;
     font-size: 15pt;
-    margin: 5pt;
+    margin: 0;
+    margin-left: 5pt;
+}
+
+.settings-slider p {
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 .settings button {
-    margin-top: 15pt;
+    margin-top: 5pt;
+    margin-bottom: 5pt;
+}
+
+
+.ending-page {
+    width: 33%;
+    min-width: 7in;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (max-width: 7in) {
+    .ending-page {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.ending-page h1 {
+    margin-bottom: 0;
+}
+
+.ending-page p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ending-page button {
+    width: 100%;
 }
