@@ -11,6 +11,7 @@ export default class TransitionScreen implements Page {
     private loadingArea: HTMLElement;
     private loadingBar: HTMLElement;
     private quote: Quote;
+    private doneLoading: boolean = false;
 
     constructor(
         private run: Game
@@ -26,7 +27,7 @@ export default class TransitionScreen implements Page {
         const quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
         UI.fillHTML(this.html, [
             UI.makeDivContaining([
-                UI.makePara(`${quotedText}`),
+                UI.makePara(quotedText),
                 UI.makePara(`- ${this.quote.attribution}`, ["transition-attribution"])
             ], ["transition-quote-panel"]),
             this.loadingArea
@@ -41,10 +42,17 @@ export default class TransitionScreen implements Page {
             UI.fillHTML(this.loadingArea, [
                 UI.makeButton("Continue", () => { this.continueToNextTurn(); })
             ]);
-        }, 750);
+            this.doneLoading = true;
+        }, 2000);
     }
 
     private continueToNextTurn(): void {
         GameWindow.show(new WorldScreen(this.run));
+    }
+
+    handleKeyDown(): void {
+        if (this.doneLoading) {
+            this.continueToNextTurn();
+        }
     }
 }
