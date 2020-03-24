@@ -3,8 +3,6 @@
 
 import { QuestStage, QuestPath } from "./QuestStage.js";
 import Resource from "../resources/Resource.js";
-import { MinResourcePredicate, MinTilePredicate, MinPopulationPredicate,
-    TechPredicate, AllTypesElemOfPredicate } from "../predicates/WorldPredicates.js";
 import Habitat from "../world/Tiles/Habitat.js";
 import SolarPanels from "../world/Tiles/SolarArray.js";
 import Lander from "../world/Tiles/Lander.js";
@@ -21,6 +19,8 @@ import AlienCircuits from "../world/Tiles/AlienCircuits.js";
 import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
 import HumanCircuits from "../world/Tiles/HumanCircuits.js";
 import { stripIndent } from "../util/Text.js";
+import { allTilesAreOfType, hasTech, tileExists, hasResource } from "../predicates/predicates.js";
+import Game from "../Game.js";
 
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
@@ -76,12 +76,12 @@ export const QuestActivateMonolith: QuestStage = new QuestStage(
     `Unlock the secrets of the monolith`,
     [
         new QuestPath(
-            new AllTypesElemOfPredicate([AlienSeedCore, AlienCircuits]),
+            allTilesAreOfType([AlienSeedCore, AlienCircuits]),
             AlienEnding
         ),
 
         new QuestPath(
-            new AllTypesElemOfPredicate([HumanSeedCore, HumanCircuits]),
+            allTilesAreOfType([HumanSeedCore, HumanCircuits]),
             HumanEnding
         )
     ],
@@ -91,7 +91,7 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
     `Study the Monolith`,
     [
         new QuestPath(
-            new TechPredicate(MonolithSurveyTech),
+            hasTech(MonolithSurveyTech),
             QuestActivateMonolith
         )
     ],
@@ -99,10 +99,10 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
-    `Research ${AlienHistoryTech}`,
+    `Research ${AlienHistoryTech.name}`,
     [
         new QuestPath(
-            new TechPredicate(AlienHistoryTech),
+            hasTech(AlienHistoryTech),
             QuestMonolithSurvey,
         )
     ]
@@ -112,7 +112,7 @@ export const QuestExcavate: QuestStage = new QuestStage(
     `Excavate the ${Ruins.tileName} to extract resources`,
     [
         new QuestPath(
-            new MinTilePredicate(Recycler, 1),
+            (game: Game) => game.world.getTiles().some(tile => tile instanceof Recycler),
             QuestAlienHistory,
         )
     ]
@@ -122,7 +122,7 @@ export const QuestXenoLab: QuestStage = new QuestStage(
     `Construct ${XenoLab.tileName} to study the ${Ruins.tileName}`,
     [
         new QuestPath(
-            new MinTilePredicate(XenoLab, 1),
+            tileExists(XenoLab),
             QuestExcavate,
         )
     ],
@@ -132,7 +132,7 @@ export const TutorialQuestPopulation: QuestStage = new QuestStage(
     "Grow total worker population to 250",
     [
         new QuestPath(
-            new MinPopulationPredicate(250),
+            (game: Game) => game.inventory.getTotalPopulation() >= 250,
             QuestXenoLab,
         )
     ],
@@ -143,7 +143,7 @@ export const TutorialQuestScience: QuestStage = new QuestStage(
     `Develop the ${StructureConstructionTech.name} technology`,
     [
         new QuestPath(
-            new TechPredicate(StructureConstructionTech),
+            hasTech(StructureConstructionTech),
             TutorialQuestPopulation,
         )
     ],
@@ -154,7 +154,7 @@ export const TutorialQuestBuildLab: QuestStage = new QuestStage(
     `Construct ${EngineeringLab.tileName}`,
     [
         new QuestPath(
-            new MinTilePredicate(EngineeringLab, 1),
+            tileExists(EngineeringLab),
             TutorialQuestScience,
         )
     ],
@@ -165,7 +165,7 @@ export const TutorialQuestGetOre: QuestStage = new QuestStage(
     `Acquire ${Resource.Metal.name}`,
     [
         new QuestPath(
-            new MinResourcePredicate(Resource.Metal, 1),
+            hasResource(Resource.Metal, 1),
             TutorialQuestBuildLab,
         )
     ],
@@ -175,7 +175,7 @@ export const TutorialQuestGetEnergy: QuestStage = new QuestStage(
     `Build up at least 100 units of ${Resource.Energy.name}`,
     [
         new QuestPath(
-            new MinResourcePredicate(Resource.Energy, 100),
+            hasResource(Resource.Energy, 100),
             TutorialQuestGetOre,
         )
     ],
@@ -187,7 +187,7 @@ export const TutorialQuestUnpackLander: QuestStage = new QuestStage(
     "Deploy shelter for the colonists",
     [
         new QuestPath(
-            new MinTilePredicate(Habitat, 1),
+            tileExists(Habitat),
             TutorialQuestGetEnergy,
         )
     ],

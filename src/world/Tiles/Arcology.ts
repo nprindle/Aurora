@@ -5,10 +5,10 @@ import Housing from "../../resources/Housing.js";
 import { ArcologyTexture } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
-import { NotTilePredicate, SpeciesPopulationPredicate } from "../../predicates/TilePredicates.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
+import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { hasTech, speciesHasPopulation } from "../../predicates/predicates.js";
 
 export default class Arcology extends Tile {
 
@@ -26,11 +26,11 @@ export default class Arcology extends Tile {
             no longer pursue the mission of uncovering information about the aliens at all costs.`,
             (position: GridCoordinates, game: Game) => game.unlockTechnology(AiResearchTech),
             [],
-            [new TechPredicate(RationalityTech)],
+            [techRequirement(RationalityTech)],
             [
-                new TechPredicate(CognitiveBiasesTech),
-                new NotTilePredicate(new TechPredicate(AiResearchTech)),
-                new SpeciesPopulationPredicate(Species.Human, 500),
+                hasTech(CognitiveBiasesTech),
+                (game: Game) => !game.hasUnlockedTechnology(AiResearchTech),
+                speciesHasPopulation(Species.Human, 500),
             ]
         )
     ];

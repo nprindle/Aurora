@@ -9,7 +9,7 @@ export default class Recycler extends Tile {
     protected texture: HTMLImageElement = RecyclerTexture1;
     private textureVariant: 1 | 2;
 
-    constructor(position: GridCoordinates, textureVariant: 1 | 2 = 1) {
+    constructor(position: GridCoordinates, textureVariant: 1 | 2) {
         super(position);
         this.textureVariant = textureVariant;
     }

@@ -1,11 +1,10 @@
 import Tile from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { IndustryConstructionTexture } from "../../UI/Images.js";
+import { IndustryConstructionTexture, } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { TileWithinDistancePredicate, adjacentToRoad } from "../../predicates/TilePredicates.js";
 import MiningFacility from "./MiningFacility.js";
 import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
@@ -13,13 +12,14 @@ import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
 import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech,
     XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import RobotHive from "./RobotHive.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
+import { techRequirement, roadRequirement, tileWithinDistanceRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -47,47 +47,47 @@ export default class ConstructionIndustry extends Tile {
         constructionProject(RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
-                new TechPredicate(StructureConstructionTech),
-                new TechPredicate(RobotTech),
-                adjacentToRoad,
+                techRequirement(StructureConstructionTech),
+                techRequirement(RobotTech),
+                roadRequirement,
             ],
-            [new TechPredicate(IndustrialEngineeringTech)],
+            [hasTech(IndustrialEngineeringTech)],
         ),
 
         constructionProject(MiningFacility,
             [new Cost(Resource.Energy, 200), new Cost(Resource.Metal, 300)],
-            [new TileWithinDistancePredicate(5, Mountain), adjacentToRoad, new TechPredicate(IndustrialEngineeringTech)],
-            [new TechPredicate(StructureConstructionTech)],
+            [tileWithinDistanceRequirement(Mountain, 5), roadRequirement, techRequirement(IndustrialEngineeringTech)],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(ConstructionFactory,
             [new Cost(Resource.BuildingMaterials, 350)],
-            [adjacentToRoad, new TechPredicate(IndustrialEngineeringTech)],
-            [new TechPredicate(StructureConstructionTech)],
+            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(ElectronicsFactory,
             [new Cost(Resource.BuildingMaterials, 300), new Cost(Resource.Electronics, 150)],
-            [adjacentToRoad, new TechPredicate(IndustrialEngineeringTech)],
-            [new TechPredicate(StructureConstructionTech)],
+            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(XenoFactory,
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Electronics, 200), new Cost(Resource.Energy, 1000)],
-            [adjacentToRoad, new TechPredicate(XenoMaterialsTech)],
-            [new TechPredicate(XenoarchaeologyTech)],
+            [roadRequirement, techRequirement(XenoMaterialsTech)],
+            [hasTech(XenoarchaeologyTech)],
         ),
 
         constructionProject(NuclearPlant,
             [new Cost(Resource.BuildingMaterials, 100), new Cost(Resource.Electronics, 100)],
-            [new TechPredicate(NuclearTech), adjacentToRoad],
-            [new TechPredicate(StructureConstructionTech)],
+            [techRequirement(NuclearTech), roadRequirement],
+            [hasTech(StructureConstructionTech)],
         ),
 
         constructionProject(ZeroPointPlant,
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Electronics, 100), new Cost(Resource.Superconductor, 1000)],
-            [new TechPredicate(ZeroPointTech)],
-            [new TechPredicate(XenoarchaeologyTech)],
+            [techRequirement(ZeroPointTech)],
+            [hasTech(XenoarchaeologyTech)],
         ),
     ];
 
