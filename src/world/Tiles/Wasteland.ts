@@ -10,13 +10,13 @@ import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
-import { adjacentToRoad, NotTilePredicate, OrTilePredicate } from "../../predicates/TilePredicates.js";
 import World from "../World.js";
-import { TechPredicate, TileExistsPredicate } from "../../predicates/WorldPredicates.js";
 import { MonolithSurveyTech } from "../../techtree/TechTree.js";
 import ConstructionVictory from "./ConstructionVictory.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
+import { hasTech, tileExists } from "../../predicates/predicates.js";
+import { roadRequirement } from "../../predicates/DescribedTilePredicate.js";
 
 
 
@@ -65,13 +65,8 @@ export default class Wasteland extends Tile {
             [],
             [],
             [
-                new TechPredicate(MonolithSurveyTech),
-                new OrTilePredicate(
-                    [
-                        new NotTilePredicate(new TileExistsPredicate(NeuralEmulator)),
-                        new NotTilePredicate(new TileExistsPredicate(NanotechFoundry))
-                    ]
-                ),
+                hasTech(MonolithSurveyTech),
+                (game: Game) => !tileExists(NeuralEmulator)(game) || !tileExists(NanotechFoundry)(game),
             ]
         ),
 
@@ -80,7 +75,7 @@ export default class Wasteland extends Tile {
                 run.world.placeTile(new Road(position));
             },
             [new Cost(Resource.BuildingMaterials, 10)],
-            [adjacentToRoad],
+            [roadRequirement],
             [],
         ),
     ];

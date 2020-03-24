@@ -10,14 +10,12 @@ import PsychLab from "./PsychLab.js";
 import XenoLab from "./XenoLab.js";
 import AlignmentLab from "./AlignmentLab.js";
 import Wasteland from "./Wasteland.js";
-import { TileWithinDistancePredicate, SpeciesPopulationPredicate, adjacentToRoad,
-    OrTilePredicate } from "../../predicates/TilePredicates.js";
-import Ruins from "./Ruins.js";
 import { SurveyTech, AiResearchTech } from "../../techtree/TechTree.js";
-import { TechPredicate } from "../../predicates/WorldPredicates.js";
 import Species from "../../resources/Species.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
-import Monolith from "./Monolith.js";
+import { roadRequirement, techRequirement, speciesPopulationRequirement,
+    nearRuinsOrMonolith } from "../../predicates/DescribedTilePredicate.js";
+import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionLaboratory extends Tile {
 
@@ -36,30 +34,30 @@ export default class ConstructionLaboratory extends Tile {
 
         constructionProject(EngineeringLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 20)],
-            [adjacentToRoad],
+            [roadRequirement],
             [],
         ),
 
         constructionProject(PsychLab,
             [new Cost(Resource.BuildingMaterials, 30)],
-            [adjacentToRoad],
+            [roadRequirement],
             [],
         ),
 
         constructionProject(XenoLab,
             [new Cost(Resource.BuildingMaterials, 40)],
             [
-                new OrTilePredicate([new TileWithinDistancePredicate(3, Ruins), new TileWithinDistancePredicate(3, Monolith)]),
-                adjacentToRoad,
-                new TechPredicate(SurveyTech)
+                nearRuinsOrMonolith(3),
+                roadRequirement,
+                techRequirement(SurveyTech)
             ],
             [],
         ),
 
         constructionProject(AlignmentLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
-            [new SpeciesPopulationPredicate(Species.Human, 200), adjacentToRoad],
-            [new TechPredicate(AiResearchTech)],
+            [speciesPopulationRequirement(Species.Human, 200), roadRequirement],
+            [hasTech(AiResearchTech)],
         ),
     ];
 
