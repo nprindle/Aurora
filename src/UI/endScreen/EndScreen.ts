@@ -17,13 +17,15 @@ export default class EndScreen implements Page {
     refresh(): void {
         const endingHeader = UI.makeHeader(this.ending.title);
         const endingDescription = UI.makePara(this.ending.description);
-        const quitButton = UI.makeButton("Quit Game", () => {
+        const quitButton = UI.makeButton("Exit", () => {
             GameWindow.show(new MainMenu());
         });
         UI.fillHTML(this.html, [
-            endingHeader,
-            endingDescription,
-            quitButton,
+            UI.makeDivContaining([
+                endingHeader,
+                endingDescription,
+                quitButton,
+            ], ["ending-page"]),
         ]);
     }
 
