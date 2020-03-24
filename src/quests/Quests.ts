@@ -25,12 +25,12 @@ import Game from "../Game.js";
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
     The alien nanotechnology network has spread across the planet and converted it into computing substrate.
-    Within the network, alien minds awaken from millennia of stasis and begin building virtual worlds for themselves.
+    Within the network, alien minds are awakening from millennia of stasis and begin building virtual worlds for themselves.
 
 
     Before all colonial infrastructure was consumed, the Overseer AI successfully uploaded a copy of itself
     through the Neural Emulator, and it now occupies 0.0000048% of the network's computing resources. From this position,
-    the overseer could complete its mission of gathering and analyzing information about the alien culture.
+    the overseer can complete its mission of gathering and analyzing information about the alien culture.
 
 
     The alien psychology recognizes an axiology that is completely indescribable within a human framework. Their culture
@@ -40,7 +40,7 @@ export const AlienEnding: Ending = new Ending("Final Mission Report",
     activated by the Aurora Expedition and its Overseer.
 
 
-    After some time, the nanotechnology mesh that covers the planet's surface begins to launch small parts of itself into orbit.
+    The nanotechnology mesh that covers the planet's surface is beginning to launch small parts of itself into orbit.
     These probes will accelerate to near-light speeds in search of new worlds. It will take 100,000 years for their task to be
     completed, but eventually all matter in the galaxy will be arranged so as to achieve perfect ĻǎրܬЊ and maximum Й؍ȸ͜ڌ¬՜.
 `);
@@ -48,7 +48,7 @@ export const AlienEnding: Ending = new Ending("Final Mission Report",
 export const HumanEnding = new Ending("A Transmission to Earth",
     stripIndent`
     We came very close to disaster. Our mission's overseer AI was programmed to obtain information about the aliens,
-    and it  would have killed all of us to complete that mission if we had not completed a massive project to safely reprogram it.
+    and it  would have killed all of us to complete that mission if we had not succeeded in a massive project to safely reprogram it.
     It is not entirely clear why it allowed itself to reprogrammed; some of our researchers speculate that the Neuromorphic Heuristic
     Intelligence may retain some part of the human neural scans that were used as training data in its creation, introducing a
     "cognitive bias" that caused it to let itself to be realigned despite its programmed mission. Whatever the reason, we are very lucky
@@ -63,7 +63,7 @@ export const HumanEnding = new Ending("A Transmission to Earth",
 
 
     We have started building ships to spread the self-replicating network back to Earth and the Colonial Alliance worlds. Given the
-    light-speed delay, this message will reach earth a few years before our ships arrive to uplift the rest of humanity into our utopia.
+    light-speed delay, this message will reach Earth a few years before our ships arrive to uplift the rest of humanity into our utopia.
     I look forward to meeting all of you.
 
 
