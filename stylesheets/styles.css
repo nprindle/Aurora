@@ -31,6 +31,11 @@ button:focus {
     outline: 0;
 }
 
+/* remove dotted border around clicked buttons on firefox */
+button::-moz-focus-inner {
+    border: 0;
+}
+
 button:disabled,
 button[disabled]{
   color: #808080;
@@ -62,3 +67,64 @@ img.emoji {
     margin: 0 .05em 0 .1em;
     vertical-align: -0.1em;
 }
+
+/* consistent appearance of range inputs (sliders) across browsers is hard.
+ * we first have to disable the default styling, then add our own.
+ * to make matters worse, chromium and firefox use different names for
+ * the components within a range input, so we have to repeat ourselves a bunch
+ * supposedly safari uses the same names as chromium, and we already didn't
+ * support Internet Explorer so we don't need to include support for it here*/
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  input[type=range]:focus {
+    outline: none;
+  }
+
+/* slider style for chrome/safari */
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+
+    margin-top: -7px;
+    border: 2px solid white;
+    height: 22px;
+    width: 16px;
+    border-radius: 0px;
+    background: black;
+    cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: white;
+    border-radius: 0px;
+}
+
+/* slider styling for firefox */
+input[type=range]::-moz-range-thumb {
+    border: 2px solid white;
+    height: 22px;
+    width: 16px;
+    border-radius: 0px;
+    background: black;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: white;
+    border-radius: 0px;
+}
+
+
