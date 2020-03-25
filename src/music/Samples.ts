@@ -24,6 +24,14 @@ export namespace SampleUtils {
             headers: new Headers({
                 "Content-Type": "audio/ogg"
             })
+        }).catch(async (e) => {
+            if (e instanceof Response) {
+                throw new Error(await e.text());
+            } else if (e instanceof Error) {
+                throw e;
+            } else {
+                throw new Error('Unknown error when fetching sample: ' + e);
+            }
         });
         const arr = await response.arrayBuffer();
         const tempBuffer = await context.decodeAudioData(arr);
