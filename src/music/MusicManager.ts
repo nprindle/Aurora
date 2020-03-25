@@ -211,10 +211,9 @@ export namespace MusicManager {
     export function initialize(): void {
         masterGain.gain.value = 0.25;
         masterGain.connect(context.destination);
-        queueNextMeasure(context.currentTime).catch((reason: any) => {
-            if (reason) {
-                console.error(reason);
-            }
+        queueNextMeasure(context.currentTime).catch(e => {
+            console.error("Music initialization failed:");
+            console.error(e);
         });
     }
 
