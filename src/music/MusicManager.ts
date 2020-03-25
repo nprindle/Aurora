@@ -34,7 +34,16 @@ enum ChordFunction {
 
 export namespace MusicManager {
 
-    export const context: AudioContext = new AudioContext();
+    // Get an AudioContext, in a browser-compatible way
+    export const context: AudioContext = (() => {
+        const theWindow: any = window;
+        const ctor = theWindow.AudioContext ?? theWindow.webkitAudioContext;
+        if (ctor) {
+            return new ctor();
+        } else {
+            throw new Error("AudioContext is not supported");
+        }
+    })();
 
     export const samples: Record<SampleNames, Promise<SampleData>> = makeSamples(context);
 
