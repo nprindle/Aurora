@@ -5,9 +5,8 @@ import SettingsScreen from "./SettingsScreen.js";
 import { enableCheats } from "../../util/Cheats.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
 import Game from "../../Game.js";
+import { MusicManager } from "../../music/MusicManager.js";
 
-// this may need to become a real class in the future
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class MainMenu implements Page {
 
     readonly html: HTMLElement;
@@ -18,6 +17,22 @@ export default class MainMenu implements Page {
     }
 
     refresh(): void {
+        const musicPlaying = MusicManager.isPlaying();
+        let musicButton;
+        if (!musicPlaying) {
+            musicButton = UI.makeButton("start music", () => {
+                MusicManager.initialize();
+                this.refresh();
+            });
+        } else {
+            musicButton = UI.makeButton("stop music", async (button: HTMLButtonElement) => {
+                button.disabled = true;
+                button.innerText = "stopping...";
+                await MusicManager.stop();
+                this.refresh();
+            });
+        }
+
         UI.fillHTML(this.html, [
             UI.makeHeader("Aurora", 1),
             UI.makeDivContaining([
@@ -28,6 +43,7 @@ export default class MainMenu implements Page {
                 }),
                 UI.makeButton("settings", () => GameWindow.show(new SettingsScreen())),
                 UI.makeButton("credits", () => GameWindow.show(new CreditsScreen())),
+                musicButton,
             ], ["main-menu-options"]),
         ]);
     }

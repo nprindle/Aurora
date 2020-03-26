@@ -66,9 +66,14 @@ export namespace UI {
         return header;
     }
 
-    // creates a button which executes the given callback function when clicked
-    export function makeButton(text: string, callback: Function, classes?: string[],
-        buttonEnabled: "enabled" | "disabled" = "enabled"): HTMLButtonElement {
+    // Creates a button which executes the given callback function when clicked.
+    // The callback may reference the button itself, as well as the mouse event.
+    export function makeButton(
+        text: string,
+        callback: (this: GlobalEventHandlers, button: HTMLButtonElement, ev: MouseEvent) => any,
+        classes?: string[],
+        buttonEnabled: "enabled" | "disabled" = "enabled"
+    ): HTMLButtonElement {
         const b: HTMLButtonElement = document.createElement("button");
         b.type = "button";
         if (buttonEnabled === "disabled") {
@@ -78,9 +83,9 @@ export namespace UI {
         if (classes) {
             b.classList.add(...classes);
         }
-        b.onclick = function(ev: MouseEvent) {
+        b.onclick = function(this: GlobalEventHandlers, ev: MouseEvent) {
             ev.preventDefault();
-            callback.call(this, ev);
+            callback.call(this, b, ev);
         };
         if (containsEmoji(text)) {
             patchEmoji(b);
