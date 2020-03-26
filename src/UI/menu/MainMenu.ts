@@ -20,14 +20,14 @@ export default class MainMenu implements Page {
         const musicPlaying = MusicManager.isPlaying();
         let musicButton;
         if (!musicPlaying) {
-            musicButton = UI.makeButton("start music", () => {
+            musicButton = UI.makeButton("enable audio", () => {
                 MusicManager.initialize();
                 this.refresh();
             });
         } else {
-            musicButton = UI.makeButton("stop music", async (button: HTMLButtonElement) => {
+            musicButton = UI.makeButton("disable audio", async (button: HTMLButtonElement) => {
                 button.disabled = true;
-                button.innerText = "stopping...";
+                button.innerText = "stopping audio...";
                 await MusicManager.stop();
                 this.refresh();
             });
@@ -36,14 +36,14 @@ export default class MainMenu implements Page {
         UI.fillHTML(this.html, [
             UI.makeHeader("Aurora", 1),
             UI.makeDivContaining([
-                UI.makeButton("new game", () => {
+                UI.makeButton("start game", () => {
                     const newGame = new Game();
                     enableCheats(newGame);
                     GameWindow.show(new WorldScreen(newGame));
                 }),
-                UI.makeButton("settings", () => GameWindow.show(new SettingsScreen())),
-                UI.makeButton("credits", () => GameWindow.show(new CreditsScreen())),
                 musicButton,
+                UI.makeButton("change settings", () => GameWindow.show(new SettingsScreen())),
+                UI.makeButton("view credits", () => GameWindow.show(new CreditsScreen())),
             ], ["main-menu-options"]),
         ]);
     }
