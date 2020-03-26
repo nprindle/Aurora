@@ -74,9 +74,10 @@ export default class ResearchScreen implements Page {
         }
         const canUnlock = (unmetPrereqs === 0) && this.run.inventory.canAfford([tech.researchCost]);
         const unlockCallback: () => void = () => {
+            this.run.inventory.payCost([tech.researchCost]);
             this.run.unlockTechnology(tech);
-            this.refresh();
             this.run.updateQuestState();
+            this.refresh();
         };
         div.appendChild(UI.makeButton("Conduct Research", unlockCallback, [], canUnlock ? "enabled" : "disabled"));
 

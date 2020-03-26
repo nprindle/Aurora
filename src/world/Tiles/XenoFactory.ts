@@ -14,12 +14,12 @@ export default class XenoFactory extends Tile {
 
     resourceConversions = [
         new Conversion(
-            [new Cost(Resource.Cavorite, 500)],
+            [new Cost(Resource.Cavorite, 500), new Cost(Resource.Energy, 200)],
             [new Cost(Resource.Superconductor, 500)],
             100,
         ),
         new Conversion(
-            [new Cost(Resource.Orichalcum, 500), new Cost(Resource.Superconductor, 100)],
+            [new Cost(Resource.Orichalcum, 500), new Cost(Resource.Energy, 200)],
             [new Cost(Resource.SmartMatter, 500)],
             100,
         )

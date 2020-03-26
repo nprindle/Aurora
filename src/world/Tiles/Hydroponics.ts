@@ -15,7 +15,7 @@ export default class Hydroponics extends Tile {
 
     resourceConversions = [
         new Conversion(
-            [new Cost(Resource.Energy, 50)], [new Cost(Resource.Food, 1000)], 40
+            [new Cost(Resource.Energy, 150)], [new Cost(Resource.Food, 2000)], 50
         ),
     ];
 

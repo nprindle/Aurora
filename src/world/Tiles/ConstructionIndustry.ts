@@ -55,8 +55,8 @@ export default class ConstructionIndustry extends Tile {
         ),
 
         constructionProject(MiningFacility,
-            [new Cost(Resource.Energy, 200), new Cost(Resource.Metal, 300)],
-            [tileWithinDistanceRequirement(Mountain, 5), roadRequirement, techRequirement(IndustrialEngineeringTech)],
+            [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 100)],
+            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
             [hasTech(StructureConstructionTech)],
         ),
 

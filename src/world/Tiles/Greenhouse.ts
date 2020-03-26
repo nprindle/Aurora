@@ -15,7 +15,7 @@ export default class Greenhouse extends Tile {
 
     resourceConversions = [
         new Conversion(
-            [new Cost(Resource.Energy, 10)], [new Cost(Resource.Food, 200)], 20
+            [new Cost(Resource.Energy, 10)], [new Cost(Resource.Food, 200)], 30
         ),
     ];
 
