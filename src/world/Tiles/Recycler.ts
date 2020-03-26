@@ -17,12 +17,12 @@ export default class Recycler extends Tile {
     resourceConversions = [
         new Conversion(
             [],
-            [new Cost(Resource.Cavorite, 200)],
+            [new Cost(Resource.Cavorite, 200), new Cost(Resource.Energy, 25)],
             300,
         ),
         new Conversion(
             [],
-            [new Cost(Resource.Orichalcum, 200)],
+            [new Cost(Resource.Orichalcum, 200), new Cost(Resource.Energy, 25)],
             300,
         ),
     ];

@@ -15,11 +15,19 @@ export default class RobotHive extends Tile {
     populationCapacity: Housing = new Housing(Species.Robot, 5000);
 
     possibleProjects: TileProject[] = [
-        new TileProject("Construct robot swarm", "Creates 100 robotic worker drones",
+        new TileProject("Construct robot group", "Create 100 robotic worker drones",
             (position: GridCoordinates, game: Game) => {
                 game.inventory.addWorkers(Species.Robot, 100);
             },
             [new Cost(Resource.Electronics, 50), new Cost(Resource.Energy, 100)],
+            [], []
+        ),
+
+        new TileProject("Construct robot swarm", "Create 1000 robotic worker drones",
+            (position: GridCoordinates, game: Game) => {
+                game.inventory.addWorkers(Species.Robot, 1000);
+            },
+            [new Cost(Resource.Electronics, 250), new Cost(Resource.Energy, 1000)],
             [], []
         ),
     ];
