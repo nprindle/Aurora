@@ -1,7 +1,6 @@
 import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import MainMenu from "./MainMenu.js";
-import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
 
 
 class CreditsEntry {
@@ -44,6 +43,6 @@ export default class CreditsScreen implements Page {
         return UI.makeDivContaining([
             UI.makeHeader(entry.header),
             ...entry.text.map(text => UI.makePara(text)),
-        ], entry.largeText? ["credits-entry-large"] : ["credits-entry-small"]);
+        ], entry.largeText ? ["credits-entry-large"] : ["credits-entry-small"]);
     }
 }
