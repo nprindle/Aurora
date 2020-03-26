@@ -1,21 +1,26 @@
 import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
 import MainMenu from "./MainMenu.js";
+import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
 
 
 class CreditsEntry {
-    constructor(public name: string, public roles: string[]) {}
+    constructor(readonly header: string, readonly text: string[], readonly largeText?: boolean) {}
 }
 
 const credits: CreditsEntry[] = [
-    new CreditsEntry("Grace Rarer", ["Team Lead", "Game Designer", "Programmer"]),
-    new CreditsEntry("Prindle", ["Programmer", "DevOps"]), // <3
-    new CreditsEntry("Seong Ryoo", ["Environment Artist"]),
-    new CreditsEntry("May Lawver", ["Programmer"]),
-    new CreditsEntry("Mitchell Philipp", ["UI Programmer"]),
-    new CreditsEntry("Brad Baker", ["Gameplay Programmer"]),
-    new CreditsEntry("Will Cooper", ["UI Programmer"]),
-
+    new CreditsEntry("Grace Rarer", ["Team Lead, Game Designer, Programmer"], true),
+    new CreditsEntry("Prindle", ["Programmer, DevOps"], true), // <3
+    new CreditsEntry("May Lawver", ["Music Generation Programmer"], true),
+    new CreditsEntry("Seong Ryoo", ["Environment Artist"], true),
+    new CreditsEntry("Code Contributors", ["Mitchell Philipp", "Brad Baker", "Will Cooper"]),
+    new CreditsEntry("Third Party Assets", [
+        "Twemoji (MIT License for code, CC-BY for graphics)",
+        "IBM Plex Mono (Open Font License)"
+    ]),
+    new CreditsEntry("Aurora is released under the MIT License", [
+        "Source code is available at github.com/GRarer/Aurora"
+    ]),
 ];
 
 // this may need to become a real class in the future
@@ -37,8 +42,8 @@ export default class CreditsScreen implements Page {
 
     private renderCreditsEntry(entry: CreditsEntry): HTMLElement {
         return UI.makeDivContaining([
-            UI.makeHeader(entry.name, 1),
-            ...entry.roles.map(role => UI.makePara(role)),
-        ], ["credits-entry"]);
+            UI.makeHeader(entry.header),
+            ...entry.text.map(text => UI.makePara(text)),
+        ], entry.largeText? ["credits-entry-large"] : ["credits-entry-small"]);
     }
 }
