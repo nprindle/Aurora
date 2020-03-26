@@ -30,14 +30,17 @@ export default class SettingsScreen implements Page {
         };
 
         const sliders: HTMLElement[] = [
-            makeTrackedSlider("Volume", 0, 100, this.options.volume, (value: number) => {
-                this.options.volume = value;
+            makeTrackedSlider("Volume", 0, 100, this.options.volume * 100, (value: number) => {
+                this.options.volume = value / 100;
+                Settings.saveOptions(this.options);
             }, 5),
             makeTrackedSlider("View width", 6, 18, this.options.viewWidth, (value: number) => {
                 this.options.viewWidth = value;
+                Settings.saveOptions(this.options);
             }),
             makeTrackedSlider("View height", 4, 12, this.options.viewHeight, (value: number) => {
                 this.options.viewHeight = value;
+                Settings.saveOptions(this.options);
             }),
         ];
 
@@ -48,6 +51,7 @@ export default class SettingsScreen implements Page {
                 UI.makeDivContaining([
                     UI.makeButton("Restore defaults", () => {
                         this.options = SettingsOptions.defaultOptions();
+                        Settings.saveOptions(this.options);
                         this.refresh();
                     }),
                 ]),
