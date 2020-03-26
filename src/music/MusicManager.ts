@@ -35,6 +35,15 @@ enum ChordFunction {
 
 export namespace MusicManager {
 
+    // Whether or not the music is playing. Setting this to false will kill the
+    // music. Ideally, we would keep track of a cancellable Promise instead, but
+    // JS doesn't have cancellation, async exceptions, masking, etc.
+    let shouldBePlaying: boolean = false;
+
+    // The current music computation. We track this so we can propertly wait for
+    // the music to stop playing after stopping it.
+    let currentMusic: Promise<void> | undefined = undefined;
+
     // Get an AudioContext, in a browser-compatible way
     export const context: AudioContext = (() => {
         const theWindow: any = window;
@@ -191,6 +200,9 @@ export namespace MusicManager {
     }
 
     async function queueNextMeasure(startingTime: number): Promise<void> {
+        if (!shouldBePlaying) {
+            return;
+        }
         const beatLength: number = 60 / state.beatsPerMinute;
         if (state.queue.length === 0) {
             fillQueue();
@@ -219,12 +231,29 @@ export namespace MusicManager {
     }
 
     export function initialize(): void {
-        masterGain.gain.value = Settings.currentOptions.volume;
-        masterGain.connect(context.destination);
-        queueNextMeasure(context.currentTime).catch(e => {
-            console.error("Music initialization failed:");
-            console.error(e);
-        });
+        // Don't initialize if already running
+        if (!shouldBePlaying) {
+            shouldBePlaying = true;
+            masterGain.gain.value = Settings.currentOptions.volume;
+            masterGain.connect(context.destination);
+            currentMusic = queueNextMeasure(context.currentTime);
+            currentMusic.catch((e: any) => {
+                console.error("Music initialization failed:");
+                console.error(e);
+            });
+        }
+    }
+
+    export async function stop(): Promise<void> {
+        if (shouldBePlaying && currentMusic !== undefined) {
+            shouldBePlaying = false;
+            await currentMusic;
+            currentMusic = undefined;
+        }
+    }
+
+    export function isPlaying(): boolean {
+        return shouldBePlaying;
     }
 
     /**
