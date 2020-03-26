@@ -76,7 +76,7 @@ img.emoji {
  * support Internet Explorer so we don't need to include support for it here*/
 input[type=range] {
     -webkit-appearance: none;
-    width: 100%;
+    width: 160px;
     background: transparent;
   }
 
