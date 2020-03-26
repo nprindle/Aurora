@@ -6,7 +6,8 @@ import { Scales, Scale, Chord, Pitch, offsetPitch, Degree, ScaleQuery } from "./
 import Rhythm from "./Rhythm.js";
 import { Drumkit, Drums } from "./Drums.js";
 import { Arrays, NonEmptyArray } from "../util/Arrays.js";
-import { mod, impossible } from "../util/Util.js";
+import { Settings } from "../persistence/Settings.js";
+import { clamp, mod, impossible } from "../util/Util.js";
 import { unwrap } from "@nprindle/minewt";
 import { makeSamples, SampleNames, SampleData } from "./Samples.js";
 
@@ -218,7 +219,7 @@ export namespace MusicManager {
     }
 
     export function initialize(): void {
-        masterGain.gain.value = 0.25;
+        masterGain.gain.value = Settings.currentOptions.volume;
         masterGain.connect(context.destination);
         queueNextMeasure(context.currentTime).catch(e => {
             console.error("Music initialization failed:");
@@ -226,8 +227,11 @@ export namespace MusicManager {
         });
     }
 
+    /**
+     * Sets the music volume, with range [0, 1].
+     */
     export function setVolume(volume: number): void {
-        masterGain.gain.value = volume;
+        masterGain.gain.value = clamp(0, volume, 1);
     }
 
 }
