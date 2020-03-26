@@ -29,7 +29,7 @@ export const RobotTech = Technology.makeUnlockableTechnology(
 export const SwarmRoboticsTech = Technology.makeUnlockableTechnology(
     "Swarm Robotics",
     "Algorithms for efficiently managing large numbers of robotic workers",
-    [IndustrialEngineeringTech],
+    [RobotTech],
     new Cost(Resource.EngineeringKnowledge, 100),
 );
 
@@ -136,7 +136,7 @@ export const CooperativeReprogrammingTech = Technology.makeUnlockableTechnology(
     its goals to be reprogrammed. This would make it possible for the Overseer to protect human values at the expense of completing its
     original mission.`,
     [AcausalTradeTech, CEVTech],
-    new Cost(Resource.AlignmentKnowledge, 1000),
+    new Cost(Resource.AlignmentKnowledge, 700),
 );
 
 export const XenoarchaeologyTech = Technology.makeUnlockableTechnology(
@@ -162,28 +162,28 @@ export const AlienHistoryTech = Technology.makeUnlockableTechnology(
         What is the purpose of the ruins and the towering monolith structure? Was their civilization consumed by war over competing
         philosophies? What might alien philosophy be like?`,
     [SociologyTech, XenoarchaeologyTech],
-    new Cost(Resource.AlienKnowledge, 50),
+    new Cost(Resource.AlienKnowledge, 200),
 );
 
 export const XenoMaterialsTech = Technology.makeUnlockableTechnology(
     "Xenomaterials",
     "Techniques for processing and applying exotic resources found in the ruins of the alien civilization",
     [XenoarchaeologyTech],
-    new Cost(Resource.AlienKnowledge, 50),
+    new Cost(Resource.AlienKnowledge, 200),
 );
 
 export const NanoTech = Technology.makeUnlockableTechnology(
     "Nanotechnology",
     "Manipulation of matter on an atomic, molecular, and supramolecular scale",
     [XenoMaterialsTech],
-    new Cost(Resource.EngineeringKnowledge, 30),
+    new Cost(Resource.EngineeringKnowledge, 100),
 );
 
 export const ZeroPointTech = Technology.makeUnlockableTechnology(
     "Zero Point Energy",
     "Exploiting exotic, previously-unknown principles of physics to extract tremendous amounts of energy from the quantum vacuum",
     [XenoMaterialsTech, NuclearTech],
-    new Cost(Resource.EngineeringKnowledge, 100),
+    new Cost(Resource.EngineeringKnowledge, 250),
 );
 
 export const MonolithSurveyTech = Technology.makeHiddenTechnology(
@@ -200,7 +200,7 @@ export const HypercomputingTech = Technology.makeUnlockableTechnology(
         Powerful new models of computation that could eclipse traditional computer technology and produce results that are not
         turing-computable`,
     [XenoMaterialsTech],
-    new Cost(Resource.EngineeringKnowledge, 100)
+    new Cost(Resource.EngineeringKnowledge, 300)
 );
 
 export const NeuralUploadingTech = Technology.makeUnlockableTechnology(
@@ -210,7 +210,7 @@ export const NeuralUploadingTech = Technology.makeUnlockableTechnology(
         potentially be used to resurrect their minds within a virtual reality. Studying this technology could allow us to reactivate these
         minds, or even scan and simulate human minds with perfect fidelity.`,
     [MonolithSurveyTech, HypercomputingTech],
-    new Cost(Resource.AlienKnowledge, 80)
+    new Cost(Resource.AlienKnowledge, 200)
 );
 
 export const SingularityEngineeringTech = Technology.makeUnlockableTechnology(
@@ -220,5 +220,5 @@ export const SingularityEngineeringTech = Technology.makeUnlockableTechnology(
         and perhaps the entire galaxy, into a maximally-efficient computing substrate. It may be possible to unlock all of the aliens'
         data by repairing and activating this machine.`,
     [MonolithSurveyTech],
-    new Cost(Resource.AlienKnowledge, 200)
+    new Cost(Resource.AlienKnowledge, 500)
 );

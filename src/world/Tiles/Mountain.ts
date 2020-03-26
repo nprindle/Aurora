@@ -8,7 +8,8 @@ import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
 import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
-import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
+import MiningFacility from "./MiningFacility.js";
 
 export default class Mountain extends Tile {
     protected texture: HTMLImageElement = MountainTexture;
@@ -18,22 +19,22 @@ export default class Mountain extends Tile {
     }
 
     possibleProjects: TileProject[] = [
-        new TileProject("Strip Mining", `Destroy the mountain to produce ${Resource.Metal.name}`,
-            (position: GridCoordinates, run: Game) => {
-                run.inventory.addResource(Resource.Metal, 150);
-                run.world.placeTile(new Wasteland(position));
-            },
-            [new Cost(Resource.Energy, 25)],
-            [],
-            [],
-        ),
-
         new TileProject("Construct Mineshaft", "Create a mineshaft to allow long-term ore extraction",
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Mineshaft(position));
             },
-            [new Cost(Resource.Energy, 300), new Cost(Resource.BuildingMaterials, 50)],
-            [techRequirement(StructureConstructionTech)],
+            [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 25)],
+            [techRequirement(StructureConstructionTech), roadRequirement],
+            [],
+        ),
+
+        new TileProject("Strip Mining", `Destroy the mountain to produce ${Resource.Metal.name}`,
+            (position: GridCoordinates, run: Game) => {
+                run.inventory.addResource(Resource.Metal, 500);
+                run.world.placeTile(new Wasteland(position));
+            },
+            [new Cost(Resource.Energy, 25)],
+            [tileWithinDistanceRequirement(MiningFacility, 5)],
             [],
         ),
     ];
