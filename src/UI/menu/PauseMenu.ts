@@ -17,14 +17,14 @@ export default class PauseMenu implements Page {
         UI.fillHTML(this.html, [
             UI.makeHeader("Game Paused", 2),
             UI.makeDivContaining([
-                UI.makeButton("resume game", () => {
+                UI.makeButton("resume_game", () => {
                     GameWindow.show(new WorldScreen(this.run));
                 }),
                 MainMenu.makeAudioButton(this),
-                UI.makeButton("change settings", () => {
+                UI.makeButton("change_settings", () => {
                     GameWindow.show(new SettingsScreen(this));
                 }),
-                UI.makeButton("quit game", () => {
+                UI.makeButton("quit_game", () => {
                     GameWindow.show(new MainMenu());
                 }),
             ], ["main-menu-options"]),
