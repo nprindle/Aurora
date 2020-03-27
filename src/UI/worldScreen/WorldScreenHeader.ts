@@ -1,7 +1,7 @@
 import Game from "../../Game.js";
 import { UI } from "../UI.js";
 import { GameWindow, Page } from "../GameWindow.js";
-import MainMenu from "../menu/MainMenu.js";
+import PauseMenu from "../menu/PauseMenu.js";
 import TransitionScreen from "../transitionScreen/TransitionScreen.js";
 import ProductionScreen from "../productionScreen/ProductionScreen.js";
 import ResearchScreen from "../researchScreen/ResearchScreen.js";
@@ -15,8 +15,8 @@ export default class WorldScreenHeader implements Page {
     }
 
     refresh(): void {
-        const quitButton = UI.makeButton("Quit Game", () => {
-            GameWindow.show(new MainMenu());
+        const quitButton = UI.makeButton("Pause Game", () => {
+            GameWindow.show(new PauseMenu(this.run));
         }, [], this.buttonState);
         const transitionButton = UI.makeButton("Next Turn", () => {
             const transitionScreen = new TransitionScreen(this.run);
