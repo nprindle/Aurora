@@ -49,10 +49,6 @@
     margin-block-start: 0;
 }
 
-.free-conversions-list {
-    margin-bottom: 16pt;
-}
-
 .conversion {
     width: 7in;
     min-width: 50%;
@@ -67,10 +63,17 @@
     }
 }
 
+.production-screen-drag-hint {
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-size: 12pt;
+}
+
 .conversion-description {
     margin: 0pt; /* remove margin between description and surrounding box */
     font-size: 16pt;
     text-align: left;
+    min-height: 54px;
 }
 
 .conversion-description-box {

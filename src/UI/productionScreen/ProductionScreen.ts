@@ -23,30 +23,25 @@ export default class ProductionScreen implements Page {
         // clone of the inventory that represents what the inventory will be after this turn's conversions are applied
         const inventoryCopy = this.run.inventory.clone();
 
-        const { free, costly } = this.run.getResourceConversions();
+        const conversions = this.run.getResourceConversions();
 
-        inventoryCopy.applyConversions(free);
-
-        const freeConversionsHTML: HTMLElement[] = free.map(conversion => this.renderConversion(conversion, true));
-        const freeConversionsDiv = UI.makeDivContaining(freeConversionsHTML, ["free-conversions-list"]);
-
-        const costlyConversionsHTML: HTMLElement[] = [];
-        for (const conversion of costly) {
+        const conversionsHTML: HTMLElement[] = [];
+        for (const conversion of conversions) {
             if (inventoryCopy.canAfford(conversion.inputs) && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)) {
-                costlyConversionsHTML.push(this.renderConversion(conversion, true));
+                conversionsHTML.push(this.renderConversion(conversion, true));
                 inventoryCopy.applyConversions([conversion]);
             } else {
-                costlyConversionsHTML.push(this.renderConversion(conversion, false));
+                conversionsHTML.push(this.renderConversion(conversion, false));
             }
         }
-        const costlyConversionsDiv = UI.makeDivContaining(costlyConversionsHTML);
+        const conversionsDiv = UI.makeDivContaining(conversionsHTML);
 
-        Sortable.create(costlyConversionsDiv, {
+        Sortable.create(conversionsDiv, {
             onEnd: evt => {
                 const fromIndex = evt.oldDraggableIndex;
                 const toIndex = evt.newDraggableIndex;
                 if (fromIndex !== undefined && toIndex !== undefined) {
-                    this.shiftCostlyConversion(fromIndex, toIndex);
+                    this.shiftConversion(fromIndex, toIndex);
                 }
             }
         });
@@ -115,8 +110,8 @@ export default class ProductionScreen implements Page {
             this.renderInventory(this.run.inventory),
             UI.makeHeader("Resource production", 2, ["production-screen-label"]),
             availableWorkersLabel,
-            freeConversionsDiv,
-            costlyConversionsDiv,
+            UI.makePara("Drag conversions to change the activation order", ["production-screen-drag-hint"]),
+            conversionsDiv,
             UI.makeHeader("Workforce", 2, ["production-screen-label"]),
             unusedWorkersLabel,
             populationConsumptionHtml,
@@ -158,8 +153,8 @@ export default class ProductionScreen implements Page {
         return div;
     }
 
-    private shiftCostlyConversion(fromIndex: number, toIndex: number): void {
-        this.run.shiftCostlyConversionPriority(fromIndex, toIndex);
+    private shiftConversion(fromIndex: number, toIndex: number): void {
+        this.run.shiftConversionPriority(fromIndex, toIndex);
         this.refresh();
     }
 

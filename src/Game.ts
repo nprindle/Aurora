@@ -57,26 +57,9 @@ export default class Game {
         return this.prevQuestDescription;
     }
 
-    private getUnorderedConversions(): Conversion[] {
-        return Arrays.flatten(this.world.getTiles().map(tile => tile.resourceConversions));
-    }
-
-    // Returns all available free and costly resource conversions in the order
-    // in which they will be applied, as two separate arrays
-    getResourceConversions(): { free: Conversion[]; costly: Conversion[]; } {
-        const allConversions = this.getUnorderedConversions();
-        const { yes: free, no: costly } = Arrays.partition(allConversions, c => c.isFree());
-        // sort by priority number
-        free.sort((a, b) => a.priority - b.priority);
-        costly.sort((a, b) => a.priority - b.priority);
-        return { free, costly };
-    }
-
-    // Returns all resource conversions in the order in which they will be
-    // applied; i.e., all free conversions first, followed by costly conversions
-    // in decreasing order of priority.
-    getAllResourceConversions(): Conversion[] {
-        const allConversions = this.getUnorderedConversions();
+    // Returns all resource conversions in the order in which they will be applied
+    getResourceConversions(): Conversion[] {
+        const allConversions = Arrays.flatten(this.world.getTiles().map(tile => tile.resourceConversions));
         // sort by priority number
         allConversions.sort((a, b) => a.priority - b.priority);
         return allConversions;
@@ -106,7 +89,7 @@ export default class Game {
     // this is called at the end of each turn
     completeTurn(): void {
         // calculate resource production
-        this.inventory.applyConversions(this.getAllResourceConversions());
+        this.inventory.applyConversions(this.getResourceConversions());
 
         this.inventory.releaseWorkers();
         this.inventory.doPopulationGrowth();
@@ -114,31 +97,30 @@ export default class Game {
         this.updateQuestState();
     }
 
-    // Moves a costly conversion to a different point in the order of
-    // priorities.
-    shiftCostlyConversionPriority(fromIndex: number, toIndex: number): void {
+    // Moves a conversion to a different point in the order of priorities
+    shiftConversionPriority(fromIndex: number, toIndex: number): void {
         if (fromIndex === toIndex || fromIndex < 0) {
             return;
         }
 
-        const { costly } = this.getResourceConversions();
-        if (toIndex >= costly.length) {
+        const conversions = this.getResourceConversions();
+        if (toIndex >= conversions.length) {
             return;
         }
 
         // The priority of toIndex after shifting intermediate priorities
-        const priority = costly[toIndex].priority;
+        const priority = conversions[toIndex].priority;
         if (fromIndex < toIndex) {
             // Shift intermediate priorities up
             for (let i = toIndex; i > fromIndex; i--) {
-                costly[i].priority = costly[i - 1].priority;
+                conversions[i].priority = conversions[i - 1].priority;
             }
         } else {
             // Shift intermediate priorities down
             for (let i = toIndex; i < fromIndex; i++) {
-                costly[i].priority = costly[i + 1].priority;
+                conversions[i].priority = conversions[i + 1].priority;
             }
         }
-        costly[fromIndex].priority = priority;
+        conversions[fromIndex].priority = priority;
     }
 }
