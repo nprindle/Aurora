@@ -7,6 +7,7 @@ import Monolith from "../world/Tiles/Monolith";
 import HumanMonolith from "../world/Tiles/HumanMonolith";
 import Species from "../resources/Species";
 import Ruins from "../world/Tiles/Ruins";
+import Recycler from "../world/Tiles/Recycler";
 
 // a requirement for completing a tileproject
 export default class DescribedTilePredicate {
@@ -49,9 +50,12 @@ export function nearRuinsOrMonolith(radius: number): DescribedTilePredicate {
         radius === 1 ? `adjacent to ${Ruins.tileName} or ${Monolith.tileName}`
             : `within ${radius} units of ${Ruins.tileName} or ${Monolith.tileName}`,
         (game: Game, position: GridCoordinates) => {
-            return tileWithinDistance(Ruins, radius)(game, position)
-                    || tileWithinDistance(Monolith, radius)(game, position)
-                    || tileWithinDistance(HumanMonolith, radius)(game, position);
+            return game.world.getTilesInCircle(position, radius).some(tile => (
+                tile instanceof Ruins
+                    || tile instanceof Recycler
+                    || tile instanceof Monolith
+                    || tile instanceof HumanMonolith
+            ));
         }
     );
 }
