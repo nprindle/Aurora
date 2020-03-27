@@ -1,7 +1,6 @@
 import { Page } from "../GameWindow.js";
 import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
-import MainMenu from "../menu/MainMenu.js";
 
 import { Settings, SettingsOptions } from "../../persistence/Settings.js";
 
@@ -11,7 +10,9 @@ export default class SettingsScreen implements Page {
     // The current values of selected options
     options: SettingsOptions;
 
-    constructor() {
+    constructor(
+        private readonly backScreen: Page, // the page to return to
+    ) {
         this.html = UI.makeDiv();
         this.options = Settings.loadOptions();
         this.refresh();
@@ -58,7 +59,7 @@ export default class SettingsScreen implements Page {
                 UI.makeDivContaining([
                     UI.makeButton("Back", () => {
                         Settings.saveOptions(this.options);
-                        GameWindow.show(new MainMenu());
+                        GameWindow.show(this.backScreen);
                     }),
                 ]),
             ], ["settings"])

@@ -70,7 +70,7 @@ export namespace UI {
     // The callback may reference the button itself, as well as the mouse event.
     export function makeButton(
         text: string,
-        callback: (this: GlobalEventHandlers, button: HTMLButtonElement, ev: MouseEvent) => any,
+        callback: (button: HTMLButtonElement, ev: MouseEvent) => any,
         classes?: string[],
         buttonEnabled: "enabled" | "disabled" = "enabled"
     ): HTMLButtonElement {
@@ -83,9 +83,9 @@ export namespace UI {
         if (classes) {
             b.classList.add(...classes);
         }
-        b.onclick = function(this: GlobalEventHandlers, ev: MouseEvent) {
+        b.onclick = function(ev: MouseEvent) {
             ev.preventDefault();
-            callback.call(this, b, ev);
+            callback(b, ev);
         };
         if (containsEmoji(text)) {
             patchEmoji(b);
