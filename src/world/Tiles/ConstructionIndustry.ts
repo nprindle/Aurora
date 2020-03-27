@@ -6,7 +6,6 @@ import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import MiningFacility from "./MiningFacility.js";
-import Mountain from "./Mountain.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
@@ -18,7 +17,7 @@ import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
-import { techRequirement, roadRequirement, tileWithinDistanceRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
 import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionIndustry extends Tile {
