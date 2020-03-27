@@ -66,3 +66,10 @@ export function speciesPopulationRequirement(species: Species, minPopulation: nu
         (game: Game) => (game.inventory.getPopulation(species) >= minPopulation),
     );
 }
+
+export function availableHousingRequirement(species: Species, minAvailableCapacity: number): DescribedTilePredicate {
+    return new DescribedTilePredicate(
+        `available housing capacity for ${minAvailableCapacity} ${species.name}`,
+        (game: Game) => ((game.world.getPopulationCapacity(species) - game.inventory.getPopulation(species)) >= minAvailableCapacity)
+    );
+}
