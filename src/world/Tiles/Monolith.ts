@@ -13,7 +13,7 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Game from "../../Game.js";
 import HumanMonolith from "./HumanMonolith.js";
-import { tileWithinDistanceRequirement, techRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { tileWithinDistanceRequirement, techRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 
 export default class Monolith extends Tile {

@@ -14,10 +14,8 @@ import { MonolithSurveyTech } from "../../techtree/TechTree.js";
 import ConstructionVictory from "./ConstructionVictory.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
-import { hasTech, tileExists } from "../../predicates/predicates.js";
-import { roadRequirement } from "../../predicates/DescribedTilePredicate.js";
-
-
+import { hasTech, tileExists, orQuery, notQuery } from "../../predicates/predicates.js";
+import { roadRequirement } from "../../predicates/DescribedTileQuery.js";
 
 export default class Wasteland extends Tile {
 
@@ -72,7 +70,7 @@ export default class Wasteland extends Tile {
             [],
             [
                 hasTech(MonolithSurveyTech),
-                (game: Game) => !tileExists(NeuralEmulator)(game) || !tileExists(NanotechFoundry)(game),
+                orQuery(notQuery(tileExists(NeuralEmulator)), notQuery(tileExists(NanotechFoundry)))
             ]
         ),
 

@@ -9,14 +9,15 @@ import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
-    XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
+import {
+    StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech
+} from "../../techtree/TechTree.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
-import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, roadRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionIndustry extends Tile {
@@ -26,8 +27,6 @@ export default class ConstructionIndustry extends Tile {
     constructor(position: GridCoordinates, private wastelandVariant: 1 | 2 | 3 | 4 | 5) {
         super(position);
     }
-
-
 
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",

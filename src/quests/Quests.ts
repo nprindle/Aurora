@@ -19,8 +19,7 @@ import AlienCircuits from "../world/Tiles/AlienCircuits.js";
 import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
 import HumanCircuits from "../world/Tiles/HumanCircuits.js";
 import { stripIndent } from "../util/Text.js";
-import { allTilesAreOfType, hasTech, tileExists, hasResource } from "../predicates/predicates.js";
-import Game from "../Game.js";
+import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation } from "../predicates/predicates.js";
 
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
@@ -111,7 +110,7 @@ export const QuestExcavate: QuestStage = new QuestStage(
     `Excavate the ${Ruins.tileName} to extract resources`,
     [
         new QuestPath(
-            (game: Game) => game.world.getTiles().some(tile => tile instanceof Recycler),
+            tileExists(Recycler),
             QuestAlienHistory,
         )
     ]
@@ -132,7 +131,7 @@ export const TutorialQuestPopulation: QuestStage = new QuestStage(
     "Grow total worker population to 250",
     [
         new QuestPath(
-            (game: Game) => game.inventory.getTotalPopulation() >= 250,
+            hasTotalPopulation(250),
             QuestXenoLab,
         )
     ],
