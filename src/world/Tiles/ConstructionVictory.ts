@@ -1,7 +1,7 @@
 import Tile from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { IndustryConstructionTexture } from "../../UI/Images.js";
+import { XenoEngineeringConstructionTexture } from "../../UI/Images.js";
 import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
@@ -17,7 +17,7 @@ import { hasTech, tileExists } from "../../predicates/predicates.js";
 
 export default class ConstructionVictory extends Tile {
 
-    protected texture: HTMLImageElement = IndustryConstructionTexture;
+    protected texture: HTMLImageElement = XenoEngineeringConstructionTexture;
 
     constructor(position: GridCoordinates) {
         super(position);

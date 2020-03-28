@@ -39,6 +39,7 @@ export const HumanCircuitsTexture = makeImage("assets/tiles/end/circuits human.p
 export const HabConstructionTexture = makeImage("assets/tiles/construction/hab_site.png");
 export const LabConstructionTexture = makeImage("assets/tiles/construction/lab_site.png");
 export const IndustryConstructionTexture = makeImage("assets/tiles/construction/industry_site.png");
+export const XenoEngineeringConstructionTexture = makeImage("assets/tiles/construction/xenoengineering_site.png");
 
 export const HabitatTexture = makeImage("assets/tiles/colony/habitat.png");
 export const SolarPanelsTexture = makeImage("assets/tiles/colony/solar_panels.png");
