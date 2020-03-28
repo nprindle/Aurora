@@ -21,4 +21,9 @@ export default class Technology {
     static makeHiddenTechnology(name: string, description: string, visible: boolean = false): Technology {
         return new Technology(name, description, [], new Cost(Resource.EngineeringKnowledge, 0), visible);
     }
+
+    equals(other: Technology): boolean {
+        // Names uniquely identify technology
+        return this.name === other.name;
+    }
 }
