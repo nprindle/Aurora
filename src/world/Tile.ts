@@ -39,9 +39,9 @@ export default abstract class Tile {
 }
 
 /* used by predicates to allow statically accessing the name of a Tile subclass
-  * Tile subclasses that are used by predicates in this way
-  * will need to declare a static readonly tileName string
-  */
+ * Tile subclasses that are used by predicates in this way
+ * will need to declare a static readonly tileName string
+ */
 export type NamedTileType = typeof Tile & {
     readonly tileName: string;
     readonly tileDescription: string;

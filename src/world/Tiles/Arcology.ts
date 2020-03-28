@@ -7,8 +7,8 @@ import Game from "../../Game.js";
 import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
-import { techRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech, speciesHasPopulation } from "../../predicates/predicates.js";
+import { techRequirement } from "../../predicates/DescribedTileQuery.js";
+import { hasTech, speciesHasPopulation, notQuery } from "../../predicates/predicates.js";
 
 export default class Arcology extends Tile {
 
@@ -29,7 +29,7 @@ export default class Arcology extends Tile {
             [techRequirement(RationalityTech)],
             [
                 hasTech(CognitiveBiasesTech),
-                (game: Game) => !game.hasUnlockedTechnology(AiResearchTech),
+                notQuery(hasTech(AiResearchTech)),
                 speciesHasPopulation(Species.Human, 500),
             ]
         )

@@ -11,9 +11,10 @@ import { constructionProject } from "../../tileProjects/TileProject.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import Monolith from "./Monolith.js";
 import NeuralEmulator from "./NeuralEmulator.js";
-import { roadRequirement, techRequirement, tileWithinDistanceRequirement,
-    nearMonolithRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech, tileExists } from "../../predicates/predicates.js";
+import {
+    roadRequirement, techRequirement, tileWithinDistanceRequirement, nearMonolithRequirement
+} from "../../predicates/DescribedTileQuery.js";
+import { hasTech, tileExists, notQuery } from "../../predicates/predicates.js";
 
 export default class ConstructionVictory extends Tile {
 
@@ -37,7 +38,7 @@ export default class ConstructionVictory extends Tile {
                 nearMonolithRequirement(3),
                 techRequirement(NanoTech)
             ],
-            [hasTech(MonolithSurveyTech), (game: Game) => !tileExists(NanotechFoundry)(game)],
+            [hasTech(MonolithSurveyTech), notQuery(tileExists(NanotechFoundry))],
         ),
 
         constructionProject(NeuralEmulator,
@@ -52,7 +53,7 @@ export default class ConstructionVictory extends Tile {
                 tileWithinDistanceRequirement(Monolith, 2),
                 techRequirement(NeuralUploadingTech)
             ],
-            [hasTech(MonolithSurveyTech), (game: Game) => !tileExists(NeuralEmulator)(game)],
+            [hasTech(MonolithSurveyTech), notQuery(tileExists(NeuralEmulator))],
         ),
     ];
 

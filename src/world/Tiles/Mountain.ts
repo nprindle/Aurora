@@ -8,7 +8,7 @@ import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
 import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
-import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../predicates/DescribedTileQuery.js";
 import MiningFacility from "./MiningFacility.js";
 
 export default class Mountain extends Tile {

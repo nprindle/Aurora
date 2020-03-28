@@ -13,8 +13,9 @@ import Wasteland from "./Wasteland.js";
 import { SurveyTech, AiResearchTech } from "../../techtree/TechTree.js";
 import Species from "../../resources/Species.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
-import { roadRequirement, techRequirement, speciesPopulationRequirement,
-    nearRuinsOrMonolith } from "../../predicates/DescribedTilePredicate.js";
+import {
+    roadRequirement, techRequirement, speciesPopulationRequirement, nearRuinsOrMonolith
+} from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 
 export default class ConstructionLaboratory extends Tile {

@@ -10,7 +10,7 @@ import HumanSeedCore from "./HumanSeedCore.js";
 import { SingularityEngineeringTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
-import { techRequirement, tileWithinDistanceRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, tileWithinDistanceRequirement } from "../../predicates/DescribedTileQuery.js";
 
 export default class HumanMonolith extends Tile {
     protected texture: HTMLImageElement = HumanMonolithTexture;

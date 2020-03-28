@@ -9,8 +9,8 @@ import { MonolithSurveyTech, AlienHistoryTech } from "../../techtree/TechTree.js
 import Game from "../../Game.js";
 import Monolith from "./Monolith.js";
 import { stripIndent } from "../../util/Text.js";
-import { tileWithinDistanceRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { tileWithinDistanceRequirement } from "../../predicates/DescribedTileQuery.js";
+import { hasTech, notQuery } from "../../predicates/predicates.js";
 
 
 export default class XenoLab extends Tile {
@@ -39,7 +39,7 @@ export default class XenoLab extends Tile {
             (position: GridCoordinates, game: Game) => { game.unlockTechnology(MonolithSurveyTech); },
             [new Cost(Resource.AlienKnowledge, 50)],
             [tileWithinDistanceRequirement(Monolith, 5)],
-            [hasTech(AlienHistoryTech), (game: Game) => !game.hasUnlockedTechnology(MonolithSurveyTech)]
+            [hasTech(AlienHistoryTech), notQuery(hasTech(MonolithSurveyTech))]
         )
     ];
 

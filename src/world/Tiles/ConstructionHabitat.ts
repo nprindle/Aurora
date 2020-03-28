@@ -12,7 +12,7 @@ import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import Hydroponics from "./Hydroponics.js";
-import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { techRequirement, roadRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 import RobotHive from "./RobotHive.js";
 

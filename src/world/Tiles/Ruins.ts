@@ -8,7 +8,7 @@ import Recycler from "./Recycler.js";
 import { SurveyTech, XenoarchaeologyTech } from "../../techtree/TechTree.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
-import { roadRequirement, techRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { roadRequirement, techRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 
 export default class Ruins extends Tile {

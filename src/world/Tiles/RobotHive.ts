@@ -7,7 +7,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import Game from "../../Game.js";
-import { availableHousingRequirement } from "../../predicates/DescribedTilePredicate.js";
+import { availableHousingRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
 import { SwarmRoboticsTech } from "../../techtree/TechTree.js";
 
