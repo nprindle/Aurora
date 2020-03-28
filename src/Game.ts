@@ -66,7 +66,7 @@ export default class Game {
     }
 
     hasUnlockedTechnology(tech: Technology): boolean {
-        return this.completedTechs.includes(tech);
+        return this.completedTechs.some(t => t.equals(tech));
     }
 
     unlockTechnology(tech: Technology): void {
@@ -82,7 +82,9 @@ export default class Game {
     getResearchOptions(): Technology[] {
         return ResearchableTechnologies
             .filter(tech => tech.visible)
-            .filter(tech => tech.requiredTechs.every(prerequisite => this.completedTechs.includes(prerequisite)))
+            .filter(tech => tech.requiredTechs.every(prerequisite => {
+                return this.completedTechs.some(t => t.equals(prerequisite));
+            }))
             .filter(tech => !this.hasUnlockedTechnology(tech));
     }
 
