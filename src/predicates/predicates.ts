@@ -6,6 +6,7 @@ import Tile from "../world/Tile";
 import Road from "../world/Tiles/Road";
 import Resource from "../resources/Resource";
 import { impossible } from "../util/Util";
+import { Schema, Schemas as S, ReprOf } from "../serialize/Schema.js";
 
 // a predicate evaluated relative to a specific position in the world
 export type TilePredicate = (game: Game, position: GridCoordinates) => boolean;
@@ -27,6 +28,8 @@ export type WorldQuery =
     | { queryType: "allTilesAreOfType"; tileTypes: (typeof Tile)[]; }
     | { queryType: "hasResource"; resource: Resource; minQuantity: number; }
     ;
+// TODO: derive the above type from the schema
+// export type WorldQuery = DomainOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]>
 
 /**
  * An abstract syntax tree describing possible queries about the game,
@@ -47,6 +50,8 @@ export type TileQuery =
     | { queryType: "or"; query1: TileQuery; query2: TileQuery; }
     | { queryType: "and"; query1: TileQuery; query2: TileQuery; }
     ;
+// TODO: derive the above type from the schema
+// export type TileQuery = DomainOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]>
 
 export function hasTech(technology: Technology): WorldQuery {
     return { queryType: "hasTech", technology };
@@ -163,3 +168,106 @@ export function queryTile(query: TileQuery): TilePredicate {
     }
 }
 
+// TODO: implement these
+const typeofTileSchema: Schema<typeof Tile, any> = 0 as any;
+const technologySchema: Schema<Technology, any> = 0 as any;
+const speciesSchema: Schema<Species, any> = 0 as any;
+const resourceSchema: Schema<Resource, any> = 0 as any;
+
+const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>> = {
+    "hasTech": S.recordOf({
+        queryType: S.literal("hasTech" as const), technology: technologySchema
+    }),
+    "speciesHasPopulation": S.recordOf({
+        queryType: S.literal("speciesHasPopulation" as const), species: speciesSchema, minPopulation: S.aNumber
+    }),
+    "hasTotalPopulation": S.recordOf({
+        queryType: S.literal("hasTotalPopulation" as const), minPopulation: S.aNumber
+    }),
+    "availableHousing": S.recordOf({
+        queryType: S.literal("availableHousing" as const), species: speciesSchema, minAvailableCapacity: S.aNumber
+    }),
+    "tileExists": S.recordOf({
+        queryType: S.literal("tileExists" as const), tileType: typeofTileSchema
+    }),
+    "allTilesAreOfType": S.recordOf({
+        queryType: S.literal("allTilesAreOfType" as const), tileTypes: S.arrayOf(typeofTileSchema)
+    }),
+    "hasResource": S.recordOf({
+        queryType: S.literal("hasResource" as const), resource: resourceSchema, minQuantity: S.aNumber
+    }),
+};
+
+// TODO: implement a combinator to do this automatically
+// TODO: type the representation correctly
+export const worldQuerySchema: Schema<WorldQuery, any> = S.schema({
+    encode: (x: WorldQuery): ReprOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]> => {
+        return worldQuerySchemas[x.queryType].encode(x);
+    },
+    decode: (x: ReprOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]>): WorldQuery => {
+        const t: WorldQuery["queryType"] = x.queryType;
+        return worldQuerySchemas[t].decode(x);
+    },
+    validate: (data: unknown): data is any => {
+        if (typeof data !== "object" || data === null) {
+            return false;
+        }
+        const queryType: WorldQuery["queryType"] = (data as any).queryType;
+        const schema = worldQuerySchemas[queryType] as Schema<WorldQuery, any> | undefined;
+        if (schema) {
+            return schema.validate(data);
+        } else {
+            return false;
+        }
+    },
+});
+
+// Tile queries are possible infinitely recursive, so we must define these
+// with mutual recursion.
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
+// TODO: type the representation correctly
+const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> = {
+    ...worldQuerySchemas,
+    "tileWithinDistance": S.recordOf({
+        queryType: S.literal("tileWithinDistance" as const), tileType: typeofTileSchema, radius: S.aNumber,
+    }),
+    "anyTileWithinDistance": S.recordOf({
+        queryType: S.literal("anyTileWithinDistance" as const), tileTypes: S.arrayOf(typeofTileSchema), radius: S.aNumber,
+    }),
+    "not": S.recordOf({
+        queryType: S.literal("not" as const), query: tileQuerySchema(),
+    }),
+    "or": S.recordOf({
+        queryType: S.literal("or" as const), query1: tileQuerySchema(), query2: tileQuerySchema(),
+    }),
+    "and": S.recordOf({
+        queryType: S.literal("and" as const), query1: tileQuerySchema(), query2: tileQuerySchema(),
+    }),
+};
+
+// TODO: implement a combinator to do this automatically
+// TODO: type the representation correctly
+export function tileQuerySchema(): Schema<TileQuery, any> {
+    return S.schema({
+        encode: (x: TileQuery): ReprOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]> => {
+            return tileQuerySchemas[x.queryType].encode(x);
+        },
+        decode: (x: ReprOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]>): TileQuery => {
+            const t: TileQuery["queryType"] = x.queryType;
+            return tileQuerySchemas[t].decode(x);
+        },
+        validate: (data: unknown): data is any => {
+            if (typeof data !== "object" || data === null) {
+                return false;
+            }
+            const queryType: TileQuery["queryType"] = (data as any).queryType;
+            const schema = tileQuerySchemas[queryType] as Schema<TileQuery, any> | undefined;
+            if (schema) {
+                return schema.validate(data);
+            } else {
+                return false;
+            }
+        },
+    });
+}
