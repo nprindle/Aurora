@@ -95,7 +95,6 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
             QuestActivateMonolith
         )
     ],
-    `Use the "WASD" or arrow keys to move around the map`,
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
@@ -126,6 +125,7 @@ export const QuestXenoLab: QuestStage = new QuestStage(
             QuestExcavate,
         )
     ],
+    `Use the "WASD" or arrow keys to move around the map`,
 );
 
 export const TutorialQuestPopulation: QuestStage = new QuestStage(
