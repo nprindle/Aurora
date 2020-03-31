@@ -43,7 +43,7 @@ export default class ConstructionHabitat extends Tile {
         ),
 
         constructionProject(Habitat,
-            [new Cost(Resource.BuildingMaterials, 100)],
+            [new Cost(Resource.BuildingMaterials, 200)],
             [
                 techRequirement(StructureConstructionTech),
                 roadRequirement,
@@ -52,7 +52,7 @@ export default class ConstructionHabitat extends Tile {
         ),
 
         constructionProject(Arcology,
-            [new Cost(Resource.BuildingMaterials, 250)],
+            [new Cost(Resource.BuildingMaterials, 500)],
             [techRequirement(UrbanPlanningTech), roadRequirement],
             [hasTech(StructureConstructionTech)],
         ),

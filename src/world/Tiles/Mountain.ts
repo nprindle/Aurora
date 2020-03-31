@@ -23,8 +23,8 @@ export default class Mountain extends Tile {
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Mineshaft(position));
             },
-            [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 25)],
-            [techRequirement(StructureConstructionTech), roadRequirement],
+            [new Cost(Resource.Energy, 500), new Cost(Resource.BuildingMaterials, 250)],
+            [techRequirement(StructureConstructionTech), roadRequirement, tileWithinDistanceRequirement(MiningFacility, 5)],
             [],
         ),
 
