@@ -14,9 +14,9 @@ export default class Mineshaft extends Tile {
 
     resourceConversions = [
         new Conversion(
-            [new Cost(Resource.Energy, 50)],
-            [new Cost(Resource.Metal, 100)],
-            50,
+            [new Cost(Resource.Energy, 75)],
+            [new Cost(Resource.Metal, 50)],
+            100,
         ),
     ];
 
