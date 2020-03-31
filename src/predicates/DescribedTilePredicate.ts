@@ -31,7 +31,7 @@ export const roadRequirement = new DescribedTilePredicate("adjacent to a road", 
 
 export function tileWithinDistanceRequirement(tileType: NamedTileType, radius: number): DescribedTilePredicate {
     return new DescribedTilePredicate(
-        radius === 1 ? `adjacent to a ${tileType.tileName}` : `within ${radius} units of a ${tileType.tileName}`,
+        radius === 1 ? `adjacent to a ${tileType.tileName}` : `within ${radius} units of ${tileType.tileName}`,
         tileWithinDistance(tileType, radius),
     );
 }
