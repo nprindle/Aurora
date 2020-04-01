@@ -9,9 +9,8 @@ import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, RobotTech, XenoarchaeologyTech,
+import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
     XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
-import RobotHive from "./RobotHive.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
@@ -41,16 +40,6 @@ export default class ConstructionIndustry extends Tile {
             [new Cost(Resource.Electronics, 200)],
             [],
             [],
-        ),
-
-        constructionProject(RobotHive,
-            [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
-            [
-                techRequirement(StructureConstructionTech),
-                techRequirement(RobotTech),
-                roadRequirement,
-            ],
-            [hasTech(IndustrialEngineeringTech)],
         ),
 
         constructionProject(MiningFacility,

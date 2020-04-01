@@ -6,7 +6,7 @@ import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, RobotTech, } from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
@@ -14,6 +14,7 @@ import { constructionProject } from "../../tileProjects/TileProject.js";
 import Hydroponics from "./Hydroponics.js";
 import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
 import { hasTech } from "../../predicates/predicates.js";
+import RobotHive from "./RobotHive.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -29,6 +30,16 @@ export default class ConstructionHabitat extends Tile {
             (position: GridCoordinates, run: Game) => {
                 run.world.placeTile(new Wasteland(position));
             }, [], [], [],
+        ),
+
+        constructionProject(RobotHive,
+            [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
+            [
+                techRequirement(StructureConstructionTech),
+                techRequirement(RobotTech),
+                roadRequirement,
+            ],
+            [hasTech(IndustrialEngineeringTech)],
         ),
 
         constructionProject(Habitat,
