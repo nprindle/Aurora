@@ -2,7 +2,7 @@ import GridCoordinates from "../world/GridCoordinates";
 import Game from "../Game";
 import {
     hasTech, adjacentToRoad, tileWithinDistance, anyTileWithinDistance, speciesHasPopulation, availableHousing,
-    TileQuery, queryTile, orQuery
+    TileQuery, queryTile, orQuery, tileQuerySchema
 } from "./predicates";
 import Technology from "../techtree/Technology";
 import { NamedTileType } from "../world/Tile";
@@ -11,6 +11,7 @@ import HumanMonolith from "../world/Tiles/HumanMonolith";
 import Species from "../resources/Species";
 import Ruins from "../world/Tiles/Ruins";
 import Recycler from "../world/Tiles/Recycler";
+import { Schemas as S } from "../serialize/Schema.js";
 
 // a requirement for completing a tileproject
 export default class DescribedTileQuery {
@@ -28,6 +29,15 @@ export default class DescribedTileQuery {
     toString(): string {
         return this.description;
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            description: S.aString,
+            query: tileQuerySchema(),
+        }),
+        (x: DescribedTileQuery) => ({ description: x.description, query: x.query }),
+        ({ description, query }) => new DescribedTileQuery(description, query),
+    );
 }
 
 export function techRequirement(technology: Technology): DescribedTileQuery {

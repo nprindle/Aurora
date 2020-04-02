@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
@@ -9,6 +9,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
 import { techRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech, speciesHasPopulation, notQuery } from "../../predicates/predicates.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class Arcology extends Tile {
 
@@ -47,4 +48,15 @@ export default class Arcology extends Tile {
     getTileDescription(): string {
         return Arcology.tileDescription;
     }
+
+    static schema = S.classOf({
+        position: GridCoordinates.schema,
+        populationCapacity: Housing.schema,
+    }, ({ position, populationCapacity }) => {
+        const r = new Arcology(position);
+        r.populationCapacity = populationCapacity;
+        return r;
+    });
 }
+
+tileTypes[Arcology.name] = Arcology;

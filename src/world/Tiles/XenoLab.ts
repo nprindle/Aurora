@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
@@ -11,6 +11,7 @@ import Monolith from "./Monolith.js";
 import { stripIndent } from "../../util/Text.js";
 import { tileWithinDistanceRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech, notQuery } from "../../predicates/predicates.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 
 export default class XenoLab extends Tile {
@@ -21,7 +22,7 @@ export default class XenoLab extends Tile {
     }
 
     resourceConversions = [
-        new Conversion(
+        Conversion.newConversion(
             [],
             [new Cost(Resource.AlienKnowledge, 10)],
             50,
@@ -51,4 +52,15 @@ export default class XenoLab extends Tile {
     getTileDescription(): string {
         return XenoLab.tileDescription;
     }
+
+    static schema = S.classOf({
+        position: GridCoordinates.schema,
+        resourceConversions: S.arrayOf(Conversion.schema),
+    }, ({ position, resourceConversions }) => {
+        const s = new XenoLab(position);
+        s.resourceConversions = resourceConversions;
+        return s;
+    });
 }
+
+tileTypes[XenoLab.name] = XenoLab;
