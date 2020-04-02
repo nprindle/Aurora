@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
@@ -9,6 +9,7 @@ import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../tech
 import { stripIndent } from "../../util/Text.js";
 import { techRequirement } from "../../predicates/DescribedTileQuery.js";
 import { speciesHasPopulation, hasTech, notQuery } from "../../predicates/predicates.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class Habitat extends Tile {
 
@@ -47,4 +48,15 @@ export default class Habitat extends Tile {
     getTileDescription(): string {
         return Habitat.tileDescription;
     }
+
+    static schema = S.classOf({
+        position: GridCoordinates.schema,
+        populationCapacity: Housing.schema
+    }, ({ position, populationCapacity }) => {
+        const h = new Habitat(position);
+        h.populationCapacity = populationCapacity;
+        return h;
+    });
 }
+
+tileTypes[Habitat.name] = Habitat;

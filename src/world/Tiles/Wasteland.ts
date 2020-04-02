@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Game from "../../Game.js";
@@ -16,6 +16,7 @@ import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { hasTech, tileExists, orQuery, notQuery } from "../../predicates/predicates.js";
 import { roadRequirement } from "../../predicates/DescribedTileQuery.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class Wasteland extends Tile {
 
@@ -108,4 +109,15 @@ export default class Wasteland extends Tile {
             return WastelandTexture5;
         }
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            textureVariant: wastelandVariantSchema,
+        }),
+        (w: Wasteland) => ({ position: w.position, textureVariant: w.textureVariant }),
+        ({ position, textureVariant }) => new Wasteland(position, textureVariant),
+    );
 }
+
+tileTypes[Wasteland.name] = Wasteland;

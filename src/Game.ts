@@ -7,12 +7,10 @@ import Technology from "./techtree/Technology.js";
 import { ResearchableTechnologies } from "./techtree/TechTree.js";
 import { Arrays } from "./util/Arrays.js";
 import Ending from "./quests/Ending.js";
+import { Schemas as S } from "./serialize/Schema.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
-    readonly world: World;
-    readonly inventory: Inventory;
-    private questStage: QuestStage;
     private endState: Ending | undefined = undefined;
 
     private prevQuestDescription = "";
@@ -20,10 +18,17 @@ export default class Game {
 
     private completedTechs: Technology[] = [];
 
-    constructor() {
-        this.world = new World();
-        this.inventory = new Inventory(this.world);
-        this.questStage = TutorialQuestUnpackLander;
+    private constructor(
+        readonly world: World,
+        readonly inventory: Inventory,
+        private questStage: QuestStage,
+    ) {}
+
+    static newGame(): Game {
+        const world = World.generateWorld();
+        const inventory = new Inventory(world);
+        const questStage = TutorialQuestUnpackLander;
+        return new Game(world, inventory, questStage);
     }
 
     getCurrentQuestDescription(): string {
@@ -125,4 +130,34 @@ export default class Game {
         }
         conversions[fromIndex].priority = priority;
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            world: World.schema,
+            inventory: Inventory.schema,
+            questStage: QuestStage.schema(),
+            endState: S.optional(Ending.schema),
+            prevQuestDescription: S.aString,
+            questCompletionShown: S.aBoolean,
+            completedTechs: S.arrayOf(Technology.schema()),
+        }),
+        (game: Game) => ({
+            world: game.world,
+            inventory: game.inventory,
+            questStage: game.questStage,
+            endState: game.endState,
+            prevQuestDescription: game.prevQuestDescription,
+            questCompletionShown: game.questCompletionShown,
+            completedTechs: game.completedTechs,
+        }),
+        ({ world, inventory, questStage, endState, prevQuestDescription, questCompletionShown, completedTechs }) => {
+            const game = new Game(world, inventory, questStage);
+            game.endState = endState;
+            game.prevQuestDescription = prevQuestDescription;
+            game.questCompletionShown = questCompletionShown;
+            game.completedTechs = completedTechs;
+            return game;
+        },
+    );
 }
+

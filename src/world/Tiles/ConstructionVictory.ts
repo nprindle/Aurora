@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { XenoEngineeringConstructionTexture } from "../../UI/Images.js";
@@ -15,12 +15,13 @@ import {
     roadRequirement, techRequirement, tileWithinDistanceRequirement, nearMonolithRequirement
 } from "../../predicates/DescribedTileQuery.js";
 import { hasTech, tileExists, notQuery } from "../../predicates/predicates.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionVictory extends Tile {
 
     protected texture: HTMLImageElement = XenoEngineeringConstructionTexture;
 
-    constructor(position: GridCoordinates, private wastelandVariant: 1 | 2 | 3 | 4 | 5) {
+    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
         super(position);
     }
 
@@ -67,4 +68,15 @@ export default class ConstructionVictory extends Tile {
     getTileDescription(): string {
         return ConstructionVictory.tileDescription;
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            wastelandVariant: wastelandVariantSchema,
+        }),
+        (x: ConstructionVictory) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
+        ({ position, wastelandVariant }) => new ConstructionVictory(position, wastelandVariant),
+    );
 }
+
+tileTypes[ConstructionVictory.name] = ConstructionVictory;

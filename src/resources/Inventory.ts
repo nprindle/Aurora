@@ -5,6 +5,7 @@ import Quantities from "../util/Quantities.js";
 import Species from "./Species.js";
 import World from "../world/World.js";
 import { clamp } from "../util/Util.js";
+import { Schemas as S } from "../serialize/Schema.js";
 
 export default class Inventory {
 
@@ -167,4 +168,28 @@ export default class Inventory {
         clone.availableWorkers = this.availableWorkers;
         return clone;
     }
+
+    // TODO: prevent duplication of injected 'World'
+    static schema = S.contra(
+        S.recordOf({
+            resourceQuantities: Quantities.schema(Resource.schema),
+            populationQuantities: Quantities.schema(Species.schema),
+            availableWorkers: S.aNumber,
+            world: World.schema,
+        }),
+        (inv: Inventory) => ({
+            resourceQuantities: inv.resourceQuantities,
+            populationQuantities: inv.populationQuantities,
+            availableWorkers: inv.availableWorkers,
+            world: inv.world,
+        }),
+        ({ resourceQuantities, populationQuantities, availableWorkers, world }) => {
+            const inv = new Inventory(world);
+            inv.resourceQuantities = resourceQuantities;
+            inv.populationQuantities = populationQuantities;
+            inv.availableWorkers = availableWorkers;
+            return inv;
+        }
+    );
+
 }

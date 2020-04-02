@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { RuinsTexture1, RuinsTexture2 } from "../../UI/Images.js";
 import { Random } from "../../util/Random.js";
@@ -10,6 +10,7 @@ import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { roadRequirement, techRequirement } from "../../predicates/DescribedTileQuery.js";
 import { hasTech } from "../../predicates/predicates.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class Ruins extends Tile {
 
@@ -47,4 +48,20 @@ export default class Ruins extends Tile {
             return RuinsTexture2;
         }
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            textureVariant: S.union(S.literal(1 as const), S.literal(2 as const)),
+        }), (ruins: Ruins) => ({
+            position: ruins.position,
+            textureVariant: ruins.textureVariant
+        }), ({ position, textureVariant }) => {
+            const r = new Ruins(position);
+            r.textureVariant = textureVariant;
+            return r;
+        }
+    );
 }
+
+tileTypes[Ruins.name] = Ruins;
