@@ -139,7 +139,7 @@ export default class Quote {
         new Quote(
             stripIndent`
             Some early interstellar colonial projects, such as the Mayflower Expedition, the Holy
-            Burderhof Kingdom, and New Rojava claimed to be returning to various "traditional" past
+            Bruderhof Kingdom, and New Rojava claimed to be returning to various "traditional" past
             ways of life, but many interstellar travellers were motivated by new, unproven ideologies.
 
 
@@ -187,6 +187,43 @@ export default class Quote {
             `,
             "Quartermaster Allison Li, Aurora Expedition, T-minus-3 days to planetfall",
         ),
+        new Quote(
+            stripIndent`
+            Our species is much safer than when our ancestors lived on only one planet. If we had been unlucky, all of humanity
+            could have been killed by one rogue asteroid, supervolcano, or gamma ray burst before ever reaching the stars. If a
+            planetary-scale disaster happened today it would be a tragedy, but humanity would still live on across dozens of major
+            populated worlds and hundreds of minor planets and stations.
+
+
+            Despite the safety benefits of an interstellar civilization, there are still existential risks. For example, a self-upgrading
+            general artificial intelligence would not be confined to one planet or star system. We should also be concerned about
+            militarized nanotechnology and biotechnology, as well as more speculative threats such as memetic weapons.
+            `,
+            "Journal of the Moretrue Institute for Effective Policy",
+        ),
+        new Quote(
+            stripIndent`
+            New Plymouth's Hall of the Founders was the first building of its size to be produced through structural flash-printing.
+            It was built by the Mayflower colonists as a short-term shelter, but they soon found that its high-density
+            construction would make demolishing the "temporary" structure prohibitively expensive. The dome still stands today,
+            serving as a museum and national monument. Despite the difficulty of demolishing or even renovating flash-printed
+            buildings once the ferrofoam has solidified, the speed and labor-saving make them an indispensible asset in the first
+            few years after planetfall.
+            `,
+            "Introduction to Frontier Engineering by Robin North",
+        ),
+        new Quote(
+            stripIndent`
+            The latest trend in computer automation is Neuromorphic Heuristic Intelligences, which are based on rough simulations
+            of the cognitive machinery of the human brain. NHIs are not qualitatively more intelligent than humans, which is why
+            the Colonial Alliance does not consider them to be prohibited under the San Jose Accords. However, they are quantitatively
+            more intelligent than humans, able to think faster and manage a large number of tasks while remaining completely focused
+            on their programmed objectives. Many experts believe that this is sufficient reason to restrict the use of this technology.
+            `,
+            "Dr. Alex Scott, Moretrue Institute for Effective Policy",
+        ),
+
+
     ];
 
     static getRandomQuote(): Quote {
