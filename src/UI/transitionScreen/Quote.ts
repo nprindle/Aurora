@@ -79,6 +79,13 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
+            We had this whole big beautiful place for discovery, and all we could think to do
+            with it was wipe out everything that made it worth discovering.
+            `,
+            "Buzz Aldrin"
+        ),
+        new Quote(
+            stripIndent`
                 The planets designated Thesan, Eos, Austra, and Aurora are
                 each at least 200 light-years from the nearest inhabited star
                 system. Until now all colonies in the Stellar Alliance have
@@ -89,6 +96,15 @@ export default class Quote {
                 programmed to ensure that its mission is completed.
             `,
             "Dawn Program mission proposal, published 10942214400 SPE"
+        ),
+        new Quote(
+            stripIndent`
+                The Colonial Alliance Research Agency has been enthusiastic about adopting Neuromorphic Heuristic Intelligences.
+                These cutting-edge AI brains have assisted in many important scientific and exploratory projects, but where they
+                most excel is in administrative roles. An Overseer AI can monitor and direct a project's data, materials, and
+                human resources with laser-like focus towards completing its programmed objectives.
+            `,
+            `Isaac Calvin, CEO of CabiAI`
         ),
         new Quote(
             stripIndent`
@@ -221,6 +237,13 @@ export default class Quote {
             on their programmed objectives. Many experts believe that this is sufficient reason to restrict the use of this technology.
             `,
             "Dr. Alex Scott, Moretrue Institute for Effective Policy",
+        ),
+        new Quote(
+            stripIndent`
+            Kids who grew up after the terraforming don't realize how lucky they are. I remember when you couldn't take a step outside
+            Shackleton Base without a pressure suit. Every cubic meter of breathable air was a miracle.
+            `,
+            "An Oral History of The Lunar Republics"
         ),
 
 
