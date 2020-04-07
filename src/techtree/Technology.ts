@@ -1,7 +1,8 @@
 import Cost from "../resources/Cost.js";
-import { ResearchableTechnologies } from "./TechTree.js";
 import Resource from "../resources/Resource.js";
 import { Schema, Schemas as S, LazySchemas as LS } from "../serialize/Schema.js";
+
+export const ResearchableTechnologies: Technology[] = [];
 
 export default class Technology {
     private constructor(
