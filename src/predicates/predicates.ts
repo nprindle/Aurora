@@ -2,7 +2,7 @@ import Game from "../Game";
 import GridCoordinates from "../world/GridCoordinates";
 import Technology from "../techtree/Technology";
 import Species from "../resources/Species";
-import Tile from "../world/Tile";
+import Tile, { typeofTileSchema } from "../world/Tile";
 import Road from "../world/Tiles/Road";
 import Resource from "../resources/Resource";
 import { impossible } from "../util/Util";
@@ -28,8 +28,6 @@ export type WorldQuery =
     | { queryType: "allTilesAreOfType"; tileTypes: (typeof Tile)[]; }
     | { queryType: "hasResource"; resource: Resource; minQuantity: number; }
     ;
-// TODO: derive the above type from the schema
-// export type WorldQuery = DomainOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]>
 
 /**
  * An abstract syntax tree describing possible queries about the game,
@@ -50,8 +48,6 @@ export type TileQuery =
     | { queryType: "or"; query1: TileQuery; query2: TileQuery; }
     | { queryType: "and"; query1: TileQuery; query2: TileQuery; }
     ;
-// TODO: derive the above type from the schema
-// export type TileQuery = DomainOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]>
 
 export function hasTech(technology: Technology): WorldQuery {
     return { queryType: "hasTech", technology };
@@ -168,24 +164,18 @@ export function queryTile(query: TileQuery): TilePredicate {
     }
 }
 
-// TODO: implement these
-const typeofTileSchema: Schema<typeof Tile, any> = 0 as any;
-const technologySchema: Schema<Technology, any> = 0 as any;
-const speciesSchema: Schema<Species, any> = 0 as any;
-const resourceSchema: Schema<Resource, any> = 0 as any;
-
 const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>> = {
     "hasTech": S.recordOf({
-        queryType: S.literal("hasTech" as const), technology: technologySchema
+        queryType: S.literal("hasTech" as const), technology: Technology.schema()
     }),
     "speciesHasPopulation": S.recordOf({
-        queryType: S.literal("speciesHasPopulation" as const), species: speciesSchema, minPopulation: S.aNumber
+        queryType: S.literal("speciesHasPopulation" as const), species: Species.schema, minPopulation: S.aNumber
     }),
     "hasTotalPopulation": S.recordOf({
         queryType: S.literal("hasTotalPopulation" as const), minPopulation: S.aNumber
     }),
     "availableHousing": S.recordOf({
-        queryType: S.literal("availableHousing" as const), species: speciesSchema, minAvailableCapacity: S.aNumber
+        queryType: S.literal("availableHousing" as const), species: Species.schema, minAvailableCapacity: S.aNumber
     }),
     "tileExists": S.recordOf({
         queryType: S.literal("tileExists" as const), tileType: typeofTileSchema
@@ -194,12 +184,11 @@ const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>
         queryType: S.literal("allTilesAreOfType" as const), tileTypes: S.arrayOf(typeofTileSchema)
     }),
     "hasResource": S.recordOf({
-        queryType: S.literal("hasResource" as const), resource: resourceSchema, minQuantity: S.aNumber
+        queryType: S.literal("hasResource" as const), resource: Resource.schema, minQuantity: S.aNumber
     }),
 };
 
 // TODO: implement a combinator to do this automatically
-// TODO: type the representation correctly
 export const worldQuerySchema: Schema<WorldQuery, any> = S.schema({
     encode: (x: WorldQuery): ReprOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]> => {
         return worldQuerySchemas[x.queryType].encode(x);
@@ -226,7 +215,6 @@ export const worldQuerySchema: Schema<WorldQuery, any> = S.schema({
 // with mutual recursion.
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
-// TODO: type the representation correctly
 const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> = {
     ...worldQuerySchemas,
     "tileWithinDistance": S.recordOf({
@@ -247,7 +235,6 @@ const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> =
 };
 
 // TODO: implement a combinator to do this automatically
-// TODO: type the representation correctly
 export function tileQuerySchema(): Schema<TileQuery, any> {
     return S.schema({
         encode: (x: TileQuery): ReprOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]> => {
