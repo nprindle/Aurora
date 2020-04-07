@@ -9,8 +9,8 @@ import { MonolithSurveyTech, AlienHistoryTech } from "../../techtree/TechTree.js
 import Game from "../../Game.js";
 import Monolith from "./Monolith.js";
 import { stripIndent } from "../../util/Text.js";
-import { tileWithinDistanceRequirement } from "../../predicates/DescribedTileQuery.js";
-import { hasTech, notQuery } from "../../predicates/predicates.js";
+import { tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
 

@@ -19,7 +19,7 @@ import AlienCircuits from "../world/Tiles/AlienCircuits.js";
 import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
 import HumanCircuits from "../world/Tiles/HumanCircuits.js";
 import { stripIndent } from "../util/Text.js";
-import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation } from "../predicates/predicates.js";
+import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation } from "../queries/Queries.js";
 
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`

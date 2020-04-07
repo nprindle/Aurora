@@ -8,7 +8,7 @@ import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../UI/Images.js";
 import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
-import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../predicates/DescribedTileQuery.js";
+import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import MiningFacility from "./MiningFacility.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 

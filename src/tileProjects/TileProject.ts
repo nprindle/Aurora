@@ -4,8 +4,8 @@ import Cost from "../resources/Cost";
 import { NamedTileType } from "../world/Tile";
 import { GameWindow } from "../UI/GameWindow";
 import EndingWorldScreen from "../UI/endingWorldScreen/EndingWorldScreen";
-import DescribedTileQuery from "../predicates/DescribedTileQuery";
-import { TileQuery, queryTile } from "../predicates/predicates";
+import DescribedTileQuery from "../queries/DescribedTileQuery";
+import { TileQuery, queryTile } from "../queries/Queries.js";
 
 /* A project that can be performed by on tile
  * e.g., turning a wasteland tile into a habitat, or researching a technology
