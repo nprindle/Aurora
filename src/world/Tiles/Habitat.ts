@@ -7,8 +7,8 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Game from "../../Game.js";
 import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
 import { stripIndent } from "../../util/Text.js";
-import { techRequirement } from "../../predicates/DescribedTileQuery.js";
-import { speciesHasPopulation, hasTech, notQuery } from "../../predicates/predicates.js";
+import { techRequirement } from "../../queries/DescribedTileQuery.js";
+import { speciesHasPopulation, hasTech, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class Habitat extends Tile {

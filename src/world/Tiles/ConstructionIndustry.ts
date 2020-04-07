@@ -17,8 +17,8 @@ import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
-import { techRequirement, roadRequirement } from "../../predicates/DescribedTileQuery.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionIndustry extends Tile {

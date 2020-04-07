@@ -3,7 +3,7 @@ import Game from "../Game";
 import {
     hasTech, adjacentToRoad, tileWithinDistance, anyTileWithinDistance, speciesHasPopulation, availableHousing,
     TileQuery, queryTile, orQuery, tileQuerySchema
-} from "./predicates";
+} from "./Queries.js";
 import Technology from "../techtree/Technology";
 import { NamedTileType } from "../world/Tile";
 import Monolith from "../world/Tiles/Monolith";

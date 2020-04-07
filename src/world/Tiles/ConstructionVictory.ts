@@ -13,8 +13,8 @@ import Monolith from "./Monolith.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import {
     roadRequirement, techRequirement, tileWithinDistanceRequirement, nearMonolithRequirement
-} from "../../predicates/DescribedTileQuery.js";
-import { hasTech, tileExists, notQuery } from "../../predicates/predicates.js";
+} from "../../queries/DescribedTileQuery.js";
+import { hasTech, tileExists, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionVictory extends Tile {

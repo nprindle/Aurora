@@ -1,6 +1,6 @@
 import Game from "../Game.js";
 import Ending from "./Ending.js";
-import { WorldQuery, queryWorld, worldQuerySchema } from "../predicates/predicates.js";
+import { WorldQuery, queryWorld, worldQuerySchema } from "../queries/Queries.js";
 import { Schema, Schemas as S, LazySchemas as LS } from "../serialize/Schema.js";
 
 // These are mutually recursive classes, so the serialization them to refer to

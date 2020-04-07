@@ -15,8 +15,8 @@ import Species from "../../resources/Species.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import {
     roadRequirement, techRequirement, speciesPopulationRequirement, nearRuinsOrMonolith
-} from "../../predicates/DescribedTileQuery.js";
-import { hasTech } from "../../predicates/predicates.js";
+} from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionLaboratory extends Tile {

@@ -7,8 +7,8 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import Game from "../../Game.js";
-import { availableHousingRequirement } from "../../predicates/DescribedTileQuery.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { availableHousingRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
 import { SwarmRoboticsTech } from "../../techtree/TechTree.js";
 import { Schemas as S } from "../../serialize/Schema.js";
 
