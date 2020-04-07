@@ -41,6 +41,23 @@ export default class Conversion {
         }
     }
 
+    /**
+     * Do not use this function. This exists purely for serialization of the
+     * game state. Depending on this value will lead to bad conversion behavior.
+     */
+    static unsafeGetNextPriority(): number {
+        return Conversion.nextNumber;
+    }
+
+    /**
+     * Do not use this function. This exists purely for deserialization of the
+     * game state, and setting this at runtime will lead to bad conversion
+     * behavior.
+     */
+    static unsafeSetNextPriority(priority: number): void {
+        Conversion.nextNumber = priority;
+    }
+
     static schema = S.classOf({
         priority: S.aNumber,
         enabled: S.aBoolean,
