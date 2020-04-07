@@ -14,10 +14,13 @@
  * 'Schema<Person, { name: string; age: number; }' to handle this for us.
  */
 export interface Schema<T, S> {
-    encode(src: T): S;
+    encode(val: T): S;
     decode(data: S): T;
     validate(data: unknown): data is S;
 }
+
+// The possible types of the keys of an object
+type PrimKey = string | number | symbol;
 
 /**
  * Extract the domain type from the type of a schema.
@@ -57,7 +60,7 @@ type RecordReprs<R extends Record<string, Schema<unknown, unknown>> | Schema<unk
 
 // Function to use when the compiler needs a path to be present, even when it's
 // technically unreachable
-function impossible(): never {
+function impossible(x: never): never {
     throw Error("This code should be unreachable");
 }
 
@@ -73,7 +76,7 @@ export namespace Schemas {
      * declarative.
      */
     export function schema<T, S>(args: {
-        encode: (src: T) => S;
+        encode: (val: T) => S;
         decode: (data: S) => T;
         validate: (data: unknown) => data is S;
     }): Schema<T, S> {
@@ -93,6 +96,59 @@ export namespace Schemas {
      */
     export function literal<T>(value: T): Schema<T, T> {
         return { encode: id, decode: id, validate: (x: unknown): x is T => x === value };
+    }
+
+    /**
+     * Transform a schema in the contravariant position to serialization; given
+     * a way to encode and decode from a new domain type to the old domain type,
+     * produce a new schema that has the new domain type.
+     */
+    export function contra<U, T, S>(
+        schema: Schema<T, S>,
+        encode: (val: U) => T,
+        decode: (data: T) => U,
+    ): Schema<U, S> {
+        return {
+            encode: (x: U): S => schema.encode(encode(x)),
+            decode: (x: S): U => decode(schema.decode(x)),
+            validate: (data: unknown): data is S => schema.validate(data),
+        };
+    }
+
+    /**
+     * Transform a schema in the covariant position to serialization; given a
+     * way to encode and decode from a new representation type to the old
+     * representation type, and a new validator, produce a new schema that has
+     * the new representation type.
+     */
+    export function co<T, S, U>(
+        schema: Schema<T, S>,
+        encode: (val: S) => U,
+        decode: (data: U) => S,
+        validate: (data: unknown) => data is U,
+    ): Schema<T, U> {
+        return {
+            encode: (x: T): U => encode(schema.encode(x)),
+            decode: (x: U): T => schema.decode(decode(x)),
+            validate
+        };
+    }
+
+    /**
+     * Pushes the evaluation of a schema into its individual functions, for use
+     * with recursive structures. Note that if the 'schema' computation is very
+     * expensive, this may be inefficient for aggregate schemas, such as
+     * 'arrayOf'; in this case, use the lazy aggregate schemas provided in
+     * 'LazySchemas' to prevent recomputation. However, if it's simple being
+     * used as 'lazy(() => s)' to define a recursive structure, there is not
+     * much of a difference.
+     */
+    export function lazy<T, S>(schema: () => Schema<T, S>): Schema<T, S> {
+        return {
+            encode: (val: T): S => schema().encode(val),
+            decode: (data: S): T => schema().decode(data),
+            validate: (data: unknown): data is S => schema().validate(data),
+        };
     }
 
     /**
@@ -134,6 +190,124 @@ export namespace Schemas {
     export const anUndefined: Schema<undefined, undefined> = primitive((data: unknown): data is undefined => {
         return typeof data === "undefined";
     });
+
+    /**
+     * Construct a schema for arrays, given a schema for their elements.
+     */
+    export function arrayOf<T, S>(elementsSchema: Schema<T, S>): Schema<T[], S[]> {
+        return {
+            encode: (arr: T[]) => arr.map(x => elementsSchema.encode(x)),
+            decode: (arr: S[]) => arr.map(x => elementsSchema.decode(x)),
+            validate: (data: unknown): data is S[] => {
+                if (!Array.isArray(data)) {
+                    return false;
+                }
+                return data.every(x => elementsSchema.validate(x));
+            },
+        };
+    }
+
+    export function nonEmptyArrayOf<T, S>(elementsSchema: Schema<T, S>): Schema<NonEmptyArray<T>, NonEmptyArray<S>> {
+        const { encode, decode, validate } = arrayOf(elementsSchema);
+        return {
+            encode: encode as (value: NonEmptyArray<T>) => NonEmptyArray<S>,
+            decode: decode as (data: NonEmptyArray<S>) => NonEmptyArray<T>,
+            validate: (data: unknown): data is NonEmptyArray<S> => {
+                return Array.isArray(data) && data.length >= 1 && validate(data);
+            },
+        };
+    }
+
+    export function tupleOf<
+        // The structure of the serialized tuple
+        R extends Schema<unknown, unknown>[],
+    >(...elementSchemas: R): Schema<RecordDomains<R>, RecordReprs<R>> {
+        return {
+            encode: (tup: RecordDomains<R>) => {
+                return tup.map((x, i) => elementSchemas[i].encode(x)) as RecordReprs<R>;
+            },
+            decode: (tup: RecordReprs<R>) => {
+                return tup.map((x, i) => elementSchemas[i].decode(x)) as RecordDomains<R>;
+            },
+            validate: (data: unknown): data is RecordReprs<R> => {
+                if (!Array.isArray(data) || data.length !== elementSchemas.length) {
+                    return false;
+                }
+                return elementSchemas.every((schema, i) => schema.validate(data[i]));
+            }
+        };
+    }
+
+    /**
+     * Trivial serializer for empty array/tuple, the identity under tuple/array
+     * concatenation.
+     */
+    export const anEmptyArray: Schema<[], []> = tupleOf();
+
+    /**
+     * Serializes a raw object by serializing its keys.
+     */
+    export function object<V, R>(values: Schema<V, R>): Schema<Record<PrimKey, V>, Record<PrimKey, R>> {
+        return {
+            encode: (val: Record<PrimKey, V>): Record<PrimKey, R> => {
+                const acc: Record<PrimKey, R> = {};
+                for (const k in val) {
+                    acc[k] = values.encode(val[k]);
+                }
+                return acc;
+            },
+            decode: (data: Record<PrimKey, R>): Record<PrimKey, V> => {
+                const acc: Record<PrimKey, V> = {};
+                for (const k in data) {
+                    acc[k] = values.decode(data[k]);
+                }
+                return acc;
+            },
+            validate: (data: unknown): data is Record<PrimKey, R> => {
+                if (typeof data !== "object" || data === null) {
+                    return false;
+                }
+                const obj = data as Record<PrimKey, unknown>;
+                for (const k in obj) {
+                    if (!values.validate(obj[k])) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+        };
+    }
+
+    /**
+     * Serializes an ES6 'Map'. We unfortunately cannot serialize it as an
+     * object, since a 'Map' is strictly more flexible; for example, `0` and
+     * `"0"` are considered different keys in a 'Map', but the same key in an
+     * object.
+     *
+     * When deserializing, if the same key is present multiple times, the last
+     * occurrence's value will be kept.
+     */
+    export function map<K, V, KR, VR>(keys: Schema<K, KR>, values: Schema<V, VR>): Schema<Map<K, V>, [KR, VR][]> {
+        return {
+            encode: (val: Map<K, V>): [KR, VR][] => {
+                const acc: [KR, VR][] = [];
+                for (const entry of val.entries()) {
+                    acc.push([keys.encode(entry[0]), values.encode(entry[1])]);
+                }
+                return acc;
+            },
+            decode: (data: [KR, VR][]): Map<K, V> => {
+                const acc: Map<K, V> = new Map();
+                for (const entry of data) {
+                    acc.set(keys.decode(entry[0]), values.decode(entry[1]));
+                }
+                return acc;
+            },
+            validate: (data: unknown): data is [KR, VR][] => {
+                return tupleOf(keys, values).validate(data);
+            },
+        };
+    }
 
     /**
      * Construct a schema for a given record type, given the structure of the
@@ -221,66 +395,8 @@ export namespace Schemas {
         R extends Record<string, Schema<unknown, unknown>>,
         T extends RecordDomains<R>
     >(structure: R, reconstruct: (data: RecordDomains<R>) => T): Schema<T, RecordReprs<R>> {
-        const { encode, decode, validate } = recordOf<R>(structure);
-        return {
-            encode,
-            decode: x => reconstruct(decode(x)),
-            validate,
-        };
+        return contra(recordOf(structure), id, reconstruct);
     }
-
-    /**
-     * Construct a schema for arrays, given a schema for their elements.
-     */
-    export function arrayOf<T, S>(elementsSchema: Schema<T, S>): Schema<T[], S[]> {
-        return {
-            encode: (arr: T[]) => arr.map(x => elementsSchema.encode(x)),
-            decode: (arr: S[]) => arr.map(x => elementsSchema.decode(x)),
-            validate: (data: unknown): data is S[] => {
-                if (!Array.isArray(data)) {
-                    return false;
-                }
-                return data.every(x => elementsSchema.validate(x));
-            },
-        };
-    }
-
-    export function nonEmptyArrayOf<T, S>(elementsSchema: Schema<T, S>): Schema<NonEmptyArray<T>, NonEmptyArray<S>> {
-        const { encode, decode, validate } = arrayOf(elementsSchema);
-        return {
-            encode: encode as (value: NonEmptyArray<T>) => NonEmptyArray<S>,
-            decode: decode as (data: NonEmptyArray<S>) => NonEmptyArray<T>,
-            validate: (data: unknown): data is NonEmptyArray<S> => {
-                return Array.isArray(data) && data.length >= 1 && validate(data);
-            },
-        };
-    }
-
-    export function tupleOf<
-        // The structure of the serialized tuple
-        R extends Schema<unknown, unknown>[],
-    >(...elementSchemas: R): Schema<RecordDomains<R>, RecordReprs<R>> {
-        return {
-            encode: (tup: RecordDomains<R>) => {
-                return tup.map((x, i) => elementSchemas[i].encode(x)) as RecordReprs<R>;
-            },
-            decode: (tup: RecordReprs<R>) => {
-                return tup.map((x, i) => elementSchemas[i].decode(x)) as RecordDomains<R>;
-            },
-            validate: (data: unknown): data is RecordReprs<R> => {
-                if (!Array.isArray(data) || data.length !== elementSchemas.length) {
-                    return false;
-                }
-                return elementSchemas.every((schema, i) => schema.validate(data[i]));
-            }
-        };
-    }
-
-    /**
-     * Trivial serializer for empty array/tuple, the identity under tuple/array
-     * concatenation.
-     */
-    export const anEmptyArray: Schema<[], []> = tupleOf();
 
     /**
      * Construct a schema for a type union, given schemas of either type.
@@ -303,16 +419,16 @@ export namespace Schemas {
                 } else if (isRight(x)) {
                     return right.encode(x);
                 } else {
-                    return impossible();
+                    return impossible(x);
                 }
             },
-            decode: (json: SL | SR) => {
-                if (left.validate(json)) {
-                    return left.decode(json);
-                } else if (right.validate(json)) {
-                    return right.decode(json);
+            decode: (data: SL | SR) => {
+                if (left.validate(data)) {
+                    return left.decode(data);
+                } else if (right.validate(data)) {
+                    return right.decode(data);
                 } else {
-                    return impossible();
+                    return impossible(data);
                 }
             },
             validate: (data: unknown): data is SL | SR => {
@@ -377,6 +493,17 @@ export namespace Schemas {
     }
 
     /**
+     * Like 'constrain', but uses a type predicate to narrow the
+     * representational type. For example, this can be used to narrow the
+     * representational type of a string schema that is more specifically a set
+     * of keys of another type, by 'in' to make a type predicate.
+     */
+    export function asserting<T, R, S extends R>(schema: Schema<T, R>, predicate: (x: R) => x is S): Schema<T, S> {
+        // We can decay type predicates to boolean constraints
+        return constrain(schema, predicate) as Schema<T, S>;
+    }
+
+    /**
      * Restrict a string schema to only strings matching a regular expression.
      * The match is conducted via 'RegExp.prototype.test'. To ensure that the
      * entire string matches the regex, use <code>/^regex$/</code>.
@@ -386,34 +513,126 @@ export namespace Schemas {
     }
 
     /**
-     * Transform a schema in the contravariant position to serialization; given
-     * a way to encode and decode from a new domain type to the old domain type,
-     * produce a new schema that has the new domain type.
+     * Construct a schema that serializes a value by its index in an array of
+     * possible values. This is a somewhat unsafe combinator, since any
+     * unrecognized value will throw an error. Furthermore, serialization
+     * requires an O(n) lookup via an 'indexOf', which is not performance
+     * optimal. This is also brittle, since changing the order of array elements
+     * can break the deserialization if your data is persistent. Only use this
+     * when you know what you're doing.
      */
-    export function contra<U, T, S>(schema: Schema<T, S>, encode: (src: U) => T, decode: (data: T) => U): Schema<U, S> {
+    export function indexing<T>(values: T[]): Schema<T, number> {
+        return contra(
+            constrain(aNumber, x => x >= 0 && x < values.length),
+            (x: T): number => {
+                const ix = values.indexOf(x);
+                if (ix < 0) {
+                    throw new Error(`Serialization error: attempted to serialize ${x} by index in ${values}`);
+                }
+                return ix;
+            },
+            (x: number): T => values[x],
+        );
+    }
+
+    // TODO: restrict the keys to a 'K extends string' set; figure out a good
+    // way to do a 'K extends S => Schema<S, S> -> Schema<K, K>', since
+    // 'asserting' can only map the representational type
+    /**
+     * Like 'indexing', except use an object mapping string values instead of an
+     * array with indices. All of the same restrictions and warnings apply.
+     */
+    export function mapping<T>(values: Record<string, T>): Schema<T, string> {
+        return contra(
+            constrain(aString, s => s in values),
+            (val: T): string => {
+                for (const k in values) {
+                    if (values[k] === val) {
+                        return k;
+                    }
+                }
+                throw new Error(`Serialization error: attempted to serialize ${val} by key in ${values}`);
+            },
+            (key: string): T => values[key],
+        );
+    }
+
+}
+
+// Ugly helper types for object- or tuple-based schemas
+// Replace the schemas in an object/array with the domains of the schemas
+type RecordDomainsLazy<R extends Record<string, () => Schema<unknown, unknown>>> = {
+    [K in keyof R]: ReturnType<R[K]> extends Schema<infer A, unknown> ? A : never;
+};
+// Replace the schemas in an object/array with the representations of the schemas
+type RecordReprsLazy<R extends Record<string, () => Schema<unknown, unknown>>> = {
+    [K in keyof R]: ReturnType<R[K]> extends Schema<unknown, infer B> ? B : never;
+};
+
+export namespace LazySchemas {
+    /**
+     * Like 'recordOf', but lazy in its schema values for recursive types.
+     */
+    export function recordOf<
+        // The structure of the record
+        R extends Record<string, () => Schema<unknown, unknown>>,
+    >(structure: R): Schema<RecordDomainsLazy<R>, RecordReprsLazy<R>> {
         return {
-            encode: (x: U): S => schema.encode(encode(x)),
-            decode: (x: S): U => decode(schema.decode(x)),
-            validate: (data: unknown): data is S => schema.validate(data),
+            encode: (x: RecordDomainsLazy<R>) => {
+                const obj: Partial<RecordReprsLazy<R>> = {};
+                for (const key in structure) {
+                    obj[key] = structure[key]().encode(x[key]) as ReprOf<ReturnType<R[keyof R]>>;
+                }
+                return obj as RecordReprsLazy<R>;
+            },
+            decode: (obj: RecordReprsLazy<R>) => {
+                const res: Partial<RecordDomainsLazy<R>> = {};
+                for (const key in structure) {
+                    res[key] = structure[key]().decode(obj[key]) as DomainOf<ReturnType<R[keyof R]>>;
+                }
+                return res as RecordDomainsLazy<R>;
+            },
+            validate: (data: unknown): data is RecordReprsLazy<R> => {
+                if (typeof data !== "object" || data === null) {
+                    return false;
+                }
+                // Assume that data can be properly indexed, though we don't
+                // know if the keys exist, or what type the values are. The
+                // validator will handle 'undefined' keys. The 'Partial' here is
+                // technically redundant, as the 'unknown' already handles the
+                // 'undefined' case.
+                const obj = data as Partial<Record<keyof R, unknown>>;
+                for (const key in structure) {
+                    const validator = structure[key]();
+                    if (!validator.validate(obj[key])) {
+                        return false;
+                    }
+                }
+                return true;
+            },
         };
     }
 
     /**
-     * Transform a schema in the covariant position to serialization; given a
-     * way to encode and decode from a new representation type to the old
-     * representation type, and a new validator, produce a new schema that has
-     * the new representation type.
+     * Like 'arrayOf', but allows for a lazy schema for recursive types.
      */
-    export function co<T, S, U>(
-        schema: Schema<T, S>,
-        encode: (src: S) => U,
-        decode: (data: U) => S,
-        validate: (data: unknown) => data is U,
-    ): Schema<T, U> {
+    export function arrayOf<T, S>(elementsSchema: () => Schema<T, S>): Schema<T[], S[]> {
         return {
-            encode: (x: T): U => encode(schema.encode(x)),
-            decode: (x: U): T => schema.decode(decode(x)),
-            validate
+            encode: (arr: T[]) => {
+                const schema = elementsSchema();
+                return arr.map(x => schema.encode(x));
+            },
+            decode: (arr: S[]) => {
+                const schema = elementsSchema();
+                return arr.map(x => schema.decode(x));
+            },
+            validate: (data: unknown): data is S[] => {
+                const schema = elementsSchema();
+                if (!Array.isArray(data)) {
+                    return false;
+                }
+                return data.every(x => schema.validate(x));
+            },
         };
     }
 }
