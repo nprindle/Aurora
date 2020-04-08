@@ -16,14 +16,19 @@ export default class TransitionScreen implements Page {
     private doneLoading: boolean = false;
 
     constructor(
-        private run: Game
+        private run: Game,
+        private quoteIndex?: number,
     ) {
         this.html = UI.makeDiv();
         this.loadingBar = UI.makeDiv(["transition-loading-bar"]);
         this.loadingArea = UI.makeDivContaining([
             this.loadingBar
         ], ["transition-loading-area"]);
-        this.quote = Quote.getRandomQuote();
+        if (quoteIndex) {
+            this.quote = Quote.getQuote(quoteIndex);
+        } else {
+            this.quote = Quote.getRandomQuote();
+        }
 
         // Add in leading quote after leading whitespace
         const quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
