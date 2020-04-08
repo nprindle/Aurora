@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
@@ -7,9 +7,10 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import Game from "../../Game.js";
-import { availableHousingRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { availableHousingRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
 import { SwarmRoboticsTech } from "../../techtree/TechTree.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class RobotHive extends Tile {
 
@@ -51,4 +52,15 @@ export default class RobotHive extends Tile {
     getTileDescription(): string {
         return RobotHive.tileDescription;
     }
+
+    static schema = S.classOf({
+        position: GridCoordinates.schema,
+        populationCapacity: Housing.schema,
+    }, ({ position, populationCapacity }) => {
+        const r = new RobotHive(position);
+        r.populationCapacity = populationCapacity;
+        return r;
+    });
 }
+
+tileTypes[RobotHive.name] = RobotHive;

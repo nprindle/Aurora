@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { IndustryConstructionTexture, } from "../../UI/Images.js";
@@ -9,25 +9,25 @@ import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import { StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
-    XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
+import {
+    StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech
+} from "../../techtree/TechTree.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
-import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionIndustry extends Tile {
 
     protected texture: HTMLImageElement = IndustryConstructionTexture;
 
-    constructor(position: GridCoordinates, private wastelandVariant: 1 | 2 | 3 | 4 | 5) {
+    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
         super(position);
     }
-
-
 
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
@@ -87,4 +87,15 @@ export default class ConstructionIndustry extends Tile {
     getTileDescription(): string {
         return ConstructionIndustry.tileDescription;
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            wastelandVariant: wastelandVariantSchema,
+        }),
+        (x: ConstructionIndustry) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
+        ({ position, wastelandVariant }) => new ConstructionIndustry(position, wastelandVariant),
+    );
 }
+
+tileTypes[ConstructionIndustry.name] = ConstructionIndustry;

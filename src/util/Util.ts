@@ -12,6 +12,6 @@ export function mod(a: number, b: number): number {
     return a - (b * Math.floor(a / b));
 }
 
-export function impossible(): never {
+export function impossible(x: never): never {
     throw new Error("unreachable");
 }
