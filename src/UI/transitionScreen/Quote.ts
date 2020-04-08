@@ -69,16 +69,6 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
-                There is no such thing as real taste or real smell or even
-                real sight, because there is no true definition of ‘real.’
-                There is only information, viewed subjectively, which is
-                allowed by consciousness—human or AI. In the end, all we have
-                is math.
-            `,
-            "Blake Crouch"
-        ),
-        new Quote(
-            stripIndent`
             We had this whole big beautiful place for discovery, and all we could think to do
             with it was wipe out everything that made it worth discovering.
             `,
@@ -88,12 +78,12 @@ export default class Quote {
             stripIndent`
                 The planets designated Thesan, Eos, Austra, and Aurora are
                 each at least 200 light-years from the nearest inhabited star
-                system. Until now all colonies in the Stellar Alliance have
-                been within communications range of Earth, but these
+                system. Until now, all colonies in the Colonial Alliance have
+                been within a few dozen light years of Earth, but these
                 explorers will be completely cut off from the rest of
-                humanity. Therefore, each expedition will be managed by an
-                autonomous neuromorphic processor, an artificial intelligence
-                programmed to ensure that its mission is completed.
+                humanity. Therefore, each expedition will be managed by a
+                neuromorphic heuristic intelligence, an AI programmed to ensure
+                that its mission is completed.
             `,
             "Dawn Program mission proposal, published 10942214400 SPE"
         ),
@@ -233,7 +223,7 @@ export default class Quote {
             The latest trend in computer automation is Neuromorphic Heuristic Intelligences, which are based on rough simulations
             of the cognitive machinery of the human brain. NHIs are not qualitatively more intelligent than humans, which is why
             the Colonial Alliance does not consider them to be prohibited under the San Jose Accords. However, they are quantitatively
-            more intelligent than humans, able to think faster and manage a large number of tasks while remaining completely focused
+            more intelligent than humans, able to think faster and manage a larger number of tasks while remaining completely focused
             on their programmed objectives. Many experts believe that this is sufficient reason to restrict the use of this technology.
             `,
             "Dr. Alex Scott, Moretrue Institute for Effective Policy",
@@ -265,16 +255,16 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
-            The first attempt at starting musical blank slate colony went well at first. The project nearly
-            failed when they received a shipment of Wagner operas meant for the Holy Bruderhof Kingdom. The operas were
-            stored on a long-dead magnetic tape format the colonists couldn't read, though, so disaster was averted.`,
+            The first attempt at starting a musical-blank-slate colony went well at first, but the project nearly
+            failed when they received a physical shipment of Wagner operas meant for the Holy Bruderhof Kingdom. Disaster was averted
+            because the operas were stored on a magnetic tape format the colonists couldn't read.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
             stripIndent`
-            Very few people know that the laws against broadcasting music between planets weren't the
-            music industry's idea. The musicologists at the Colonial Alliance Department of Cultural Innovation
-            were annoyed their experiments in creating new musical cultures kept getting ruined when colonists
+            Very few people know that the laws against broadcasting analogue music between planets were drafted by
+            the musicologists at the Colonial Alliance Department of Cultural Innovation, who
+            were worried that their experiments in creating new musical cultures would be ruined when colonists
             overheard broadcasts from Interstellar Beats to Study To.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
@@ -282,6 +272,8 @@ export default class Quote {
             stripIndent`
             It's hard to believe now, but the set of people who got to experience zero-gravity was
             a pretty exclusive club: astronauts, scientists, the rich and famous, the absurdly lucky.
+
+
             Space elevators made sending people into orbit for "frivolous" reasons possible,
             though, and once that happened, the stage was set for all sorts of recreational uses of zero-gravity.
             It's no coincidence that the first Zeroball league was established less than a decade after the first
@@ -293,7 +285,7 @@ export default class Quote {
             Initially, weightless sports were all merely weightless versions of terrestrial sports.
             Some fared better than others in the conversion. Most attempts to translate American football failed
             because it's hard to have an intuition for how bodies behave in zero-gravity. A tackle leads to two
-            people sailing through the air until they hit a wall or another player. Hockey, which already has an
+            people sailing through the air until they hit a wall or another player. Hockey, which already had an
             established underwater variant, failed for similar reasons. You can't push against the air as you can
             with water, so once you're far from the walls, you're left doing your best bird impression in an attempt
             to get somewhere.
