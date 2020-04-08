@@ -1,8 +1,9 @@
 import { Page } from "../GameWindow.js";
 import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
-
 import { Settings, SettingsOptions } from "../../persistence/Settings.js";
+import { GameSave } from "../../persistence/GameSave.js";
+import DeleteConfirmScreen from "./DeleteConfirmScreen.js";
 
 export default class SettingsScreen implements Page {
     readonly html: HTMLElement;
@@ -55,6 +56,11 @@ export default class SettingsScreen implements Page {
                         Settings.saveOptions(this.options);
                         this.refresh();
                     }),
+                ]),
+                UI.makeDivContaining([
+                    UI.makeButton("Clear saved game", () => {
+                        GameWindow.show(new DeleteConfirmScreen());
+                    }, [], GameSave.saveExists() ? "enabled" : "disabled"),
                 ]),
                 UI.makeDivContaining([
                     UI.makeButton("Back", () => {
