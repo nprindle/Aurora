@@ -247,7 +247,8 @@ export default class Quote {
         ),
 
         new Quote(
-            stripIndent`The trend of musicologists funding interstellar colonies was a big shock to everybody, but in
+            stripIndent`
+            The trend of musicologists funding interstellar colonies was a big shock to everybody, but in
             retrospect they should've seen it coming. Anybody in that field would kill for the opportunity
             to create a culture devoid of the European musical tradition's influence. The new perspectives
             they'd bring would revitalize a field that had run out of interesting problems after the breakthrough
@@ -255,27 +256,31 @@ export default class Quote {
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
-            stripIndent`Octave was the first musically motivated colony. While nobody knows how the Colonial Alliance
+            stripIndent`
+            Octave was the first musically motivated colony. While nobody knows how the Colonial Alliance
             Department of Cultural Innovation got their hands on enough artificial wombs to birth Octave's initial wave of
             colonists, it's obvious why that was necessary. If you want a colony of people with no preexisting ideas of what
             music should be, you need people who haven't heard music before.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
-            stripIndent`The first attempt at starting musical blank slate colony went well at first. The project nearly
+            stripIndent`
+            The first attempt at starting musical blank slate colony went well at first. The project nearly
             failed when they received a shipment of Wagner operas meant for the Holy Bruderhof Kingdom. The operas were
             stored on a long-dead magnetic tape format the colonists couldn't read, though, so disaster was averted.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
-            stripIndent`Very few people know that the laws against broadcasting music between planets weren't the
+            stripIndent`
+            Very few people know that the laws against broadcasting music between planets weren't the
             music industry's idea. The musicologists at the Colonial Alliance Department of Cultural Innovation
             were annoyed their experiments in creating new musical cultures kept getting ruined when colonists
             overheard broadcasts from Interstellar Beats to Study To.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
-            stripIndent`It's hard to believe now, but the set of people who got to experience zero-gravity was
+            stripIndent`
+            It's hard to believe now, but the set of people who got to experience zero-gravity was
             a pretty exclusive club: astronauts, scientists, the rich and famous, the absurdly lucky.
             Space elevators made sending people into orbit for "frivolous" reasons possible,
             though, and once that happened, the stage was set for all sorts of recreational uses of zero-gravity.
@@ -284,13 +289,15 @@ export default class Quote {
             "Zeroball, Etc. by Parity Harker"
         ),
         new Quote(
-            stripIndent`Initially, weightless sports were all merely weightless versions of terrestrial sports.
+            stripIndent`
+            Initially, weightless sports were all merely weightless versions of terrestrial sports.
             Some fared better than others in the conversion. Most attempts to translate American football failed
             because it's hard to have an intuition for how bodies behave in zero-gravity. A tackle leads to two
             people sailing through the air until they hit a wall or another player. Hockey, which already has an
             established underwater variant, failed for similar reasons. You can't push against the air as you can
             with water, so once you're far from the walls, you're left doing your best bird impression in an attempt
             to get somewhere.
+
 
             The only sport which survived the conversion well was, funnily enough, bocce ball.`,
             "Zeroball, Etc. by Parity Harker"
@@ -341,5 +348,9 @@ export default class Quote {
 
     static getRandomQuote(): Quote {
         return Random.fromArray(this.QuotesList);
+    }
+
+    static getQuote(index: number): Quote {
+        return this.QuotesList[index];
     }
 }
