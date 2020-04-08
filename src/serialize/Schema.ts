@@ -139,7 +139,7 @@ export namespace Schemas {
      * with recursive structures. Note that if the 'schema' computation is very
      * expensive, this may be inefficient for aggregate schemas, such as
      * 'arrayOf'; in this case, use the lazy aggregate schemas provided in
-     * 'LazySchemas' to prevent recomputation. However, if it's simple being
+     * 'LazySchemas' to prevent recomputation. However, if it's simply being
      * used as 'lazy(() => s)' to define a recursive structure, there is not
      * much of a difference.
      */
@@ -571,10 +571,50 @@ type RecordReprsLazy<R extends Record<string, () => Schema<unknown, unknown>>> =
 
 export namespace LazySchemas {
     /**
-     * Like 'recordOf', but lazy in its schema values for recursive types.
+     * Like 'Schemas.arrayOf', but allows for a lazy schema for recursive types.
+     */
+    export function arrayOf<T, S>(elementsSchema: () => Schema<T, S>): Schema<T[], S[]> {
+        return {
+            encode: (arr: T[]) => {
+                const schema = elementsSchema();
+                return arr.map(x => schema.encode(x));
+            },
+            decode: (arr: S[]) => {
+                const schema = elementsSchema();
+                return arr.map(x => schema.decode(x));
+            },
+            validate: (data: unknown): data is S[] => {
+                const schema = elementsSchema();
+                if (!Array.isArray(data)) {
+                    return false;
+                }
+                return data.every(x => schema.validate(x));
+            },
+        };
+    }
+
+    /**
+     * Like 'Schemas.nonEmptyArrayOf', but allows for a lazy schema for
+     * recursive types.
+     */
+    export function nonEmptyArrayOf<T, S>(elementsSchema: () => Schema<T, S>): Schema<NonEmptyArray<T>, NonEmptyArray<S>> {
+        const { encode, decode, validate } = arrayOf(elementsSchema);
+        return {
+            encode: encode as (value: NonEmptyArray<T>) => NonEmptyArray<S>,
+            decode: decode as (data: NonEmptyArray<S>) => NonEmptyArray<T>,
+            validate: (data: unknown): data is NonEmptyArray<S> => {
+                return Array.isArray(data) && data.length >= 1 && validate(data);
+            },
+        };
+    }
+
+    /**
+     * Like 'Schemas.recordOf', but lazy in its schema values for recursive
+     * types. This doesn't lessen recomputation over just using 'Schemas.lazy'
+     * with 'Schemas.recordOf', but it can be used for syntactic convenience in
+     * highly recursive types.
      */
     export function recordOf<
-        // The structure of the record
         R extends Record<string, () => Schema<unknown, unknown>>,
     >(structure: R): Schema<RecordDomainsLazy<R>, RecordReprsLazy<R>> {
         return {
@@ -596,11 +636,6 @@ export namespace LazySchemas {
                 if (typeof data !== "object" || data === null) {
                     return false;
                 }
-                // Assume that data can be properly indexed, though we don't
-                // know if the keys exist, or what type the values are. The
-                // validator will handle 'undefined' keys. The 'Partial' here is
-                // technically redundant, as the 'unknown' already handles the
-                // 'undefined' case.
                 const obj = data as Partial<Record<keyof R, unknown>>;
                 for (const key in structure) {
                     const validator = structure[key]();
@@ -614,25 +649,15 @@ export namespace LazySchemas {
     }
 
     /**
-     * Like 'arrayOf', but allows for a lazy schema for recursive types.
+     * Like 'Schemas.classOf', but lazy in its schema values for recursive
+     * types. This doesn't lessen recomputation over just using 'Schemas.lazy'
+     * with 'Schemas.classOf', but it can be used for syntactic convenience in
+     * highly recursive types.
      */
-    export function arrayOf<T, S>(elementsSchema: () => Schema<T, S>): Schema<T[], S[]> {
-        return {
-            encode: (arr: T[]) => {
-                const schema = elementsSchema();
-                return arr.map(x => schema.encode(x));
-            },
-            decode: (arr: S[]) => {
-                const schema = elementsSchema();
-                return arr.map(x => schema.decode(x));
-            },
-            validate: (data: unknown): data is S[] => {
-                const schema = elementsSchema();
-                if (!Array.isArray(data)) {
-                    return false;
-                }
-                return data.every(x => schema.validate(x));
-            },
-        };
+    export function classOf<
+        R extends Record<string, () => Schema<unknown, unknown>>,
+        T extends RecordDomainsLazy<R>
+    >(structure: R, reconstruct: (data: RecordDomainsLazy<R>) => T): Schema<T, RecordReprsLazy<R>> {
+        return Schemas.contra(recordOf(structure), id, reconstruct);
     }
 }
