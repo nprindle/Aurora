@@ -68,6 +68,12 @@ img.emoji {
     vertical-align: -0.1em;
 }
 
+.index-label {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 /* consistent appearance of range inputs (sliders) across browsers is hard.
  * we first have to disable the default styling, then add our own.
  * to make matters worse, chromium and firefox use different names for
