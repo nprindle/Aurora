@@ -1,4 +1,4 @@
-import Tile from "../Tile.js";
+import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HabConstructionTexture, } from "../../UI/Images.js";
@@ -12,15 +12,16 @@ import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import Hydroponics from "./Hydroponics.js";
-import { techRequirement, roadRequirement } from "../../predicates/DescribedTilePredicate.js";
-import { hasTech } from "../../predicates/predicates.js";
+import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
+import { hasTech } from "../../queries/Queries.js";
 import RobotHive from "./RobotHive.js";
+import { Schemas as S } from "../../serialize/Schema.js";
 
 export default class ConstructionHabitat extends Tile {
 
     protected texture: HTMLImageElement = HabConstructionTexture;
 
-    constructor(position: GridCoordinates, private wastelandVariant: 1 | 2 | 3 | 4 | 5) {
+    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
         super(position);
     }
 
@@ -78,4 +79,15 @@ export default class ConstructionHabitat extends Tile {
     getTileDescription(): string {
         return ConstructionHabitat.tileDescription;
     }
+
+    static schema = S.contra(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            wastelandVariant: wastelandVariantSchema,
+        }),
+        (x: ConstructionHabitat) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
+        ({ position, wastelandVariant }) => new ConstructionHabitat(position, wastelandVariant),
+    );
 }
+
+tileTypes[ConstructionHabitat.name] = ConstructionHabitat;
