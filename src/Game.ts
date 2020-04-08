@@ -142,7 +142,7 @@ export default class Game {
         }),
         (game: Game) => ({
             world: game.world,
-            inventory: game.inventory,
+            inventory: Inventory.schema.project(game.inventory),
             questStage: game.questStage,
             endState: game.endState,
             prevQuestDescription: game.prevQuestDescription,
@@ -150,7 +150,8 @@ export default class Game {
             completedTechs: game.completedTechs,
         }),
         ({ world, inventory, questStage, endState, prevQuestDescription, questCompletionShown, completedTechs }) => {
-            const game = new Game(world, inventory, questStage);
+            const inv = Inventory.schema.inject(world)(inventory);
+            const game = new Game(world, inv, questStage);
             game.endState = endState;
             game.prevQuestDescription = prevQuestDescription;
             game.questCompletionShown = questCompletionShown;

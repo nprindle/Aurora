@@ -169,21 +169,18 @@ export default class Inventory {
         return clone;
     }
 
-    // TODO: prevent duplication of injected 'World'
-    static schema = S.contra(
+    static schema = S.injecting(
         S.recordOf({
             resourceQuantities: Quantities.schema(Resource.schema),
             populationQuantities: Quantities.schema(Species.schema),
             availableWorkers: S.aNumber,
-            world: World.schema,
         }),
         (inv: Inventory) => ({
             resourceQuantities: inv.resourceQuantities,
             populationQuantities: inv.populationQuantities,
             availableWorkers: inv.availableWorkers,
-            world: inv.world,
         }),
-        ({ resourceQuantities, populationQuantities, availableWorkers, world }) => {
+        (world: World) => ({ resourceQuantities, populationQuantities, availableWorkers }) => {
             const inv = new Inventory(world);
             inv.resourceQuantities = resourceQuantities;
             inv.populationQuantities = populationQuantities;
