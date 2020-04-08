@@ -4,6 +4,8 @@ import Quote from "./Quote.js";
 import { indentWithNBS } from "../../util/Text.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
 import Game from "../../Game.js";
+import { GameSave } from "../../persistence/GameSave.js";
+import Conversion from "../../resources/Conversion.js";
 
 // "loading" screen shown between turns
 export default class TransitionScreen implements Page {
@@ -37,13 +39,17 @@ export default class TransitionScreen implements Page {
     refresh(): void {}
 
     startLoading(): void {
+        const startTime = Date.now();
         this.run.completeTurn();
+        GameSave.saveProgress({ game: this.run, nextConversionPriority: Conversion.unsafeGetNextPriority() });
+        const elapsedTime = Date.now() - startTime;
+
         setTimeout(() => {
             UI.fillHTML(this.loadingArea, [
                 UI.makeButton("Continue", () => { this.continueToNextTurn(); })
             ]);
             this.doneLoading = true;
-        }, 2000);
+        }, 2000 - elapsedTime);
     }
 
     private continueToNextTurn(): void {
