@@ -4,6 +4,9 @@ import { stripIndent } from "../../util/Text.js";
 
 export default class Quote {
 
+    // track this to avoid showing the same quote twice in a row
+    private static lastQuote?: Quote;
+
     constructor(
         readonly text: string,
         readonly attribution: string
@@ -339,7 +342,21 @@ export default class Quote {
     ];
 
     static getRandomQuote(): Quote {
-        return Random.fromArray(this.QuotesList);
+        // try to avoid choosing the same quote twice in a row
+        const newQuotes = this.QuotesList.filter(q => q !== Quote.lastQuote);
+        // make sure that it's safe to treat the filtered array as nonempty
+        if (newQuotes[0] !== undefined) {
+            const quote = Random.fromArray(newQuotes as NonEmptyArray<Quote>);
+            Quote.lastQuote = quote;
+            return quote;
+
+        } else {
+            // if the filtered array is empty (which shouldn't ever happen), fall back to totally random
+            const quote = Random.fromArray(this.QuotesList);
+            Quote.lastQuote = quote;
+            return quote;
+        }
+
     }
 
     static getQuote(index: number): Quote {
