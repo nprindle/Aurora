@@ -1,5 +1,5 @@
 import { Random } from "../../util/Random.js";
-import { NonEmptyArray } from "../../util/Arrays.js";
+import { NonEmptyArray, Arrays } from "../../util/Arrays.js";
 import { stripIndent } from "../../util/Text.js";
 
 export default class Quote {
@@ -345,11 +345,10 @@ export default class Quote {
         // try to avoid choosing the same quote twice in a row
         const newQuotes = this.QuotesList.filter(q => q !== Quote.lastQuote);
         // make sure that it's safe to treat the filtered array as nonempty
-        if (newQuotes[0] !== undefined) {
-            const quote = Random.fromArray(newQuotes as NonEmptyArray<Quote>);
+        if (Arrays.isNonEmpty(newQuotes)) {
+            const quote = Random.fromArray(newQuotes);
             Quote.lastQuote = quote;
             return quote;
-
         } else {
             // if the filtered array is empty (which shouldn't ever happen), fall back to totally random
             const quote = Random.fromArray(this.QuotesList);
