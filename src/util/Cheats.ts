@@ -6,6 +6,7 @@ import Cost from "../resources/Cost.js";
 import { HumanEnding, AlienEnding } from "../quests/Quests.js";
 import EndScreen from "../UI/endScreen/EndScreen.js";
 import TransitionScreen from "../UI/transitionScreen/TransitionScreen.js";
+import { Achievements } from "../achievements/Achievements.js";
 
 // container for cheat methods for debugging/testing via the browser console
 class Cheats {
@@ -60,6 +61,7 @@ export function enableCheats(run: Game): void {
     theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
     theWindow.cheatsShowEnding = (human: boolean = false) => cheatsObject.showEnding(human);
     theWindow.showQuote = (index: number) => cheatsObject.showQuote(index);
+    theWindow.unlockAllAchievements = () => Achievements.unlockAll();
 
     // these classes also need to be made globally accessible so their instances can be used as parameters for cheats
     // we freeze the constructors so the existing instances can't be modified
