@@ -52,14 +52,14 @@ export default class SettingsScreen implements Page {
                 UI.makeHeader("Settings", 1),
                 UI.makeDivContaining(sliders),
                 UI.makeDivContaining([
-                    UI.makeButton("Restore defaults", () => {
+                    UI.makeButton("Restore Defaults", () => {
                         this.options = SettingsOptions.defaultOptions();
                         Settings.saveOptions(this.options);
                         this.refresh();
                     }),
-                ]),
+                ], ["settings-reset"]),
                 UI.makeDivContaining([
-                    UI.makeButton("Clear saved game", () => {
+                    UI.makeButton("Clear Saved Game", () => {
                         GameWindow.show(new ConfirmScreen(
                             "Delete Saved Data?",
                             this,
@@ -71,7 +71,7 @@ export default class SettingsScreen implements Page {
                             }
                         ));
                     }, [], GameSave.saveExists() ? "enabled" : "disabled"),
-                ]),
+                ], ["settings-reset"]),
                 UI.makeDivContaining([
                     UI.makeButton("Reset Achievements", () => {
                         GameWindow.show(new ConfirmScreen(
@@ -85,7 +85,7 @@ export default class SettingsScreen implements Page {
                             }
                         ));
                     }, [], Achievements.getUnlockedAchievements().length > 0 ? "enabled" : "disabled"),
-                ]),
+                ], ["settings-reset"]),
                 UI.makeDivContaining([
                     UI.makeButton("Back", () => {
                         Settings.saveOptions(this.options);

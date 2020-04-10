@@ -127,6 +127,11 @@
     margin-top: 5px;
 }
 
+.settings-reset button {
+    width: 200px;
+    font-size: 12pt;
+}
+
 .settings button {
     margin-top: 5pt;
     margin-bottom: 5pt;
