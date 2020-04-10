@@ -39,12 +39,12 @@ export default class Achievement {
         (game: Game) => game.world.getTiles().filter(tile => tile instanceof SolarPanels).length >= 10,
     );
     static readonly ConstructionAchievement = new Achievement(
-        "🚧", "Constructive Feedback",
+        "🏗️", "Constructive Feedback",
         `You built up an inventory of 1000 Construction Parts`,
         (game: Game) => game.inventory.getResourceQuantity(Resource.BuildingMaterials) >= 1000
     );
     static readonly RoadAchievement = new Achievement(
-        "🚌", "Paving The Way",
+        "🚧", "Paving The Way",
         `You built an extensive network of roads`,
         (game: Game) => game.world.getTiles().filter(tile => tile instanceof Road).length >= 50,
     );

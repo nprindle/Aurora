@@ -209,7 +209,7 @@
 }
 
 .achievements-screen h1 {
-    font-size: 36pt;
+    font-size: 20pt;
     margin-bottom: 10pt;
 
 }
@@ -221,23 +221,23 @@
 }
 
 .achievement h1 {
-    font-size: 30pt;
-    margin-top: 0;
+    font-size: 18pt;
+    margin-top: 5px;
     margin-bottom: 0;
     margin-left: 5pt;
     margin-right: 0;
 }
 
 .achievement p {
-    font-size: 16pt;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 60pt;
+    font-size: 12pt;
+    margin-top: 2.5px;
+    margin-bottom: 2.5px;
+    margin-left: 32pt;
     margin-right: 0;
 }
 
 .achievements-screen button {
-    margin-top: 10pt;
+    margin-top: 5pt;
 }
 
 .achievement-header {
