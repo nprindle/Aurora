@@ -6,7 +6,7 @@ import Tile, { typeofTileSchema } from "../world/Tile";
 import Road from "../world/Tiles/Road";
 import Resource from "../resources/Resource";
 import { impossible } from "../util/Util";
-import { Schema, Schemas as S, ReprOf } from "../serialize/Schema.js";
+import { Schema, Schemas as S } from "../serialize/Schema.js";
 
 // a predicate evaluated relative to a specific position in the world
 export type TilePredicate = (game: Game, position: GridCoordinates) => boolean;
@@ -188,31 +188,10 @@ const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>
     }),
 };
 
-// TODO: implement a combinator to do this automatically
-export const worldQuerySchema: Schema<WorldQuery, any> = S.schema({
-    encode: (x: WorldQuery): ReprOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]> => {
-        return worldQuerySchemas[x.queryType].encode(x);
-    },
-    decode: (x: ReprOf<(typeof worldQuerySchemas)[WorldQuery["queryType"]]>): WorldQuery => {
-        const t: WorldQuery["queryType"] = x.queryType;
-        return worldQuerySchemas[t].decode(x);
-    },
-    validate: (data: unknown): data is any => {
-        if (typeof data !== "object" || data === null) {
-            return false;
-        }
-        const queryType: WorldQuery["queryType"] = (data as any).queryType;
-        const schema = worldQuerySchemas[queryType] as Schema<WorldQuery, any> | undefined;
-        if (schema) {
-            return schema.validate(data);
-        } else {
-            return false;
-        }
-    },
-});
+export const worldQuerySchema = S.discriminating("queryType", worldQuerySchemas);
 
 // Tile queries are possible infinitely recursive, so we must define these
-// with mutual recursion.
+// with mutual recursion. The 'lazy's prevent ReferenceErrors.
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
 const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> = {
@@ -224,37 +203,14 @@ const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> =
         queryType: S.literal("anyTileWithinDistance" as const), tileTypes: S.arrayOf(typeofTileSchema), radius: S.aNumber,
     }),
     "not": S.recordOf({
-        queryType: S.literal("not" as const), query: tileQuerySchema(),
+        queryType: S.literal("not" as const), query: S.lazy(() => tileQuerySchema),
     }),
     "or": S.recordOf({
-        queryType: S.literal("or" as const), query1: tileQuerySchema(), query2: tileQuerySchema(),
+        queryType: S.literal("or" as const), query1: S.lazy(() => tileQuerySchema), query2: S.lazy(() => tileQuerySchema),
     }),
     "and": S.recordOf({
-        queryType: S.literal("and" as const), query1: tileQuerySchema(), query2: tileQuerySchema(),
+        queryType: S.literal("and" as const), query1: S.lazy(() => tileQuerySchema), query2: S.lazy(() => tileQuerySchema),
     }),
 };
 
-// TODO: implement a combinator to do this automatically
-export function tileQuerySchema(): Schema<TileQuery, any> {
-    return S.schema({
-        encode: (x: TileQuery): ReprOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]> => {
-            return tileQuerySchemas[x.queryType].encode(x);
-        },
-        decode: (x: ReprOf<(typeof tileQuerySchemas)[TileQuery["queryType"]]>): TileQuery => {
-            const t: TileQuery["queryType"] = x.queryType;
-            return tileQuerySchemas[t].decode(x);
-        },
-        validate: (data: unknown): data is any => {
-            if (typeof data !== "object" || data === null) {
-                return false;
-            }
-            const queryType: TileQuery["queryType"] = (data as any).queryType;
-            const schema = tileQuerySchemas[queryType] as Schema<TileQuery, any> | undefined;
-            if (schema) {
-                return schema.validate(data);
-            } else {
-                return false;
-            }
-        },
-    });
-}
+export const tileQuerySchema = S.discriminating("queryType", tileQuerySchemas);

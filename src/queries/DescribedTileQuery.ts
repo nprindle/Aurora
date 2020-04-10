@@ -33,7 +33,7 @@ export default class DescribedTileQuery {
     static schema = S.contra(
         S.recordOf({
             description: S.aString,
-            query: tileQuerySchema(),
+            query: tileQuerySchema,
         }),
         (x: DescribedTileQuery) => ({ description: x.description, query: x.query }),
         ({ description, query }) => new DescribedTileQuery(description, query),
