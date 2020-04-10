@@ -88,7 +88,6 @@ export default class Achievement {
         (game: Game) => !!game.getQuestEndState()?.equals(HumanEnding),
     );
 
-    // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
         readonly emoji: string,
         readonly title: string,
@@ -96,7 +95,6 @@ export default class Achievement {
         readonly requirement: (game: Game) => boolean,
     ) {}
 
-    // returns a list of all species instances
     static values(): Achievement[] {
         return Objects.safeKeys(Achievement)
             .map(k => Achievement[k])

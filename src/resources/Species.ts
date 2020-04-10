@@ -8,7 +8,6 @@ export default class Species {
     static readonly Human = new Species("👩🏻‍🚀 Human Colonists", 0.1, new Cost(Resource.Food, 1));
     static readonly Robot = new Species("🦾 Robots", 0, new Cost(Resource.Energy, 0.5));
 
-    // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
         public readonly name: string,
         public readonly growthMultiplier: number, // % increase in population per turn
