@@ -9,7 +9,9 @@ import AlienSeedCore from "../world/Tiles/AlienSeedCore.js";
 import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
 import HumanMonolith from "../world/Tiles/HumanMonolith.js";
 import { AiResearchTech } from "../techtree/TechTree.js";
-import Recycler from "../world/Tiles/Recycler.js";
+import Resource from "../resources/Resource.js";
+import SolarPanels from "../world/Tiles/SolarArray.js";
+import Road from "../world/Tiles/Road.js";
 
 export default class Achievement {
 
@@ -21,19 +23,48 @@ export default class Achievement {
     );
     static readonly ExcavationPointAchievement = new Achievement(
         "💎", "Grave Robber",
-        `You looted the alien ruins for valuable resources`,
-        (game: Game) => game.world.getTiles().some(tile => tile instanceof Recycler),
+        `You harvested resources from the ruins of a long-dead civilization`,
+        (game: Game) =>
+            (game.inventory.getResourceQuantity(Resource.Cavorite) > 0)
+            || (game.inventory.getResourceQuantity(Resource.Orichalcum) > 0),
     );
     static readonly FoodAchievement = new Achievement(
-        "🌯", "Burritos are just monads in the category of enchiladafunctors",
-        `You built a ${Hydroponics.tileName}`,
+        "🌯", "Neato Burrito",
+        `You built a hydroponics greenhouse`,
         (game: Game) => game.world.getTiles().some(tile => tile instanceof Hydroponics),
     );
+    static readonly SolarAchievement = new Achievement(
+        "☀️", "Praise The Sun",
+        `You built 10 photovoltaic arrays`,
+        (game: Game) => game.world.getTiles().filter(tile => tile instanceof SolarPanels).length >= 10,
+    );
+    static readonly ConstructionAchievement = new Achievement(
+        "🚧", "Constructive Feedback",
+        `You built up an inventory of 1000 Construction Parts`,
+        (game: Game) => game.inventory.getResourceQuantity(Resource.BuildingMaterials) >= 1000
+    );
+    static readonly RoadAchievement = new Achievement(
+        "🚌", "Paving The Way",
+        `You built an extensive network of roads`,
+        (game: Game) => game.world.getTiles().filter(tile => tile instanceof Road).length >= 50,
+    );
+    static readonly HumanPopulationAchievement = new Achievement(
+        "📈", "Baby Boom",
+        "You grew a population of 10,000 human colonists",
+        (game: Game) => game.inventory.getPopulation(Species.Human) > 10000,
+    );
+    static readonly RobotSwarmAchievement = new Achievement(
+        "🤖", "The Next Generation",
+        "You built swarms of robotic workers",
+        (game: Game) => game.inventory.getPopulation(Species.Robot) > 2000,
+    );
     static readonly KillHumansAchievement = new Achievement(
-        "💀", "Fully Automated",
+        "💀", "Planned Obsolescence",
         "You allowed all of the human colonists to die",
         (game: Game) => (
             game.inventory.getPopulation(Species.Human) === 0)
+            && game.inventory.getPopulation(Species.Robot) > 0
+            // doesn't count if the humans die during the ending sequence
             && !game.world.getTiles().some(
                 tile => tile instanceof Lander
                 || tile instanceof AlienSeedCore
@@ -42,7 +73,7 @@ export default class Achievement {
             ),
     );
     static readonly SafetyProjectAchievement = new Achievement(
-        "🖇️", "Fable of the Sparrows",
+        "🦉", "Fable of the Sparrows",
         "You approved the AI Safety Research Project",
         (game: Game) => game.hasUnlockedTechnology(AiResearchTech)
     );
