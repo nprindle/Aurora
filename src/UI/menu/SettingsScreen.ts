@@ -4,6 +4,8 @@ import { GameWindow } from "../GameWindow.js";
 import { Settings, SettingsOptions } from "../../persistence/Settings.js";
 import { GameSave } from "../../persistence/GameSave.js";
 import DeleteConfirmScreen from "./DeleteConfirmScreen.js";
+import ResetAchievementsConfirmScreen from "./ResetAchievementsConfirmScreen.js";
+import { Achievements } from "../../achievements/Achievements.js";
 
 export default class SettingsScreen implements Page {
     readonly html: HTMLElement;
@@ -61,6 +63,11 @@ export default class SettingsScreen implements Page {
                     UI.makeButton("Clear saved game", () => {
                         GameWindow.show(new DeleteConfirmScreen());
                     }, [], GameSave.saveExists() ? "enabled" : "disabled"),
+                ]),
+                UI.makeDivContaining([
+                    UI.makeButton("Reset Achievements", () => {
+                        GameWindow.show(new ResetAchievementsConfirmScreen());
+                    }, [], Achievements.getUnlockedAchievements().length > 0 ? "enabled" : "disabled"),
                 ]),
                 UI.makeDivContaining([
                     UI.makeButton("Back", () => {

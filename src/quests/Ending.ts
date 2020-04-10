@@ -6,6 +6,10 @@ export default class Ending {
         readonly description: string,
     ) { }
 
+    equals(other: Ending): boolean {
+        return other.description === this.description && other.title === this.title;
+    }
+
     static schema = S.classOf({
         title: S.aString,
         description: S.aString,

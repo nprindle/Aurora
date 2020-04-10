@@ -7,6 +7,7 @@ import Technology, { ResearchableTechnologies } from "./techtree/Technology.js";
 import { Arrays } from "./util/Arrays.js";
 import Ending from "./quests/Ending.js";
 import { Schemas as S } from "./serialize/Schema.js";
+import { Achievements } from "./achievements/Achievements.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
@@ -55,6 +56,8 @@ export default class Game {
             this.questCompletionShown = false;
             this.prevQuestDescription = prevDescription;
         }
+
+        Achievements.updateAchievements(this);
     }
 
     getPreviousQuestDescription(): string {

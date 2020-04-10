@@ -10,6 +10,7 @@ import { GameSave } from "../../persistence/GameSave";
 import OverwriteConfirmScreen from "./OverwriteConfirmScreen.js";
 import Conversion from "../../resources/Conversion.js";
 import MessageScreen from "./MessageScreen.js";
+import AchievementsScreen from "./AchievementsScreen.js";
 
 export default class MainMenu implements Page {
 
@@ -68,6 +69,7 @@ export default class MainMenu implements Page {
                 startButton,
                 MainMenu.makeAudioButton(this),
                 UI.makeButton("change_settings", () => GameWindow.show(new SettingsScreen(this))),
+                UI.makeButton("view_achievements", () => GameWindow.show(new AchievementsScreen(this))),
                 UI.makeButton("view_credits", () => GameWindow.show(new CreditsScreen())),
             ], ["main-menu-options"]),
         ]);

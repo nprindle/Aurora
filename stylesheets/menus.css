@@ -196,3 +196,51 @@
 .message-screen p {
     margin-top: 0;
 }
+
+.achievements-screen {
+    width: 7in;
+    min-width: 50%;
+}
+
+@media (max-width: 7in) {
+    .achievements-screen {
+        width: 100%;
+    }
+}
+
+.achievements-screen h1 {
+    font-size: 36pt;
+    margin-bottom: 10pt;
+
+}
+
+.achievement {
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+
+.achievement h1 {
+    font-size: 30pt;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 5pt;
+    margin-right: 0;
+}
+
+.achievement p {
+    font-size: 16pt;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 60pt;
+    margin-right: 0;
+}
+
+.achievements-screen button {
+    margin-top: 10pt;
+}
+
+.achievement-header {
+    display: flex;
+    flex-direction: row;
+}
