@@ -19,6 +19,10 @@ export namespace GameWindow {
     // currently-displayed page
     let currentPage: Page | undefined = undefined;
 
+    const popUpDiv: HTMLElement = document.getElementById("popup")!;
+
+    let currentPopup: Page | undefined = undefined;
+
     export function show(page: Page): void {
         currentPage = page;
         UI.fillHTML(rootDiv, [page.html]);
@@ -40,5 +44,16 @@ export namespace GameWindow {
         if (currentPage) {
             currentPage.refresh();
         }
+    }
+
+    export function popup(contents: Page, milliseconds: number): void {
+        currentPopup = contents;
+        UI.fillHTML(popUpDiv, [contents.html]);
+        setTimeout(() => {
+            if (currentPopup === contents) {
+                currentPopup = undefined;
+                UI.fillHTML(popUpDiv, []);
+            }
+        }, milliseconds);
     }
 }

@@ -2,6 +2,8 @@ import Achievement from "./Achievement";
 import Game from "../Game";
 import { Storage } from "../persistence/Storage";
 import { Schemas } from "../serialize/Schema";
+import { GameWindow } from "../UI/GameWindow";
+import { AchievementPopup } from "../UI/AchievementPopup";
 
 export namespace Achievements {
     let unlockedAchievements: Achievement[] = [];
@@ -48,6 +50,7 @@ export namespace Achievements {
             console.log(`unlocked ${achievement.title}`);
             unlockedAchievements.push(achievement);
             saveAchievementProgress();
+            GameWindow.popup(new AchievementPopup(achievement), 3000);
         }
     }
 
