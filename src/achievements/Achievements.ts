@@ -50,7 +50,7 @@ export namespace Achievements {
             console.log(`unlocked ${achievement.title}`);
             unlockedAchievements.push(achievement);
             saveAchievementProgress();
-            GameWindow.popup(new AchievementPopup(achievement), 3000);
+            GameWindow.addPopup(new AchievementPopup(achievement), 3000);
         }
     }
 

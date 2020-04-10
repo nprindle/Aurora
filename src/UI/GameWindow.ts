@@ -13,15 +13,16 @@ export interface Page {
 
 export namespace GameWindow {
 
-    // root div for all of our HTML
+    // root div for all of the main game HTML
     const rootDiv: HTMLElement = document.getElementById("rootdiv")!;
 
     // currently-displayed page
     let currentPage: Page | undefined = undefined;
 
+    // div containing pop-ups on top of the rootDiv
     const popUpDiv: HTMLElement = document.getElementById("popup")!;
-
-    let currentPopup: Page | undefined = undefined;
+    // queue of content to be shown as pop-ups, and time in milliseconds that each will be shown
+    const popupQueue: { page: Page; milliseconds: number; }[] = [];
 
     export function show(page: Page): void {
         currentPage = page;
@@ -46,14 +47,22 @@ export namespace GameWindow {
         }
     }
 
-    export function popup(contents: Page, milliseconds: number): void {
-        currentPopup = contents;
-        UI.fillHTML(popUpDiv, [contents.html]);
-        setTimeout(() => {
-            if (currentPopup === contents) {
-                currentPopup = undefined;
-                UI.fillHTML(popUpDiv, []);
-            }
-        }, milliseconds);
+    function showNextPopup(): void {
+        if (popupQueue.length > 0) {
+            UI.fillHTML(popUpDiv, [popupQueue[0].page.html]);
+            setTimeout(() => {
+                popupQueue.shift();
+                showNextPopup();
+            }, popupQueue[0].milliseconds);
+        } else {
+            UI.fillHTML(popUpDiv, []);
+        }
+    }
+
+    export function addPopup(contents: Page, milliseconds: number): void {
+        popupQueue.push({ page: contents, milliseconds: milliseconds });
+        if (popupQueue.length === 1) {
+            showNextPopup();
+        }
     }
 }
