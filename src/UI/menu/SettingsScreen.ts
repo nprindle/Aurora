@@ -3,9 +3,8 @@ import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
 import { Settings, SettingsOptions } from "../../persistence/Settings.js";
 import { GameSave } from "../../persistence/GameSave.js";
-import DeleteConfirmScreen from "./DeleteConfirmScreen.js";
-import ResetAchievementsConfirmScreen from "./ResetAchievementsConfirmScreen.js";
 import { Achievements } from "../../achievements/Achievements.js";
+import { ConfirmScreen } from "./ConfirmScreen.js";
 
 export default class SettingsScreen implements Page {
     readonly html: HTMLElement;
@@ -61,12 +60,30 @@ export default class SettingsScreen implements Page {
                 ]),
                 UI.makeDivContaining([
                     UI.makeButton("Clear saved game", () => {
-                        GameWindow.show(new DeleteConfirmScreen());
+                        GameWindow.show(new ConfirmScreen(
+                            "Delete Saved Data?",
+                            this,
+                            () => {
+                                GameSave.clearProgress();
+                                this.refresh();
+                                this.backScreen.refresh();
+                                GameWindow.show(this);
+                            }
+                        ));
                     }, [], GameSave.saveExists() ? "enabled" : "disabled"),
                 ]),
                 UI.makeDivContaining([
                     UI.makeButton("Reset Achievements", () => {
-                        GameWindow.show(new ResetAchievementsConfirmScreen());
+                        GameWindow.show(new ConfirmScreen(
+                            "Reset Achievements Progress?",
+                            this,
+                            () => {
+                                Achievements.resetAchievements();
+                                this.refresh();
+                                this.backScreen.refresh();
+                                GameWindow.show(this);
+                            }
+                        ));
                     }, [], Achievements.getUnlockedAchievements().length > 0 ? "enabled" : "disabled"),
                 ]),
                 UI.makeDivContaining([
