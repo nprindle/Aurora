@@ -7,10 +7,10 @@ import WorldScreen from "../worldScreen/WorldScreen";
 import Game from "../../Game";
 import { MusicManager } from "../../music/MusicManager";
 import { GameSave } from "../../persistence/GameSave";
-import OverwriteConfirmScreen from "./OverwriteConfirmScreen.js";
 import Conversion from "../../resources/Conversion.js";
 import MessageScreen from "./MessageScreen.js";
 import AchievementsScreen from "./AchievementsScreen.js";
+import { ConfirmScreen } from "./ConfirmScreen.js";
 
 export default class MainMenu implements Page {
 
@@ -54,7 +54,15 @@ export default class MainMenu implements Page {
 
         const startButton = UI.makeButton(saved ? "start_new_game" : "start_game", () => {
             if (saved) {
-                GameWindow.show(new OverwriteConfirmScreen());
+                GameWindow.show(new ConfirmScreen(
+                    "Overwrite Saved Data?",
+                    this,
+                    () => {
+                        const newGame = Game.newGame();
+                        enableCheats(newGame);
+                        GameWindow.show(new WorldScreen(newGame));
+                    }
+                ));
             } else {
                 const newGame = Game.newGame();
                 enableCheats(newGame);
