@@ -106,7 +106,6 @@ export default class TileSidebar implements Page {
             projectHTML.appendChild(UI.makePara(`- ${requirement.toString()}`, [cssClass]));
         }
 
-
         return projectHTML;
     }
 

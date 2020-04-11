@@ -1,5 +1,9 @@
 import { lerp } from "../util/Util.js";
 
+/**
+ * An envelope describes how a sound should change over time. The envelope is
+ * generated using an attack, delay, sustain, and release (ADSR).
+ */
 export interface AdsrConfig {
     attack?: number;
     decay?: number;
@@ -7,13 +11,22 @@ export interface AdsrConfig {
     release?: number;
 }
 
+// Give default values to an 'AdsrConfig'
+function normalizeAdsr(config: AdsrConfig): Required<AdsrConfig> {
+    const { attack = 0, sustain = 0, decay = 0, release = 0 } = config;
+    return { attack, sustain, decay, release };
+}
+
 export namespace Envelopes {
 
-    export function createAdsrEnvelope(context: AudioContext, start: number, duration: number,
-        env: AdsrConfig, volume: number = 1): GainNode {
-
-        // these are all optional, so make sure they're not undefined
-        const { attack = 0, sustain = 0, decay = 0, release = 0 } = env;
+    /**
+     * Create a 'GainNode' generated using the given ADSR parameters. 'start'
+     * refers to the number of seconds since the creation of the 'AudioContext'.
+     */
+    export function createAdsrEnvelope(
+        context: AudioContext, start: number, duration: number, env: AdsrConfig, volume: number = 1
+    ): GainNode {
+        const { attack, sustain, decay, release } = normalizeAdsr(env);
         const gainNode: GainNode = context.createGain();
         gainNode.gain.setValueAtTime(0, start);
         if (duration < attack) {

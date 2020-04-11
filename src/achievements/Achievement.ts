@@ -15,8 +15,6 @@ import Road from "../world/Tiles/Road.js";
 import { WorldPredicate } from "../queries/Queries.js";
 
 export default class Achievement {
-
-
     static readonly StartAchievement = new Achievement(
         "🚀", "One Small Step",
         "You deployed a colony on the surface of Aurora",
@@ -62,8 +60,8 @@ export default class Achievement {
     static readonly KillHumansAchievement = new Achievement(
         "💀", "Planned Obsolescence",
         "You allowed all of the human colonists to die",
-        (game: Game) => (
-            game.inventory.getPopulation(Species.Human) === 0)
+        (game: Game) =>
+            game.inventory.getPopulation(Species.Human) === 0
             && game.inventory.getPopulation(Species.Robot) > 0
             // doesn't count if the humans die during the ending sequence
             && !game.world.getTiles().some(

@@ -20,28 +20,4 @@ export namespace Arrays {
     export function flatten<T>(arr: T[][]): T[] {
         return arr.reduce((acc, x) => acc.concat(x), []);
     }
-
-    // Given an array, return all elements that do and do not satisfy the
-    // predicate
-    export function partition<T>(arr: T[], pred: (elem: T) => boolean): { yes: T[]; no: T[]; } {
-        const yes = [];
-        const no = [];
-        for (const x of arr) {
-            if (pred(x)) {
-                yes.push(x);
-            } else {
-                no.push(x);
-            }
-        }
-        return { yes, no };
-    }
-
-    // create an array containing the same item repeated
-    export function repeat<T>(item: T, count: number): T[] {
-        const array = new Array(count);
-        for (let i = 0; i < count; i++) {
-            array[i] = item;
-        }
-        return array;
-    }
 }

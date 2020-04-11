@@ -21,7 +21,7 @@ import { Schemas as S } from "../../serialize/Schema.js";
 export default class Wasteland extends Tile {
 
     protected texture: HTMLImageElement = WastelandTexture5;
-    private textureVariant: 1 | 2 | 3 | 4 |5;
+    private textureVariant: 1 | 2 | 3 | 4 | 5;
 
 
     constructor(position: GridCoordinates, textureVariant?: 1 | 2 | 3 | 4 | 5) {

@@ -23,7 +23,7 @@ export default class MapUI implements Page {
     private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
 
     constructor(
-        private parentScreen: {changeSidebarTile(position: GridCoordinates | null): void;},
+        private parentScreen: { changeSidebarTile(position: GridCoordinates | undefined): void; },
         private world: World
     ) {
         this.html = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ["map-canvas"]);
@@ -37,8 +37,8 @@ export default class MapUI implements Page {
 
     // re-draws all tiles in the viewable area
     public refresh(): void {
-        const tilesInViewableArea =
-        this.world.getTilesInRectangle(this.world.viewPosition.x, this.world.viewPosition.y, this.viewWidth, this.viewHeight);
+        const viewPosition = this.world.viewPosition;
+        const tilesInViewableArea = this.world.getTilesInRectangle(viewPosition.x, viewPosition.y, this.viewWidth, this.viewHeight);
 
         for (const tile of tilesInViewableArea) {
             this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);

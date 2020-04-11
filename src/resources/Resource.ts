@@ -14,7 +14,6 @@ export default class Resource {
     static readonly Superconductor = new Resource("🧵 Superconductor");
     static readonly SmartMatter = new Resource("💠 SmartMatter");
 
-    // knowledge types used to research technologies are also resources
     static readonly EngineeringKnowledge = new Resource("⚙️ Engineering Data");
     static readonly PsychKnowledge = new Resource("🧠 Psychological Data");
     static readonly AlienKnowledge = new Resource("🛸 Alien Data");

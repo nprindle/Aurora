@@ -37,8 +37,7 @@ export class OscillatorInstrument extends Instrument {
         // volume scaling so multiple oscillators from detune don't result in louder sounds
         const volume = Math.min(1 / freqs.length, 1) * this.volume;
         // create envelope
-        const gain: GainNode = Envelopes.createAdsrEnvelope(context, note.start, note.duration,
-            this.env, volume);
+        const gain: GainNode = Envelopes.createAdsrEnvelope(context, note.start, note.duration, this.env, volume);
         const end = note.start + note.duration + (this.env.sustain ?? 0);
         // initialize oscillator(s)
         freqs.forEach((freq, i) => {

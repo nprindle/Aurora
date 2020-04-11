@@ -26,17 +26,20 @@ export default class Conversion {
         return c;
     }
 
-    toString(): string {
-        const outputDescription = this.outputs.map((output: Cost) => output.toString()).join(", ");
-        const inputStrings = this.inputs.map(cost => cost.toString());
-        if (this.requiredWorkers !== 0) {
-            inputStrings.push(`${this.requiredWorkers} workers`);
-        }
-        const inputDescription = inputStrings.join(", ");
+    isFree(): boolean {
+        return this.inputs.length === 0 && this.requiredWorkers === 0;
+    }
 
-        if (inputStrings.length === 0) {
+    toString(): string {
+        const outputDescription = this.outputs.map(output => output.toString()).join(", ");
+        if (this.isFree()) {
             return `Produce ${outputDescription}`;
         } else {
+            const inputStrings = this.inputs.map(cost => cost.toString());
+            if (this.requiredWorkers !== 0) {
+                inputStrings.push(`${this.requiredWorkers} workers`);
+            }
+            const inputDescription = inputStrings.join(", ");
             return `Produce ${outputDescription} using ${inputDescription}`;
         }
     }
