@@ -52,8 +52,11 @@ export default class MainMenu implements Page {
             }
         });
 
-        const startButton = UI.makeButton(saved ? "start_new_game" : "start_game", () => {
-            if (saved) {
+        // The options that change depending on whether or not a save exists
+        const saveDependentOptions = [];
+        if (saved) {
+            saveDependentOptions.push(resumeButton);
+            saveDependentOptions.push(UI.makeButton("start_new_game", () => {
                 GameWindow.show(new ConfirmScreen(
                     "Overwrite Saved Data?",
                     this,
@@ -63,23 +66,23 @@ export default class MainMenu implements Page {
                         GameWindow.show(new WorldScreen(newGame));
                     }
                 ));
-            } else {
+            }));
+        } else {
+            saveDependentOptions.push(UI.makeButton("start_game", () => {
                 const newGame = Game.newGame();
                 enableCheats(newGame);
                 GameWindow.show(new WorldScreen(newGame));
-            }
-        });
+            }));
+        }
 
         UI.fillHTML(this.html, [
             UI.makeHeader("Aurora", 1),
-            UI.makeDivContaining([
-                saved ? resumeButton : UI.makeDiv(),
-                startButton,
+            UI.makeDivContaining(saveDependentOptions.concat([
                 MainMenu.makeAudioButton(this),
                 UI.makeButton("change_settings", () => GameWindow.show(new SettingsScreen(this))),
                 UI.makeButton("view_achievements", () => GameWindow.show(new AchievementsScreen(this))),
                 UI.makeButton("view_credits", () => GameWindow.show(new CreditsScreen())),
-            ], ["main-menu-options"]),
+            ]), ["main-menu-options"]),
         ]);
     }
 }
