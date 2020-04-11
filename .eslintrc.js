@@ -43,6 +43,8 @@ const possibleErrorRules = {
     "defaultAssignment": false,
   }],
 
+  "@typescript-eslint/prefer-nullish-coalescing": ["error"],
+
   // Disallow calling methods without the original class scope
   "@typescript-eslint/unbound-method": ["error", {
     "ignoreStatic": true,

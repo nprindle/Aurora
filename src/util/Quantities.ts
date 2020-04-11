@@ -21,7 +21,7 @@ export default class Quantities<T> {
     }
 
     get(key: T): number {
-        return this.map.get(key) || 0;
+        return this.map.get(key) ?? 0;
     }
 
     set(key: T, quantity: number): void {

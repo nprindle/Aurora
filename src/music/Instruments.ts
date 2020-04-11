@@ -22,7 +22,7 @@ export class OscillatorInstrument extends Instrument {
         super(volume);
         this.type = osc.type;
         this._detune = 1;
-        this.detune = osc.detune || 0;
+        this.detune = osc.detune ?? 0;
         this.env = env;
     }
 
@@ -39,7 +39,7 @@ export class OscillatorInstrument extends Instrument {
         // create envelope
         const gain: GainNode = Envelopes.createAdsrEnvelope(context, note.start, note.duration,
             this.env, volume);
-        const end = note.start + note.duration + (this.env.sustain || 0);
+        const end = note.start + note.duration + (this.env.sustain ?? 0);
         // initialize oscillator(s)
         freqs.forEach((freq, i) => {
             const osc = context.createOscillator();
@@ -79,7 +79,7 @@ export class SampleInstrument extends Instrument {
         const freqRatio = unwrap(freq) / unwrap(this.buffer.freq);
         bufferNode.playbackRate.setValueAtTime(freqRatio, note.start);
 
-        const endtime: number = note.start + note.duration + (this.env.sustain || 0);
+        const endtime: number = note.start + note.duration + (this.env.sustain ?? 0);
         if (note.endNote !== undefined) {
             const endFreq = Notes.midiNumberToFrequency(note.endNote);
             const endFreqRatio = unwrap(endFreq) / unwrap(this.buffer.freq);
