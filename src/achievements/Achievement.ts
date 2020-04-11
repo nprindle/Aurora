@@ -12,6 +12,7 @@ import { AiResearchTech } from "../techtree/TechTree.js";
 import Resource from "../resources/Resource.js";
 import SolarPanels from "../world/Tiles/SolarArray.js";
 import Road from "../world/Tiles/Road.js";
+import { WorldPredicate } from "../queries/Queries.js";
 
 export default class Achievement {
 
@@ -92,7 +93,7 @@ export default class Achievement {
         readonly emoji: string,
         readonly title: string,
         readonly description: string,
-        readonly requirement: (game: Game) => boolean,
+        readonly requirement: WorldPredicate,
     ) {}
 
     static values(): Achievement[] {
