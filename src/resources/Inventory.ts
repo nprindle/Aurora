@@ -26,7 +26,7 @@ export default class Inventory {
     }
 
     getResourceQuantity(resource: Resource): number {
-        return this.resourceQuantities.get(resource) || 0;
+        return this.resourceQuantities.get(resource);
     }
 
     addWorkers(species: Species, quantity: number): void {
@@ -110,7 +110,7 @@ export default class Inventory {
          */
         const costMap = new Map<Resource, number>();
         for (const cost of costs) {
-            costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) || 0));
+            costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) ?? 0));
         }
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
