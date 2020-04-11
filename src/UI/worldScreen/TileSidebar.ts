@@ -15,7 +15,7 @@ export default class TileSidebar implements Page {
 
     constructor(
         private parentScreen: Page,
-        private run: Game
+        private game: Game
     ) {
         this.html = UI.makeDiv(["world-screen-sidebar"]);
 
@@ -35,7 +35,7 @@ export default class TileSidebar implements Page {
                 UI.makePara(`No structure or terrain tile selected`, ["sidebar-tile-name"]),
             ]);
         } else {
-            const tile = this.run.world.getTileAtCoordinates(this.position)!;
+            const tile = this.game.world.getTileAtCoordinates(this.position)!;
 
             const housingHTML = UI.makeDiv();
             if (tile.populationCapacity) {
@@ -45,7 +45,7 @@ export default class TileSidebar implements Page {
             }
 
             const projectsHTML = UI.makeDiv();
-            const visibleProjects = tile.possibleProjects.filter(project => project.isVisible(this.position!, this.run));
+            const visibleProjects = tile.possibleProjects.filter(project => project.isVisible(this.position!, this.game));
             for (const project of visibleProjects) {
                 projectsHTML.appendChild(this.makeProjectHTML(tile, project));
             }
@@ -75,7 +75,7 @@ export default class TileSidebar implements Page {
             project.title,
             () => { this.doProject(project, tile); },
             [],
-            project.canDo(tile.position, this.run) ? "enabled" : "disabled",
+            project.canDo(tile.position, this.game) ? "enabled" : "disabled",
         );
         projectHTML.appendChild(button);
 
@@ -84,7 +84,7 @@ export default class TileSidebar implements Page {
         if (project.costs.length === 0) {
             projectHTML.appendChild(UI.makePara("Cost: Free"));
         } else {
-            const inventoryClone = this.run.inventory.clone();
+            const inventoryClone = this.game.inventory.clone();
             const costParas = project.costs.map((cost: Cost) => {
                 const affordable = inventoryClone.canAfford([cost]);
                 const para = UI.makePara(cost.toString(),
@@ -102,7 +102,7 @@ export default class TileSidebar implements Page {
             projectHTML.appendChild(UI.makePara("Requirements:"));
         }
         for (const requirement of project.completionRequirements) {
-            const cssClass = requirement.evaluate(this.run, this.position!) ? "project-requirement-met" : "project-requirement-unmet";
+            const cssClass = requirement.evaluate(this.game, this.position!) ? "project-requirement-met" : "project-requirement-unmet";
             projectHTML.appendChild(UI.makePara(`- ${requirement.toString()}`, [cssClass]));
         }
 
@@ -115,8 +115,8 @@ export default class TileSidebar implements Page {
     }
 
     private doProject(project: TileProject, tile: Tile): void {
-        project.doAction(tile.position, this.run);
-        this.run.updateQuestState(); // effects of project may cause a quest objective to be completed
+        project.doAction(tile.position, this.game);
+        this.game.updateQuestState(); // effects of project may cause a quest objective to be completed
         this.parentScreen.refresh();
     }
 }

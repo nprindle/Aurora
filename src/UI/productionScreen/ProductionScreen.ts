@@ -11,19 +11,19 @@ import Species from "../../resources/Species.js";
 // the production screen is where the player selects the priority order for resource conversions
 export default class ProductionScreen implements Page {
     readonly html: HTMLElement;
-    private run: Game;
+    private game: Game;
 
-    constructor(run: Game) {
-        this.run = run;
+    constructor(game: Game) {
+        this.game = game;
         this.html = UI.makeDiv(["production-screen"]);
         this.refresh();
     }
 
     refresh(): void {
         // clone of the inventory that represents what the inventory will be after this turn's conversions are applied
-        const inventoryCopy = this.run.inventory.clone();
+        const inventoryCopy = this.game.inventory.clone();
 
-        const conversions = this.run.getResourceConversions();
+        const conversions = this.game.getResourceConversions();
 
         const conversionsHTML: HTMLElement[] = [];
         for (const conversion of conversions) {
@@ -47,14 +47,14 @@ export default class ProductionScreen implements Page {
         });
 
         const availableWorkersLabel = UI.makePara(
-            `Available workers at start of production cycle: ${this.run.inventory.getAvailableWorkers()}`,
+            `Available workers at start of production cycle: ${this.game.inventory.getAvailableWorkers()}`,
             ["production-screen-available-workers"]);
         const unusedWorkersLabel = UI.makePara(
             `Unused workers at end of production cycle: ${inventoryCopy.getAvailableWorkers()}`,
             ["production-screen-worker-consumption-label"]);
 
         const populationConsumptionHtml = UI.makeDiv();
-        if (this.run.inventory.getSpeciesList().length !== 0) {
+        if (this.game.inventory.getSpeciesList().length !== 0) {
 
             // make another clone so that we can step through each species' resource consumption
             // but still be able to run the actual populationGrowth method on inventoryClone afterwards
@@ -107,7 +107,7 @@ export default class ProductionScreen implements Page {
         UI.fillHTML(this.html, [
             UI.makeHeader("Resource Production Management"),
             UI.makeHeader("Inventory at start of production cycle:", 2, ["production-screen-label"]),
-            this.renderInventory(this.run.inventory),
+            this.renderInventory(this.game.inventory),
             UI.makeHeader("Resource production", 2, ["production-screen-label"]),
             availableWorkersLabel,
             UI.makePara("Drag conversions to change the activation order", ["production-screen-drag-hint"]),
@@ -118,7 +118,7 @@ export default class ProductionScreen implements Page {
             workerDeathHtml,
             UI.makeHeader("Inventory at end of production cycle:", 2, ["production-screen-label"]),
             this.renderInventory(inventoryCopy),
-            UI.makeButton("Back", () => { GameWindow.show(new WorldScreen(this.run)); }, ["production-screen-back-button"]),
+            UI.makeButton("Back", () => { GameWindow.show(new WorldScreen(this.game)); }, ["production-screen-back-button"]),
         ]);
     }
 
@@ -154,7 +154,7 @@ export default class ProductionScreen implements Page {
     }
 
     private shiftConversion(fromIndex: number, toIndex: number): void {
-        this.run.shiftConversionPriority(fromIndex, toIndex);
+        this.game.shiftConversionPriority(fromIndex, toIndex);
         this.refresh();
     }
 
