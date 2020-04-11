@@ -29,8 +29,8 @@ export default class ConstructionLaboratory extends Tile {
 
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Wasteland(position, this.wastelandVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
             }, [], [], [],
         ),
 

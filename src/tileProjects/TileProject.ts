@@ -15,28 +15,28 @@ export default class TileProject {
     constructor(
         readonly title: string,
         readonly projectDescription: string,
-        protected action: ((position: GridCoordinates, run: Game) => void),
+        protected action: ((position: GridCoordinates, game: Game) => void),
         readonly costs: Cost[],
         readonly completionRequirements: DescribedTileQuery[],
         readonly visibilityRequirements: TileQuery[],
     ) {}
 
-    canDo(position: GridCoordinates, run: Game): boolean {
-        return run.inventory.canAfford(this.costs)
-            && this.isVisible(position, run)
-            && this.completionRequirements.every(requirement => requirement.evaluate(run, position));
+    canDo(position: GridCoordinates, game: Game): boolean {
+        return game.inventory.canAfford(this.costs)
+            && this.isVisible(position, game)
+            && this.completionRequirements.every(requirement => requirement.evaluate(game, position));
     }
 
-    isVisible(position: GridCoordinates, run: Game): boolean {
-        return this.visibilityRequirements.every(query => queryTile(query)(run, position));
+    isVisible(position: GridCoordinates, game: Game): boolean {
+        return this.visibilityRequirements.every(query => queryTile(query)(game, position));
     }
 
-    doAction(position: GridCoordinates, run: Game): void {
-        if (!this.canDo(position, run)) {
+    doAction(position: GridCoordinates, game: Game): void {
+        if (!this.canDo(position, game)) {
             throw `tried to do project ${this.title} without meeting requirements`;
         }
-        run.inventory.payCost(this.costs);
-        this.action(position, run);
+        game.inventory.payCost(this.costs);
+        this.action(position, game);
     }
 }
 
@@ -69,14 +69,14 @@ export class MonolithCompletionProject extends TileProject {
             visibilityRequirements);
     }
 
-    doAction(position: GridCoordinates, run: Game): void {
-        if (!this.canDo(position, run)) {
+    doAction(position: GridCoordinates, game: Game): void {
+        if (!this.canDo(position, game)) {
             throw `tried to do project ${this.title} without meeting requirements`;
         }
-        run.inventory.payCost(this.costs);
-        this.action(position, run);
+        game.inventory.payCost(this.costs);
+        this.action(position, game);
 
-        const endingWorldScreen = new EndingWorldScreen(run, position, this.circuitsTile);
+        const endingWorldScreen = new EndingWorldScreen(game, position, this.circuitsTile);
         GameWindow.show(endingWorldScreen);
         endingWorldScreen.expandCircuits(1);
     }

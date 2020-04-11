@@ -51,9 +51,9 @@ class Cheats {
 }
 
 // makes cheat methods available from the console
-export function enableCheats(run: Game): void {
+export function enableCheats(game: Game): void {
 
-    const cheatsObject = new Cheats(run);
+    const cheatsObject = new Cheats(game);
     const theWindow: any = window;
     theWindow.cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
     theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) => cheatsObject.removeResource(resource, quantity);
