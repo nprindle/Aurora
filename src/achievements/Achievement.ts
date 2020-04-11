@@ -80,12 +80,12 @@ export default class Achievement {
     static readonly AlienEndingAchievement = new Achievement(
         "👾", "Mission Accomplished",
         "You discovered as much as possible about the aliens by freeing them to conquer the universe",
-        (game: Game) => !!game.getQuestEndState()?.equals(AlienEnding),
+        (game: Game) => game.getQuestEndState()?.equals(AlienEnding) ?? false,
     );
     static readonly TrueEndingAchievement = new Achievement(
         "🌌", "We'll make Heaven a place on Earth",
         "You uplifted humanity into a virtual utopia",
-        (game: Game) => !!game.getQuestEndState()?.equals(HumanEnding),
+        (game: Game) => game.getQuestEndState()?.equals(HumanEnding) ?? false,
     );
 
     private constructor(
