@@ -8,29 +8,25 @@ import Conversion from "../../resources/Conversion.js";
 import { Page } from "../GameWindow.js";
 
 export default class TileSidebar implements Page {
-    position: GridCoordinates | null = null;
+    position: GridCoordinates | undefined = undefined;
 
     readonly html: HTMLElement;
-
 
     constructor(
         private parentScreen: Page,
         private game: Game
     ) {
         this.html = UI.makeDiv(["world-screen-sidebar"]);
-
         this.refresh();
     }
 
-
-
-    changeTile(newPosition: GridCoordinates | null): void {
+    changeTile(newPosition: GridCoordinates | undefined): void {
         this.position = newPosition;
         this.refresh();
     }
 
     refresh(): void {
-        if (this.position === null) {
+        if (this.position === undefined) {
             UI.fillHTML(this.html, [
                 UI.makePara(`No structure or terrain tile selected`, ["sidebar-tile-name"]),
             ]);
