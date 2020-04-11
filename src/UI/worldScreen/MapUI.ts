@@ -19,8 +19,8 @@ export default class MapUI implements Page {
     private viewWidth: number = Settings.currentOptions.viewWidth; // width of viewable area in tiles
     private viewHeight: number = Settings.currentOptions.viewHeight; // height of viewable area in tiles
 
-
-    private highlightedCoordinates: GridCoordinates | null = null; // coordinates of current selected tile, null if no tile is selected
+    // coordinates of current selected tile, undefined if no tile is selected
+    private highlightedCoordinates: GridCoordinates | undefined = undefined;
 
     constructor(
         private parentScreen: { changeSidebarTile(position: GridCoordinates | undefined): void; },
@@ -44,7 +44,7 @@ export default class MapUI implements Page {
             this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);
         }
         // render the highlight reticle thing
-        if (this.highlightedCoordinates !== null) {
+        if (this.highlightedCoordinates !== undefined) {
             this.drawSquareAtCoordinates(MapUI.highlightImage, this.highlightedCoordinates);
         }
     }
@@ -71,8 +71,8 @@ export default class MapUI implements Page {
         context.drawImage(image, screenX, screenY, screenWidth, screenHeight);
     }
 
-    private selectTile(tile: Tile | null): void {
-        this.highlightedCoordinates = tile ? tile.position : null;
+    private selectTile(tile: Tile | undefined): void {
+        this.highlightedCoordinates = tile?.position;
         this.refresh();
         this.parentScreen.changeSidebarTile(this.highlightedCoordinates);
     }
@@ -89,7 +89,7 @@ export default class MapUI implements Page {
         const x = Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth)) + this.world.viewPosition.x;
         const y = Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight)) + this.world.viewPosition.y;
 
-        const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y))!;
+        const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);
     }
 

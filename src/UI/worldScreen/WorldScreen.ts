@@ -54,7 +54,7 @@ export default class WorldScreen implements Page {
         this.mapUI.handleKeyDown(ev);
     }
 
-    changeSidebarTile(position: GridCoordinates | null): void {
+    changeSidebarTile(position: GridCoordinates | undefined): void {
         this.tileSidebar.changeTile(position);
     }
 }
