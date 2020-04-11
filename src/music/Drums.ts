@@ -14,25 +14,25 @@ export class Drumkit {
         private readonly samples: Record<SampleNames, Promise<SampleData>>
     ) {}
 
-    private readonly closedHiHat: Promise<SampleInstrument> = SampleInstrument.fromSample(
+    private readonly closedHiHat = SampleInstrument.fromSample(
         this.samples.white_noise,
         { attack: 0.01, decay: 0.05 },
         0.5
     );
 
-    private readonly openHiHat: Promise<SampleInstrument> = SampleInstrument.fromSample(
+    private readonly openHiHat = SampleInstrument.fromSample(
         this.samples.white_noise,
         { attack: 0.01, decay: 0.2 },
         0.5
     );
 
-    private readonly snare: Promise<SampleInstrument> = SampleInstrument.fromSample(
+    private readonly snare = SampleInstrument.fromSample(
         this.samples.snare,
         { sustain: 1 },
         1.5
     );
 
-    private readonly kick: Promise<SampleInstrument> = SampleInstrument.fromSample(
+    private readonly kick = SampleInstrument.fromSample(
         this.samples.kick,
         { sustain: 1 },
         1.5

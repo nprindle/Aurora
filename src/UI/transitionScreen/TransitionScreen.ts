@@ -30,7 +30,7 @@ export default class TransitionScreen implements Page {
             this.quote = Quote.getRandomQuote();
         }
 
-        // Add in leading quote after leading whitespace
+        // Add in leading quotation mark after leading whitespace
         const quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
         UI.fillHTML(this.html, [
             UI.makeDivContaining([

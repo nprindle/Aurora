@@ -190,7 +190,7 @@ const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>
 
 export const worldQuerySchema = S.discriminating("queryType", worldQuerySchemas);
 
-// Tile queries are possible infinitely recursive, so we must define these
+// Tile queries are possibly infinitely recursive, so we must define these
 // with mutual recursion. The 'lazy's prevent ReferenceErrors.
 /* eslint-disable @typescript-eslint/no-use-before-define */
 

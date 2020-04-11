@@ -39,9 +39,9 @@ export namespace UI {
     }
 
     // Modifies an element in-place to use Twitter emoji and returns it
-    export function patchEmoji(el: HTMLElement): HTMLElement {
-        twemoji.parse(el, { folder: "svg", ext: ".svg" });
-        return el;
+    export function patchEmoji(element: HTMLElement): HTMLElement {
+        twemoji.parse(element, { folder: "svg", ext: ".svg" });
+        return element;
     }
 
     export function containsEmoji(str: string): boolean {
@@ -132,9 +132,9 @@ export namespace UI {
 
     // clears the parent (usually a div) and fills it with new contents
     export function fillHTML(parent: HTMLElement, contents: HTMLElement[]): void {
-        parent.innerHTML = ""; // clear the parent
+        parent.innerHTML = "";
         for (const element of contents) {
-            parent.appendChild(element); // add elements to the parent
+            parent.appendChild(element);
         }
     }
 }

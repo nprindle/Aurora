@@ -34,6 +34,7 @@ export namespace Storage {
      * Check if an item entry exists in local storage
      */
     export function hasItem(key: string): boolean {
+        // Calling hasOwnProperty directly on an object is considered unsafe
         return isSupported && Object.prototype.hasOwnProperty.call(window.localStorage, key);
     }
 
