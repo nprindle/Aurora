@@ -4,7 +4,7 @@ import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { SolarPanelsTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class SolarPanels extends Tile {
     protected texture: HTMLImageElement = SolarPanelsTexture;

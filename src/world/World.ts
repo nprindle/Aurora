@@ -7,7 +7,7 @@ import GridCoordinates from "./GridCoordinates.js";
 import Species from "../resources/Species.js";
 import Ruins from "./Tiles/Ruins.js";
 import { WorldGenerationParameters } from "./WorldGenerationParameters.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class World {
 

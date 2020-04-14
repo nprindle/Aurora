@@ -17,7 +17,7 @@ import {
     roadRequirement, techRequirement, speciesPopulationRequirement, nearRuinsOrMonolith
 } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionLaboratory extends Tile {
 

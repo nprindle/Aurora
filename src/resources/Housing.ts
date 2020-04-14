@@ -1,5 +1,5 @@
 import Species from "./Species";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 // a single tile's population capacity for a specific species of worker
 export default class Housing {

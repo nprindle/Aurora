@@ -3,7 +3,7 @@ import TileProject from "../tileProjects/TileProject.js";
 import Conversion from "../resources/Conversion.js";
 import Housing from "../resources/Housing.js";
 import World from "./World.js";
-import { Schema, Schemas as S } from "../serialize/Schema.js";
+import { Schema, Schemas as S } from "@nprindle/augustus";
 
 /**
  * A tile is an object in the world that occupies a map square

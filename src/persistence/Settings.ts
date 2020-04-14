@@ -1,4 +1,4 @@
-import { Schemas } from "../serialize/Schema.js";
+import { Schemas } from "@nprindle/augustus";
 import { Storage } from "./Storage.js";
 import { MusicManager } from "../music/MusicManager.js";
 

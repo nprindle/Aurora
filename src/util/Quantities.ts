@@ -1,4 +1,4 @@
-import { Schema, Schemas as S } from "../serialize/Schema.js";
+import { Schema, Schemas as S } from "@nprindle/augustus";
 
 /* Counts positive quantities of instances of some type.
  * e.g. the amounts of each resource in the inventory

@@ -1,5 +1,5 @@
-import { Schema } from "../serialize/Schema.js";
-import { DecodeResult, jsonEncodeWith, jsonDecodeWith } from "../serialize/Serialize.js";
+import { Schema } from "@nprindle/augustus";
+import { DecodeResult, jsonEncodeWith, jsonDecodeWith } from "@nprindle/augustus";
 
 export namespace Storage {
     /**

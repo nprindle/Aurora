@@ -16,7 +16,7 @@ import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { hasTech, tileExists, orQuery, notQuery } from "../../queries/Queries.js";
 import { roadRequirement } from "../../queries/DescribedTileQuery.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Wasteland extends Tile {
 

@@ -11,7 +11,7 @@ import HumanMonolith from "../world/Tiles/HumanMonolith";
 import Species from "../resources/Species";
 import Ruins from "../world/Tiles/Ruins";
 import Recycler from "../world/Tiles/Recycler";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 // a requirement for completing a tileproject
 export default class DescribedTileQuery {

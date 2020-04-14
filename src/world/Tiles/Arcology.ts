@@ -9,7 +9,7 @@ import TileProject from "../../tileProjects/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
 import { techRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech, speciesHasPopulation, notQuery } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Arcology extends Tile {
 

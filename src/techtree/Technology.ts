@@ -1,6 +1,6 @@
 import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
-import { Schema, Schemas as S, LazySchemas as LS } from "../serialize/Schema.js";
+import { Schema, Schemas as S, LazySchemas as LS } from "@nprindle/augustus";
 
 export const ResearchableTechnologies: Technology[] = [];
 

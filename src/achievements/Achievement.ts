@@ -1,5 +1,5 @@
 import { Objects } from "../util/Objects.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 import Game from "../Game.js";
 import Lander from "../world/Tiles/Lander.js";
 import Hydroponics from "../world/Tiles/Hydroponics.js";

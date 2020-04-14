@@ -11,7 +11,7 @@ import Resource from "../../resources/Resource.js";
 import Greenhouse from "./Greenhouse.js";
 import Road from "./Road.js";
 import { stripIndent } from "../../util/Text.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Lander extends Tile {
     protected texture: HTMLImageElement = LanderTexture;

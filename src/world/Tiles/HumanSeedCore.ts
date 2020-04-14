@@ -2,7 +2,7 @@ import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HumanSeedCoreTexture } from "../../UI/Images.js";
 import { stripIndent } from "../../util/Text.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanSeedCore extends Tile {
     protected texture: HTMLImageElement = HumanSeedCoreTexture;

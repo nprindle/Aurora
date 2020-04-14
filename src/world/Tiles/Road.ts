@@ -4,7 +4,7 @@ import { RoadTextureCross, RoadTextureVertical, RoadTextureHorizontal, RoadTextu
     RoadTextureTWest, RoadTextureCornerTopRight, RoadTextureCornerBottomRight, RoadTextureCornerTopLeft,
     RoadTextureCornerBottomLeft, } from "../../UI/Images.js";
 import World from "../World.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class Road extends Tile {
