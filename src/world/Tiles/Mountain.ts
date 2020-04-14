@@ -10,7 +10,7 @@ import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import MiningFacility from "./MiningFacility.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Mountain extends Tile {
     protected texture: HTMLImageElement = MountainTexture;

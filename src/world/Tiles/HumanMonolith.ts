@@ -11,7 +11,7 @@ import { SingularityEngineeringTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { techRequirement, tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanMonolith extends Tile {
     protected texture: HTMLImageElement = HumanMonolithTexture;

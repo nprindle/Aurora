@@ -5,7 +5,7 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Species from "../../resources/Species.js";
 import { GreenhouseTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Greenhouse extends Tile {
     protected texture: HTMLImageElement = GreenhouseTexture;

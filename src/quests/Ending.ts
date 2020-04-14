@@ -1,4 +1,4 @@
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Ending {
     constructor(

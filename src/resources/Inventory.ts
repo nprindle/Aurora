@@ -5,7 +5,7 @@ import Quantities from "../util/Quantities.js";
 import Species from "./Species.js";
 import World from "../world/World.js";
 import { clamp } from "../util/Util.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Inventory {
 

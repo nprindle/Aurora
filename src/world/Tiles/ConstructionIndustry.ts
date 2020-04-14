@@ -19,7 +19,7 @@ import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionIndustry extends Tile {
 

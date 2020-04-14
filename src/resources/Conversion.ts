@@ -1,6 +1,6 @@
 import Cost from "./Cost.js";
 import { NonEmptyArray } from "../util/Arrays.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 /* a conversion from input resources to output resources that a tile can perform between turns if the conversion's
  * input resources are available

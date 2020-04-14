@@ -6,7 +6,7 @@ import Tile, { typeofTileSchema } from "../world/Tile";
 import Road from "../world/Tiles/Road";
 import Resource from "../resources/Resource";
 import { impossible } from "../util/Util";
-import { Schema, Schemas as S } from "../serialize/Schema.js";
+import { Schema, Schemas as S } from "@nprindle/augustus";
 
 // a predicate evaluated relative to a specific position in the world
 export type TilePredicate = (game: Game, position: GridCoordinates) => boolean;

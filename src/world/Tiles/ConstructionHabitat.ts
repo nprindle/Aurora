@@ -15,7 +15,7 @@ import Hydroponics from "./Hydroponics.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import RobotHive from "./RobotHive.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionHabitat extends Tile {
 

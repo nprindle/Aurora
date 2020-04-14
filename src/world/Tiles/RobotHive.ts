@@ -10,7 +10,7 @@ import Game from "../../Game.js";
 import { availableHousingRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import { SwarmRoboticsTech } from "../../techtree/TechTree.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class RobotHive extends Tile {
 
