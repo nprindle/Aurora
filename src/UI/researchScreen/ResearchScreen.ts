@@ -38,8 +38,9 @@ export default class ResearchScreen implements Page {
         }
 
         let historyHeader = UI.makeHeader("Previous Research Projects", 1, ["previous-research-header"]);
-        const techHistory =
-        this.game.getUnlockedTechnologies().filter(tech => tech.visible).map(tech => UI.makePara(`• ${tech.name}`, ["previous-research"]));
+        const techHistory = this.game.getUnlockedTechnologies()
+            .filter(tech => tech.visible)
+            .map(tech => UI.makePara(`• ${tech.name}`, ["previous-research"]));
 
         if (techHistory.length === 0) {
             historyHeader = UI.makeDiv();
