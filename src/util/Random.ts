@@ -5,12 +5,14 @@ import { NonEmptyArray } from "./Arrays.js";
  */
 export namespace Random {
 
-    // random real number (almost always non-integer) within the given range
+    // random real number (almost always non-integer) within the given range,
+    // inclusive in the lower bound and exclusive in the upper bound
     export function realBetween(min: number, max: number): number {
         return Math.random() * (max - min) + min;
     }
 
-    // random integer within the given range
+    // random integer within the given range, inclusive in the lower bound and
+    // exclusive in the upper bound
     export function intBetween(min: number, max: number): number {
         return Math.floor(realBetween(min, max));
     }
@@ -20,7 +22,7 @@ export namespace Random {
         return arr[intBetween(0, arr.length)];
     }
 
-    // return true with a chance probability and false with a (1 - chance) probability
+    // return true with a 'chance' probability and false with a '(1 - chance)' probability
     export function bool(chance: number = 0.5): boolean {
         return Math.random() < chance;
     }
