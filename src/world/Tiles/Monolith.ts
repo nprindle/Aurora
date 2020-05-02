@@ -79,7 +79,7 @@ export default class Monolith extends Tile {
         return Monolith.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Monolith(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Monolith(position));
 }
 
 tileTypes[Monolith.name] = Monolith;

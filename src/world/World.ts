@@ -118,7 +118,7 @@ export default class World {
         return capacity;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         width: S.aNumber,
         height: S.aNumber,
         grid: S.arrayOf(S.arrayOf(tileSchema)),

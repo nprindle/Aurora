@@ -60,7 +60,7 @@ export default class Lander extends Tile {
         return Lander.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Lander(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Lander(position));
 }
 
 tileTypes[Lander.name] = Lander;

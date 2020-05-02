@@ -49,7 +49,7 @@ export default class Mountain extends Tile {
         return Mountain.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Mountain(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Mountain(position));
 }
 
 tileTypes[Mountain.name] = Mountain;

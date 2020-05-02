@@ -53,7 +53,7 @@ export default class RobotHive extends Tile {
         return RobotHive.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         populationCapacity: Housing.schema,
     }, ({ position, populationCapacity }) => {

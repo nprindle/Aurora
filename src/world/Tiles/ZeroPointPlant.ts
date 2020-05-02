@@ -33,7 +33,7 @@ export default class ZeroPointPlant extends Tile {
         return ZeroPointPlant.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

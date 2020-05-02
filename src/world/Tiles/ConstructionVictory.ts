@@ -69,7 +69,7 @@ export default class ConstructionVictory extends Tile {
         return ConstructionVictory.tileDescription;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,

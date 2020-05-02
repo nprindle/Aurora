@@ -24,7 +24,7 @@ export default class HumanSeedCore extends Tile {
         return HumanSeedCore.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanSeedCore(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanSeedCore(position));
 }
 
 tileTypes[HumanSeedCore.name] = HumanSeedCore;

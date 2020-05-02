@@ -30,7 +30,7 @@ export default class Mineshaft extends Tile {
         return Mineshaft.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

@@ -88,7 +88,7 @@ export default class ConstructionIndustry extends Tile {
         return ConstructionIndustry.tileDescription;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,

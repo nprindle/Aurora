@@ -169,7 +169,7 @@ export default class Inventory {
         return clone;
     }
 
-    static schema = S.injecting(
+    static readonly schema = S.injecting(
         S.recordOf({
             resourceQuantities: Quantities.schema(Resource.schema),
             populationQuantities: Quantities.schema(Species.schema),

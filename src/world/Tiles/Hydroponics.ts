@@ -30,7 +30,7 @@ export default class Hydroponics extends Tile {
         return Hydroponics.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

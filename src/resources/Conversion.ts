@@ -61,7 +61,7 @@ export default class Conversion {
         Conversion.nextNumber = priority;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         priority: S.aNumber,
         enabled: S.aBoolean,
         inputs: S.arrayOf(Cost.schema),

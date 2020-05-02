@@ -17,5 +17,5 @@ export default class Species {
     static readonly values = Objects.multitonValues(Species);
     static readonly entries = Objects.multitonEntries(Species);
 
-    static schema = S.mapping(Objects.multitonEntries(Species));
+    static readonly schema = S.mapping(Objects.multitonEntries(Species));
 }
