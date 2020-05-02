@@ -14,20 +14,8 @@ export default class Species {
         public readonly survivalCost: Cost, // resources required per worker to keep workers of this species alive
     ) {}
 
-    // returns a list of all species instances
-    static values(): Species[] {
-        return Objects.safeKeys(Species)
-            .map(k => Species[k])
-            .filter((v): v is Species => v instanceof Species);
-    }
+    static readonly values = Objects.multitonValues(Species);
+    static readonly entries = Objects.multitonEntries(Species);
 
-    static entries(): Record<string, Species> {
-        const acc: Record<string, Species> = {};
-        Objects.safeEntries(Species)
-            .filter((t): t is [keyof typeof Species, Species] => t[1] instanceof Species)
-            .forEach(([k, v]) => { acc[k] = v; });
-        return acc;
-    }
-
-    static schema = S.mapping(Species.entries());
+    static schema = S.mapping(Objects.multitonEntries(Species));
 }

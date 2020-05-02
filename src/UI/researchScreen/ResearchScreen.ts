@@ -21,7 +21,7 @@ export default class ResearchScreen implements Page {
 
         const possibleTechs: Technology[] = this.game.getResearchOptions();
         const researchResources: Resource[] =
-        Resource.values().filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
+        Resource.values.filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
 
         const researchResourcesHTML: HTMLElement = UI.makeDiv(["research-resources"]);
         if (researchResources.length !== 0) {
