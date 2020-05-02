@@ -49,7 +49,7 @@ export default class Arcology extends Tile {
         return Arcology.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         populationCapacity: Housing.schema,
     }, ({ position, populationCapacity }) => {

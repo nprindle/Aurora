@@ -30,7 +30,7 @@ export default class DescribedTileQuery {
         return this.description;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             description: S.aString,
             query: tileQuerySchema,

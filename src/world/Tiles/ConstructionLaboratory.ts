@@ -72,7 +72,7 @@ export default class ConstructionLaboratory extends Tile {
         return ConstructionLaboratory.tileDescription;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,

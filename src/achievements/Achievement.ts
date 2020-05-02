@@ -108,5 +108,5 @@ export default class Achievement {
         return acc;
     }
 
-    static schema = S.mapping(Achievement.entries());
+    static readonly schema = S.mapping(Achievement.entries());
 }

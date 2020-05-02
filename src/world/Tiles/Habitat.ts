@@ -49,7 +49,7 @@ export default class Habitat extends Tile {
         return Habitat.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         populationCapacity: Housing.schema
     }, ({ position, populationCapacity }) => {

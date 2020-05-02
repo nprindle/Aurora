@@ -84,7 +84,7 @@ export default class Road extends Tile {
         return RoadTextureVertical;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Road(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Road(position));
 }
 
 tileTypes[Road.name] = Road;

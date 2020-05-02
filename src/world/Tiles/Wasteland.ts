@@ -110,7 +110,7 @@ export default class Wasteland extends Tile {
         }
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             textureVariant: wastelandVariantSchema,

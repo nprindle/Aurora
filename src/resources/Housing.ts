@@ -8,7 +8,7 @@ export default class Housing {
         public readonly capacity: number,
     ) {}
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         species: Species.schema,
         capacity: S.aNumber,
     }, ({ species, capacity }) => new Housing(species, capacity));

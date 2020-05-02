@@ -21,7 +21,7 @@ export class SettingsOptions {
         return new SettingsOptions();
     }
 
-    static schema = Schemas.classOf({
+    static readonly schema = Schemas.classOf({
         viewWidth: Schemas.aNumber,
         viewHeight: Schemas.aNumber,
         volume: Schemas.aNumber,

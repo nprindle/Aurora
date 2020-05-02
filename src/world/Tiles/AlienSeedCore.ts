@@ -24,7 +24,7 @@ export default class AlienSeedCore extends Tile {
         return AlienSeedCore.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienSeedCore(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienSeedCore(position));
 }
 
 tileTypes[AlienSeedCore.name] = AlienSeedCore;

@@ -21,7 +21,7 @@ export default class NeuralEmulator extends Tile {
         return NeuralEmulator.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new NeuralEmulator(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new NeuralEmulator(position));
 }
 
 tileTypes[NeuralEmulator.name] = NeuralEmulator;

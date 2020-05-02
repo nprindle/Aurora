@@ -46,7 +46,7 @@ export default class Recycler extends Tile {
         }
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             resourceConversions: S.arrayOf(Conversion.schema),

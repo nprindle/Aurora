@@ -28,5 +28,5 @@ export default class Resource {
     static readonly entries = Objects.multitonEntries(Resource);
     static readonly values = Objects.multitonValues(Resource);
 
-    static schema = S.mapping(Resource.entries);
+    static readonly schema = S.mapping(Resource.entries);
 }

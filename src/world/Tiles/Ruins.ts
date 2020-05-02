@@ -49,7 +49,7 @@ export default class Ruins extends Tile {
         }
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             textureVariant: S.union(S.literal(1 as const), S.literal(2 as const)),

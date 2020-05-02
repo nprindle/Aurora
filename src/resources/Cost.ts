@@ -11,7 +11,7 @@ export default class Cost {
         return `${this.resource.name} x${this.quantity}`;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         resource: Resource.schema,
         quantity: S.aNumber,
     }, ({ resource, quantity }) => new Cost(resource, quantity));

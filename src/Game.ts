@@ -133,7 +133,7 @@ export default class Game {
         conversions[fromIndex].priority = priority;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             world: World.schema,
             inventory: Inventory.schema,

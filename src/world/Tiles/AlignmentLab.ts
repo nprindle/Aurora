@@ -34,7 +34,7 @@ export default class AlignmentLab extends Tile {
         return AlignmentLab.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

@@ -55,7 +55,7 @@ export default class HumanMonolith extends Tile {
         return HumanMonolith.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
 }
 
 tileTypes[HumanMonolith.name] = HumanMonolith;

@@ -31,7 +31,7 @@ export default class PsychLab extends Tile {
         return PsychLab.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {
