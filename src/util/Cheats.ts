@@ -40,7 +40,7 @@ class Cheats {
     }
 
     freeResources(): void {
-        for (const resource of Resource.values()) {
+        for (const resource of Resource.values) {
             this.addResource(resource, 1000000);
         }
     }

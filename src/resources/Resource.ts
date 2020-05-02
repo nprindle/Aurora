@@ -25,20 +25,8 @@ export default class Resource {
         public readonly name: string,
     ) {}
 
-    // returns a list of all resource instances
-    static values(): Resource[] {
-        return Objects.safeKeys(Resource)
-            .map(k => Resource[k])
-            .filter((v): v is Resource => v instanceof Resource);
-    }
+    static readonly entries = Objects.multitonEntries(Resource);
+    static readonly values = Objects.multitonValues(Resource);
 
-    static entries(): Record<string, Resource> {
-        const acc: Record<string, Resource> = {};
-        Objects.safeEntries(Resource)
-            .filter((t): t is [keyof typeof Resource, Resource] => t[1] instanceof Resource)
-            .forEach(([k, v]) => { acc[k] = v; });
-        return acc;
-    }
-
-    static schema = S.mapping(Resource.entries());
+    static schema = S.mapping(Resource.entries);
 }
