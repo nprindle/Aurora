@@ -1,10 +1,12 @@
 import { Random } from "../../util/Random.js";
-import { NonEmptyArray, Arrays } from "../../util/Arrays.js";
+import { NonEmptyArray } from "../../util/Arrays.js";
 import { stripIndent } from "../../util/Text.js";
 
 export default class Quote {
 
-    // track this to avoid showing the same quote twice in a row
+    // track this to make sure all quotes are shown before repeating
+    // when array is empty, it will be refilled with shuffled quotes
+    private static quoteOrder: Quote[] = [];
     private static lastQuote?: Quote;
 
     constructor(
@@ -12,7 +14,7 @@ export default class Quote {
         readonly attribution: string
     ) {}
 
-    private static readonly QuotesList: NonEmptyArray<Quote> = [
+    private static readonly quotesList: NonEmptyArray<Quote> = [
         new Quote(
             stripIndent`
                 At least 10^58 human lives could be created in emulation even
@@ -342,23 +344,19 @@ export default class Quote {
     ];
 
     static getRandomQuote(): Quote {
-        // try to avoid choosing the same quote twice in a row
-        const newQuotes = this.QuotesList.filter(q => q !== Quote.lastQuote);
-        // make sure that it's safe to treat the filtered array as nonempty
-        if (Arrays.isNonEmpty(newQuotes)) {
-            const quote = Random.fromArray(newQuotes);
-            Quote.lastQuote = quote;
-            return quote;
-        } else {
-            // if the filtered array is empty (which shouldn't ever happen), fall back to totally random
-            const quote = Random.fromArray(this.QuotesList);
-            Quote.lastQuote = quote;
-            return quote;
+        if (this.quoteOrder.length === 0) {
+            // If we only re-shuffle, we might get the same quote twice in a row
+            do {
+                this.quoteOrder = Random.shuffle(Quote.quotesList);
+            } while (this.quoteOrder[0] === Quote.lastQuote);
         }
-
+        // Array must be nonempty, so pop() will succeed
+        const quote = this.quoteOrder.pop()!;
+        Quote.lastQuote = quote;
+        return quote;
     }
 
     static getQuote(index: number): Quote {
-        return this.QuotesList[index];
+        return Quote.quotesList[index];
     }
 }
