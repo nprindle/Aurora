@@ -11,7 +11,7 @@ import HumanMonolith from "../world/Tiles/HumanMonolith";
 import Species from "../resources/Species";
 import Ruins from "../world/Tiles/Ruins";
 import Recycler from "../world/Tiles/Recycler";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 // a requirement for completing a tileproject
 export default class DescribedTileQuery {
@@ -30,10 +30,10 @@ export default class DescribedTileQuery {
         return this.description;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             description: S.aString,
-            query: tileQuerySchema(),
+            query: tileQuerySchema,
         }),
         (x: DescribedTileQuery) => ({ description: x.description, query: x.query }),
         ({ description, query }) => new DescribedTileQuery(description, query),

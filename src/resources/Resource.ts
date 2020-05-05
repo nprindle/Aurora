@@ -1,5 +1,5 @@
 import { Objects } from "../util/Objects.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Resource {
     // all resource instances are defined here
@@ -14,7 +14,6 @@ export default class Resource {
     static readonly Superconductor = new Resource("🧵 Superconductor");
     static readonly SmartMatter = new Resource("💠 SmartMatter");
 
-    // knowledge types used to research technologies are also resources
     static readonly EngineeringKnowledge = new Resource("⚙️ Engineering Data");
     static readonly PsychKnowledge = new Resource("🧠 Psychological Data");
     static readonly AlienKnowledge = new Resource("🛸 Alien Data");
@@ -26,20 +25,8 @@ export default class Resource {
         public readonly name: string,
     ) {}
 
-    // returns a list of all resource instances
-    static values(): Resource[] {
-        return Objects.safeKeys(Resource)
-            .map(k => Resource[k])
-            .filter((v): v is Resource => v instanceof Resource);
-    }
+    static readonly entries = Objects.multitonEntries(Resource);
+    static readonly values = Objects.multitonValues(Resource);
 
-    static entries(): Record<string, Resource> {
-        const acc: Record<string, Resource> = {};
-        Objects.safeEntries(Resource)
-            .filter((t): t is [keyof typeof Resource, Resource] => t[1] instanceof Resource)
-            .forEach(([k, v]) => { acc[k] = v; });
-        return acc;
-    }
-
-    static schema = S.mapping(Resource.entries());
+    static readonly schema = S.mapping(Resource.entries);
 }

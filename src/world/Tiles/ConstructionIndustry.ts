@@ -19,7 +19,7 @@ import XenoFactory from "./XenoFactory.js";
 import ZeroPointPlant from "./ZeroPointPlant.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -31,8 +31,8 @@ export default class ConstructionIndustry extends Tile {
 
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Wasteland(position, this.wastelandVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
             }, [], [], [],
         ),
 
@@ -88,7 +88,7 @@ export default class ConstructionIndustry extends Tile {
         return ConstructionIndustry.tileDescription;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,

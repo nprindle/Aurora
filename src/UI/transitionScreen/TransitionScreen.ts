@@ -16,7 +16,7 @@ export default class TransitionScreen implements Page {
     private doneLoading: boolean = false;
 
     constructor(
-        private run: Game,
+        private game: Game,
         private quoteIndex?: number,
     ) {
         this.html = UI.makeDiv();
@@ -30,7 +30,7 @@ export default class TransitionScreen implements Page {
             this.quote = Quote.getRandomQuote();
         }
 
-        // Add in leading quote after leading whitespace
+        // Add in leading quotation mark after leading whitespace
         const quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
         UI.fillHTML(this.html, [
             UI.makeDivContaining([
@@ -45,8 +45,8 @@ export default class TransitionScreen implements Page {
 
     startLoading(): void {
         const startTime = Date.now();
-        this.run.completeTurn();
-        GameSave.saveProgress({ game: this.run, nextConversionPriority: Conversion.unsafeGetNextPriority() });
+        this.game.completeTurn();
+        GameSave.saveProgress({ game: this.game, nextConversionPriority: Conversion.unsafeGetNextPriority() });
         const elapsedTime = Date.now() - startTime;
 
         setTimeout(() => {
@@ -58,7 +58,7 @@ export default class TransitionScreen implements Page {
     }
 
     private continueToNextTurn(): void {
-        GameWindow.show(new WorldScreen(this.run));
+        GameWindow.show(new WorldScreen(this.game));
     }
 
     handleKeyDown(): void {

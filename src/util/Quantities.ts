@@ -1,4 +1,4 @@
-import { Schema, Schemas as S } from "../serialize/Schema.js";
+import { Schema, Schemas as S } from "@nprindle/augustus";
 
 /* Counts positive quantities of instances of some type.
  * e.g. the amounts of each resource in the inventory
@@ -21,7 +21,7 @@ export default class Quantities<T> {
     }
 
     get(key: T): number {
-        return this.map.get(key) || 0;
+        return this.map.get(key) ?? 0;
     }
 
     set(key: T, quantity: number): void {

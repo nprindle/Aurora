@@ -1,5 +1,5 @@
 import Game from "../Game.js";
-import { DomainOf, Schemas as S } from "../serialize/Schema.js";
+import { DomainOf, Schemas as S } from "@nprindle/augustus";
 import { Storage } from "./Storage.js";
 
 /**

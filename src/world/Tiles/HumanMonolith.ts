@@ -11,7 +11,7 @@ import { SingularityEngineeringTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { techRequirement, tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanMonolith extends Tile {
     protected texture: HTMLImageElement = HumanMonolithTexture;
@@ -55,7 +55,7 @@ export default class HumanMonolith extends Tile {
         return HumanMonolith.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
 }
 
 tileTypes[HumanMonolith.name] = HumanMonolith;

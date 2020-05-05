@@ -1,5 +1,5 @@
 import { Random } from "../util/Random.js";
-import { NonEmptyArray } from "../util/Arrays.js";
+import { NonEmptyArray, Arrays } from "../util/Arrays.js";
 
 export default class Rhythm {
 
@@ -39,12 +39,14 @@ export default class Rhythm {
         this.subdivision = [];
         const min: number = Math.min(...Rhythm.divisions);
         while (beats >= min) {
-            // Beats must be larger than the minimum of divisions, so this cast
-            // is safe
             const validDivisions = Rhythm.divisions.filter(num => num <= beats) as NonEmptyArray<number>;
-            const currentDivision = Random.fromArray(validDivisions);
-            beats -= currentDivision;
-            this.subdivision.push(currentDivision);
+            // beats must be larger than the minimum division, so this will
+            // always be nonempty; the loop will always terminate
+            if (Arrays.isNonEmpty(validDivisions)) {
+                const currentDivision = Random.fromArray(validDivisions);
+                beats -= currentDivision;
+                this.subdivision.push(currentDivision);
+            }
         }
         if (beats > 0) {
             this.subdivision.push(beats);

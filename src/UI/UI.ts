@@ -39,9 +39,9 @@ export namespace UI {
     }
 
     // Modifies an element in-place to use Twitter emoji and returns it
-    export function patchEmoji(el: HTMLElement): HTMLElement {
-        twemoji.parse(el, { folder: "svg", ext: ".svg" });
-        return el;
+    export function patchEmoji(element: HTMLElement): HTMLElement {
+        twemoji.parse(element, { folder: "svg", ext: ".svg" });
+        return element;
     }
 
     export function containsEmoji(str: string): boolean {
@@ -119,6 +119,18 @@ export namespace UI {
         return div;
     }
 
+    // Make a slider with an adjacent label displaying its current value
+    export function makeTrackedSlider(
+        label: string, min: number, max: number, def: number, callback: (value: number) => void, step?: number
+    ): HTMLElement {
+        const tracker = UI.makePara(def.toString());
+        const slider = UI.makeSlider(label, min, max, def, (value: number) => {
+            callback(value);
+            tracker.innerText = value.toString();
+        }, step);
+        return UI.makeDivContaining([slider, tracker], ["settings-slider"]);
+    }
+
     // creates an HTML canvas for drawing graphics
     export function makeCanvas(width: number, height: number, classes?: string[]): HTMLCanvasElement {
         const canvas = document.createElement("canvas");
@@ -132,9 +144,9 @@ export namespace UI {
 
     // clears the parent (usually a div) and fills it with new contents
     export function fillHTML(parent: HTMLElement, contents: HTMLElement[]): void {
-        parent.innerHTML = ""; // clear the parent
+        parent.innerHTML = "";
         for (const element of contents) {
-            parent.appendChild(element); // add elements to the parent
+            parent.appendChild(element);
         }
     }
 }

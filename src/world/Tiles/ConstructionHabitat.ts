@@ -15,7 +15,7 @@ import Hydroponics from "./Hydroponics.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import RobotHive from "./RobotHive.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -28,8 +28,8 @@ export default class ConstructionHabitat extends Tile {
     possibleProjects: TileProject[] = [
 
         new TileProject("Break down construction site", "Revert this location to wasteland",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Wasteland(position, this.wastelandVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
             }, [], [], [],
         ),
 
@@ -80,7 +80,7 @@ export default class ConstructionHabitat extends Tile {
         return ConstructionHabitat.tileDescription;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,

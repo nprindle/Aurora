@@ -19,7 +19,7 @@ export const Frequency = newtype<Frequency>();
 
 export interface Note {
     midiNumber: MidiNumber; // the MIDI number of the note
-    start: number; // starting time in seconds
+    start: number; // starting time in seconds (relative to creation of an 'AudioContext')
     duration: number; // duration in seconds
     endNote?: MidiNumber; // MIDI number of note to end on. if undefined, this has no effect
 }

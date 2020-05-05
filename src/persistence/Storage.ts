@@ -1,5 +1,5 @@
-import { Schema } from "../serialize/Schema.js";
-import { DecodeResult, jsonEncodeWith, jsonDecodeWith } from "../serialize/Serialize.js";
+import { Schema } from "@nprindle/augustus";
+import { DecodeResult, jsonEncodeWith, jsonDecodeWith } from "@nprindle/augustus";
 
 export namespace Storage {
     /**
@@ -34,6 +34,7 @@ export namespace Storage {
      * Check if an item entry exists in local storage
      */
     export function hasItem(key: string): boolean {
+        // Calling hasOwnProperty directly on an object is considered unsafe
         return isSupported && Object.prototype.hasOwnProperty.call(window.localStorage, key);
     }
 

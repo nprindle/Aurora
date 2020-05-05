@@ -9,25 +9,25 @@ import ResearchScreen from "../researchScreen/ResearchScreen.js";
 export default class WorldScreenHeader implements Page {
     readonly html: HTMLElement;
 
-    constructor(private run: Game, private buttonState: "disabled" | "enabled" = "enabled") {
+    constructor(private game: Game, private buttonState: "disabled" | "enabled" = "enabled") {
         this.html = UI.makeDiv(["world-screen-header"]);
         this.refresh();
     }
 
     refresh(): void {
         const quitButton = UI.makeButton("Pause Game", () => {
-            GameWindow.show(new PauseMenu(this.run));
+            GameWindow.show(new PauseMenu(this.game));
         }, [], this.buttonState);
         const transitionButton = UI.makeButton("Next Turn", () => {
-            const transitionScreen = new TransitionScreen(this.run);
+            const transitionScreen = new TransitionScreen(this.game);
             GameWindow.show(transitionScreen);
             transitionScreen.startLoading();
         }, [], this.buttonState);
         const productionScreenButton = UI.makeButton("Manage Production", () => {
-            GameWindow.show(new ProductionScreen(this.run));
+            GameWindow.show(new ProductionScreen(this.game));
         }, [], this.buttonState);
         const researchScreenButton = UI.makeButton("Research Projects", () => {
-            GameWindow.show(new ResearchScreen(this.run));
+            GameWindow.show(new ResearchScreen(this.game));
         }, [], this.buttonState);
 
         UI.fillHTML(this.html, [

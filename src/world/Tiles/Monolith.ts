@@ -15,7 +15,7 @@ import Game from "../../Game.js";
 import HumanMonolith from "./HumanMonolith.js";
 import { tileWithinDistanceRequirement, techRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Monolith extends Tile {
     protected texture: HTMLImageElement = MonolithTexture;
@@ -79,7 +79,7 @@ export default class Monolith extends Tile {
         return Monolith.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Monolith(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Monolith(position));
 }
 
 tileTypes[Monolith.name] = Monolith;

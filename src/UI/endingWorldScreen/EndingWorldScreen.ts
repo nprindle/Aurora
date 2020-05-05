@@ -21,13 +21,13 @@ export default class EndingWorldScreen implements Page {
     private questIndicator: QuestIndicator;
     readonly html: HTMLElement;
 
-    constructor(private run: Game, private center: GridCoordinates, private circuitsTile: NamedTileType) {
-        this.mapUI = new MapUI(this, run.world);
-        this.tileSidebar = new TileSidebar(this, run);
+    constructor(private game: Game, private center: GridCoordinates, private circuitsTile: NamedTileType) {
+        this.mapUI = new MapUI(this, game.world);
+        this.tileSidebar = new TileSidebar(this, game);
         this.tileSidebar.changeTile(center);
-        this.inventorySidebar = new InventorySidebar(run);
-        this.header = new WorldScreenHeader(run, "disabled");
-        this.questIndicator = new QuestIndicator(run);
+        this.inventorySidebar = new InventorySidebar(game);
+        this.header = new WorldScreenHeader(game, "disabled");
+        this.questIndicator = new QuestIndicator(game);
 
         this.html = UI.makeDivContaining([
 
@@ -45,7 +45,7 @@ export default class EndingWorldScreen implements Page {
 
     // the animation for the end of the game shows the "circuits" tiles spreading out from the monolith and consuming the world
     expandCircuits(radius: number): void {
-        const world = this.run.world;
+        const world = this.game.world;
         const tilesInRadius = world.getTilesInCircle(this.center, radius);
         const targets = tilesInRadius;
         const centerTile = world.getTileAtCoordinates(this.center);
@@ -55,8 +55,8 @@ export default class EndingWorldScreen implements Page {
             }
         }
 
-        this.run.updateQuestState();
-        this.run.inventory.applyPopulationCaps();
+        this.game.updateQuestState();
+        this.game.inventory.applyPopulationCaps();
         this.refresh();
 
         if (tilesInRadius.length < (world.width * world.height)) {
@@ -64,9 +64,9 @@ export default class EndingWorldScreen implements Page {
                 this.expandCircuits(radius * 1.01 + 0.05);
             }, 100);
         } else {
-            for (const resource of this.run.inventory.getResourceList()) {
+            for (const resource of this.game.inventory.getResourceList()) {
                 // once the entire world is consumed, all resources should disappear
-                this.run.inventory.removeResource(resource, this.run.inventory.getResourceQuantity(resource));
+                this.game.inventory.removeResource(resource, this.game.inventory.getResourceQuantity(resource));
             }
             this.refresh();
         }
@@ -85,7 +85,7 @@ export default class EndingWorldScreen implements Page {
         this.mapUI.handleKeyDown(ev);
     }
 
-    changeSidebarTile(position: GridCoordinates | null): void {
+    changeSidebarTile(position: GridCoordinates | undefined): void {
         this.tileSidebar.changeTile(position);
     }
 }

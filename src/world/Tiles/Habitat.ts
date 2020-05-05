@@ -9,7 +9,7 @@ import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../tech
 import { stripIndent } from "../../util/Text.js";
 import { techRequirement } from "../../queries/DescribedTileQuery.js";
 import { speciesHasPopulation, hasTech, notQuery } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Habitat extends Tile {
 
@@ -49,7 +49,7 @@ export default class Habitat extends Tile {
         return Habitat.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         populationCapacity: Housing.schema
     }, ({ position, populationCapacity }) => {

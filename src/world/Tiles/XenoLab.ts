@@ -11,7 +11,7 @@ import Monolith from "./Monolith.js";
 import { stripIndent } from "../../util/Text.js";
 import { tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech, notQuery } from "../../queries/Queries.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class XenoLab extends Tile {
@@ -53,7 +53,7 @@ export default class XenoLab extends Tile {
         return XenoLab.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

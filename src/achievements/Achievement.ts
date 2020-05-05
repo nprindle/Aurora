@@ -1,5 +1,5 @@
 import { Objects } from "../util/Objects.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 import Game from "../Game.js";
 import Lander from "../world/Tiles/Lander.js";
 import Hydroponics from "../world/Tiles/Hydroponics.js";
@@ -12,10 +12,9 @@ import { AiResearchTech } from "../techtree/TechTree.js";
 import Resource from "../resources/Resource.js";
 import SolarPanels from "../world/Tiles/SolarArray.js";
 import Road from "../world/Tiles/Road.js";
+import { WorldPredicate } from "../queries/Queries.js";
 
 export default class Achievement {
-
-
     static readonly StartAchievement = new Achievement(
         "🚀", "One Small Step",
         "You deployed a colony on the surface of Aurora",
@@ -61,8 +60,8 @@ export default class Achievement {
     static readonly KillHumansAchievement = new Achievement(
         "💀", "Planned Obsolescence",
         "You allowed all of the human colonists to die",
-        (game: Game) => (
-            game.inventory.getPopulation(Species.Human) === 0)
+        (game: Game) =>
+            game.inventory.getPopulation(Species.Human) === 0
             && game.inventory.getPopulation(Species.Robot) > 0
             // doesn't count if the humans die during the ending sequence
             && !game.world.getTiles().some(
@@ -80,19 +79,19 @@ export default class Achievement {
     static readonly AlienEndingAchievement = new Achievement(
         "👾", "Mission Accomplished",
         "You discovered as much as possible about the aliens by freeing them to conquer the universe",
-        (game: Game) => !!game.getQuestEndState()?.equals(AlienEnding),
+        (game: Game) => game.getQuestEndState()?.equals(AlienEnding) ?? false,
     );
     static readonly TrueEndingAchievement = new Achievement(
         "🌌", "We'll make Heaven a place on Earth",
         "You uplifted humanity into a virtual utopia",
-        (game: Game) => !!game.getQuestEndState()?.equals(HumanEnding),
+        (game: Game) => game.getQuestEndState()?.equals(HumanEnding) ?? false,
     );
 
     private constructor(
         readonly emoji: string,
         readonly title: string,
         readonly description: string,
-        readonly requirement: (game: Game) => boolean,
+        readonly requirement: WorldPredicate,
     ) {}
 
     static values(): Achievement[] {
@@ -109,5 +108,5 @@ export default class Achievement {
         return acc;
     }
 
-    static schema = S.mapping(Achievement.entries());
+    static readonly schema = S.mapping(Achievement.entries());
 }
