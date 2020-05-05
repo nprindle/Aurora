@@ -1,4 +1,4 @@
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class GridCoordinates {
 
@@ -15,7 +15,7 @@ export default class GridCoordinates {
         return Math.hypot(Math.abs(this.x - other.x), Math.abs(this.y - other.y));
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         x: S.aNumber, y: S.aNumber
     }, ({ x, y }) => new GridCoordinates(x, y));
 }

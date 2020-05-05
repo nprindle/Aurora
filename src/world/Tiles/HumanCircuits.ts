@@ -1,7 +1,7 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HumanCircuitsTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanCircuits extends Tile {
     protected texture: HTMLImageElement = HumanCircuitsTexture;
@@ -22,7 +22,7 @@ export default class HumanCircuits extends Tile {
         return HumanCircuits.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanCircuits(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanCircuits(position));
 }
 
 tileTypes[HumanCircuits.name] = HumanCircuits;

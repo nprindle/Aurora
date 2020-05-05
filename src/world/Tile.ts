@@ -3,16 +3,7 @@ import TileProject from "../tileProjects/TileProject.js";
 import Conversion from "../resources/Conversion.js";
 import Housing from "../resources/Housing.js";
 import World from "./World.js";
-import { Schema, Schemas as S } from "../serialize/Schema.js";
-
-/**
- * Serializer for the type of wasteland tile texture variants. The
- * implementation is slightly unsafe, but faster than the alternative union
- * of literals. This needs to be here, since many Tiles use it, and it would
- * throw a ReferenceError at runtime otherwise.
- */
-export const wastelandVariantSchema: Schema<1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5> =
-    S.constrain(S.aNumber, x => 1 <= x && x <= 5) as Schema<1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5>;
+import { Schema, Schemas as S } from "@nprindle/augustus";
 
 /**
  * A tile is an object in the world that occupies a map square
@@ -28,7 +19,7 @@ export default abstract class Tile {
     // conversion from input resources to output resources that the tile can perform at the end of each turn
     resourceConversions: Conversion[] = [];
 
-    readonly populationCapacity: Housing | undefined = undefined;
+    readonly populationCapacity?: Housing = undefined;
 
     // this provides a key into the ImageCache, which preloads all of the images so that we can synchronously draw them to the map canvas
     protected abstract readonly texture: HTMLImageElement;
@@ -93,4 +84,13 @@ export const tileSchema: Schema<Tile, { type: string; value: any; }> = S.schema(
         }
     }
 });
+
+/**
+ * Serializer for the type of wasteland tile texture variants. The
+ * implementation is slightly unsafe, but faster than the alternative union
+ * of literals. This needs to be here, since many Tiles use it, and it would
+ * throw a ReferenceError at runtime otherwise.
+ */
+export const wastelandVariantSchema: Schema<1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5> =
+    S.constrain(S.aNumber, x => 1 <= x && x <= 5) as Schema<1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5>;
 

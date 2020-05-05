@@ -21,27 +21,16 @@ export default class SettingsScreen implements Page {
     }
 
     refresh(): void {
-        // Make a slider with an adjacent label displaying its current value
-        const makeTrackedSlider = (label: string, min: number, max: number, def: number,
-            callback: (value: number) => void, step?: number): HTMLElement => {
-            const tracker = UI.makePara(def.toString());
-            const slider = UI.makeSlider(label, min, max, def, (value: number) => {
-                callback(value);
-                tracker.innerText = value.toString();
-            }, step);
-            return UI.makeDivContaining([slider, tracker], ["settings-slider"]);
-        };
-
         const sliders: HTMLElement[] = [
-            makeTrackedSlider("Volume", 0, 100, this.options.volume * 100, (value: number) => {
+            UI.makeTrackedSlider("Volume", 0, 100, this.options.volume * 100, (value: number) => {
                 this.options.volume = value / 100;
                 Settings.saveOptions(this.options);
             }, 5),
-            makeTrackedSlider("View width", 6, 18, this.options.viewWidth, (value: number) => {
+            UI.makeTrackedSlider("View width", 6, 18, this.options.viewWidth, (value: number) => {
                 this.options.viewWidth = value;
                 Settings.saveOptions(this.options);
             }),
-            makeTrackedSlider("View height", 4, 12, this.options.viewHeight, (value: number) => {
+            UI.makeTrackedSlider("View height", 4, 12, this.options.viewHeight, (value: number) => {
                 this.options.viewHeight = value;
                 Settings.saveOptions(this.options);
             }),

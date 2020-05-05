@@ -4,7 +4,7 @@ import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { ElectronicsFactoryTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class ElectronicsFactory extends Tile {
     protected texture: HTMLImageElement = ElectronicsFactoryTexture;
@@ -30,7 +30,7 @@ export default class ElectronicsFactory extends Tile {
         return ElectronicsFactory.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

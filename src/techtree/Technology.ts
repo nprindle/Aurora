@@ -1,6 +1,6 @@
 import Cost from "../resources/Cost.js";
 import Resource from "../resources/Resource.js";
-import { Schema, Schemas as S, LazySchemas as LS } from "../serialize/Schema.js";
+import { Schema, Schemas as S, LazySchemas as LS } from "@nprindle/augustus";
 
 export const ResearchableTechnologies: Technology[] = [];
 
@@ -25,8 +25,12 @@ export default class Technology {
     }
 
     equals(other: Technology): boolean {
-        // Names uniquely identify technology
-        return this.name === other.name;
+        // Recursively equating requiredTechs would be expensive, and no two
+        // Technologies are the exact same except for requirements.
+        return this.name === other.name
+            && this.description === other.description
+            && this.researchCost === other.researchCost
+            && this.visible === other.visible;
     }
 
     static schema(): Schema<Technology, any> {

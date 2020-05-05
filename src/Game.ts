@@ -6,7 +6,7 @@ import { TutorialQuestUnpackLander } from "./quests/Quests.js";
 import Technology, { ResearchableTechnologies } from "./techtree/Technology.js";
 import { Arrays } from "./util/Arrays.js";
 import Ending from "./quests/Ending.js";
-import { Schemas as S } from "./serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 import { Achievements } from "./achievements/Achievements.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
@@ -133,7 +133,7 @@ export default class Game {
         conversions[fromIndex].priority = priority;
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             world: World.schema,
             inventory: Inventory.schema,

@@ -1,5 +1,5 @@
 import Resource from "./Resource";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Cost {
     constructor(
@@ -11,7 +11,7 @@ export default class Cost {
         return `${this.resource.name} x${this.quantity}`;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         resource: Resource.schema,
         quantity: S.aNumber,
     }, ({ resource, quantity }) => new Cost(resource, quantity));

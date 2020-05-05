@@ -2,7 +2,7 @@ import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { AlienSeedCoreTexture } from "../../UI/Images.js";
 import { stripIndent } from "../../util/Text.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class AlienSeedCore extends Tile {
     protected texture: HTMLImageElement = AlienSeedCoreTexture;
@@ -24,7 +24,7 @@ export default class AlienSeedCore extends Tile {
         return AlienSeedCore.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienSeedCore(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienSeedCore(position));
 }
 
 tileTypes[AlienSeedCore.name] = AlienSeedCore;

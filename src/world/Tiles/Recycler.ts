@@ -4,7 +4,7 @@ import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { RecyclerTexture1, RecyclerTexture2 } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Recycler extends Tile {
     protected texture: HTMLImageElement = RecyclerTexture1;
@@ -46,7 +46,7 @@ export default class Recycler extends Tile {
         }
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             resourceConversions: S.arrayOf(Conversion.schema),

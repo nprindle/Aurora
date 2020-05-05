@@ -5,7 +5,7 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Species from "../../resources/Species.js";
 import { HydroponicsTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Hydroponics extends Tile {
     protected texture: HTMLImageElement = HydroponicsTexture;
@@ -30,7 +30,7 @@ export default class Hydroponics extends Tile {
         return Hydroponics.tileDescription;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         position: GridCoordinates.schema,
         resourceConversions: S.arrayOf(Conversion.schema),
     }, ({ position, resourceConversions }) => {

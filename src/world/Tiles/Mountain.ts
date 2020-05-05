@@ -10,7 +10,7 @@ import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import MiningFacility from "./MiningFacility.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Mountain extends Tile {
     protected texture: HTMLImageElement = MountainTexture;
@@ -21,8 +21,8 @@ export default class Mountain extends Tile {
 
     possibleProjects: TileProject[] = [
         new TileProject("Construct Mineshaft", "Create a mineshaft to allow long-term ore extraction",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Mineshaft(position));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new Mineshaft(position));
             },
             [new Cost(Resource.Energy, 500), new Cost(Resource.BuildingMaterials, 250)],
             [techRequirement(StructureConstructionTech), roadRequirement, tileWithinDistanceRequirement(MiningFacility, 5)],
@@ -30,9 +30,9 @@ export default class Mountain extends Tile {
         ),
 
         new TileProject("Strip Mining", `Destroy the mountain to produce ${Resource.Metal.name}`,
-            (position: GridCoordinates, run: Game) => {
-                run.inventory.addResource(Resource.Metal, 500);
-                run.world.placeTile(new Wasteland(position, 5));
+            (position: GridCoordinates, game: Game) => {
+                game.inventory.addResource(Resource.Metal, 500);
+                game.world.placeTile(new Wasteland(position, 5));
             },
             [new Cost(Resource.Energy, 25)],
             [tileWithinDistanceRequirement(MiningFacility, 5)],
@@ -49,7 +49,7 @@ export default class Mountain extends Tile {
         return Mountain.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Mountain(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Mountain(position));
 }
 
 tileTypes[Mountain.name] = Mountain;

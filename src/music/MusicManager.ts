@@ -40,7 +40,7 @@ export namespace MusicManager {
     // JS doesn't have cancellation, async exceptions, masking, etc.
     let shouldBePlaying: boolean = false;
 
-    // The current music computation. We track this so we can propertly wait for
+    // The current music computation. We track this so we can properly wait for
     // the music to stop playing after stopping it.
     let currentMusic: Promise<void> | undefined = undefined;
 

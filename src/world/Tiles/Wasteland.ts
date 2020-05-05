@@ -16,12 +16,12 @@ import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { hasTech, tileExists, orQuery, notQuery } from "../../queries/Queries.js";
 import { roadRequirement } from "../../queries/DescribedTileQuery.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Wasteland extends Tile {
 
     protected texture: HTMLImageElement = WastelandTexture5;
-    private textureVariant: 1 | 2 | 3 | 4 |5;
+    private textureVariant: 1 | 2 | 3 | 4 | 5;
 
 
     constructor(position: GridCoordinates, textureVariant?: 1 | 2 | 3 | 4 | 5) {
@@ -44,28 +44,28 @@ export default class Wasteland extends Tile {
         new TileProject(
             "Create habitat construction site",
             "Designate this location for construction of habitation and life support facilities",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new ConstructionHabitat(position, this.textureVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new ConstructionHabitat(position, this.textureVariant));
             }, [], [], [],
         ),
 
         new TileProject(
             "Create industry construction site",
             "Designate this location for construction of industrial facilities and infrastructure",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new ConstructionIndustry(position, this.textureVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new ConstructionIndustry(position, this.textureVariant));
             }, [], [], [],
         ),
 
         new TileProject("Create laboratory construction site", "Designate this location for construction of research laboratories",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new ConstructionLaboratory(position, this.textureVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new ConstructionLaboratory(position, this.textureVariant));
             }, [], [], [],
         ),
 
         new TileProject("Create xenoengineering construction site", "Designate this location for construction of advanced technologies",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new ConstructionVictory(position, this.textureVariant));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new ConstructionVictory(position, this.textureVariant));
             },
             [],
             [],
@@ -76,8 +76,8 @@ export default class Wasteland extends Tile {
         ),
 
         new TileProject("Construct Road", "Construct roads to extend the reach of the colony's logistics",
-            (position: GridCoordinates, run: Game) => {
-                run.world.placeTile(new Road(position));
+            (position: GridCoordinates, game: Game) => {
+                game.world.placeTile(new Road(position));
             },
             [new Cost(Resource.BuildingMaterials, 10)],
             [roadRequirement],
@@ -110,7 +110,7 @@ export default class Wasteland extends Tile {
         }
     }
 
-    static schema = S.contra(
+    static readonly schema = S.contra(
         S.recordOf({
             position: GridCoordinates.schema,
             textureVariant: wastelandVariantSchema,

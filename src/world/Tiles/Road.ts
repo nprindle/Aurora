@@ -4,7 +4,7 @@ import { RoadTextureCross, RoadTextureVertical, RoadTextureHorizontal, RoadTextu
     RoadTextureTWest, RoadTextureCornerTopRight, RoadTextureCornerBottomRight, RoadTextureCornerTopLeft,
     RoadTextureCornerBottomLeft, } from "../../UI/Images.js";
 import World from "../World.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class Road extends Tile {
@@ -84,7 +84,7 @@ export default class Road extends Tile {
         return RoadTextureVertical;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Road(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Road(position));
 }
 
 tileTypes[Road.name] = Road;

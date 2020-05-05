@@ -5,7 +5,7 @@ import Quantities from "../util/Quantities.js";
 import Species from "./Species.js";
 import World from "../world/World.js";
 import { clamp } from "../util/Util.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Inventory {
 
@@ -26,7 +26,7 @@ export default class Inventory {
     }
 
     getResourceQuantity(resource: Resource): number {
-        return this.resourceQuantities.get(resource) || 0;
+        return this.resourceQuantities.get(resource);
     }
 
     addWorkers(species: Species, quantity: number): void {
@@ -110,7 +110,7 @@ export default class Inventory {
          */
         const costMap = new Map<Resource, number>();
         for (const cost of costs) {
-            costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) || 0));
+            costMap.set(cost.resource, cost.quantity + (costMap.get(cost.resource) ?? 0));
         }
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
@@ -135,7 +135,7 @@ export default class Inventory {
     }
 
     getResourceList(): Resource[] {
-        return Resource.values().filter(resource => this.resourceQuantities.get(resource) !== 0);
+        return Resource.values.filter(resource => this.resourceQuantities.get(resource) !== 0);
     }
 
     // returns strings showing the resource type and amount for each resource in the inventory
@@ -169,7 +169,7 @@ export default class Inventory {
         return clone;
     }
 
-    static schema = S.injecting(
+    static readonly schema = S.injecting(
         S.recordOf({
             resourceQuantities: Quantities.schema(Resource.schema),
             populationQuantities: Quantities.schema(Species.schema),

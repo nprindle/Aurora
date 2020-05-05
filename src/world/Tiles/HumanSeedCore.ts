@@ -2,7 +2,7 @@ import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HumanSeedCoreTexture } from "../../UI/Images.js";
 import { stripIndent } from "../../util/Text.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanSeedCore extends Tile {
     protected texture: HTMLImageElement = HumanSeedCoreTexture;
@@ -24,7 +24,7 @@ export default class HumanSeedCore extends Tile {
         return HumanSeedCore.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanSeedCore(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanSeedCore(position));
 }
 
 tileTypes[HumanSeedCore.name] = HumanSeedCore;

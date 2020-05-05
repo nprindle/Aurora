@@ -1,7 +1,7 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { NeuralEmulatorTexture } from "../../UI/Images.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class NeuralEmulator extends Tile {
     protected texture: HTMLImageElement = NeuralEmulatorTexture;
@@ -21,7 +21,7 @@ export default class NeuralEmulator extends Tile {
         return NeuralEmulator.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new NeuralEmulator(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new NeuralEmulator(position));
 }
 
 tileTypes[NeuralEmulator.name] = NeuralEmulator;

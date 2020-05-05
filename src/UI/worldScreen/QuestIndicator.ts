@@ -7,28 +7,28 @@ import EndScreen from "../endScreen/EndScreen.js";
 export default class QuestIndicator implements Page {
 
     readonly html: HTMLElement;
-    private run: Game;
+    private game: Game;
 
-    constructor(run: Game) {
+    constructor(game: Game) {
         this.html = UI.makeDiv(["world-screen-quest-description"]);
-        this.run = run;
+        this.game = game;
         this.refresh();
     }
 
     refresh(): void {
-        const questDescription = this.run.getCurrentQuestDescription();
-        const questHint = this.run.getCurrentQuestHint();
+        const questDescription = this.game.getCurrentQuestDescription();
+        const questHint = this.game.getCurrentQuestHint();
         const questText = questHint ? `${questDescription}\n(hint: ${questHint})` : questDescription;
         let questLabel = UI.makePara(`Objective: ${questText}`);
 
-        const prevQuestDescription = this.run.getPreviousQuestDescription();
-        if (!this.run.questCompletionShown) {
-            this.run.questCompletionShown = true;
+        const prevQuestDescription = this.game.getPreviousQuestDescription();
+        if (!this.game.questCompletionShown) {
+            this.game.questCompletionShown = true;
             questLabel = UI.makePara(`Completed: ${prevQuestDescription}`, ["quest-description-emphasis"]);
 
             // reset description after time has passed
             setTimeout(() => {
-                const endState: Ending | undefined = this.run.getQuestEndState();
+                const endState: Ending | undefined = this.game.getQuestEndState();
                 if (endState) {
                     GameWindow.show(new EndScreen(endState));
                 } else {

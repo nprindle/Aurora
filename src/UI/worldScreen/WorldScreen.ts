@@ -20,12 +20,12 @@ export default class WorldScreen implements Page {
     private questIndicator: QuestIndicator;
     readonly html: HTMLElement;
 
-    constructor(run: Game) {
-        this.mapUI = new MapUI(this, run.world);
-        this.tileSidebar = new TileSidebar(this, run);
-        this.inventorySidebar = new InventorySidebar(run);
-        this.header = new WorldScreenHeader(run);
-        this.questIndicator = new QuestIndicator(run);
+    constructor(game: Game) {
+        this.mapUI = new MapUI(this, game.world);
+        this.tileSidebar = new TileSidebar(this, game);
+        this.inventorySidebar = new InventorySidebar(game);
+        this.header = new WorldScreenHeader(game);
+        this.questIndicator = new QuestIndicator(game);
 
         this.html = UI.makeDivContaining([
 
@@ -54,7 +54,7 @@ export default class WorldScreen implements Page {
         this.mapUI.handleKeyDown(ev);
     }
 
-    changeSidebarTile(position: GridCoordinates | null): void {
+    changeSidebarTile(position: GridCoordinates | undefined): void {
         this.tileSidebar.changeTile(position);
     }
 }

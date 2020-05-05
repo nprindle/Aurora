@@ -1,4 +1,4 @@
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Ending {
     constructor(
@@ -10,7 +10,7 @@ export default class Ending {
         return other.description === this.description && other.title === this.title;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         title: S.aString,
         description: S.aString,
     }, ({ title, description }) => new Ending(title, description));

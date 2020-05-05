@@ -11,7 +11,7 @@ import Resource from "../../resources/Resource.js";
 import Greenhouse from "./Greenhouse.js";
 import Road from "./Road.js";
 import { stripIndent } from "../../util/Text.js";
-import { Schemas as S } from "../../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class Lander extends Tile {
     protected texture: HTMLImageElement = LanderTexture;
@@ -19,8 +19,8 @@ export default class Lander extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject(
             "Unpack Lander", "Unload colonists and deploy prefabricated colonial buildings",
-            (position: GridCoordinates, run: Game) => {
-                const world = run.world;
+            (position: GridCoordinates, game: Game) => {
+                const world = game.world;
 
                 // place colony buildings
                 world.placeTile(new Habitat(new GridCoordinates(position.x + 1, position.y)));
@@ -32,12 +32,12 @@ export default class Lander extends Tile {
                 world.placeTile(new Road(new GridCoordinates(position.x, position.y + 1)));
 
                 // provide initial supplies
-                run.inventory.addResource(Resource.Food, 1000);
+                game.inventory.addResource(Resource.Food, 1000);
 
                 // create initial population
-                run.inventory.addWorkers(Species.Human, 100);
+                game.inventory.addWorkers(Species.Human, 100);
                 // make workers available on first turn
-                run.inventory.releaseWorkers();
+                game.inventory.releaseWorkers();
             },
             [],
             [],
@@ -60,7 +60,7 @@ export default class Lander extends Tile {
         return Lander.tileDescription;
     }
 
-    static schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Lander(position));
+    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Lander(position));
 }
 
 tileTypes[Lander.name] = Lander;

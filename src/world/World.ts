@@ -7,7 +7,7 @@ import GridCoordinates from "./GridCoordinates.js";
 import Species from "../resources/Species.js";
 import Ruins from "./Tiles/Ruins.js";
 import { WorldGenerationParameters } from "./WorldGenerationParameters.js";
-import { Schemas as S } from "../serialize/Schema.js";
+import { Schemas as S } from "@nprindle/augustus";
 
 export default class World {
 
@@ -118,7 +118,7 @@ export default class World {
         return capacity;
     }
 
-    static schema = S.classOf({
+    static readonly schema = S.classOf({
         width: S.aNumber,
         height: S.aNumber,
         grid: S.arrayOf(S.arrayOf(tileSchema)),
