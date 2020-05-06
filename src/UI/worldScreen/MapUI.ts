@@ -12,8 +12,6 @@ export default class MapUI implements Page {
 
     private static readonly pixelsPerTile: number = 100;
 
-    private static readonly highlightImage: HTMLImageElement = HighlightSelectionImage;
-
     readonly html: HTMLCanvasElement; // the html for this component is an html canvas that we draw tiles onto
 
     private viewWidth: number = Settings.currentOptions.viewWidth; // width of viewable area in tiles
@@ -43,9 +41,9 @@ export default class MapUI implements Page {
         for (const tile of tilesInViewableArea) {
             this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);
         }
-        // render the highlight reticle thing
+        // render the selected-tile highlight border
         if (this.highlightedCoordinates !== undefined) {
-            this.drawSquareAtCoordinates(MapUI.highlightImage, this.highlightedCoordinates);
+            this.drawSquareAtCoordinates(HighlightSelectionImage, this.highlightedCoordinates);
         }
     }
 
@@ -86,8 +84,8 @@ export default class MapUI implements Page {
     }
 
     handleClick(ev: MouseEvent): void {
-        const x = Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth)) + this.world.viewPosition.x;
-        const y = Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight)) + this.world.viewPosition.y;
+        const x = this.world.viewPosition.x + Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth));
+        const y = this.world.viewPosition.y + Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight));
 
         const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);

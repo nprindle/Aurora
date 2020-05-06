@@ -7,11 +7,11 @@ import EndScreen from "../endScreen/EndScreen.js";
 export default class QuestIndicator implements Page {
 
     readonly html: HTMLElement;
-    private game: Game;
 
-    constructor(game: Game) {
+    constructor(
+        private game: Game
+    ) {
         this.html = UI.makeDiv(["world-screen-quest-description"]);
-        this.game = game;
         this.refresh();
     }
 
@@ -21,10 +21,9 @@ export default class QuestIndicator implements Page {
         const questText = questHint ? `${questDescription}\n(hint: ${questHint})` : questDescription;
         let questLabel = UI.makePara(`Objective: ${questText}`);
 
-        const prevQuestDescription = this.game.getPreviousQuestDescription();
         if (!this.game.questCompletionShown) {
             this.game.questCompletionShown = true;
-            questLabel = UI.makePara(`Completed: ${prevQuestDescription}`, ["quest-description-emphasis"]);
+            questLabel = UI.makePara(`Completed: ${this.game.getPreviousQuestDescription()}`, ["quest-description-emphasis"]);
 
             // reset description after time has passed
             setTimeout(() => {
