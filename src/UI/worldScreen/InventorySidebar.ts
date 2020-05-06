@@ -6,10 +6,10 @@ import { Page } from "../GameWindow.js";
 export default class InventorySidebar implements Page {
 
     readonly html: HTMLElement;
-    private inventory: Inventory;
 
-    constructor(game: Game) {
-        this.inventory = game.inventory;
+    constructor(
+        private inventory: Inventory
+        ) {
         this.html = UI.makeDiv(["world-screen-inventory"]);
         this.refresh();
     }

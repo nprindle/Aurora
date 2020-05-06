@@ -25,7 +25,7 @@ export default class EndingWorldScreen implements Page {
         this.mapUI = new MapUI(this, game.world);
         this.tileSidebar = new TileSidebar(this, game);
         this.tileSidebar.changeTile(center);
-        this.inventorySidebar = new InventorySidebar(game);
+        this.inventorySidebar = new InventorySidebar(game.inventory);
         this.header = new WorldScreenHeader(game, "disabled");
         this.questIndicator = new QuestIndicator(game);
 
