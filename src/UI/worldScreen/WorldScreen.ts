@@ -23,7 +23,7 @@ export default class WorldScreen implements Page {
     constructor(game: Game) {
         this.mapUI = new MapUI(this, game.world);
         this.tileSidebar = new TileSidebar(this, game);
-        this.inventorySidebar = new InventorySidebar(game);
+        this.inventorySidebar = new InventorySidebar(game.inventory);
         this.header = new WorldScreenHeader(game);
         this.questIndicator = new QuestIndicator(game);
 
