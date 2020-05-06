@@ -13,6 +13,11 @@ import { Achievements } from "./achievements/Achievements.js";
 export default class Game {
     private endState: Ending | undefined = undefined;
 
+    /* when a quest is completed, the description of the completed quest is still shown (with different style)
+     * for a few seconds to indicate that it has been completed, so we have to keep track of the last quest description
+     * and whether it has been shown
+     */
+
     private prevQuestDescription = "";
     public questCompletionShown: boolean = true;
 
@@ -89,9 +94,9 @@ export default class Game {
     getResearchOptions(): Technology[] {
         return ResearchableTechnologies
             .filter(tech => tech.visible)
-            .filter(tech => tech.requiredTechs.every(prerequisite => {
-                return this.completedTechs.some(t => t.equals(prerequisite));
-            }))
+            .filter(tech => tech.requiredTechs.every(prerequisite =>
+                this.completedTechs.some(t => t.equals(prerequisite))
+            ))
             .filter(tech => !this.hasUnlockedTechnology(tech));
     }
 

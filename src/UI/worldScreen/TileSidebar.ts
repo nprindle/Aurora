@@ -4,7 +4,6 @@ import TileProject from "../../tileProjects/TileProject.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Tile from "../../world/Tile.js";
-import Conversion from "../../resources/Conversion.js";
 import { Page } from "../GameWindow.js";
 
 export default class TileSidebar implements Page {
@@ -50,7 +49,7 @@ export default class TileSidebar implements Page {
             if (tile.resourceConversions.length > 0) {
                 conversionsHTML.appendChild(UI.makePara("Production:"));
                 for (const conversion of tile.resourceConversions) {
-                    conversionsHTML.appendChild(this.makeConversionHTML(conversion));
+                    conversionsHTML.appendChild(UI.makePara(`- ${conversion.toString()}`));
                 }
             }
 
@@ -90,8 +89,7 @@ export default class TileSidebar implements Page {
                 }
                 return para;
             });
-            const costsDiv = UI.makeDivContaining([UI.makePara("Costs: "), ...costParas]);
-            projectHTML.appendChild(costsDiv);
+            projectHTML.appendChild(UI.makeDivContaining([UI.makePara("Costs: "), ...costParas]));
         }
 
         if (project.completionRequirements.length > 0) {
@@ -103,10 +101,6 @@ export default class TileSidebar implements Page {
         }
 
         return projectHTML;
-    }
-
-    private makeConversionHTML(conversion: Conversion): HTMLElement {
-        return UI.makePara(`- ${conversion.toString()}`);
     }
 
     private doProject(project: TileProject, tile: Tile): void {

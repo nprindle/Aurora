@@ -1,6 +1,5 @@
 import { UI } from "../UI.js";
 import Inventory from "../../resources/Inventory.js";
-import Game from "../../Game.js";
 import { Page } from "../GameWindow.js";
 
 export default class InventorySidebar implements Page {
@@ -9,7 +8,7 @@ export default class InventorySidebar implements Page {
 
     constructor(
         private inventory: Inventory
-        ) {
+    ) {
         this.html = UI.makeDiv(["world-screen-inventory"]);
         this.refresh();
     }
