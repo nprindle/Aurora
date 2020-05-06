@@ -4,7 +4,6 @@ import MainMenuUI from "./UI/menu/MainMenu.js";
 
 // this is the entrypoint to the program.
 window.onload = async function() {
-    console.log("Script Loaded");
     await preloadImages();
     GameWindow.show(new MainMenuUI());
 };
