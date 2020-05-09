@@ -29,7 +29,7 @@ export default class Technology {
         // Technologies are the exact same except for requirements.
         return this.name === other.name
             && this.description === other.description
-            && this.researchCost === other.researchCost
+            && this.researchCost.equals(other.researchCost)
             && this.visible === other.visible;
     }
 
