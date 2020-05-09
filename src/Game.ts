@@ -11,8 +11,6 @@ import { Achievements } from "./achievements/Achievements.js";
 
 // Holds the state of one run of the game, including the game world, inventory, and run statistics
 export default class Game {
-    private endState: Ending | undefined = undefined;
-
     /* when a quest is completed, the description of the completed quest is still shown (with different style)
      * for a few seconds to indicate that it has been completed, so we have to keep track of the last quest description
      * and whether it has been shown
@@ -45,22 +43,29 @@ export default class Game {
     }
 
     getQuestEndState(): Ending | undefined {
-        return this.endState;
+        const questState = this.questStage.nextState(this);
+        if (questState instanceof Ending) {
+            return questState;
+        } else {
+            return undefined;
+        }
     }
 
     updateQuestState(): void {
         const next = this.questStage.nextState(this);
-        if (next instanceof Ending) {
-            this.endState = next;
+        if (next !== this.questStage) {
             this.questCompletionShown = false;
-        } else if (next !== this.questStage) {
-            const prevDescription = this.questStage.description;
-            this.questStage = next;
-            // repeat to skip over the next quest if it's requirements are already completed
-            this.updateQuestState();
-            this.questCompletionShown = false;
-            this.prevQuestDescription = prevDescription;
+
+            if (next instanceof QuestStage) {
+                const prevDescription = this.questStage.description;
+                this.questStage = next;
+                // repeat to skip over the next quest if it's requirements are already completed
+                this.updateQuestState();
+                this.prevQuestDescription = prevDescription;
+            }
         }
+
+
 
         Achievements.updateAchievements(this);
     }
@@ -152,15 +157,13 @@ export default class Game {
             world: game.world,
             inventory: Inventory.schema.project(game.inventory),
             questStage: game.questStage,
-            endState: game.endState,
             prevQuestDescription: game.prevQuestDescription,
             questCompletionShown: game.questCompletionShown,
             completedTechs: game.completedTechs,
         }),
-        ({ world, inventory, questStage, endState, prevQuestDescription, questCompletionShown, completedTechs }) => {
+        ({ world, inventory, questStage, prevQuestDescription, questCompletionShown, completedTechs }) => {
             const inv = Inventory.schema.inject(world)(inventory);
             const game = new Game(world, inv, questStage);
-            game.endState = endState;
             game.prevQuestDescription = prevQuestDescription;
             game.questCompletionShown = questCompletionShown;
             game.completedTechs = completedTechs;
