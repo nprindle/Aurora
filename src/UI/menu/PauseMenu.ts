@@ -11,12 +11,7 @@ export default class PauseMenu implements Page {
     readonly html: HTMLElement;
 
     constructor(private game: Game) {
-        this.html = UI.makeDiv(["main-menu", "pause-menu"]);
-        this.refresh();
-    }
-
-    refresh(): void {
-        UI.fillHTML(this.html, [
+        this.html = UI.makeDivContaining([
             UI.makeHeader("Game Paused", 2),
             UI.makeDivContaining([
                 UI.makeButton("resume_game", () => {
@@ -31,6 +26,8 @@ export default class PauseMenu implements Page {
                     GameWindow.show(new MainMenu());
                 }),
             ], ["main-menu-options"]),
-        ]);
+        ], ["main-menu", "pause-menu"]);
     }
+
+    refresh(): void {}
 }

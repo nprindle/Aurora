@@ -29,16 +29,14 @@ export default class CreditsScreen implements Page {
 
     readonly html: HTMLElement;
     constructor() {
-        this.html = UI.makeDiv(["credits"]);
+        this.html = UI.makeDivContaining([
+            ...credits.map(entry => this.renderCreditsEntry(entry)),
+            UI.makeButton("Back", () => GameWindow.show(new MainMenu())),
+        ], ["credits"]);
         this.refresh();
     }
 
-    refresh(): void {
-        UI.fillHTML(this.html, [
-            ...credits.map(entry => this.renderCreditsEntry(entry)),
-            UI.makeButton("Back", () => GameWindow.show(new MainMenu())),
-        ]);
-    }
+    refresh(): void {}
 
     private renderCreditsEntry(entry: CreditsEntry): HTMLElement {
         return UI.makeDivContaining([
