@@ -11,6 +11,11 @@ export default class Cost {
         return `${this.resource.name} x${this.quantity}`;
     }
 
+    equals(other: Cost): boolean {
+        return this.resource === other.resource
+            && this.quantity === other.quantity;
+    }
+
     static readonly schema = S.classOf({
         resource: Resource.schema,
         quantity: S.aNumber,
