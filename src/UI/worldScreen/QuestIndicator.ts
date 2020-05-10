@@ -23,7 +23,10 @@ export default class QuestIndicator implements Page {
 
         if (!this.game.questCompletionShown) {
             this.game.questCompletionShown = true;
-            questLabel = UI.makePara(`Completed: ${this.game.getPreviousQuestDescription()}`, ["quest-description-emphasis"]);
+            questLabel = UI.makePara(
+                `Completed: ${this.game.getPreviousQuestDescription()}`,
+                ["quest-description-emphasis"]
+            );
 
             // reset description after time has passed
             setTimeout(() => {

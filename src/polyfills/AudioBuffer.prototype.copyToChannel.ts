@@ -12,7 +12,12 @@ if (!AudioBuffer.prototype.copyToChannel) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function(this: AudioBuffer, source: Float32Array, channelNumber: number, startInChannel: number = 0): void {
+        value: function(
+            this: AudioBuffer,
+            source: Float32Array,
+            channelNumber: number,
+            startInChannel: number = 0
+        ): void {
             const arr = this.getChannelData(channelNumber);
             const len = Math.min(arr.length, source.length);
             for (let i = startInChannel, j = 0; j < len; i++, j++) {

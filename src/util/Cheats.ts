@@ -55,17 +55,22 @@ export function enableCheats(game: Game): void {
 
     const cheatsObject = new Cheats(game);
     const theWindow: any = window;
-    theWindow.cheatsAddResource = (resource: Resource, quantity: number) => cheatsObject.addResource(resource, quantity);
-    theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) => cheatsObject.removeResource(resource, quantity);
-    theWindow.cheatsAddPopulation = (species: Species, quantity: number) => cheatsObject.addPopulation(species, quantity);
+    theWindow.cheatsAddResource = (resource: Resource, quantity: number) =>
+        cheatsObject.addResource(resource, quantity);
+    theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) =>
+        cheatsObject.removeResource(resource, quantity);
+    theWindow.cheatsAddPopulation = (species: Species, quantity: number) =>
+        cheatsObject.addPopulation(species, quantity);
     theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
     theWindow.cheatsShowEnding = (human: boolean = false) => cheatsObject.showEnding(human);
     theWindow.showQuote = (index: number) => cheatsObject.showQuote(index);
     theWindow.unlockAllAchievements = () => Achievements.unlockAll();
 
-    // these classes also need to be made globally accessible so their instances can be used as parameters for cheats
-    // we freeze the constructors so the existing instances can't be modified
-    // unfortunately, this still makes it possible for players to construct new instances of the multitons that are supposed to be constant
+    /* these classes also need to be made globally accessible so their instances can be used as parameters for cheats
+     * we freeze the constructors so the existing instances can't be modified
+     * unfortunately, this still makes it possible for players to construct new instances of the multitons that are
+     * supposed to be constant
+     */
     Object.freeze(Resource);
     Object.freeze(Species);
     theWindow.Resources = Resource;

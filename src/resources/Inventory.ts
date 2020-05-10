@@ -31,7 +31,10 @@ export default class Inventory {
 
     addWorkers(species: Species, quantity: number): void {
         this.populationQuantities.add(species, quantity);
-        this.populationQuantities.set(species, clamp(0, this.populationQuantities.get(species), this.world.getPopulationCapacity(species)));
+        this.populationQuantities.set(
+            species,
+            clamp(0, this.populationQuantities.get(species), this.world.getPopulationCapacity(species))
+        );
     }
 
     // makes a quantity of the population available as workers
@@ -78,7 +81,8 @@ export default class Inventory {
             this.payCost([providedUpkeepCost]);
 
             const survivingPopulation = Math.floor(providedUpkeepCost.quantity / species.survivalCost.quantity);
-            // we don't need to do a housing-capacity check here because it's impossible for the population to increase in this step
+            // we don't need to do a housing-capacity check here
+            // because it's impossible for the population to increase in this step
             this.populationQuantities.set(species, survivingPopulation);
 
             // exponential population growth
@@ -105,8 +109,8 @@ export default class Inventory {
     }
 
     canAfford(costs: Cost[]): boolean {
-        /* since it's possible that the cost list contains more than one cost of the same resource type, we need to aggregate the costs
-         * together to make sure that the entire set of costs can be afforded together
+        /* since it's possible that the cost list contains more than one cost of the same resource type, we need to
+         * aggregate the costs together to make sure that the entire set of costs can be afforded together
          */
         const costMap = new Map<Resource, number>();
         for (const cost of costs) {
@@ -140,18 +144,26 @@ export default class Inventory {
 
     // returns strings showing the resource type and amount for each resource in the inventory
     getInventoryStrings(): string[] {
-        return this.getResourceList().map((resource: Resource) => `${resource.name}: ${this.getResourceQuantity(resource)}`);
+        return this.getResourceList().map(
+            (resource: Resource) => `${resource.name}: ${this.getResourceQuantity(resource)}`
+        );
     }
 
     // returns strings showing the amounts of each population type
     getPopulationStrings(): string[] {
-        return this.populationQuantities.positiveQuantityKeys().map(species => `${this.populationQuantities.get(species)} ${species.name}`);
+        return this.populationQuantities.positiveQuantityKeys().map(
+            species => `${this.populationQuantities.get(species)} ${species.name}`
+        );
     }
 
     // Attempts to apply each resource conversion in sequence, skipping those for which the inputs are unavailable
     applyConversions(conversions: Conversion[]): void {
         for (const conversion of conversions) {
-            if (this.canAfford(conversion.inputs) && this.hasEnoughWorkers(conversion.requiredWorkers) && conversion.enabled) {
+            if (
+                this.canAfford(conversion.inputs)
+                && this.hasEnoughWorkers(conversion.requiredWorkers)
+                && conversion.enabled
+            ) {
                 this.payCost(conversion.inputs);
                 this.occupyWorkers(conversion.requiredWorkers);
                 for (const output of conversion.outputs) {

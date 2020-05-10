@@ -19,8 +19,6 @@ export default class Resource {
     static readonly AlienKnowledge = new Resource("🛸 Alien Data");
     static readonly AlignmentKnowledge = new Resource("📎 AI Alignment Data");
 
-
-    // the constructor is private because the resources defined as static members above should be the only possible instances
     private constructor(
         public readonly name: string,
     ) {}

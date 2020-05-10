@@ -5,7 +5,8 @@ import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { Random } from "../../util/Random.js";
-import { WastelandTexture1, WastelandTexture2, WastelandTexture3, WastelandTexture4, WastelandTexture5 } from "../../UI/Images.js";
+import { WastelandTexture1, WastelandTexture2, WastelandTexture3, WastelandTexture4, WastelandTexture5 }
+    from "../../UI/Images.js";
 import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
@@ -57,13 +58,17 @@ export default class Wasteland extends Tile {
             }, [], [], [],
         ),
 
-        new TileProject("Create laboratory construction site", "Designate this location for construction of research laboratories",
+        new TileProject(
+            "Create laboratory construction site",
+            "Designate this location for construction of research laboratories",
             (position: GridCoordinates, game: Game) => {
                 game.world.placeTile(new ConstructionLaboratory(position, this.textureVariant));
             }, [], [], [],
         ),
 
-        new TileProject("Create xenoengineering construction site", "Designate this location for construction of advanced technologies",
+        new TileProject(
+            "Create xenoengineering construction site",
+            "Designate this location for construction of advanced technologies",
             (position: GridCoordinates, game: Game) => {
                 game.world.placeTile(new ConstructionVictory(position, this.textureVariant));
             },

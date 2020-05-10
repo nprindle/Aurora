@@ -28,10 +28,9 @@ export default class Monolith extends Tile {
         new TileProject(
             "Upload human neural data",
             stripIndent`
-            In the process of repairing the monolith, it would be possible to delete the alien neural scans contained within,
-            and replace them with the connectomes of human colonists. However, this would result in the permanent loss of the
-            monolith's vast stores of alien data, which would be considered mission failure.
-            `,
+            In the process of repairing the monolith, it would be possible to delete the alien neural scans contained
+            within, and replace them with the connectomes of human colonists. However, this would result in the
+            permanent loss of the monolith's vast stores of alien data, which would be considered mission failure.`,
             (position: GridCoordinates, game: Game) => { game.world.placeTile(new HumanMonolith(position)); },
             [new Cost(Resource.Energy, 1000), new Cost(Resource.SmartMatter, 500)],
             [

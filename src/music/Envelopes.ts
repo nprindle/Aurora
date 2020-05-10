@@ -36,7 +36,10 @@ export namespace Envelopes {
         } else if (duration < attack + decay) {
             // note gets cut off in middle of decay
             gainNode.gain.linearRampToValueAtTime(volume, start + attack);
-            gainNode.gain.linearRampToValueAtTime(lerp(volume, volume * sustain, (duration - attack) / decay), start + attack + decay);
+            gainNode.gain.linearRampToValueAtTime(
+                lerp(volume, volume * sustain, (duration - attack) / decay),
+                start + attack + decay
+            );
             gainNode.gain.linearRampToValueAtTime(0, start + duration + release);
         } else {
             // envelope executes fully

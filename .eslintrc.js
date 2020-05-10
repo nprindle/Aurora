@@ -118,12 +118,12 @@ const possibleErrorRules = {
 const styleRules = {
 
   // Limit line length
-  "max-len": ["Warn", 140],
+  "max-len": ["Warn", 120],
 
   // Indent with 4 spaces
   "indent": "off",
   "@typescript-eslint/indent": ["warn", 4, {
-    "ignoredNodes": ["TemplateLiteral > *"],
+    "ignoredNodes": ["TemplateLiteral > *", "ClassProperty > *"],
   }],
 
   // Disallow trailing whitespace

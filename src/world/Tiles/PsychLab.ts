@@ -23,7 +23,9 @@ export default class PsychLab extends Tile {
     ];
 
     static readonly tileName: string = "Psychology Lab";
-    static readonly tileDescription: string = "A laboratory for studying how humans behave in the isolated conditions of a remote colony";
+    static readonly tileDescription: string =
+        "A laboratory for studying how humans behave in the isolated conditions of a remote colony";
+
     getTileName(): string {
         return PsychLab.tileName;
     }

@@ -136,7 +136,8 @@ export namespace Scales {
 
     export function hasInterval(scale: Scale, semitones: number): boolean {
         semitones = mod(semitones, 12);
-        return (unwrap(scale) & (1 << semitones)) !== 0; // if the semitones-th bit is set, the scale contains a given interval
+        // if the semitones-th bit is set, the scale contains a given interval
+        return (unwrap(scale) & (1 << semitones)) !== 0;
     }
 
     // count the instances of a particular interval in a scale
@@ -144,7 +145,8 @@ export namespace Scales {
     export function countInterval(scale: Scale, semitones: number): number {
         semitones = mod(semitones, 12);
         const count: number = getModes(scale) // starting from each note in the scale...
-            .filter(mode => hasInterval(mode, semitones)).length; // count all the notes with a note N semitones above them
+            // count all the notes with a note N semitones above them
+            .filter(mode => hasInterval(mode, semitones)).length;
         if (semitones === 6) { // special case (tritones get counted twice since they're symmetrical)
             return count / 2;
         }
@@ -202,7 +204,8 @@ export namespace Scales {
         return scales.filter(scale => matchesQuery(scale, query));
     }
 
-    // index into a pitch class, shifting up/down through octaves (ie, -1 is the last element of the class, but an octave down)
+    // index into a pitch class, shifting up/down through octaves
+    // (ie, -1 is the last element of the class, but an octave down)
     export function indexIntoPitchClass(pitches: PitchOffset[], index: number): PitchOffset {
         const baseOffset = pitches[mod(index, pitches.length)];
         const adjust = 12 * Math.floor(index / pitches.length);

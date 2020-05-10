@@ -200,16 +200,22 @@ const tileQuerySchemas: Record<TileQuery["queryType"], Schema<TileQuery, any>> =
         queryType: S.literal("tileWithinDistance" as const), tileType: typeofTileSchema, radius: S.aNumber,
     }),
     "anyTileWithinDistance": S.recordOf({
-        queryType: S.literal("anyTileWithinDistance" as const), tileTypes: S.arrayOf(typeofTileSchema), radius: S.aNumber,
+        queryType: S.literal("anyTileWithinDistance" as const),
+        tileTypes: S.arrayOf(typeofTileSchema),
+        radius: S.aNumber,
     }),
     "not": S.recordOf({
         queryType: S.literal("not" as const), query: S.lazy(() => tileQuerySchema),
     }),
     "or": S.recordOf({
-        queryType: S.literal("or" as const), query1: S.lazy(() => tileQuerySchema), query2: S.lazy(() => tileQuerySchema),
+        queryType: S.literal("or" as const),
+        query1: S.lazy(() => tileQuerySchema),
+        query2: S.lazy(() => tileQuerySchema),
     }),
     "and": S.recordOf({
-        queryType: S.literal("and" as const), query1: S.lazy(() => tileQuerySchema), query2: S.lazy(() => tileQuerySchema),
+        queryType: S.literal("and" as const),
+        query1: S.lazy(() => tileQuerySchema),
+        query2: S.lazy(() => tileQuerySchema),
     }),
 };
 

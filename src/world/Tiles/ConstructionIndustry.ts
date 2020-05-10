@@ -10,8 +10,8 @@ import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
 import {
-    StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech, XenoMaterialsTech, ZeroPointTech
-} from "../../techtree/TechTree.js";
+    StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
+    XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
 import { constructionProject } from "../../tileProjects/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
@@ -61,7 +61,11 @@ export default class ConstructionIndustry extends Tile {
         ),
 
         constructionProject(XenoFactory,
-            [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Electronics, 200), new Cost(Resource.Energy, 1000)],
+            [
+                new Cost(Resource.BuildingMaterials, 200),
+                new Cost(Resource.Electronics, 200),
+                new Cost(Resource.Energy, 1000)
+            ],
             [roadRequirement, techRequirement(XenoMaterialsTech)],
             [hasTech(XenoarchaeologyTech)],
         ),
@@ -73,14 +77,20 @@ export default class ConstructionIndustry extends Tile {
         ),
 
         constructionProject(ZeroPointPlant,
-            [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Electronics, 100), new Cost(Resource.Superconductor, 1000)],
+            [
+                new Cost(Resource.BuildingMaterials, 200),
+                new Cost(Resource.Electronics, 100),
+                new Cost(Resource.Superconductor, 1000)
+            ],
             [techRequirement(ZeroPointTech)],
             [hasTech(XenoarchaeologyTech)],
         ),
     ];
 
     static readonly tileName: string = "Construction Site - Industry";
-    static readonly tileDescription: string = "An area designated for construction of industrial facilities and infrastructure";
+    static readonly tileDescription: string =
+        "An area designated for construction of industrial facilities and infrastructure";
+
     getTileName(): string {
         return ConstructionIndustry.tileName;
     }

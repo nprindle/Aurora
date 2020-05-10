@@ -5,6 +5,7 @@ import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { ZeroPointPlantTexture } from "../../UI/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import { stripIndent } from "../../util/Text.js";
 
 
 export default class ZeroPointPlant extends Tile {
@@ -23,8 +24,9 @@ export default class ZeroPointPlant extends Tile {
     ];
 
     static readonly tileName: string = "Zero Point Energy Plant";
-    static readonly tileDescription: string =
-        `A power plant that exploits exotic physics and alien science to produce vast amounts of ${Resource.Energy.name}.`;
+    static readonly tileDescription: string = stripIndent`
+        A power plant that exploits exotic physics and alien science to produce vast amounts
+        of ${Resource.Energy.name}.`;
 
     getTileName(): string {
         return ZeroPointPlant.tileName;

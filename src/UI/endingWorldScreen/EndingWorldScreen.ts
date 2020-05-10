@@ -43,7 +43,8 @@ export default class EndingWorldScreen implements Page {
         ], ["flex-vertical", "world-screen"]);
     }
 
-    // the animation for the end of the game shows the "circuits" tiles spreading out from the monolith and consuming the world
+    // the animation for the end of the game shows the "circuits" tiles spreading out from the monolith
+    // and consuming the world
     expandCircuits(radius: number): void {
         const world = this.game.world;
         const tilesInRadius = world.getTilesInCircle(this.center, radius);

@@ -13,7 +13,12 @@ export default class Technology {
         public readonly visible: boolean = true,
     ) {}
 
-    static makeUnlockableTechnology(name: string, description: string, requiredTechs: Technology[], researchCost: Cost): Technology {
+    static makeUnlockableTechnology(
+        name: string,
+        description: string,
+        requiredTechs: Technology[],
+        researchCost: Cost
+    ): Technology {
         const newTech = new Technology(name, description, requiredTechs, researchCost, true);
         ResearchableTechnologies.push(newTech);
         return newTech;

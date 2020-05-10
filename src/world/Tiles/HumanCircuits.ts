@@ -22,7 +22,10 @@ export default class HumanCircuits extends Tile {
         return HumanCircuits.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanCircuits(position));
+    static readonly schema = S.classOf(
+        { position: GridCoordinates.schema },
+        ({ position }) => new HumanCircuits(position)
+    );
 }
 
 tileTypes[HumanCircuits.name] = HumanCircuits;

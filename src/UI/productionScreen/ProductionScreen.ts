@@ -27,7 +27,9 @@ export default class ProductionScreen implements Page {
 
         const conversionsHTML: HTMLElement[] = [];
         for (const conversion of conversions) {
-            if (inventoryCopy.canAfford(conversion.inputs) && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)) {
+            if (inventoryCopy.canAfford(conversion.inputs)
+                && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)
+            ) {
                 conversionsHTML.push(this.renderConversion(conversion, true));
                 inventoryCopy.applyConversions([conversion]);
             } else {
@@ -98,8 +100,10 @@ export default class ProductionScreen implements Page {
 
             if (deaths > 0) {
                 workerDeathHtml.appendChild(
-                    UI.makePara(`${deaths} ${species.name} will die from lack of ${species.survivalCost.resource.name}!`,
-                        ["population-death-label"]));
+                    UI.makePara(
+                        `${deaths} ${species.name} will die from lack of ${species.survivalCost.resource.name}!`,
+                        ["population-death-label"])
+                );
             }
         }
 
@@ -118,7 +122,11 @@ export default class ProductionScreen implements Page {
             workerDeathHtml,
             UI.makeHeader("Inventory at end of production cycle:", 2, ["production-screen-label"]),
             this.renderInventory(inventoryCopy),
-            UI.makeButton("Back", () => { GameWindow.show(new WorldScreen(this.game)); }, ["production-screen-back-button"]),
+            UI.makeButton(
+                "Back",
+                () => { GameWindow.show(new WorldScreen(this.game)); },
+                ["production-screen-back-button"]
+            ),
         ]);
     }
 

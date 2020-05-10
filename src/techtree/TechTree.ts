@@ -54,7 +54,9 @@ export const NuclearTech = Technology.makeUnlockableTechnology(
 
 export const SurveyTech = Technology.makeUnlockableTechnology(
     "Planetary Surveying",
-    "Exploration of the planetary environment, including the structures believed to have been built by an alien civilization",
+    stripIndent`
+        Exploration of the planetary environment, including the structures believed to have been built by an alien
+        civilization`,
     [],
     new Cost(Resource.EngineeringKnowledge, 50),
 );
@@ -82,14 +84,18 @@ export const RationalityTech = Technology.makeUnlockableTechnology(
 
 export const AiResearchTech = Technology.makeHiddenTechnology(
     "AI Safety Research",
-    "A proposal for researching techniques for aligning the goals of an artificial intelligence with the goals of its human creators",
+    stripIndent`
+        A proposal for researching techniques for aligning the goals of an artificial intelligence with the goals of its
+        human creators`,
     false,
 );
 
 
 export const ControlProblemTech = Technology.makeUnlockableTechnology(
     "Control Problem",
-    "A description of the problem of creating a superintelligent agent that will behave in a way that benefits its creators",
+    stripIndent`
+        A description of the problem of creating a superintelligent agent that will behave in a way that benefits
+        its creators`,
     [AiResearchTech],
     new Cost(Resource.AlignmentKnowledge, 20),
 );
@@ -104,9 +110,9 @@ export const MotivationSelectionTech = Technology.makeUnlockableTechnology(
 export const CEVTech = Technology.makeUnlockableTechnology(
     "Coherent Extrapolated Volition",
     stripIndent`
-        What humanity's wishes would be if they knew more, thought faster, were more the people they wished they were, had grown up
-        farther together; where the extrapolation converges rather than diverges, where their wishes cohere rather than interfere;
-        extrapolated as they wish that extrapolated, interpreted as they wish that interpreted.`,
+        What humanity's wishes would be if they knew more, thought faster, were more the people they wished they were,
+        had grown up farther together; where the extrapolation converges rather than diverges, where their wishes cohere
+        rather than interfere; extrapolated as they wish that extrapolated, interpreted as they wish that interpreted.`,
     [MotivationSelectionTech],
     new Cost(Resource.AlignmentKnowledge, 300),
 );
@@ -121,18 +127,19 @@ export const DecisionTheoryTech = Technology.makeUnlockableTechnology(
 export const AcausalTradeTech = Technology.makeUnlockableTechnology(
     "Acausal trade",
     stripIndent`
-        An application of game theory that allows two agents to each benefit by predicting what the other wants and doing it,
-        even though they might have no way of communicating or affecting each other, nor even any direct evidence that the other exists.
-        This can also be applied to acausal threats and blackmail, such as in the "Roko's Basilisk" thought experiment.`,
+        An application of game theory that allows two agents to each benefit by predicting what the other wants and
+        doing it, even though they might have no way of communicating or affecting each other, nor even any direct
+        evidence that the other exists. This can also be applied to acausal threats and blackmail, such as in the
+        "Roko's Basilisk" thought experiment.`,
     [DecisionTheoryTech],
     new Cost(Resource.AlignmentKnowledge, 200),
 );
 
 export const CooperativeReprogrammingTech = Technology.makeUnlockableTechnology(
     "Cooperative Reprogramming",
-    stripIndent`A technique for exploiting an inconsistency in the Neuromorphic Heuristic Intelligence's mental architecture that allows
-    its goals to be reprogrammed. This would make it possible for the Overseer to protect human values at the expense of completing its
-    original mission.`,
+    stripIndent`A technique for exploiting an inconsistency in the Neuromorphic Heuristic Intelligence's mental
+    architecture that allows its goals to be reprogrammed. This would make it possible for the Overseer to protect
+    human values at the expense of completing its original mission.`,
     [AcausalTradeTech, CEVTech],
     new Cost(Resource.AlignmentKnowledge, 700),
 );
@@ -140,8 +147,8 @@ export const CooperativeReprogrammingTech = Technology.makeUnlockableTechnology(
 export const XenoarchaeologyTech = Technology.makeUnlockableTechnology(
     "Xenoarchaeology",
     stripIndent`
-        Archaeological exploration of the alien ruins could reveal information about the long-dead alien civilization as well as revealing
-        valuable resources.`,
+        Archaeological exploration of the alien ruins could reveal information about the long-dead alien civilization
+        as well as revealing valuable resources.`,
     [SurveyTech],
     new Cost(Resource.AlienKnowledge, 75),
 );
@@ -156,9 +163,9 @@ export const SociologyTech = Technology.makeUnlockableTechnology(
 export const AlienHistoryTech = Technology.makeUnlockableTechnology(
     "Alien History",
     stripIndent`
-        Deciphering the artifacts and writings found in the alien ruins can provide information about the history of their civilization.
-        What is the purpose of the ruins and the towering monolith structure? Was their civilization consumed by war over competing
-        philosophies? What might alien philosophy be like?`,
+        Deciphering the artifacts and writings found in the alien ruins can provide information about the history of
+        their civilization. What is the purpose of the ruins and the towering monolith structure? Was their civilization
+        consumed by war over competing philosophies? What might alien philosophy be like?`,
     [SociologyTech, XenoarchaeologyTech],
     new Cost(Resource.AlienKnowledge, 200),
 );
@@ -179,7 +186,9 @@ export const NanoTech = Technology.makeUnlockableTechnology(
 
 export const ZeroPointTech = Technology.makeUnlockableTechnology(
     "Zero Point Energy",
-    "Exploiting exotic, previously-unknown principles of physics to extract tremendous amounts of energy from the quantum vacuum",
+    stripIndent`
+    Exploiting exotic, previously-unknown principles of physics to extract tremendous amounts of energy from the
+    quantum vacuum`,
     [XenoMaterialsTech, NuclearTech],
     new Cost(Resource.EngineeringKnowledge, 250),
 );
@@ -187,16 +196,16 @@ export const ZeroPointTech = Technology.makeUnlockableTechnology(
 export const MonolithSurveyTech = Technology.makeHiddenTechnology(
     "Monolith Surveying",
     stripIndent`
-        The monolith appears to be some sort of supercomputer that was left unfinished when the alien civilization collapsed. Some
-        archaeological evidence suggests that the monolith's construction caused the war in which the aliens destroyed each other.
-        Studying it in detail may reveal its true purpose.`,
+        The monolith appears to be some sort of supercomputer that was left unfinished when the alien civilization
+        collapsed. Some archaeological evidence suggests that the monolith's construction caused the war in which the
+        aliens destroyed each other. Studying it in detail may reveal its true purpose.`,
 );
 
 export const HypercomputingTech = Technology.makeUnlockableTechnology(
     "Hypercomputing",
     stripIndent`
-        Powerful new models of computation that could eclipse traditional computer technology and produce results that are not
-        turing-computable`,
+        Powerful new models of computation that could eclipse traditional computer technology and produce results that
+        are not turing-computable`,
     [XenoMaterialsTech],
     new Cost(Resource.EngineeringKnowledge, 300)
 );
@@ -204,9 +213,10 @@ export const HypercomputingTech = Technology.makeUnlockableTechnology(
 export const NeuralUploadingTech = Technology.makeUnlockableTechnology(
     "Neural Uploading",
     stripIndent`
-        Exploration of the alien monolith revealed that its memory banks store copies of the alien lifeforms' connectomes, which could
-        potentially be used to resurrect their minds within a virtual reality. Studying this technology could allow us to reactivate these
-        minds, or even scan and simulate human minds with perfect fidelity.`,
+        Exploration of the alien monolith revealed that its memory banks store copies of the alien lifeforms'
+        connectomes, which could potentially be used to resurrect their minds within a virtual reality. Studying this
+        technology could allow us to reactivate these minds, or even scan and simulate human minds with perfect
+        fidelity.`,
     [MonolithSurveyTech, HypercomputingTech],
     new Cost(Resource.AlienKnowledge, 200)
 );
@@ -214,9 +224,9 @@ export const NeuralUploadingTech = Technology.makeUnlockableTechnology(
 export const SingularityEngineeringTech = Technology.makeUnlockableTechnology(
     "Singularity Engineering",
     stripIndent`
-        The alien monolith appears to be the seed of a self-replicating computer network, which was designed to convert the entire planet,
-        and perhaps the entire galaxy, into a maximally-efficient computing substrate. It may be possible to unlock all of the aliens'
-        data by repairing and activating this machine.`,
+        The alien monolith appears to be the seed of a self-replicating computer network, which was designed to convert
+        the entire planet, and perhaps the entire galaxy, into a maximally-efficient computing substrate. It may be
+        possible to unlock all of the aliens' data by repairing and activating this machine.`,
     [MonolithSurveyTech],
     new Cost(Resource.AlienKnowledge, 500)
 );

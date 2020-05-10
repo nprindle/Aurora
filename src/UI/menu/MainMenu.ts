@@ -48,7 +48,11 @@ export default class MainMenu implements Page {
                 enableCheats(data.game);
                 GameWindow.show(new WorldScreen(data.game));
             } else {
-                GameWindow.show(new MessageScreen("Deserialization Error", "The saved game data is invalid", new MainMenu()));
+                GameWindow.show(new MessageScreen(
+                    "Deserialization Error",
+                    "The saved game data is invalid",
+                    new MainMenu())
+                );
             }
         });
 
