@@ -6,7 +6,8 @@ import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, RobotTech, } from "../../techtree/TechTree.js";
+import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, RobotTech, }
+    from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
@@ -21,7 +22,7 @@ export default class ConstructionHabitat extends Tile {
 
     protected texture: HTMLImageElement = HabConstructionTexture;
 
-    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
+    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5 ) {
         super(position);
     }
 
@@ -72,7 +73,9 @@ export default class ConstructionHabitat extends Tile {
     ];
 
     static readonly tileName: string = "Construction Site - Habitat";
-    static readonly tileDescription: string = "An area designated for construction of habitation and life support facilities";
+    static readonly tileDescription: string =
+        "An area designated for construction of habitation and life support facilities";
+
     getTileName(): string {
         return ConstructionHabitat.tileName;
     }

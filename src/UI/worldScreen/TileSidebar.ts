@@ -34,13 +34,17 @@ export default class TileSidebar implements Page {
 
             const housingHTML = UI.makeDiv();
             if (tile.populationCapacity) {
+                const capacity = tile.populationCapacity.capacity;
+                const species = tile.populationCapacity.species;
                 housingHTML.appendChild(UI.makePara(
-                    `Population capacity for ${tile.populationCapacity.capacity} ${tile.populationCapacity.species.name}`
+                    `Population capacity for ${capacity} ${species.name}`
                 ));
             }
 
             const projectsHTML = UI.makeDiv();
-            const visibleProjects = tile.possibleProjects.filter(project => project.isVisible(this.position!, this.game));
+            const visibleProjects = tile.possibleProjects.filter(
+                project => project.isVisible(this.position!, this.game)
+            );
             for (const project of visibleProjects) {
                 projectsHTML.appendChild(this.makeProjectHTML(tile, project));
             }
@@ -96,7 +100,9 @@ export default class TileSidebar implements Page {
             projectHTML.appendChild(UI.makePara("Requirements:"));
         }
         for (const requirement of project.completionRequirements) {
-            const cssClass = requirement.evaluate(this.game, this.position!) ? "project-requirement-met" : "project-requirement-unmet";
+            const cssClass = requirement.evaluate(this.game, this.position!)
+                ? "project-requirement-met"
+                : "project-requirement-unmet";
             projectHTML.appendChild(UI.makePara(`- ${requirement.toString()}`, [cssClass]));
         }
 

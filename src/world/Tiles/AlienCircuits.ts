@@ -22,7 +22,8 @@ export default class AlienCircuits extends Tile {
         return AlienCircuits.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienCircuits(position));
+    static readonly schema =
+        S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienCircuits(position));
 }
 
 tileTypes[AlienCircuits.name] = AlienCircuits;

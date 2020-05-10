@@ -24,7 +24,11 @@ export default class MapUI implements Page {
         private parentScreen: { changeSidebarTile(position: GridCoordinates | undefined): void; },
         private world: World
     ) {
-        this.html = UI.makeCanvas(this.viewWidth * MapUI.pixelsPerTile, this.viewHeight * MapUI.pixelsPerTile, ["map-canvas"]);
+        this.html = UI.makeCanvas(
+            this.viewWidth * MapUI.pixelsPerTile,
+            this.viewHeight * MapUI.pixelsPerTile,
+            ["map-canvas"]
+        );
 
         // attach click listener for tile selection
         this.html.addEventListener("click", ev => this.handleClick(ev));
@@ -36,7 +40,10 @@ export default class MapUI implements Page {
     // re-draws all tiles in the viewable area
     public refresh(): void {
         const viewPosition = this.world.viewPosition;
-        const tilesInViewableArea = this.world.getTilesInRectangle(viewPosition.x, viewPosition.y, this.viewWidth, this.viewHeight);
+        const tilesInViewableArea = this.world.getTilesInRectangle(
+            viewPosition.x, viewPosition.y,
+            this.viewWidth, this.viewHeight
+        );
 
         for (const tile of tilesInViewableArea) {
             this.drawSquareAtCoordinates(tile.getTexture(this.world), tile.position);
@@ -64,7 +71,8 @@ export default class MapUI implements Page {
         const screenHeight = image.height * ratio; // necessary scaling for non 100xN images
 
         const screenX = x * MapUI.pixelsPerTile;
-        const screenY = y * MapUI.pixelsPerTile - screenHeight + MapUI.pixelsPerTile; // make sure tall images line up properly
+        // make sure tall images line up properly
+        const screenY = y * MapUI.pixelsPerTile - screenHeight + MapUI.pixelsPerTile;
 
         context.drawImage(image, screenX, screenY, screenWidth, screenHeight);
     }
@@ -84,8 +92,10 @@ export default class MapUI implements Page {
     }
 
     handleClick(ev: MouseEvent): void {
-        const x = this.world.viewPosition.x + Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth));
-        const y = this.world.viewPosition.y + Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight));
+        const x = this.world.viewPosition.x
+            + Math.floor((ev.pageX - this.html.offsetLeft) * (this.viewWidth / this.html.clientWidth));
+        const y = this.world.viewPosition.y
+            + Math.floor((ev.pageY - this.html.offsetTop) * (this.viewHeight / this.html.clientHeight));
 
         const targetTile = this.world.getTileAtCoordinates(new GridCoordinates(x, y));
         this.selectTile(targetTile);

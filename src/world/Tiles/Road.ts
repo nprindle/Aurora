@@ -1,8 +1,8 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { RoadTextureCross, RoadTextureVertical, RoadTextureHorizontal, RoadTextureTSouth, RoadTextureTNorth, RoadTextureTEast,
-    RoadTextureTWest, RoadTextureCornerTopRight, RoadTextureCornerBottomRight, RoadTextureCornerTopLeft,
-    RoadTextureCornerBottomLeft, } from "../../UI/Images.js";
+import { RoadTextureCross, RoadTextureVertical, RoadTextureHorizontal, RoadTextureTSouth, RoadTextureTNorth,
+    RoadTextureTEast, RoadTextureTWest, RoadTextureCornerTopRight, RoadTextureCornerBottomRight,
+    RoadTextureCornerTopLeft, RoadTextureCornerBottomLeft, } from "../../UI/Images.js";
 import World from "../World.js";
 import { Schemas as S } from "@nprindle/augustus";
 

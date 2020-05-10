@@ -26,9 +26,9 @@ export default class HumanMonolith extends Tile {
             stripIndent`
             Evidence suggests that, once activated, the hypercomputing matrix will expand to absorb all available
             matter in order to provide as much computing power as possible to sustain a virtual world for its
-            inhabitants. It once contained the uploaded minds of its alien designers, but now that it has been reprogrammed
-            with the connectomes of human colonists, it should produce a virtual reality utopia optimized for the flourishing
-            of humans rather than aliens.`,
+            inhabitants. It once contained the uploaded minds of its alien designers, but now that it has been
+            reprogrammed with the connectomes of human colonists, it should produce a virtual reality utopia optimized
+            for the flourishing of humans rather than aliens.`,
             HumanSeedCore,
             HumanCircuits,
             [
@@ -45,9 +45,8 @@ export default class HumanMonolith extends Tile {
 
     static readonly tileName: string = "Reprogrammed Monolith";
     static readonly tileDescription: string = stripIndent`
-    A towering alien structure; the hypercomputing matrix contained with in it has been reprogrammed, and the alien data it
-    once held has been replaced with the scanned connectomes of human colonists.
-    `;
+        A towering alien structure; the hypercomputing matrix contained with in it has been reprogrammed, and the alien
+        data it once held has been replaced with the scanned connectomes of human colonists.`;
     getTileName(): string {
         return HumanMonolith.tileName;
     }
@@ -55,7 +54,8 @@ export default class HumanMonolith extends Tile {
         return HumanMonolith.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
+    static readonly schema =
+        S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
 }
 
 tileTypes[HumanMonolith.name] = HumanMonolith;

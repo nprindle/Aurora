@@ -10,7 +10,11 @@ export interface SampleData {
 export namespace SampleUtils {
 
     // Length is in units of number of samples
-    export function createBufferFromGenerator(context: AudioContext, length: number, func: (i: number) => number): AudioBuffer {
+    export function createBufferFromGenerator(
+        context: AudioContext,
+        length: number,
+        func: (i: number) => number
+    ): AudioBuffer {
         // Number of channels, length, sample rate
         const buffer = context.createBuffer(1, length, 44100);
         const arr: Float32Array = new Float32Array(length);
@@ -21,7 +25,11 @@ export namespace SampleUtils {
         return buffer;
     }
 
-    export async function createBufferFromAudioData(context: AudioContext, length: number, filename: string): Promise<AudioBuffer> {
+    export async function createBufferFromAudioData(
+        context: AudioContext,
+        length: number,
+        filename: string
+    ): Promise<AudioBuffer> {
         const buffer = context.createBuffer(1, length, 44100);
         const response = await fetch(`assets/${filename}`, {
             headers: new Headers({

@@ -21,10 +21,12 @@ export default class Arcology extends Tile {
         new TileProject(
             "AI Safety Research Proposal",
             stripIndent`
-            A human colonist wants to start a project with the goal of aligning artificial intelligence to serve human goals.
+            A human colonist wants to start a project with the goal of aligning artificial intelligence to serve human
+            goals.
 
-            If approved, this line of research risks mission failure, since if the overseer allowed itself to be reprogrammed it would
-            no longer pursue the mission of uncovering information about the aliens at all costs.`,
+            If approved, this line of research risks mission failure, since if the overseer allowed itself to be
+            reprogrammed it would no longer pursue the mission of uncovering information about the aliens at all
+            costs.`,
             (position: GridCoordinates, game: Game) => game.unlockTechnology(AiResearchTech),
             [],
             [techRequirement(RationalityTech)],
@@ -41,7 +43,9 @@ export default class Arcology extends Tile {
     }
 
     static readonly tileName: string = "Arcology";
-    static readonly tileDescription: string = "A self-contained habitat for efficiently housing a large number of humans";
+    static readonly tileDescription: string =
+        "A self-contained habitat for efficiently housing a large number of humans";
+
     getTileName(): string {
         return Arcology.tileName;
     }

@@ -1,7 +1,9 @@
 /* common HTML/DOM-manipulation helper methods shared by our UI
- * this file is not the place to put layout or logic for a specific page or component's UI; those should each get their own file
+ * this file is not the place to put layout or logic for a specific page or component's UI
+ * those should each get their own file
  *
- * thank you to May Lawver for her UI code from last semester's game "Prototype Inheritance", which provided some helpful examples
+ * thank you to May Lawver for her UI code from last semester's game "Prototype Inheritance",
+ * which provided some helpful examples
  */
 
 // Emoji rendering is done using the twemoji library

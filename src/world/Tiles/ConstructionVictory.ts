@@ -33,7 +33,11 @@ export default class ConstructionVictory extends Tile {
         ),
 
         constructionProject(NanotechFoundry,
-            [new Cost(Resource.SmartMatter, 1000), new Cost(Resource.BuildingMaterials, 500), new Cost(Resource.Electronics, 200)],
+            [
+                new Cost(Resource.SmartMatter, 1000),
+                new Cost(Resource.BuildingMaterials, 500),
+                new Cost(Resource.Electronics, 200)
+            ],
             [
                 roadRequirement,
                 nearMonolithRequirement(3),

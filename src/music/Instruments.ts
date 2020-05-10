@@ -64,7 +64,11 @@ export class SampleInstrument extends Instrument {
         super(volume);
     }
 
-    static async fromSample(buffer: Promise<SampleData>, env: AdsrConfig, volume: number = 1): Promise<SampleInstrument> {
+    static async fromSample(
+        buffer: Promise<SampleData>,
+        env: AdsrConfig,
+        volume: number = 1
+    ): Promise<SampleInstrument> {
         return new SampleInstrument(await buffer, env, volume);
     }
 

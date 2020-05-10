@@ -20,7 +20,10 @@ export default class NanotechFoundry extends Tile {
         return NanotechFoundry.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new NanotechFoundry(position));
+    static readonly schema = S.classOf(
+        { position: GridCoordinates.schema },
+        ({ position }) => new NanotechFoundry(position)
+    );
 }
 
 tileTypes[NanotechFoundry.name] = NanotechFoundry;

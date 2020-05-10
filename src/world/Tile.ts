@@ -21,7 +21,6 @@ export default abstract class Tile {
 
     readonly populationCapacity?: Housing = undefined;
 
-    // this provides a key into the ImageCache, which preloads all of the images so that we can synchronously draw them to the map canvas
     protected abstract readonly texture: HTMLImageElement;
 
     constructor(

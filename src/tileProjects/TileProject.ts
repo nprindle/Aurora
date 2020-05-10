@@ -41,7 +41,10 @@ export default class TileProject {
 }
 
 export function constructionProject(
-    tile: NamedTileType, costs: Cost[], completionRequirements: DescribedTileQuery[], visibilityRequirements: TileQuery[]
+    tile: NamedTileType,
+    costs: Cost[],
+    completionRequirements: DescribedTileQuery[],
+    visibilityRequirements: TileQuery[]
 ): TileProject {
     return new TileProject(
         `Construct ${tile.tileName}`, tile.tileDescription,

@@ -45,7 +45,9 @@ export default class RobotHive extends Tile {
     }
 
     static readonly tileName: string = "Drone Hive";
-    static readonly tileDescription: string = "A facility for manufacturing, storing, and maintaining mobile robotic worker drones";
+    static readonly tileDescription: string =
+        "A facility for manufacturing, storing, and maintaining mobile robotic worker drones";
+
     getTileName(): string {
         return RobotHive.tileName;
     }

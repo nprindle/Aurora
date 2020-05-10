@@ -23,7 +23,8 @@ export default class Ruins extends Tile {
 
     possibleProjects = [
         new TileProject("Excavate", "Construct a facility to harvest exotic alien resources from the ruins",
-            (position: GridCoordinates, game: Game) => game.world.placeTile(new Recycler(position, this.textureVariant)),
+            (position: GridCoordinates, game: Game) =>
+                game.world.placeTile(new Recycler(position, this.textureVariant)),
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Energy, 100)],
             [roadRequirement, techRequirement(XenoarchaeologyTech)],
             [hasTech(SurveyTech)],

@@ -33,10 +33,10 @@ export default class XenoLab extends Tile {
         new TileProject(
             "Survey Alien Monolith",
             stripIndent`
-                The monolith appears to be some sort of supercomputer that was left unfinished when the alien civilization collapsed.
-                Some archaeological evidence suggests that the monolith's construction caused the war in which the aliens destroyed
-                each other. Studying it in detail may reveal its true purpose. Completing this project provides the
-                "${MonolithSurveyTech.name}" technology.`,
+                The monolith appears to be some sort of supercomputer that was left unfinished when the alien
+                civilization collapsed. Some archaeological evidence suggests that the monolith's construction caused
+                the war in which the aliens destroyed each other. Studying it in detail may reveal its true purpose.
+                Completing this project provides the "${MonolithSurveyTech.name}" technology.`,
             (position: GridCoordinates, game: Game) => { game.unlockTechnology(MonolithSurveyTech); },
             [new Cost(Resource.AlienKnowledge, 50)],
             [tileWithinDistanceRequirement(Monolith, 5)],
@@ -45,7 +45,9 @@ export default class XenoLab extends Tile {
     ];
 
     static readonly tileName: string = "Xenoarchaeology Lab";
-    static readonly tileDescription: string = "A laboratory for studying artifacts and technology left by the now-dead alien civilization";
+    static readonly tileDescription: string =
+        "A laboratory for studying artifacts and technology left by the now-dead alien civilization";
+
     getTileName(): string {
         return XenoLab.tileName;
     }

@@ -29,7 +29,9 @@ export default class Recycler extends Tile {
     ];
 
     static readonly tileName: string = "Alien Ruins Recycler Excavation";
-    static readonly tileDescription: string = `A facility that harvests and recycles exotic materials from the alien structure.`;
+    static readonly tileDescription: string =
+        "A facility that harvests and recycles exotic materials from the alien structure.";
+
     getTileName(): string {
         return Recycler.tileName;
     }

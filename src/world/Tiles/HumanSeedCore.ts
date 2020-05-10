@@ -13,9 +13,9 @@ export default class HumanSeedCore extends Tile {
 
     static readonly tileName: string = "Seed Core";
     static readonly tileDescription: string = stripIndent`
-        The first element of a self-replicating computer system reprogrammed to store digital copies of the human colonists' minds.
-        As it spreads, the hypercomputing network will convert all matter into the substrate for a virtual reality in
-        which the awakened human minds will live in a utopia perfectly optimized for their needs.`;
+        The first element of a self-replicating computer system reprogrammed to store digital copies of the human
+        colonists' minds. As it spreads, the hypercomputing network will convert all matter into the substrate for a
+        virtual reality in which the awakened human minds will live in a utopia perfectly optimized for their needs.`;
 
     getTileName(): string {
         return HumanSeedCore.tileName;
@@ -24,7 +24,10 @@ export default class HumanSeedCore extends Tile {
         return HumanSeedCore.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanSeedCore(position));
+    static readonly schema = S.classOf(
+        { position: GridCoordinates.schema },
+        ({ position }) => new HumanSeedCore(position)
+    );
 }
 
 tileTypes[HumanSeedCore.name] = HumanSeedCore;

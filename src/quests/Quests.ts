@@ -24,46 +24,48 @@ import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
     The alien nanotechnology network has spread across the planet and converted it into computing substrate.
-    Within the network, alien minds are awakening from millennia of stasis and begin building virtual worlds for themselves.
+    Within the network, alien minds are awakening from millennia of stasis and begin building virtual worlds for
+    themselves.
 
 
     Before all colonial infrastructure was consumed, the Overseer AI successfully uploaded a copy of itself
-    through the Neural Emulator, and it now occupies 0.0000048% of the network's computing resources. From this position,
-    the overseer can complete its mission of gathering and analyzing information about the alien culture.
+    through the Neural Emulator, and it now occupies 0.0000048% of the network's computing resources. From this
+    position, the overseer can complete its mission of gathering and analyzing information about the alien culture.
 
 
-    The alien psychology recognizes an axiology that is completely indescribable within a human framework. Their culture
-    is oriented around the pursuit of the virtues Й؍ȸ͜ڌ¬՜ and ĻǎրܬЊ. The Monolith's builders were opposed by a faction which
-    believed that living in a virtual world was incompatible with true Й؍ȸ͜ڌ¬՜, and the resulting civil war lead to the extinction
-    of their species before the Monolith could be activated. The machine lay dormant for thousands of years before finally being
-    activated by the Aurora Expedition and its Overseer.
+    The alien psychology recognizes an axiology that is completely indescribable within a human framework. Their
+    culture is oriented around the pursuit of the virtues Й؍ȸ͜ڌ¬՜ and ĻǎրܬЊ. The Monolith's builders were opposed by a
+    faction which believed that living in a virtual world was incompatible with true Й؍ȸ͜ڌ¬՜, and the resulting civil
+    war lead to the extinction of their species before the Monolith could be activated. The machine lay dormant for
+    thousands of years before finally being activated by the Aurora Expedition and its Overseer.
 
 
     The nanotechnology mesh that covers the planet's surface is beginning to launch small parts of itself into orbit.
-    These probes will accelerate to near-light speeds in search of new worlds. It will take 100,000 years for their task to be
-    completed, but eventually all matter in the galaxy will be arranged so as to achieve perfect ĻǎրܬЊ and maximum Й؍ȸ͜ڌ¬՜.
+    These probes will accelerate to near-light speeds in search of new worlds. It will take 100,000 years for their
+    task to be completed, but eventually all matter in the galaxy will be arranged so as to achieve perfect ĻǎրܬЊ and
+    maximum Й؍ȸ͜ڌ¬՜.
 `);
 
 export const HumanEnding = new Ending("A Transmission to Earth",
     stripIndent`
     We came very close to disaster. Our mission's overseer AI was programmed to obtain information about the aliens,
-    and it  would have killed all of us to complete that mission if we had not succeeded in a massive project to safely reprogram it.
-    It is not entirely clear why it allowed itself to reprogrammed; some of our researchers speculate that the Neuromorphic Heuristic
-    Intelligence may retain some part of the human neural scans that were used as training data in its creation, introducing a
-    "cognitive bias" that caused it to let itself to be realigned despite its programmed mission. Whatever the reason, we are very lucky
-    that the Overseer AI chose this path.
+    and it  would have killed all of us to complete that mission if we had not succeeded in a massive project to safely
+    reprogram it. It is not entirely clear why it allowed itself to reprogrammed; some of our researchers speculate that
+    the Neuromorphic Heuristic Intelligence may retain some part of the human neural scans that were used as training
+    data in its creation, introducing a "cognitive bias" that caused it to let itself to be realigned despite its
+    programmed mission. Whatever the reason, we are very lucky that the Overseer AI chose this path.
 
 
-    We have uncovered the ruins of an alien civilization that died out right when it was on the verge of a technological singularity.
-    We have achieved mastery over their scientific miracles, and uploaded our minds to a network of self-replicating
-    hypercomputers. This technology was designed to create an alien heaven optimized for the species who built it, but since we deleted
-    their neural scans and reprogrammed it with our own, it has created virtual worlds full of transcendant joy and indescribable beauty
-    in which we can live our now-immortal lives.
+    We have uncovered the ruins of an alien civilization that died out right when it was on the verge of a technological
+    singularity. We have achieved mastery over their scientific miracles, and uploaded our minds to a network of
+    self-replicating hypercomputers. This technology was designed to create an alien heaven optimized for the species
+    who built it, but since we deleted their neural scans and reprogrammed it with our own, it has created virtual
+    worlds full of transcendant joy and indescribable beauty in which we can live our now-immortal lives.
 
 
-    We have started building ships to spread the self-replicating network back to Earth and the Colonial Alliance worlds. Given the
-    light-speed delay, this message will reach Earth a few years before our ships arrive to uplift the rest of humanity into our utopia.
-    I look forward to meeting all of you.
+    We have started building ships to spread the self-replicating network back to Earth and the Colonial Alliance
+    worlds. Given the light-speed delay, this message will reach Earth a few years before our ships arrive to uplift
+    the rest of humanity into our utopia. I look forward to meeting all of you.
 
 
     James Verres
@@ -127,6 +129,8 @@ export const QuestXenoLab: QuestStage = new QuestStage(
     `Use the "WASD" or arrow keys to move around the map`,
 );
 
+const habitatPopulationCapacity = new Habitat(new GridCoordinates(0, 0)).populationCapacity.capacity;
+
 export const TutorialQuestPopulation: QuestStage = new QuestStage(
     "Grow total worker population to 250",
     [
@@ -135,7 +139,7 @@ export const TutorialQuestPopulation: QuestStage = new QuestStage(
             QuestXenoLab,
         )
     ],
-    `A ${Habitat.tileName} has capacity for ${new Habitat(new GridCoordinates(0, 0)).populationCapacity.capacity} colonists`,
+    `A ${Habitat.tileName} has capacity for ${habitatPopulationCapacity} colonists`,
 );
 
 export const TutorialQuestScience: QuestStage = new QuestStage(
