@@ -94,10 +94,11 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
-                The Colonial Alliance Research Agency has been enthusiastic about adopting Neuromorphic Heuristic Intelligences.
-                These cutting-edge AI brains have assisted in many important scientific and exploratory projects, but where they
-                most excel is in administrative roles. An Overseer AI can monitor and direct a project's data, materials, and
-                human resources with laser-like focus towards completing its programmed objectives.
+                The Colonial Alliance Research Agency has been enthusiastic about adopting Neuromorphic Heuristic
+                Intelligences. These cutting-edge AI brains have assisted in many important scientific and exploratory
+                projects, but where they most excel is in administrative roles. An Overseer AI can monitor and direct a
+                project's data, materials, and human resources with laser-like focus towards completing its programmed
+                objectives.
             `,
             `Isaac Calvin, CEO of CabiAI`
         ),
@@ -181,62 +182,64 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
-            They warned us about brain-thaw, but nothing can prepare you for the experience of slowly regaining consciousness
-            while your body is still half-frozen from years of cryostasis.
+            They warned us about brain-thaw, but nothing can prepare you for the experience of slowly regaining
+            consciousness while your body is still half-frozen from years of cryostasis.
             `,
             "Medical Technician Noah Verres, Aurora Expedition, T-minus-5 days to planetfall",
         ),
         new Quote(
             stripIndent`
-            Thankfully, our food stores are intact after centuries of travel and we have more than enough to last until we can set
-            up greenhouses on the planet's surface and grow our own food.
+            Thankfully, our food stores are intact after centuries of travel and we have more than enough to last until
+            we can set up greenhouses on the planet's surface and grow our own food.
 
 
-            However, I still don't understand why the mission planners insisted that the bulk of our food supply be burritos.
-            Back on earth, I asked one of the nutritionists why that was considered the optimal form-factor for delivering all of our
-            nutrition, and she just gave me an incomprehensible explanation involving monads.
+            However, I still don't understand why the mission planners insisted that the bulk of our food supply be
+            burritos. Back on earth, I asked one of the nutritionists why that was considered the optimal form-factor
+            for delivering all of our nutrition, and she just gave me an incomprehensible explanation involving monads.
             `,
             "Quartermaster Allison Li, Aurora Expedition, T-minus-3 days to planetfall",
         ),
         new Quote(
             stripIndent`
-            Our species is much safer than when our ancestors lived on only one planet. If we had been unlucky, all of humanity
-            could have been killed by one rogue asteroid, supervolcano, or gamma ray burst before ever reaching the stars. If a
-            planetary-scale disaster happened today it would be a tragedy, but humanity would still live on across dozens of major
-            populated worlds and hundreds of minor planets and stations.
+            Our species is much safer than when our ancestors lived on only one planet. If we had been unlucky, all of
+            humanity could have been killed by one rogue asteroid, supervolcano, or gamma ray burst before ever reaching
+            the stars. If a planetary-scale disaster happened today it would be a tragedy, but humanity would still live
+            on across dozens of major populated worlds and hundreds of minor planets and stations.
 
 
-            Despite the safety benefits of an interstellar civilization, there are still existential risks. For example, a self-upgrading
-            general artificial intelligence would not be confined to one planet or star system. We should also be concerned about
-            militarized nanotechnology and biotechnology, as well as more speculative threats such as memetic weapons.
+            Despite the safety benefits of an interstellar civilization, there are still existential risks. For example,
+            a self-upgrading general artificial intelligence would not be confined to one planet or star system. We
+            should also be concerned about militarized nanotechnology and biotechnology, as well as more speculative
+            threats such as memetic weapons.
             `,
             "Journal of the Moretrue Institute for Effective Policy",
         ),
         new Quote(
             stripIndent`
-            New Plymouth's Hall of the Founders was the first building of its size to be produced through structural flash-printing.
-            It was built by the Mayflower colonists as a short-term shelter, but they soon found that its high-density
-            construction would make demolishing the "temporary" structure prohibitively expensive. The dome still stands today,
-            serving as a museum and national monument. Despite the difficulty of demolishing or even renovating flash-printed
-            buildings once the ferrofoam has solidified, the speed and labor-saving make them an indispensible asset in the first
-            few years after planetfall.
+            New Plymouth's Hall of the Founders was the first building of its size to be produced through structural
+            flash-printing. It was built by the Mayflower colonists as a short-term shelter, but they soon found that
+            its high-density construction would make demolishing the "temporary" structure prohibitively expensive.
+            The dome still stands today, serving as a museum and national monument. Despite the difficulty of
+            demolishing or even renovating flash-printed buildings once the ferrofoam has solidified, the speed and
+            labor-saving make them an indispensible asset in the first few years after planetfall.
             `,
             "Introduction to Frontier Engineering by Robin North",
         ),
         new Quote(
             stripIndent`
-            The latest trend in computer automation is Neuromorphic Heuristic Intelligences, which are based on rough simulations
-            of the cognitive machinery of the human brain. NHIs are not qualitatively more intelligent than humans, which is why
-            the Colonial Alliance does not consider them to be prohibited under the San Jose Accords. However, they are quantitatively
-            more intelligent than humans, able to think faster and manage a larger number of tasks while remaining completely focused
-            on their programmed objectives. Many experts believe that this is sufficient reason to restrict the use of this technology.
+            The latest trend in computer automation is Neuromorphic Heuristic Intelligences, which are based on rough
+            simulations of the cognitive machinery of the human brain. NHIs are not qualitatively more intelligent than
+            humans, which is why the Colonial Alliance does not consider them to be prohibited under the San Jose
+            Accords. However, they are quantitatively more intelligent than humans, able to think faster and manage a
+            larger number of tasks while remaining completely focused on their programmed objectives. Many experts
+            believe that this is sufficient reason to restrict the use of this technology.
             `,
             "Dr. Alex Scott, Moretrue Institute for Effective Policy",
         ),
         new Quote(
             stripIndent`
-            Kids who grew up after the terraforming don't realize how lucky they are. I remember when you couldn't take a step outside
-            Shackleton Base without a pressure suit. Every cubic meter of breathable air was a miracle.
+            Kids who grew up after the terraforming don't realize how lucky they are. I remember when you couldn't take
+            a step outside Shackleton Base without a pressure suit. Every cubic meter of breathable air was a miracle.
             `,
             "An Oral History of The Lunar Republics"
         ),
@@ -253,16 +256,16 @@ export default class Quote {
         new Quote(
             stripIndent`
             Octave was the first musically motivated colony. While nobody knows how the Colonial Alliance
-            Department of Cultural Innovation got their hands on enough artificial wombs to birth Octave's initial wave of
-            colonists, it's obvious why that was necessary. If you want a colony of people with no preexisting ideas of what
-            music should be, you need people who haven't heard music before.`,
+            Department of Cultural Innovation got their hands on enough artificial wombs to birth Octave's initial wave
+            of colonists, it's obvious why that was necessary. If you want a colony of people with no preexisting ideas
+            of what music should be, you need people who haven't heard music before.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
             stripIndent`
             The first attempt at starting a musical-blank-slate colony went well at first, but the project nearly
-            failed when they received a physical shipment of Wagner operas meant for the Holy Bruderhof Kingdom. Disaster was averted
-            because the operas were stored on a magnetic tape format the colonists couldn't read.`,
+            failed when they received a physical shipment of Wagner operas meant for the Holy Bruderhof Kingdom.
+            Disaster was averted because the operas were stored on a magnetic tape format the colonists couldn't read.`,
             "Harmony of the Exospheres by Caritas Wilson"
         ),
         new Quote(
@@ -298,48 +301,6 @@ export default class Quote {
 
             The only sport which survived the conversion well was, funnily enough, bocce ball.`,
             "Zeroball, Etc. by Parity Harker"
-        ),
-        new Quote(
-            stripIndent`
-            Our species is much safer than when our ancestors lived on only one planet. If we had been unlucky, all of humanity
-            could have been killed by one rogue asteroid, supervolcano, or gamma ray burst before ever reaching the stars. If a
-            planetary-scale disaster happened today it would be a tragedy, but humanity would still live on across dozens of major
-            populated worlds and hundreds of minor planets and stations.
-
-
-            Despite the safety benefits of an interstellar civilization, there are still existential risks. For example, a self-upgrading
-            general artificial intelligence would not be confined to one planet or star system. We should also be concerned about
-            militarized nanotechnology and biotechnology, as well as more speculative threats such as memetic weapons.
-            `,
-            "Journal of the Moretrue Institute for Effective Policy",
-        ),
-        new Quote(
-            stripIndent`
-            New Plymouth's Hall of the Founders was the first building of its size to be produced through structural flash-printing.
-            It was built by the Mayflower colonists as a short-term shelter, but they soon found that its high-density
-            construction would make demolishing the "temporary" structure prohibitively expensive. The dome still stands today,
-            serving as a museum and national monument. Despite the difficulty of demolishing or even renovating flash-printed
-            buildings once the ferrofoam has solidified, the speed and labor-saving make them an indispensible asset in the first
-            few years after planetfall.
-            `,
-            "Introduction to Frontier Engineering by Robin North",
-        ),
-        new Quote(
-            stripIndent`
-            The latest trend in computer automation is Neuromorphic Heuristic Intelligences, which are based on rough simulations
-            of the cognitive machinery of the human brain. NHIs are not qualitatively more intelligent than humans, which is why
-            the Colonial Alliance does not consider them to be prohibited under the San Jose Accords. However, they are quantitatively
-            more intelligent than humans, able to think faster and manage a large number of tasks while remaining completely focused
-            on their programmed objectives. Many experts believe that this is sufficient reason to restrict the use of this technology.
-            `,
-            "Dr. Alex Scott, Moretrue Institute for Effective Policy",
-        ),
-        new Quote(
-            stripIndent`
-            Kids who grew up after the terraforming don't realize how lucky they are. I remember when you couldn't take a step outside
-            Shackleton Base without a pressure suit. Every cubic meter of breathable air was a miracle.
-            `,
-            "An Oral History of The Lunar Republics"
         ),
     ];
 
