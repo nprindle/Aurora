@@ -1,6 +1,6 @@
 import GridCoordinates from "../../world/GridCoordinates.js";
 import { UI } from "../UI.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Tile from "../../world/Tile.js";

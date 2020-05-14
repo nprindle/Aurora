@@ -1,5 +1,5 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { IndustryConstructionTexture, } from "../../ui/Images.js";
 import Game from "../../Game.js";
@@ -12,7 +12,7 @@ import Wasteland from "./Wasteland.js";
 import {
     StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
     XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
-import { constructionProject } from "../../tileProjects/TileProject.js";
+import { constructionProject } from "../../world/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
 import XenoFactory from "./XenoFactory.js";

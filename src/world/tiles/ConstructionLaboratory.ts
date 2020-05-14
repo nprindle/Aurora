@@ -1,5 +1,5 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { LabConstructionTexture } from "../../ui/Images.js";
 import Game from "../../Game.js";
@@ -12,7 +12,7 @@ import AlignmentLab from "./AlignmentLab.js";
 import Wasteland from "./Wasteland.js";
 import { SurveyTech, AiResearchTech } from "../../techtree/TechTree.js";
 import Species from "../../resources/Species.js";
-import { constructionProject } from "../../tileProjects/TileProject.js";
+import { constructionProject } from "../../world/TileProject.js";
 import {
     roadRequirement, techRequirement, speciesPopulationRequirement, nearRuinsOrMonolith
 } from "../../queries/DescribedTileQuery.js";

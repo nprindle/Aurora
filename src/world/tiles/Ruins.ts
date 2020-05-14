@@ -2,7 +2,7 @@ import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { RuinsTexture1, RuinsTexture2 } from "../../ui/Images.js";
 import { Random } from "../../util/Random.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import Game from "../../Game.js";
 import Recycler from "./Recycler.js";
 import { SurveyTech, XenoarchaeologyTech } from "../../techtree/TechTree.js";

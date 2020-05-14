@@ -1,5 +1,5 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";

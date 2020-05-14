@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
 import { RobotHiveTexture } from "../../ui/Images.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import Game from "../../Game.js";

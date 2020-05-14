@@ -1,5 +1,5 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { XenoEngineeringConstructionTexture } from "../../ui/Images.js";
 import Game from "../../Game.js";
@@ -7,7 +7,7 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Wasteland from "./Wasteland.js";
 import { MonolithSurveyTech, NanoTech, NeuralUploadingTech } from "../../techtree/TechTree.js";
-import { constructionProject } from "../../tileProjects/TileProject.js";
+import { constructionProject } from "../../world/TileProject.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import Monolith from "./Monolith.js";
 import NeuralEmulator from "./NeuralEmulator.js";

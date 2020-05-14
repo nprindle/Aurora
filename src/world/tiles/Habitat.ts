@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
 import { HabitatTexture } from "../../ui/Images.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import Game from "../../Game.js";
 import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
 import { stripIndent } from "../../util/Text.js";

@@ -4,7 +4,7 @@ import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { XenoLabTexture } from "../../ui/Images.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import { MonolithSurveyTech, AlienHistoryTech } from "../../techtree/TechTree.js";
 import Game from "../../Game.js";
 import Monolith from "./Monolith.js";
