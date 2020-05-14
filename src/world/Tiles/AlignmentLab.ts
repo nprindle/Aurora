@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
-import { AlignmentLabTexture } from "../../UI/Images.js";
+import { AlignmentLabTexture } from "../../ui/Images.js";
 import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
 

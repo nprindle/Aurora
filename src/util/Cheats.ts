@@ -1,11 +1,11 @@
 import Resource from "../resources/Resource.js";
 import Game from "../Game.js";
 import Species from "../resources/Species.js";
-import { GameWindow } from "../UI/GameWindow.js";
+import { GameWindow } from "../ui/GameWindow.js";
 import Cost from "../resources/Cost.js";
 import { HumanEnding, AlienEnding } from "../quests/Quests.js";
-import EndScreen from "../UI/endScreen/EndScreen.js";
-import TransitionScreen from "../UI/transitionScreen/TransitionScreen.js";
+import EndScreen from "../ui/endScreen/EndScreen.js";
+import TransitionScreen from "../ui/transitionScreen/TransitionScreen.js";
 import { Achievements } from "../achievements/Achievements.js";
 
 // container for cheat methods for debugging/testing via the browser console

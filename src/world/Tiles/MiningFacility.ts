@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
-import { MiningFacilityTexture } from "../../UI/Images.js";
+import { MiningFacilityTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class MiningFacility extends Tile {

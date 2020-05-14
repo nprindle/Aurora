@@ -2,8 +2,8 @@ import Achievement from "./Achievement";
 import Game from "../Game";
 import { Storage } from "../persistence/Storage";
 import { Schemas } from "@nprindle/augustus";
-import { GameWindow } from "../UI/GameWindow";
-import { AchievementPopup } from "../UI/AchievementPopup";
+import { GameWindow } from "../ui/GameWindow";
+import { AchievementPopup } from "../ui/AchievementPopup";
 
 export namespace Achievements {
     let unlockedAchievements: Achievement[] = [];

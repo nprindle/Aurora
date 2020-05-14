@@ -4,7 +4,7 @@ import Conversion from "../../resources/Conversion.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Species from "../../resources/Species.js";
-import { HydroponicsTexture } from "../../UI/Images.js";
+import { HydroponicsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Hydroponics extends Tile {

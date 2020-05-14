@@ -1,6 +1,6 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { MonolithTexture } from "../../UI/Images.js";
+import { MonolithTexture } from "../../ui/Images.js";
 import TileProject, { MonolithCompletionProject } from "../../tileProjects/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
 import AlienSeedCore from "./AlienSeedCore.js";

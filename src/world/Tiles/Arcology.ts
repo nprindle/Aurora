@@ -2,7 +2,7 @@ import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
-import { ArcologyTexture } from "../../UI/Images.js";
+import { ArcologyTexture } from "../../ui/Images.js";
 import Game from "../../Game.js";
 import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
 import TileProject from "../../tileProjects/TileProject.js";

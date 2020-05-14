@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
-import { XenoFactoryTexture } from "../../UI/Images.js";
+import { XenoFactoryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class XenoFactory extends Tile {

@@ -1,7 +1,7 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { LabConstructionTexture } from "../../UI/Images.js";
+import { LabConstructionTexture } from "../../ui/Images.js";
 import Game from "../../Game.js";
 import EngineeringLab from "./EngineeringLab.js";
 import Resource from "../../resources/Resource.js";
