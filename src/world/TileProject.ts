@@ -3,7 +3,7 @@ import Game from "../Game";
 import Cost from "../resources/Cost";
 import { NamedTileType } from "../world/Tile";
 import { GameWindow } from "../ui/GameWindow";
-import EndingWorldScreen from "../ui/endingWorldScreen/EndingWorldScreen";
+import EndingWorldScreen from "../ui/worldScreen/EndingWorldScreen";
 import DescribedTileQuery from "../queries/DescribedTileQuery";
 import { TileQuery, queryTile } from "../queries/Queries.js";
 
