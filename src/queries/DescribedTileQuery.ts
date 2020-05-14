@@ -6,11 +6,11 @@ import {
 } from "./Queries.js";
 import Technology from "../techtree/Technology";
 import { NamedTileType } from "../world/Tile";
-import Monolith from "../world/Tiles/Monolith";
-import HumanMonolith from "../world/Tiles/HumanMonolith";
+import Monolith from "../world/tiles/Monolith";
+import HumanMonolith from "../world/tiles/HumanMonolith";
 import Species from "../resources/Species";
-import Ruins from "../world/Tiles/Ruins";
-import Recycler from "../world/Tiles/Recycler";
+import Ruins from "../world/tiles/Ruins";
+import Recycler from "../world/tiles/Recycler";
 import { Schemas as S } from "@nprindle/augustus";
 
 // a requirement for completing a tileproject

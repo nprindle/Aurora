@@ -3,7 +3,7 @@ import GridCoordinates from "../world/GridCoordinates";
 import Technology from "../techtree/Technology";
 import Species from "../resources/Species";
 import Tile, { typeofTileSchema } from "../world/Tile";
-import Road from "../world/Tiles/Road";
+import Road from "../world/tiles/Road";
 import Resource from "../resources/Resource";
 import { impossible } from "../util/Util";
 import { Schema, Schemas as S } from "@nprindle/augustus";
