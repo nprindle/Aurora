@@ -3,21 +3,21 @@
 
 import { QuestStage, QuestPath } from "./QuestStage.js";
 import Resource from "../resources/Resource.js";
-import Habitat from "../world/Tiles/Habitat.js";
-import SolarPanels from "../world/Tiles/SolarArray.js";
-import Lander from "../world/Tiles/Lander.js";
+import Habitat from "../world/tiles/Habitat.js";
+import SolarPanels from "../world/tiles/SolarArray.js";
+import Lander from "../world/tiles/Lander.js";
 import GridCoordinates from "../world/GridCoordinates.js";
 import Ending from "./Ending.js";
-import EngineeringLab from "../world/Tiles/EngineeringLab.js";
-import Wasteland from "../world/Tiles/Wasteland.js";
-import XenoLab from "../world/Tiles/XenoLab.js";
-import Ruins from "../world/Tiles/Ruins.js";
+import EngineeringLab from "../world/tiles/EngineeringLab.js";
+import Wasteland from "../world/tiles/Wasteland.js";
+import XenoLab from "../world/tiles/XenoLab.js";
+import Ruins from "../world/tiles/Ruins.js";
 import { StructureConstructionTech, AlienHistoryTech, MonolithSurveyTech } from "../techtree/TechTree.js";
-import Recycler from "../world/Tiles/Recycler.js";
-import AlienSeedCore from "../world/Tiles/AlienSeedCore.js";
-import AlienCircuits from "../world/Tiles/AlienCircuits.js";
-import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
-import HumanCircuits from "../world/Tiles/HumanCircuits.js";
+import Recycler from "../world/tiles/Recycler.js";
+import AlienSeedCore from "../world/tiles/AlienSeedCore.js";
+import AlienCircuits from "../world/tiles/AlienCircuits.js";
+import HumanSeedCore from "../world/tiles/HumanSeedCore.js";
+import HumanCircuits from "../world/tiles/HumanCircuits.js";
 import { stripIndent } from "../util/Text.js";
 import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation } from "../queries/Queries.js";
 

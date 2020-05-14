@@ -1,11 +1,11 @@
 import Tile, { tileSchema } from "./Tile.js";
 import { Arrays } from "../util/Arrays.js";
-import Wasteland from "./Tiles/Wasteland.js";
-import Mountain from "./Tiles/Mountain.js";
+import Wasteland from "./tiles/Wasteland.js";
+import Mountain from "./tiles/Mountain.js";
 import { Random } from "../util/Random.js";
 import GridCoordinates from "./GridCoordinates.js";
 import Species from "../resources/Species.js";
-import Ruins from "./Tiles/Ruins.js";
+import Ruins from "./tiles/Ruins.js";
 import { WorldGenerationParameters } from "./WorldGenerationParameters.js";
 import { Schemas as S } from "@nprindle/augustus";
 

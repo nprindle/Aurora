@@ -1,17 +1,17 @@
 import { Objects } from "../util/Objects.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Game from "../Game.js";
-import Lander from "../world/Tiles/Lander.js";
-import Hydroponics from "../world/Tiles/Hydroponics.js";
+import Lander from "../world/tiles/Lander.js";
+import Hydroponics from "../world/tiles/Hydroponics.js";
 import { HumanEnding, AlienEnding } from "../quests/Quests.js";
 import Species from "../resources/Species.js";
-import AlienSeedCore from "../world/Tiles/AlienSeedCore.js";
-import HumanSeedCore from "../world/Tiles/HumanSeedCore.js";
-import HumanMonolith from "../world/Tiles/HumanMonolith.js";
+import AlienSeedCore from "../world/tiles/AlienSeedCore.js";
+import HumanSeedCore from "../world/tiles/HumanSeedCore.js";
+import HumanMonolith from "../world/tiles/HumanMonolith.js";
 import { AiResearchTech } from "../techtree/TechTree.js";
 import Resource from "../resources/Resource.js";
-import SolarPanels from "../world/Tiles/SolarArray.js";
-import Road from "../world/Tiles/Road.js";
+import SolarPanels from "../world/tiles/SolarArray.js";
+import Road from "../world/tiles/Road.js";
 import { WorldPredicate } from "../queries/Queries.js";
 
 export default class Achievement {

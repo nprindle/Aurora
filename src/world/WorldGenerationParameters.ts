@@ -1,8 +1,8 @@
 import GridCoordinates from "./GridCoordinates.js";
-import Wasteland from "./Tiles/Wasteland.js";
-import Mountain from "./Tiles/Mountain.js";
-import Lander from "./Tiles/Lander.js";
-import Monolith from "./Tiles/Monolith.js";
+import Wasteland from "./tiles/Wasteland.js";
+import Mountain from "./tiles/Mountain.js";
+import Lander from "./tiles/Lander.js";
+import Monolith from "./tiles/Monolith.js";
 import Tile from "./Tile.js";
 
 export namespace WorldGenerationParameters {
