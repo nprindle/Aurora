@@ -1,12 +1,12 @@
-import Game from "../../Game.js";
-import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
-import Conversion from "../../resources/Conversion.js";
-import Inventory from "../../resources/Inventory.js";
-import WorldScreen from "../worldScreen/WorldScreen.js";
+import Game from "../Game.js";
+import { UI } from "./UI.js";
+import { GameWindow, Page } from "./GameWindow.js";
+import Conversion from "../resources/Conversion.js";
+import Inventory from "../resources/Inventory.js";
+import WorldScreen from "./worldScreen/WorldScreen.js";
 
 import Sortable from "sortablejs";
-import Species from "../../resources/Species.js";
+import Species from "../resources/Species.js";
 
 // the production screen is where the player selects the priority order for resource conversions
 export default class ProductionScreen implements Page {
