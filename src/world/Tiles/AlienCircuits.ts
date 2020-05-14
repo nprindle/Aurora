@@ -1,6 +1,6 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { AlienCircuitsTexture } from "../../UI/Images.js";
+import { AlienCircuitsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class AlienCircuits extends Tile {

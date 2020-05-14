@@ -5,7 +5,7 @@ import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Wasteland from "./Wasteland.js";
 import Cost from "../../resources/Cost.js";
-import { MountainTexture } from "../../UI/Images.js";
+import { MountainTexture } from "../../ui/Images.js";
 import Mineshaft from "./Mineshaft.js";
 import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";

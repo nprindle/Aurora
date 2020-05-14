@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
-import { ZeroPointPlantTexture } from "../../UI/Images.js";
+import { ZeroPointPlantTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 import { stripIndent } from "../../util/Text.js";
 

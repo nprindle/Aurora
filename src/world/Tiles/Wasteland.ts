@@ -6,7 +6,7 @@ import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { Random } from "../../util/Random.js";
 import { WastelandTexture1, WastelandTexture2, WastelandTexture3, WastelandTexture4, WastelandTexture5 }
-    from "../../UI/Images.js";
+    from "../../ui/Images.js";
 import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";

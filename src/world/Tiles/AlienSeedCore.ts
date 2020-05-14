@@ -1,6 +1,6 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { AlienSeedCoreTexture } from "../../UI/Images.js";
+import { AlienSeedCoreTexture } from "../../ui/Images.js";
 import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
 

@@ -3,7 +3,7 @@ import GridCoordinates from "../GridCoordinates.js";
 import Resource from "../../resources/Resource.js";
 import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
-import { PsychLabTexture } from "../../UI/Images.js";
+import { PsychLabTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 

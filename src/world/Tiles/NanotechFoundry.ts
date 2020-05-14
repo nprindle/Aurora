@@ -1,6 +1,6 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { NanotechFoundryTexture } from "../../UI/Images.js";
+import { NanotechFoundryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class NanotechFoundry extends Tile {

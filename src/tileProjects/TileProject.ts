@@ -2,8 +2,8 @@ import GridCoordinates from "../world/GridCoordinates";
 import Game from "../Game";
 import Cost from "../resources/Cost";
 import { NamedTileType } from "../world/Tile";
-import { GameWindow } from "../UI/GameWindow";
-import EndingWorldScreen from "../UI/endingWorldScreen/EndingWorldScreen";
+import { GameWindow } from "../ui/GameWindow";
+import EndingWorldScreen from "../ui/endingWorldScreen/EndingWorldScreen";
 import DescribedTileQuery from "../queries/DescribedTileQuery";
 import { TileQuery, queryTile } from "../queries/Queries.js";
 

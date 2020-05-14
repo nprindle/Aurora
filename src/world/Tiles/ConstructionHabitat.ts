@@ -1,7 +1,7 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
 import TileProject from "../../tileProjects/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
-import { HabConstructionTexture, } from "../../UI/Images.js";
+import { HabConstructionTexture, } from "../../ui/Images.js";
 import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
