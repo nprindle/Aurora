@@ -1,5 +1,5 @@
 import Tile, { tileTypes, wastelandVariantSchema } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HabConstructionTexture, } from "../../ui/Images.js";
 import Game from "../../Game.js";
@@ -11,7 +11,7 @@ import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
-import { constructionProject } from "../../tileProjects/TileProject.js";
+import { constructionProject } from "../../world/TileProject.js";
 import Hydroponics from "./Hydroponics.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";

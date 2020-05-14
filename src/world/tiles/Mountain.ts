@@ -1,5 +1,5 @@
 import Tile, { tileTypes } from "../Tile.js";
-import TileProject from "../../tileProjects/TileProject.js";
+import TileProject from "../../world/TileProject.js";
 import GridCoordinates from "../GridCoordinates.js";
 import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";

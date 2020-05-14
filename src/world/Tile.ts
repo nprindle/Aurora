@@ -1,5 +1,5 @@
 import GridCoordinates from "./GridCoordinates.js";
-import TileProject from "../tileProjects/TileProject.js";
+import TileProject from "../world/TileProject.js";
 import Conversion from "../resources/Conversion.js";
 import Housing from "../resources/Housing.js";
 import World from "./World.js";

@@ -1,7 +1,7 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HumanMonolithTexture } from "../../ui/Images.js";
-import TileProject, { MonolithCompletionProject } from "../../tileProjects/TileProject.js";
+import TileProject, { MonolithCompletionProject } from "../../world/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
