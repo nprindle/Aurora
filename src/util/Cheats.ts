@@ -4,7 +4,7 @@ import Species from "../resources/Species.js";
 import { GameWindow } from "../ui/GameWindow.js";
 import Cost from "../resources/Cost.js";
 import { HumanEnding, AlienEnding } from "../quests/Quests.js";
-import EndScreen from "../ui/endScreen/EndScreen.js";
+import EndScreen from "../ui/menu/EndScreen.js";
 import TransitionScreen from "../ui/transitionScreen/TransitionScreen.js";
 import { Achievements } from "../achievements/Achievements.js";
 
