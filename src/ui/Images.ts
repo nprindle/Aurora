@@ -8,7 +8,7 @@ function makeImage(src: string): HTMLImageElement {
     const imagePromise = new Promise<HTMLImageElement>((resolve, reject) => {
         img.onload = () => resolve(img);
         // Don't break everything if an image can't be loaded
-        img.onerror = () => resolve(img);
+        img.onerror = () => reject(`failed to load image from ${src}`);
         img.src = src;
     });
     imageQueue.push(imagePromise);
