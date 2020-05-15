@@ -45,7 +45,6 @@ export default class WorldScreen implements Page {
         this.mapUI.refresh();
         this.tileSidebar.refresh();
         this.inventorySidebar.refresh();
-        this.header.refresh();
         this.questIndicator.refresh();
     }
 
