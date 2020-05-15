@@ -1,10 +1,11 @@
 import Game from "../../Game.js";
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import PauseMenu from "../menu/PauseMenu.js";
 import TransitionScreen from "../transitionScreen/TransitionScreen.js";
 import ProductionScreen from "../ProductionScreen.js";
 import ResearchScreen from "../ResearchScreen.js";
+import { Page } from "../Page.js";
 
 export default class WorldScreenHeader implements Page {
     readonly html: HTMLElement;

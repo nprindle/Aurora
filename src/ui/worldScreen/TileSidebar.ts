@@ -4,7 +4,7 @@ import TileProject from "../../world/TileProject.js";
 import Game from "../../Game.js";
 import Cost from "../../resources/Cost.js";
 import Tile from "../../world/Tile.js";
-import { Page } from "../GameWindow.js";
+import { Page } from "../Page.js";
 
 export default class TileSidebar implements Page {
     position: GridCoordinates | undefined = undefined;

@@ -5,8 +5,8 @@ import GridCoordinates from "../../world/GridCoordinates.js";
 import Game from "../../Game.js";
 import InventorySidebar from "./InventorySidebar.js";
 import WorldScreenHeader from "./WorldScreenHeader.js";
-import { Page } from "../GameWindow.js";
 import QuestIndicator from "./QuestIndicator.js";
+import { Page } from "../Page.js";
 
 /* The class associated with the "world screen"
  * which shows the map grid, available resources, and options for the selected structure

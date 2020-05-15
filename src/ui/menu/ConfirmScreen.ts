@@ -1,5 +1,6 @@
-import { Page, GameWindow } from "../GameWindow";
+import { GameWindow } from "../GameWindow";
 import { UI } from "../UI";
+import { Page } from "../Page";
 
 // a UI for prompting the user to confirm that they want to do something
 export class ConfirmScreen implements Page {

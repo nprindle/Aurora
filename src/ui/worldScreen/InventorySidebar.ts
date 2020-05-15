@@ -1,6 +1,6 @@
 import { UI } from "../UI.js";
 import Inventory from "../../resources/Inventory.js";
-import { Page } from "../GameWindow.js";
+import { Page } from "../Page.js";
 
 export default class InventorySidebar implements Page {
 

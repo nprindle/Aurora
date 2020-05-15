@@ -1,7 +1,8 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import { Achievements } from "../../achievements/Achievements.js";
 import Achievement from "../../achievements/Achievement.js";
+import { Page } from "../Page.js";
 
 export default class AchievementsScreen implements Page {
 

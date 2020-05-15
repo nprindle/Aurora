@@ -5,9 +5,9 @@ import GridCoordinates from "../../world/GridCoordinates.js";
 import Game from "../../Game.js";
 import InventorySidebar from "../worldScreen/InventorySidebar.js";
 import WorldScreenHeader from "../worldScreen/WorldScreenHeader.js";
-import { Page } from "../GameWindow.js";
 import QuestIndicator from "../worldScreen/QuestIndicator.js";
 import { NamedTileType } from "../../world/Tile.js";
+import { Page } from "../Page.js";
 
 /* an alternate version of the world screen used for the ending animation
  * in which a "wave" of circuit tiles spreads out from the monolith

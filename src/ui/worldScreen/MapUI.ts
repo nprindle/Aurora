@@ -4,8 +4,8 @@ import Tile from "../../world/Tile.js";
 import { clamp } from "../../util/Util.js";
 import GridCoordinates from "../../world/GridCoordinates.js";
 import { HighlightSelectionImage } from "../Images.js";
-import { Page } from "../GameWindow.js";
 import { Settings } from "../../persistence/Settings.js";
+import { Page } from "../Page.js";
 
 // class to manage the UI canvas that shows the map
 export default class MapUI implements Page {

@@ -1,11 +1,12 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import Quote from "./Quote.js";
 import { indentWithNBS } from "../../util/Text.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
 import Game from "../../Game.js";
 import { GameSave } from "../../persistence/GameSave.js";
 import Conversion from "../../resources/Conversion.js";
+import { Page } from "../Page.js";
 
 // "loading" screen shown between turns
 export default class TransitionScreen implements Page {

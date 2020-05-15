@@ -1,9 +1,10 @@
 import Game from "../Game.js";
 import { UI } from "./UI.js";
 import Technology from "../techtree/Technology.js";
-import { GameWindow, Page } from "./GameWindow.js";
+import { GameWindow } from "./GameWindow.js";
 import WorldScreen from "./worldScreen/WorldScreen.js";
 import Resource from "../resources/Resource.js";
+import { Page } from "./Page.js";
 
 export default class ResearchScreen implements Page {
 

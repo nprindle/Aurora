@@ -1,5 +1,5 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import CreditsScreen from "./CreditsScreen.js";
 import SettingsScreen from "./SettingsScreen.js";
 import { enableCheats } from "../../util/Cheats";
@@ -11,6 +11,7 @@ import Conversion from "../../resources/Conversion.js";
 import MessageScreen from "./MessageScreen.js";
 import AchievementsScreen from "./AchievementsScreen.js";
 import { ConfirmScreen } from "./ConfirmScreen.js";
+import { Page } from "../Page.js";
 
 export default class MainMenu implements Page {
 

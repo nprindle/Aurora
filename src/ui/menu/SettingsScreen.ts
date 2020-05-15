@@ -1,10 +1,11 @@
-import { Page } from "../GameWindow.js";
+
 import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
 import { Settings, SettingsOptions } from "../../persistence/Settings.js";
 import { GameSave } from "../../persistence/GameSave.js";
 import { Achievements } from "../../achievements/Achievements.js";
 import { ConfirmScreen } from "./ConfirmScreen.js";
+import { Page } from "../Page.js";
 
 export default class SettingsScreen implements Page {
     readonly html: HTMLElement;

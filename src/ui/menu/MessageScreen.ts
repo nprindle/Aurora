@@ -1,6 +1,6 @@
-import { Page } from "../GameWindow.js";
 import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
+import { Page } from "../Page.js";
 
 export default class MessageScreen implements Page {
     readonly html: HTMLElement;
