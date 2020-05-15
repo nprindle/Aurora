@@ -54,6 +54,7 @@ export function constructionProject(
     );
 }
 
+// special TileProject used to win the game
 export class MonolithCompletionProject extends TileProject {
     constructor(
         readonly title: string,
@@ -67,7 +68,7 @@ export class MonolithCompletionProject extends TileProject {
         super(
             title,
             projectDescription,
-            (position: GridCoordinates, game: Game) => { game.world.placeTile(new activeMonolithTile(position)); },
+            () => {},
             costs,
             completionRequirements,
             visibilityRequirements);
@@ -78,7 +79,7 @@ export class MonolithCompletionProject extends TileProject {
             console.warn(`tried to do project ${this.title} without meeting requirements`);
         } else {
             game.inventory.payCost(this.costs);
-            this.action(position, game);
+            game.world.placeTile(new this.activeMonolithTile(position));
 
             const endingWorldScreen = new EndingWorldScreen(game, position, this.circuitsTile);
             GameWindow.show(endingWorldScreen);
