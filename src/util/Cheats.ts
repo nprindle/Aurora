@@ -8,71 +8,74 @@ import EndScreen from "../ui/menu/EndScreen.js";
 import TransitionScreen from "../ui/transitionScreen/TransitionScreen.js";
 import { Achievements } from "../achievements/Achievements.js";
 
-// container for cheat methods for debugging/testing via the browser console
-class Cheats {
-    constructor(
-        private currentGame: Game,
-    ) { }
+// cheat methods for debugging/testing via the browser console
+export namespace Cheats {
+
+    let currentGame: Game | undefined = undefined;
 
     // call this to update game and ui after each cheat's effect
-    refresh(): void {
-        this.currentGame.updateQuestState();
+    function refresh(): void {
+        currentGame!.updateQuestState();
         GameWindow.refreshCurrentPage();
     }
 
-    addResource(resource: Resource, quantity: number): void {
-        this.currentGame.inventory.addResource(resource, quantity);
-        this.refresh();
+    function addResource(resource: Resource, quantity: number): void {
+        currentGame!.inventory.addResource(resource, quantity);
+        refresh();
     }
 
-    removeResource(resource: Resource, quantity: number): void {
-        this.currentGame.inventory.payCost([new Cost(resource, quantity)]);
-        this.refresh();
+    function removeResource(resource: Resource, quantity: number): void {
+        currentGame!.inventory.payCost([new Cost(resource, quantity)]);
+        refresh();
     }
 
-    addPopulation(species: Species, quantity: number): void {
-        this.currentGame.inventory.addWorkers(species, quantity);
-        this.refresh();
+    function addPopulation(species: Species, quantity: number): void {
+        currentGame!.inventory.addWorkers(species, quantity);
+        refresh();
     }
 
-    showEnding(human: boolean = false): void {
+    function showEnding(human: boolean = false): void {
         GameWindow.show(new EndScreen(human ? HumanEnding : AlienEnding));
     }
 
-    freeResources(): void {
+    function freeResources(): void {
         for (const resource of Resource.values) {
-            this.addResource(resource, 1000000);
+            addResource(resource, 1000000);
         }
     }
 
-    showQuote(index: number): void {
-        GameWindow.show(new TransitionScreen(this.currentGame, index));
+    function showQuote(index: number): void {
+        const transitionScreen = new TransitionScreen(currentGame!, index);
+        GameWindow.show(transitionScreen);
+        transitionScreen.startLoading();
+    }
+
+    // makes cheat methods available from the console and make them apply to the given game
+    export function enableCheats(game: Game): void {
+        currentGame = game;
+
+        const theWindow: any = window;
+        theWindow.cheatsAddResource = (resource: Resource, quantity: number) =>
+            addResource(resource, quantity);
+        theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) =>
+            removeResource(resource, quantity);
+        theWindow.cheatsAddPopulation = (species: Species, quantity: number) =>
+            addPopulation(species, quantity);
+        theWindow.cheatsFreeResources = () => freeResources();
+        theWindow.cheatsShowEnding = (human: boolean = false) => showEnding(human);
+        theWindow.showQuote = (index: number) => showQuote(index);
+        theWindow.unlockAllAchievements = () => Achievements.unlockAll();
+
+        /* these classes also need to be made globally accessible so their instances can be used as parameters of cheats
+        * we freeze the constructors so the existing instances can't be modified
+        * unfortunately, this still makes it possible for players to construct new instances of the multitons that are
+        * supposed to be constant
+        */
+        Object.freeze(Resource);
+        Object.freeze(Species);
+        theWindow.Resources = Resource;
+        theWindow.Species = Species;
     }
 }
 
-// makes cheat methods available from the console
-export function enableCheats(game: Game): void {
 
-    const cheatsObject = new Cheats(game);
-    const theWindow: any = window;
-    theWindow.cheatsAddResource = (resource: Resource, quantity: number) =>
-        cheatsObject.addResource(resource, quantity);
-    theWindow.cheatsRemoveResource = (resource: Resource, quantity: number) =>
-        cheatsObject.removeResource(resource, quantity);
-    theWindow.cheatsAddPopulation = (species: Species, quantity: number) =>
-        cheatsObject.addPopulation(species, quantity);
-    theWindow.cheatsFreeResources = () => cheatsObject.freeResources();
-    theWindow.cheatsShowEnding = (human: boolean = false) => cheatsObject.showEnding(human);
-    theWindow.showQuote = (index: number) => cheatsObject.showQuote(index);
-    theWindow.unlockAllAchievements = () => Achievements.unlockAll();
-
-    /* these classes also need to be made globally accessible so their instances can be used as parameters for cheats
-     * we freeze the constructors so the existing instances can't be modified
-     * unfortunately, this still makes it possible for players to construct new instances of the multitons that are
-     * supposed to be constant
-     */
-    Object.freeze(Resource);
-    Object.freeze(Species);
-    theWindow.Resources = Resource;
-    theWindow.Species = Species;
-}

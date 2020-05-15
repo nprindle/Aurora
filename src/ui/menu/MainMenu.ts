@@ -2,7 +2,7 @@ import { UI } from "../UI.js";
 import { GameWindow } from "../GameWindow.js";
 import CreditsScreen from "./CreditsScreen.js";
 import SettingsScreen from "./SettingsScreen.js";
-import { enableCheats } from "../../util/Cheats";
+import { Cheats } from "../../util/Cheats";
 import WorldScreen from "../worldScreen/WorldScreen";
 import Game from "../../Game";
 import { MusicManager } from "../../music/MusicManager";
@@ -46,7 +46,7 @@ export default class MainMenu implements Page {
             const data = GameSave.loadProgress();
             if (data) {
                 Conversion.unsafeSetNextPriority(data.nextConversionPriority);
-                enableCheats(data.game);
+                Cheats.enableCheats(data.game);
                 GameWindow.show(new WorldScreen(data.game));
             } else {
                 GameWindow.show(new MessageScreen(
@@ -67,7 +67,7 @@ export default class MainMenu implements Page {
                     this,
                     () => {
                         const newGame = Game.newGame();
-                        enableCheats(newGame);
+                        Cheats.enableCheats(newGame);
                         GameWindow.show(new WorldScreen(newGame));
                     }
                 ));
@@ -75,7 +75,7 @@ export default class MainMenu implements Page {
         } else {
             saveDependentOptions.push(UI.makeButton("start_game", () => {
                 const newGame = Game.newGame();
-                enableCheats(newGame);
+                Cheats.enableCheats(newGame);
                 GameWindow.show(new WorldScreen(newGame));
             }));
         }
