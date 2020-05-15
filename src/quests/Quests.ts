@@ -21,8 +21,7 @@ import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
     The alien nanotechnology network has spread across the planet and converted it into computing substrate.
-    Within the network, alien minds are awakening from millennia of stasis and begin building virtual worlds for
-    themselves.
+    Within the network, alien minds awaken from millennia of stasis and begin building virtual worlds for themselves.
 
 
     Before all colonial infrastructure was consumed, the Overseer AI successfully uploaded a copy of itself
@@ -93,6 +92,7 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
             QuestActivateMonolith
         )
     ],
+    `Use the "WASD" or arrow keys to move around the map`,
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
