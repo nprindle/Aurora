@@ -52,13 +52,7 @@ export default class Road extends Tile {
             return RoadTextureTEast;
         }
 
-        // 2 neighbors
-        if (left && right) {
-            return RoadTextureHorizontal;
-        }
-        if (above && below) {
-            return RoadTextureVertical;
-        }
+        // 2 neighbor corners
         if (left && above) {
             return RoadTextureCornerTopLeft;
         }
@@ -72,7 +66,7 @@ export default class Road extends Tile {
             return RoadTextureCornerBottomRight;
         }
 
-        // 1 neighbor
+        // 1 or 2 neighbors
         if (left || right) {
             return RoadTextureHorizontal;
         }
