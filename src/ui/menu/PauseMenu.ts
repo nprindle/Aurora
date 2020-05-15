@@ -1,11 +1,12 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import MainMenu from "./MainMenu.js";
 import SettingsScreen from "./SettingsScreen.js";
 import Game from "../../Game.js";
 import WorldScreen from "../worldScreen/WorldScreen.js";
 import { GameSave } from "../../persistence/GameSave.js";
 import Conversion from "../../resources/Conversion.js";
+import { Page } from "../Page.js";
 
 export default class PauseMenu implements Page {
     readonly html: HTMLElement;

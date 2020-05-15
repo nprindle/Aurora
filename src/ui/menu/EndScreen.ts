@@ -1,7 +1,8 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import Ending from "../../quests/Ending.js";
 import MainMenu from "./MainMenu.js";
+import { Page } from "../Page.js";
 
 export default class EndScreen implements Page {
 

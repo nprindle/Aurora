@@ -1,4 +1,4 @@
-import { Page } from "./GameWindow";
+import { Page } from "./Page";
 import Achievement from "../achievements/Achievement";
 import { UI } from "./UI";
 

@@ -1,8 +1,9 @@
-import { Page, GameWindow } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import Game from "../../Game.js";
 import { UI } from "../UI.js";
 import Ending from "../../quests/Ending.js";
 import EndScreen from "../menu/EndScreen.js";
+import { Page } from "../Page.js";
 
 export default class QuestIndicator implements Page {
 

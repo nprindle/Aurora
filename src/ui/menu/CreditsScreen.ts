@@ -1,6 +1,7 @@
 import { UI } from "../UI.js";
-import { GameWindow, Page } from "../GameWindow.js";
+import { GameWindow } from "../GameWindow.js";
 import MainMenu from "./MainMenu.js";
+import { Page } from "../Page.js";
 
 
 class CreditsEntry {

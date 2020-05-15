@@ -1,15 +1,5 @@
 import { UI } from "./UI.js";
-
-export interface Page {
-    // root element containing this page's HTML
-    readonly html: HTMLElement;
-    // updates the information shown on the page (may be a no-op for pages that don't show changing information)
-    refresh(): void;
-
-    // pages make optionally implement one or both of these methods in order to receive keyboard input
-    handleKeyDown?(event: KeyboardEvent): void;
-    handleKeyUp?(event: KeyboardEvent): void;
-}
+import { Page } from "./Page.js";
 
 export namespace GameWindow {
 
