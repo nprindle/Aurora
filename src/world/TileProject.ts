@@ -33,10 +33,11 @@ export default class TileProject {
 
     doAction(position: GridCoordinates, game: Game): void {
         if (!this.canDo(position, game)) {
-            throw `tried to do project ${this.title} without meeting requirements`;
+            console.warn(`tried to do project ${this.title} without meeting requirements`);
+        } else {
+            game.inventory.payCost(this.costs);
+            this.action(position, game);
         }
-        game.inventory.payCost(this.costs);
-        this.action(position, game);
     }
 }
 
@@ -74,13 +75,14 @@ export class MonolithCompletionProject extends TileProject {
 
     doAction(position: GridCoordinates, game: Game): void {
         if (!this.canDo(position, game)) {
-            throw `tried to do project ${this.title} without meeting requirements`;
-        }
-        game.inventory.payCost(this.costs);
-        this.action(position, game);
+            console.warn(`tried to do project ${this.title} without meeting requirements`);
+        } else {
+            game.inventory.payCost(this.costs);
+            this.action(position, game);
 
-        const endingWorldScreen = new EndingWorldScreen(game, position, this.circuitsTile);
-        GameWindow.show(endingWorldScreen);
-        endingWorldScreen.expandCircuits(1);
+            const endingWorldScreen = new EndingWorldScreen(game, position, this.circuitsTile);
+            GameWindow.show(endingWorldScreen);
+            endingWorldScreen.expandCircuits(1);
+        }
     }
 }
