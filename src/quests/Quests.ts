@@ -1,6 +1,3 @@
-// quests need to be able to indirectly reference the following quest(s)
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import { QuestStage, QuestPath } from "./QuestStage.js";
 import Resource from "../resources/Resource.js";
 import Habitat from "../world/tiles/Habitat.js";
