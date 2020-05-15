@@ -38,7 +38,6 @@ export class Drumkit {
         1.5
     );
 
-    // TODO: make these sound good
     async scheduleHit(context: AudioContext, start: number, drum: Drums): Promise<AudioNode> {
         switch (drum) {
         case Drums.KICK:
