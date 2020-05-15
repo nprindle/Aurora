@@ -37,17 +37,23 @@ export default class Inventory {
         );
     }
 
-    // makes a quantity of the population available as workers
+    /* The inventory contains workers of different types (humans, robots)
+     * which contribute to the maximum number of workers that can be "available" at any given time.
+     * Resource conversions can "occupy" workers, removing them from the pool of "available" workers until the are
+     * released at the start of the next turn.
+     */
     releaseWorkers(quantity: number = Number.POSITIVE_INFINITY): void {
         this.availableWorkers = Math.min(this.availableWorkers + quantity, this.populationQuantities.getSum());
     }
 
     occupyWorkers(quantity: number): void {
         if (this.availableWorkers < quantity) {
-            throw "insufficient workers";
+            console.warn("tried to occupy workers when there are insufficient available workers");
+            return;
         }
         if (quantity < 0) {
-            throw "tried to occupy a negative number of workers";
+            console.warn("tried to occupy a negative number of workers");
+            return;
         }
         this.availableWorkers = this.availableWorkers - quantity;
     }
@@ -118,7 +124,7 @@ export default class Inventory {
         }
 
         return Array.from(costMap.keys()).every((resource: Resource) => {
-            const costQuantity = costMap.get(resource)!;
+            const costQuantity = costMap.get(resource) ?? 0;
             const availableQuantity = this.getResourceQuantity(resource);
             return costQuantity <= availableQuantity;
         });
@@ -134,7 +140,7 @@ export default class Inventory {
                 this.removeResource(cost.resource, cost.quantity);
             }
         } else {
-            throw "Cannot afford to pay cost";
+            console.warn(`cannot afford cost ${costs}`);
         }
     }
 
