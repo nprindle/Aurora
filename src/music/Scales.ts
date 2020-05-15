@@ -177,8 +177,6 @@ export namespace Scales {
         getModes(Scale(0x9b3)), // double harmonic major
     ]);
 
-    // TODO: this can be made more efficient by caching modes.
-    // see if that's worthwhile.
     export function matchesQuery(scale: Scale, query: ScaleQuery): boolean {
         const outOfBounds = (val: number, range: [number, number]): boolean => {
             return (val < range[0]) || (val > range[1]);
