@@ -21,8 +21,6 @@ export default abstract class Tile {
 
     readonly populationCapacity?: Housing = undefined;
 
-    protected abstract readonly texture: HTMLImageElement;
-
     constructor(
         public position: GridCoordinates
     ) {}
@@ -30,11 +28,10 @@ export default abstract class Tile {
     abstract getTileName(): string; // returns the name of the tile type
     abstract getTileDescription(): string; // return the tile type's description
 
-    // by default this just returns the tile's texture, but it can be overridden to allow the texture to be changed
-    // including changing the texture based on the position of other tiles in the world (e.g. for aligning roads)
-    getTexture(world: World): HTMLImageElement {
-        return this.texture;
-    }
+    /* most tiles will always have the same texture, but for some tiles the texture can change depending on the world,
+     * for example to allow adjacent road tiles to connect
+     */
+    abstract getTexture(world: World): HTMLImageElement;
 }
 
 /* used by predicates to allow statically accessing the name of a Tile subclass

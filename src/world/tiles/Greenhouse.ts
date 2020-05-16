@@ -8,10 +8,13 @@ import { GreenhouseTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Greenhouse extends Tile {
-    protected texture: HTMLImageElement = GreenhouseTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return GreenhouseTexture;
     }
 
     resourceConversions = [

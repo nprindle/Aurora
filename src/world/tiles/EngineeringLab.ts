@@ -8,10 +8,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class EngineeringLab extends Tile {
-    protected texture: HTMLImageElement = EngineeringLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return EngineeringLabTexture;
     }
 
     resourceConversions = [

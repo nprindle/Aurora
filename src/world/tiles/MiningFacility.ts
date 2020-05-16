@@ -7,10 +7,13 @@ import { MiningFacilityTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class MiningFacility extends Tile {
-    protected texture: HTMLImageElement = MiningFacilityTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return MiningFacilityTexture;
     }
 
     resourceConversions = [

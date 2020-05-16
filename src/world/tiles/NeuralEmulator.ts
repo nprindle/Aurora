@@ -5,10 +5,13 @@ import { Schemas as S } from "@nprindle/augustus";
 import { stripIndent } from "../../util/Text.js";
 
 export default class NeuralEmulator extends Tile {
-    protected texture: HTMLImageElement = NeuralEmulatorTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return NeuralEmulatorTexture;
     }
 
     static readonly tileName: string = "Neural Emulation Platform";

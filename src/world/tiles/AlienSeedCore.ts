@@ -5,10 +5,13 @@ import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class AlienSeedCore extends Tile {
-    protected texture: HTMLImageElement = AlienSeedCoreTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return AlienSeedCoreTexture;
     }
 
     static readonly tileName: string = "Seed Core";

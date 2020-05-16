@@ -7,10 +7,13 @@ import { SolarPanelsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class SolarPanels extends Tile {
-    protected texture: HTMLImageElement = SolarPanelsTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return SolarPanelsTexture;
     }
 
     resourceConversions = [

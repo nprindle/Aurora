@@ -7,12 +7,14 @@ import { AlignmentLabTexture } from "../../ui/Images.js";
 import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
 
-
 export default class AlignmentLab extends Tile {
-    protected texture: HTMLImageElement = AlignmentLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return AlignmentLabTexture;
     }
 
     resourceConversions = [

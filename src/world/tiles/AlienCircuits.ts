@@ -4,10 +4,13 @@ import { AlienCircuitsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class AlienCircuits extends Tile {
-    protected texture: HTMLImageElement = AlienCircuitsTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return AlienCircuitsTexture;
     }
 
     static readonly tileName: string = "Hypercomputer Network";

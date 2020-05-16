@@ -7,10 +7,13 @@ import { ConstructionFactoryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionFactory extends Tile {
-    protected texture: HTMLImageElement = ConstructionFactoryTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return ConstructionFactoryTexture;
     }
 
     resourceConversions = [

@@ -14,10 +14,13 @@ import { techRequirement, tileWithinDistanceRequirement } from "../../queries/De
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class HumanMonolith extends Tile {
-    protected texture: HTMLImageElement = HumanMonolithTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return HumanMonolithTexture;
     }
 
     possibleProjects: TileProject[] = [

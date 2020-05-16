@@ -18,10 +18,13 @@ import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Monolith extends Tile {
-    protected texture: HTMLImageElement = MonolithTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return MonolithTexture;
     }
 
     possibleProjects: TileProject[] = [

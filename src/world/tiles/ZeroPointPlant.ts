@@ -9,10 +9,13 @@ import { stripIndent } from "../../util/Text.js";
 
 
 export default class ZeroPointPlant extends Tile {
-    protected texture: HTMLImageElement = ZeroPointPlantTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return ZeroPointPlantTexture;
     }
 
     resourceConversions = [
