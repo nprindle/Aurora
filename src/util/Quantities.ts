@@ -1,11 +1,12 @@
 import { Schema, Schemas as S } from "@nprindle/augustus";
 
-/* Counts positive quantities of instances of some type.
+/* Counts quantities of instances of some type.
  * e.g. the amounts of each resource in the inventory
  *
- * Quantities that reach 0 are removed, so having 0 of something
- * and not having the thing at all are the same thing.
- * Setting negative quantities is disallowed and will result in a runtime exception.
+ * Quantities that reach 0 are removed, so having 0 of something and not having the thing at all are the same thing.
+ *
+ * This is intended for use cases where negative values don't make sense (e.g. can't have negative population),
+ * so a warning will be printed if any entry is set to a negative value.
  */
 export default class Quantities<T> {
     private map: Map<T, number> = new Map<T, number>();
@@ -26,7 +27,7 @@ export default class Quantities<T> {
 
     set(key: T, quantity: number): void {
         if (quantity < 0) {
-            throw "tried to set quantity to negative value";
+            console.warn(`set quantity of ${key} to negative value ${quantity}`);
         }
         if (quantity === 0) {
             this.map.delete(key);
