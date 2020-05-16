@@ -22,7 +22,7 @@ export default class Inventory {
     }
 
     removeResource(resource: Resource, quantity: number): void {
-        this.resourceQuantities.remove(resource, quantity);
+        this.resourceQuantities.subtract(resource, quantity);
     }
 
     getResourceQuantity(resource: Resource): number {
