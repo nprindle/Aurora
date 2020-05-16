@@ -270,7 +270,7 @@ export default class Quote {
         ),
         new Quote(
             stripIndent`
-            Very few people know that the laws against broadcasting analogue music between planets were drafted by
+            Very few people know that the laws against broadcasting analog music between planets were drafted by
             the musicologists at the Colonial Alliance Department of Cultural Innovation, who
             were worried that their experiments in creating new musical cultures would be ruined when colonists
             overheard broadcasts from Interstellar Beats to Study To.`,

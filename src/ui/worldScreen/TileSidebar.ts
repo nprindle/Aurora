@@ -42,11 +42,10 @@ export default class TileSidebar implements Page {
             }
 
             const projectsHTML = UI.makeDiv();
-            const visibleProjects = tile.possibleProjects.filter(
-                project => project.isVisible(this.position!, this.game)
-            );
-            for (const project of visibleProjects) {
-                projectsHTML.appendChild(this.makeProjectHTML(tile, project));
+            for (const project of tile.possibleProjects) {
+                if (project.isVisible(this.position, this.game)) {
+                    projectsHTML.appendChild(this.makeProjectHTML(tile, project));
+                }
             }
 
             const conversionsHTML = UI.makeDiv();
@@ -100,7 +99,7 @@ export default class TileSidebar implements Page {
             projectHTML.appendChild(UI.makePara("Requirements:"));
         }
         for (const requirement of project.completionRequirements) {
-            const cssClass = requirement.evaluate(this.game, this.position!)
+            const cssClass = requirement.evaluate(this.game, tile.position)
                 ? "project-requirement-met"
                 : "project-requirement-unmet";
             projectHTML.appendChild(UI.makePara(`- ${requirement.toString()}`, [cssClass]));

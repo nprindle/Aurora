@@ -28,16 +28,13 @@ export default class WorldScreen implements Page {
         this.questIndicator = new QuestIndicator(game);
 
         this.html = UI.makeDivContaining([
-
             this.header.html,
             this.questIndicator.html,
-
             UI.makeDivContaining([
                 this.inventorySidebar.html,
                 UI.makeDivContaining([this.mapUI.html], ["world-screen-map-box"]),
                 this.tileSidebar.html,
             ], ["world-screen-hbox"]),
-
         ], ["flex-vertical", "world-screen"]);
     }
 
