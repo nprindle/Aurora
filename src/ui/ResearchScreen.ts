@@ -58,27 +58,21 @@ export default class ResearchScreen implements Page {
     }
 
     private renderTechOption(tech: Technology): HTMLElement {
-        const div = UI.makeDivContaining([
-            UI.makeHeader(tech.name, 2),
-            UI.makePara(tech.description),
-            UI.makePara(`Development cost: ${tech.researchCost}`)
-        ], ["tech-option"]);
-        let unmetPrereqs: number = 0;
-        for (const prereq of tech.requiredTechs) {
-            if (!this.game.hasUnlockedTechnology(prereq)) {
-                unmetPrereqs++;
-                div.appendChild(UI.makePara(`Requires ${prereq.name} research`));
-            }
-        }
-        const canUnlock = (unmetPrereqs === 0) && this.game.inventory.canAfford([tech.researchCost]);
+        // we assume that all prerequisite technologies are completed because otherwise we don't show the option at all
+        const canUnlock = this.game.inventory.canAfford([tech.researchCost]);
+
         const unlockCallback: () => void = () => {
             this.game.inventory.payCost([tech.researchCost]);
             this.game.unlockTechnology(tech);
             this.game.updateQuestState();
             this.refresh();
         };
-        div.appendChild(UI.makeButton("Conduct Research", unlockCallback, [], canUnlock ? "enabled" : "disabled"));
 
-        return div;
+        return UI.makeDivContaining([
+            UI.makeHeader(tech.name, 2),
+            UI.makePara(tech.description),
+            UI.makePara(`Development cost: ${tech.researchCost}`),
+            UI.makeButton("Conduct Research", unlockCallback, [], canUnlock ? "enabled" : "disabled"),
+        ], ["tech-option"]);
     }
 }
