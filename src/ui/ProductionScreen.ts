@@ -26,18 +26,18 @@ export default class ProductionScreen implements Page {
 
         const conversions = this.game.getResourceConversions();
 
-        const conversionsHTML: HTMLElement[] = [];
+        const conversionsDiv = UI.makeDiv();
         for (const conversion of conversions) {
-            if (inventoryCopy.canAfford(conversion.inputs)
+            if (
+                inventoryCopy.canAfford(conversion.inputs)
                 && inventoryCopy.hasEnoughWorkers(conversion.requiredWorkers)
             ) {
-                conversionsHTML.push(this.renderConversion(conversion, true));
+                conversionsDiv.appendChild(this.renderConversion(conversion, true));
                 inventoryCopy.applyConversions([conversion]);
             } else {
-                conversionsHTML.push(this.renderConversion(conversion, false));
+                conversionsDiv.appendChild(this.renderConversion(conversion, false));
             }
         }
-        const conversionsDiv = UI.makeDivContaining(conversionsHTML);
 
         Sortable.create(conversionsDiv, {
             onEnd: evt => {
@@ -48,13 +48,6 @@ export default class ProductionScreen implements Page {
                 }
             }
         });
-
-        const availableWorkersLabel = UI.makePara(
-            `Available workers at start of production cycle: ${this.game.inventory.getAvailableWorkers()}`,
-            ["production-screen-available-workers"]);
-        const unusedWorkersLabel = UI.makePara(
-            `Unused workers at end of production cycle: ${inventoryCopy.getAvailableWorkers()}`,
-            ["production-screen-worker-consumption-label"]);
 
         const populationConsumptionHtml = UI.makeDiv();
         if (this.game.inventory.getSpeciesList().length !== 0) {
@@ -112,17 +105,21 @@ export default class ProductionScreen implements Page {
         UI.fillHTML(this.html, [
             UI.makeHeader("Resource Production Management"),
             UI.makeHeader("Inventory at start of production cycle:", 2, ["production-screen-label"]),
-            this.renderInventory(this.game.inventory),
+            ProductionScreen.renderInventory(this.game.inventory),
             UI.makeHeader("Resource production", 2, ["production-screen-label"]),
-            availableWorkersLabel,
+            UI.makePara(
+                `Available workers at start of production cycle: ${this.game.inventory.getAvailableWorkers()}`,
+                ["production-screen-available-workers"]),
             UI.makePara("Drag conversions to change the activation order", ["production-screen-drag-hint"]),
             conversionsDiv,
             UI.makeHeader("Workforce", 2, ["production-screen-label"]),
-            unusedWorkersLabel,
+            UI.makePara(
+                `Unused workers at end of production cycle: ${inventoryCopy.getAvailableWorkers()}`,
+                ["production-screen-worker-consumption-label"]),
             populationConsumptionHtml,
             workerDeathHtml,
             UI.makeHeader("Inventory at end of production cycle:", 2, ["production-screen-label"]),
-            this.renderInventory(inventoryCopy),
+            ProductionScreen.renderInventory(inventoryCopy),
             UI.makeButton(
                 "Back",
                 () => { GameWindow.show(new WorldScreen(this.game)); },
@@ -131,19 +128,18 @@ export default class ProductionScreen implements Page {
         ]);
     }
 
-    private renderInventory(inventory: Inventory): HTMLElement {
-        const resourceDescriptions = inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString));
-
-        if (resourceDescriptions.length === 0) {
-            resourceDescriptions.push(UI.makePara("(none)"));
+    private static renderInventory(inventory: Inventory): HTMLElement {
+        if (inventory.getInventoryStrings().length === 0) {
+            return UI.makeDivContaining([UI.makePara("(none)")], ["production-screen-inventory"]);
+        } else {
+            return UI.makeDivContaining(
+                inventory.getInventoryStrings().map(resourceString => UI.makePara(resourceString)),
+                ["production-screen-inventory"]
+            );
         }
-
-        return UI.makeDivContaining(resourceDescriptions, ["production-screen-inventory"]);
     }
 
-    renderConversion(conversion: Conversion, canAfford: boolean): HTMLElement {
-        const div = UI.makeDiv(["conversion"]);
-
+    private renderConversion(conversion: Conversion, canAfford: boolean): HTMLElement {
         let text = conversion.toString();
         let cssClass = "conversion-description-normal"; // css class that changes to show the conversion's status
         if (!conversion.enabled) {
@@ -155,11 +151,11 @@ export default class ProductionScreen implements Page {
         }
 
         const textPara = UI.makePara(text, [cssClass, "conversion-description"]);
-        const textDiv = UI.makeDivContaining([textPara], ["conversion-description-box"]);
-        div.appendChild(textDiv);
-        div.appendChild(UI.makeButton("Toggle", () => { this.toggle(conversion); }));
 
-        return div;
+        return UI.makeDivContaining([
+            UI.makeDivContaining([textPara], ["conversion-description-box"]),
+            UI.makeButton("Toggle", () => { this.toggleConversion(conversion); }),
+        ], ["conversion"]);
     }
 
     private shiftConversion(fromIndex: number, toIndex: number): void {
@@ -167,7 +163,7 @@ export default class ProductionScreen implements Page {
         this.refresh();
     }
 
-    private toggle(conversion: Conversion): void {
+    private toggleConversion(conversion: Conversion): void {
         conversion.enabled = !conversion.enabled;
         this.refresh();
     }

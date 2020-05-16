@@ -18,9 +18,12 @@ export default class ResearchScreen implements Page {
     }
 
     refresh(): void {
-        let researchHeader = UI.makeHeader("Available Research Projects");
-
         const possibleTechs: Technology[] = this.game.getResearchOptions();
+
+        const researchHeader = (possibleTechs.length > 0)
+            ? UI.makeHeader("Available Research Projects")
+            : UI.makeDiv(); // don't show header if there are no available technologies
+
         const researchResources: Resource[] =
         Resource.values.filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
 
@@ -34,22 +37,13 @@ export default class ResearchScreen implements Page {
 
         const researchOptionsHTML = UI.makeDivContaining(possibleTechs.map(tech => this.renderTechOption(tech)));
 
-        if (possibleTechs.length === 0) {
-            researchHeader = UI.makeDiv();
-        }
-
-        let historyHeader = UI.makeHeader("Previous Research Projects", 1, ["previous-research-header"]);
         const techHistory = this.game.getUnlockedTechnologies()
             .filter(tech => tech.visible)
-            .map(tech => UI.makePara(`• ${tech.name}`, ["previous-research"]));
+            .map(tech => UI.makePara(`- ${tech.name}`, ["previous-research"]));
 
-        if (techHistory.length === 0) {
-            historyHeader = UI.makeDiv();
-        }
-
-        const backButton = UI.makeButton("Back", () => {
-            GameWindow.show(new WorldScreen(this.game));
-        }, []);
+        const historyHeader = (techHistory.length > 0)
+            ? UI.makeHeader("Previous Research Projects", 1, ["previous-research-header"])
+            : UI.makeDiv(); // don't show header if no research has been completed
 
         UI.fillHTML(this.html, [
             researchHeader,
@@ -57,7 +51,9 @@ export default class ResearchScreen implements Page {
             researchResourcesHTML,
             historyHeader,
             ...techHistory,
-            backButton,
+            UI.makeButton("Back", () => {
+                GameWindow.show(new WorldScreen(this.game));
+            }, []),
         ]);
     }
 

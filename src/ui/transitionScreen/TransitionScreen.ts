@@ -12,20 +12,15 @@ import { Page } from "../Page.js";
 export default class TransitionScreen implements Page {
     readonly html: HTMLElement;
     private loadingArea: HTMLElement;
-    private loadingBar: HTMLElement;
     private quote: Quote;
     private doneLoading: boolean = false;
 
     constructor(
         private game: Game,
+        // used by debug "cheat code" to show a specific quote, leave undefined to get a random quote each time
         private quoteIndex?: number,
     ) {
-        this.html = UI.makeDiv();
-        this.loadingBar = UI.makeDiv(["transition-loading-bar"]);
-        this.loadingArea = UI.makeDivContaining([
-            this.loadingBar
-        ], ["transition-loading-area"]);
-        if (quoteIndex) {
+        if (quoteIndex !== undefined) {
             this.quote = Quote.getQuote(quoteIndex);
         } else {
             this.quote = Quote.getRandomQuote();
@@ -33,7 +28,12 @@ export default class TransitionScreen implements Page {
 
         // Add in leading quotation mark after leading whitespace
         const quotedText = indentWithNBS(this.quote.text).replace(/^(\s*)/, "$1“") + "”";
-        UI.fillHTML(this.html, [
+
+        this.loadingArea = UI.makeDivContaining([
+            UI.makeDiv(["transition-loading-bar"]),
+        ], ["transition-loading-area"]);
+
+        this.html = UI.makeDivContaining([
             UI.makeDivContaining([
                 UI.makePara(quotedText),
                 UI.makePara(`- ${this.quote.attribution}`, ["transition-attribution"])
@@ -44,6 +44,7 @@ export default class TransitionScreen implements Page {
 
     refresh(): void {}
 
+    // if the page shown but startLoading() is not called, the player will be stuck on this page and unable to continue
     startLoading(): void {
         const startTime = Date.now();
         this.game.completeTurn();

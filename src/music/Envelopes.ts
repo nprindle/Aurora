@@ -24,11 +24,16 @@ export namespace Envelopes {
      * refers to the number of seconds since the creation of the 'AudioContext'.
      */
     export function createAdsrEnvelope(
-        context: AudioContext, start: number, duration: number, env: AdsrConfig, volume: number = 1
+        context: AudioContext,
+        start: number,
+        duration: number,
+        env: AdsrConfig,
+        volume: number = 1
     ): GainNode {
         const { attack, sustain, decay, release } = normalizeAdsr(env);
         const gainNode: GainNode = context.createGain();
         gainNode.gain.setValueAtTime(0, start);
+
         if (duration < attack) {
             // note gets cut off in middle of attack
             gainNode.gain.linearRampToValueAtTime(lerp(0, volume, duration / attack), start + duration);
@@ -49,5 +54,4 @@ export namespace Envelopes {
         }
         return gainNode;
     }
-
 }
