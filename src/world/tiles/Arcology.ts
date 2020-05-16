@@ -3,13 +3,8 @@ import GridCoordinates from "../GridCoordinates.js";
 import Species from "../../resources/Species.js";
 import Housing from "../../resources/Housing.js";
 import { ArcologyTexture } from "../../ui/Images.js";
-import Game from "../../Game.js";
-import { AiResearchTech, RationalityTech, CognitiveBiasesTech } from "../../techtree/TechTree.js";
-import TileProject from "../../world/TileProject.js";
-import { stripIndent } from "../../util/Text.js";
-import { techRequirement } from "../../queries/DescribedTileQuery.js";
-import { hasTech, speciesHasPopulation, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import { safetyProject } from "../../quests/SafetyProject.js";
 
 export default class Arcology extends Tile {
 
@@ -24,24 +19,7 @@ export default class Arcology extends Tile {
     populationCapacity: Housing = new Housing(Species.Human, 2000);
 
     possibleProjects = [
-        new TileProject(
-            "AI Safety Research Proposal",
-            stripIndent`
-            A human colonist wants to start a project with the goal of aligning artificial intelligence to serve human
-            goals.
-
-            If approved, this line of research risks mission failure, since if the overseer allowed itself to be
-            reprogrammed it would no longer pursue the mission of uncovering information about the aliens at all
-            costs.`,
-            (position: GridCoordinates, game: Game) => game.unlockTechnology(AiResearchTech),
-            [],
-            [techRequirement(RationalityTech)],
-            [
-                hasTech(CognitiveBiasesTech),
-                notQuery(hasTech(AiResearchTech)),
-                speciesHasPopulation(Species.Human, 500),
-            ]
-        )
+        safetyProject
     ];
 
     static readonly tileName: string = "Arcology";
