@@ -13,7 +13,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 export default class Arcology extends Tile {
 
-    protected texture: HTMLImageElement = ArcologyTexture;
+    constructor(position: GridCoordinates) {
+        super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return ArcologyTexture;
+    }
 
     populationCapacity: Housing = new Housing(Species.Human, 2000);
 
@@ -37,10 +43,6 @@ export default class Arcology extends Tile {
             ]
         )
     ];
-
-    constructor(position: GridCoordinates) {
-        super(position);
-    }
 
     static readonly tileName: string = "Arcology";
     static readonly tileDescription: string =

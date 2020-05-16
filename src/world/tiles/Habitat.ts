@@ -13,7 +13,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 export default class Habitat extends Tile {
 
-    protected texture: HTMLImageElement = HabitatTexture;
+    constructor(position: GridCoordinates) {
+        super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return HabitatTexture;
+    }
 
     populationCapacity: Housing = new Housing(Species.Human, 200);
 
@@ -37,10 +43,6 @@ export default class Habitat extends Tile {
             ]
         )
     ];
-
-    constructor(position: GridCoordinates) {
-        super(position);
-    }
 
     static readonly tileName: string = "Habitat Dome";
     static readonly tileDescription: string =

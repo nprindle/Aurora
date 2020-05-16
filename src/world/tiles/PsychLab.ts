@@ -8,10 +8,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class PsychLab extends Tile {
-    protected texture: HTMLImageElement = PsychLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return PsychLabTexture;
     }
 
     resourceConversions = [

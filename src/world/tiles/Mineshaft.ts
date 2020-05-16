@@ -7,10 +7,13 @@ import { MineshaftTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Mineshaft extends Tile {
-    protected texture: HTMLImageElement = MineshaftTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return MineshaftTexture;
     }
 
     resourceConversions = [

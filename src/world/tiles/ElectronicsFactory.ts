@@ -7,10 +7,13 @@ import { ElectronicsFactoryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class ElectronicsFactory extends Tile {
-    protected texture: HTMLImageElement = ElectronicsFactoryTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return ElectronicsFactoryTexture;
     }
 
     resourceConversions = [

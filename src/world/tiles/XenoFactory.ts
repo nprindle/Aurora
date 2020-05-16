@@ -7,10 +7,13 @@ import { XenoFactoryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class XenoFactory extends Tile {
-    protected texture: HTMLImageElement = XenoFactoryTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return XenoFactoryTexture;
     }
 
     resourceConversions = [

@@ -8,10 +8,13 @@ import { HydroponicsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Hydroponics extends Tile {
-    protected texture: HTMLImageElement = HydroponicsTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return HydroponicsTexture;
     }
 
     resourceConversions = [

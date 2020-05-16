@@ -15,7 +15,6 @@ import { Schemas as S } from "@nprindle/augustus";
 export default class Ruins extends Tile {
 
     private textureVariant: 1 | 2 = Random.bool() ? 1 : 2;
-    protected texture: HTMLImageElement = RuinsTexture1;
 
     constructor(position: GridCoordinates) {
         super(position);

@@ -20,10 +20,12 @@ import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionHabitat extends Tile {
 
-    protected texture: HTMLImageElement = HabConstructionTexture;
-
     constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5 ) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return HabConstructionTexture;
     }
 
     possibleProjects: TileProject[] = [

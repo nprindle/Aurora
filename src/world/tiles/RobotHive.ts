@@ -14,7 +14,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 export default class RobotHive extends Tile {
 
-    protected texture: HTMLImageElement = RobotHiveTexture;
+    constructor(position: GridCoordinates) {
+        super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return RobotHiveTexture;
+    }
 
     populationCapacity: Housing = new Housing(Species.Robot, 5000);
 
@@ -39,10 +45,6 @@ export default class RobotHive extends Tile {
             [hasTech(SwarmRoboticsTech)]
         ),
     ];
-
-    constructor(position: GridCoordinates) {
-        super(position);
-    }
 
     static readonly tileName: string = "Drone Hive";
     static readonly tileDescription: string =

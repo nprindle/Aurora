@@ -8,7 +8,6 @@ import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class Road extends Tile {
-    protected texture: HTMLImageElement = RoadTextureCross;
 
     constructor(position: GridCoordinates) {
         super(position);

@@ -23,10 +23,12 @@ import { Schemas as S } from "@nprindle/augustus";
 
 export default class ConstructionIndustry extends Tile {
 
-    protected texture: HTMLImageElement = IndustryConstructionTexture;
-
     constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return IndustryConstructionTexture;
     }
 
     possibleProjects: TileProject[] = [

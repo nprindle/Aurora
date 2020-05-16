@@ -4,10 +4,13 @@ import { NanotechFoundryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class NanotechFoundry extends Tile {
-    protected texture: HTMLImageElement = NanotechFoundryTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return NanotechFoundryTexture;
     }
 
     static readonly tileName: string = "Nanotech Foundry";

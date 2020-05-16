@@ -13,10 +13,13 @@ import MiningFacility from "./MiningFacility.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Mountain extends Tile {
-    protected texture: HTMLImageElement = MountainTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return MountainTexture;
     }
 
     possibleProjects: TileProject[] = [

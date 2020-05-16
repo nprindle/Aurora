@@ -8,10 +8,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class NuclearPlant extends Tile {
-    protected texture: HTMLImageElement = NuclearPlantTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return NuclearPlantTexture;
     }
 
     resourceConversions = [

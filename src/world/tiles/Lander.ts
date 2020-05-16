@@ -14,7 +14,14 @@ import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Lander extends Tile {
-    protected texture: HTMLImageElement = LanderTexture;
+
+    constructor(position: GridCoordinates) {
+        super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return LanderTexture;
+    }
 
     possibleProjects: TileProject[] = [
         new TileProject(
@@ -44,10 +51,6 @@ export default class Lander extends Tile {
             [],
         ),
     ];
-
-    constructor(position: GridCoordinates) {
-        super(position);
-    }
 
     static readonly tileName: string = "Landing Pod";
     static readonly tileDescription: string = stripIndent`

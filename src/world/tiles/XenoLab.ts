@@ -15,10 +15,13 @@ import { Schemas as S } from "@nprindle/augustus";
 
 
 export default class XenoLab extends Tile {
-    protected texture: HTMLImageElement = XenoLabTexture;
 
     constructor(position: GridCoordinates) {
         super(position);
+    }
+
+    getTexture(): HTMLImageElement {
+        return XenoLabTexture;
     }
 
     resourceConversions = [

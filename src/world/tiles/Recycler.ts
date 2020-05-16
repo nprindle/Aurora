@@ -7,7 +7,6 @@ import { RecyclerTexture1, RecyclerTexture2 } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 
 export default class Recycler extends Tile {
-    protected texture: HTMLImageElement = RecyclerTexture1;
     private textureVariant: 1 | 2;
 
     constructor(position: GridCoordinates, textureVariant: 1 | 2 = 1) {
