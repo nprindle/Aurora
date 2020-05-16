@@ -17,8 +17,8 @@ export default class Quantities<T> {
         this.set(key, this.get(key) + quantity);
     }
 
-    remove(key: T, quantity: number): void {
-        this.add(key, quantity * -1);
+    subtract(key: T, quantity: number): void {
+        this.set(key, this.get(key) - quantity);
     }
 
     get(key: T): number {
