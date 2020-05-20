@@ -5,12 +5,12 @@ import { Random } from "../../util/Random.js";
 import TileProject from "../../world/TileProject.js";
 import Game from "../../Game.js";
 import Recycler from "./Recycler.js";
-import { SurveyTech, XenoarchaeologyTech } from "../../techtree/TechTree.js";
 import Cost from "../../resources/Cost.js";
 import Resource from "../../resources/Resource.js";
 import { roadRequirement, techRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class Ruins extends Tile {
 
@@ -25,8 +25,8 @@ export default class Ruins extends Tile {
             (position: GridCoordinates, game: Game) =>
                 game.world.placeTile(new Recycler(position, this.textureVariant)),
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Energy, 100)],
-            [roadRequirement, techRequirement(XenoarchaeologyTech)],
-            [hasTech(SurveyTech)],
+            [roadRequirement, techRequirement(Technology.XenoarchaeologyTech)],
+            [hasTech(Technology.SurveyTech)],
         )
     ];
 

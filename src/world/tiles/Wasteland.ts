@@ -11,13 +11,13 @@ import Road from "./Road.js";
 import ConstructionHabitat from "./ConstructionHabitat.js";
 import ConstructionLaboratory from "./ConstructionLaboratory.js";
 import ConstructionIndustry from "./ConstructionIndustry.js";
-import { MonolithSurveyTech } from "../../techtree/TechTree.js";
 import ConstructionVictory from "./ConstructionVictory.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { hasTech, tileExists, orQuery, notQuery } from "../../queries/Queries.js";
 import { roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class Wasteland extends Tile {
 
@@ -74,7 +74,7 @@ export default class Wasteland extends Tile {
             [],
             [],
             [
-                hasTech(MonolithSurveyTech),
+                hasTech(Technology.MonolithSurveyTech),
                 orQuery(notQuery(tileExists(NeuralEmulator)), notQuery(tileExists(NanotechFoundry)))
             ]
         ),

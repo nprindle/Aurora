@@ -8,11 +8,11 @@ import Species from "../resources/Species.js";
 import AlienSeedCore from "../world/tiles/AlienSeedCore.js";
 import HumanSeedCore from "../world/tiles/HumanSeedCore.js";
 import HumanMonolith from "../world/tiles/HumanMonolith.js";
-import { AiResearchTech } from "../techtree/TechTree.js";
 import Resource from "../resources/Resource.js";
 import SolarPanels from "../world/tiles/SolarArray.js";
 import Road from "../world/tiles/Road.js";
 import { WorldPredicate } from "../queries/Queries.js";
+import Technology from "../techtree/Technology.js";
 
 export default class Achievement {
     static readonly StartAchievement = new Achievement(
@@ -74,7 +74,7 @@ export default class Achievement {
     static readonly SafetyProjectAchievement = new Achievement(
         "🦉", "Fable of the Sparrows",
         "You approved the AI Safety Research Project",
-        (game: Game) => game.hasUnlockedTechnology(AiResearchTech)
+        (game: Game) => game.hasUnlockedTechnology(Technology.AiResearchTech)
     );
     static readonly AlienEndingAchievement = new Achievement(
         "👾", "Mission Accomplished",

@@ -7,10 +7,10 @@ import Wasteland from "./Wasteland.js";
 import Cost from "../../resources/Cost.js";
 import { MountainTexture } from "../../ui/Images.js";
 import Mineshaft from "./Mineshaft.js";
-import { StructureConstructionTech } from "../../techtree/TechTree.js";
 import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import MiningFacility from "./MiningFacility.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class Mountain extends Tile {
 
@@ -29,7 +29,7 @@ export default class Mountain extends Tile {
             },
             [new Cost(Resource.Energy, 500), new Cost(Resource.BuildingMaterials, 250)],
             [
-                techRequirement(StructureConstructionTech),
+                techRequirement(Technology.StructureConstructionTech),
                 roadRequirement,
                 tileWithinDistanceRequirement(MiningFacility, 5)
             ],

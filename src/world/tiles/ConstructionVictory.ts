@@ -6,7 +6,6 @@ import Game from "../../Game.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import Wasteland from "./Wasteland.js";
-import { MonolithSurveyTech, NanoTech, NeuralUploadingTech } from "../../techtree/TechTree.js";
 import { constructionProject } from "../../world/TileProject.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import Monolith from "./Monolith.js";
@@ -16,6 +15,7 @@ import {
 } from "../../queries/DescribedTileQuery.js";
 import { hasTech, tileExists, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class ConstructionVictory extends Tile {
 
@@ -43,9 +43,9 @@ export default class ConstructionVictory extends Tile {
             [
                 roadRequirement,
                 nearMonolithRequirement(3),
-                techRequirement(NanoTech)
+                techRequirement(Technology.NanoTech)
             ],
-            [hasTech(MonolithSurveyTech), notQuery(tileExists(NanotechFoundry))],
+            [hasTech(Technology.MonolithSurveyTech), notQuery(tileExists(NanotechFoundry))],
         ),
 
         constructionProject(NeuralEmulator,
@@ -58,9 +58,9 @@ export default class ConstructionVictory extends Tile {
             [
                 roadRequirement,
                 tileWithinDistanceRequirement(Monolith, 2),
-                techRequirement(NeuralUploadingTech)
+                techRequirement(Technology.NeuralUploadingTech)
             ],
-            [hasTech(MonolithSurveyTech), notQuery(tileExists(NeuralEmulator))],
+            [hasTech(Technology.MonolithSurveyTech), notQuery(tileExists(NeuralEmulator))],
         ),
     ];
 

@@ -6,8 +6,6 @@ import Game from "../../Game.js";
 import Habitat from "./Habitat.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
-import { StructureConstructionTech, UrbanPlanningTech, IndustrialEngineeringTech, RobotTech, }
-    from "../../techtree/TechTree.js";
 import Greenhouse from "./Greenhouse.js";
 import Arcology from "./Arcology.js";
 import Wasteland from "./Wasteland.js";
@@ -17,6 +15,7 @@ import { techRequirement, roadRequirement } from "../../queries/DescribedTileQue
 import { hasTech } from "../../queries/Queries.js";
 import RobotHive from "./RobotHive.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class ConstructionHabitat extends Tile {
 
@@ -39,17 +38,17 @@ export default class ConstructionHabitat extends Tile {
         constructionProject(RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
-                techRequirement(StructureConstructionTech),
-                techRequirement(RobotTech),
+                techRequirement(Technology.StructureConstructionTech),
+                techRequirement(Technology.RobotTech),
                 roadRequirement,
             ],
-            [hasTech(IndustrialEngineeringTech)],
+            [hasTech(Technology.IndustrialEngineeringTech)],
         ),
 
         constructionProject(Habitat,
             [new Cost(Resource.BuildingMaterials, 200)],
             [
-                techRequirement(StructureConstructionTech),
+                techRequirement(Technology.StructureConstructionTech),
                 roadRequirement,
             ],
             [],
@@ -57,20 +56,20 @@ export default class ConstructionHabitat extends Tile {
 
         constructionProject(Arcology,
             [new Cost(Resource.BuildingMaterials, 500)],
-            [techRequirement(UrbanPlanningTech), roadRequirement],
-            [hasTech(StructureConstructionTech)],
+            [techRequirement(Technology.UrbanPlanningTech), roadRequirement],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
             [roadRequirement],
-            [hasTech(StructureConstructionTech)],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(Hydroponics,
             [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
-            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
-            [hasTech(StructureConstructionTech)]
+            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
+            [hasTech(Technology.StructureConstructionTech)]
         ),
     ];
 

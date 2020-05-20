@@ -9,8 +9,8 @@ import Resource from "../../resources/Resource.js";
 import Game from "../../Game.js";
 import { availableHousingRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
-import { SwarmRoboticsTech } from "../../techtree/TechTree.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class RobotHive extends Tile {
 
@@ -42,7 +42,7 @@ export default class RobotHive extends Tile {
             },
             [new Cost(Resource.Electronics, 250), new Cost(Resource.Energy, 1000)],
             [availableHousingRequirement(Species.Robot, 1000)],
-            [hasTech(SwarmRoboticsTech)]
+            [hasTech(Technology.SwarmRoboticsTech)]
         ),
     ];
 

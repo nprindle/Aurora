@@ -7,11 +7,11 @@ import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
 import HumanCircuits from "./HumanCircuits.js";
 import HumanSeedCore from "./HumanSeedCore.js";
-import { SingularityEngineeringTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import { techRequirement, tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class HumanMonolith extends Tile {
 
@@ -40,7 +40,7 @@ export default class HumanMonolith extends Tile {
             [
                 tileWithinDistanceRequirement(NanotechFoundry, 3),
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(SingularityEngineeringTech),
+                techRequirement(Technology.SingularityEngineeringTech),
             ],
             []
         )
