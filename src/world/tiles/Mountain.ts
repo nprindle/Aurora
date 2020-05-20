@@ -29,7 +29,7 @@ export default class Mountain extends Tile {
             },
             [new Cost(Resource.Energy, 500), new Cost(Resource.BuildingMaterials, 250)],
             [
-                techRequirement(Technology.StructureConstructionTech),
+                techRequirement(Technology.StructuralEngineering),
                 roadRequirement,
                 tileWithinDistanceRequirement(MiningFacility, 5)
             ],

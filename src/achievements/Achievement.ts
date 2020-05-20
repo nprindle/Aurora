@@ -74,7 +74,7 @@ export default class Achievement {
     static readonly SafetyProjectAchievement = new Achievement(
         "🦉", "Fable of the Sparrows",
         "You approved the AI Safety Research Project",
-        (game: Game) => game.hasUnlockedTechnology(Technology.AiResearchTech)
+        (game: Game) => game.hasUnlockedTechnology(Technology.AiResearch)
     );
     static readonly AlienEndingAchievement = new Achievement(
         "👾", "Mission Accomplished",

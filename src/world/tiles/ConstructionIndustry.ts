@@ -44,20 +44,20 @@ export default class ConstructionIndustry extends Tile {
 
         constructionProject(MiningFacility,
             [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 100)],
-            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
-            [hasTech(Technology.StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(ConstructionFactory,
             [new Cost(Resource.BuildingMaterials, 350)],
-            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
-            [hasTech(Technology.StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(ElectronicsFactory,
             [new Cost(Resource.BuildingMaterials, 300), new Cost(Resource.Electronics, 150)],
-            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
-            [hasTech(Technology.StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(XenoFactory,
@@ -66,14 +66,14 @@ export default class ConstructionIndustry extends Tile {
                 new Cost(Resource.Electronics, 200),
                 new Cost(Resource.Energy, 1000)
             ],
-            [roadRequirement, techRequirement(Technology.XenoMaterialsTech)],
-            [hasTech(Technology.XenoarchaeologyTech)],
+            [roadRequirement, techRequirement(Technology.XenoMaterials)],
+            [hasTech(Technology.Xenoarchaeology)],
         ),
 
         constructionProject(NuclearPlant,
             [new Cost(Resource.BuildingMaterials, 150), new Cost(Resource.Electronics, 300)],
-            [techRequirement(Technology.NuclearTech), roadRequirement],
-            [hasTech(Technology.StructureConstructionTech)],
+            [techRequirement(Technology.NuclearEngineering), roadRequirement],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(ZeroPointPlant,
@@ -82,8 +82,8 @@ export default class ConstructionIndustry extends Tile {
                 new Cost(Resource.Electronics, 100),
                 new Cost(Resource.Superconductor, 1000)
             ],
-            [techRequirement(Technology.ZeroPointTech)],
-            [hasTech(Technology.XenoarchaeologyTech)],
+            [techRequirement(Technology.ZeroPointEnergy)],
+            [hasTech(Technology.Xenoarchaeology)],
         ),
     ];
 

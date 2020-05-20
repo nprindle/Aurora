@@ -74,7 +74,7 @@ export default class Wasteland extends Tile {
             [],
             [],
             [
-                hasTech(Technology.MonolithSurveyTech),
+                hasTech(Technology.MonolithSurvey),
                 orQuery(notQuery(tileExists(NeuralEmulator)), notQuery(tileExists(NanotechFoundry)))
             ]
         ),

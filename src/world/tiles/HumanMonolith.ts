@@ -40,7 +40,7 @@ export default class HumanMonolith extends Tile {
             [
                 tileWithinDistanceRequirement(NanotechFoundry, 3),
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(Technology.SingularityEngineeringTech),
+                techRequirement(Technology.SingularityEngineering),
             ],
             []
         )

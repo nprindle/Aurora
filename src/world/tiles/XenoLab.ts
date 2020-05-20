@@ -39,11 +39,11 @@ export default class XenoLab extends Tile {
                 The monolith appears to be some sort of supercomputer that was left unfinished when the alien
                 civilization collapsed. Some archaeological evidence suggests that the monolith's construction caused
                 the war in which the aliens destroyed each other. Studying it in detail may reveal its true purpose.
-                Completing this project provides the "${Technology.MonolithSurveyTech.name}" technology.`,
-            (position: GridCoordinates, game: Game) => { game.unlockTechnology(Technology.MonolithSurveyTech); },
+                Completing this project provides the "${Technology.MonolithSurvey.name}" technology.`,
+            (position: GridCoordinates, game: Game) => { game.unlockTechnology(Technology.MonolithSurvey); },
             [new Cost(Resource.AlienKnowledge, 50)],
             [tileWithinDistanceRequirement(Monolith, 5)],
-            [hasTech(Technology.AlienHistoryTech), notQuery(hasTech(Technology.MonolithSurveyTech))]
+            [hasTech(Technology.AlienHistory), notQuery(hasTech(Technology.MonolithSurvey))]
         )
     ];
 

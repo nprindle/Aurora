@@ -37,9 +37,9 @@ export default class Monolith extends Tile {
             [new Cost(Resource.Energy, 1000), new Cost(Resource.SmartMatter, 500)],
             [
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(Technology.NeuralUploadingTech),
+                techRequirement(Technology.NeuralUploading),
             ],
-            [hasTech(Technology.CooperativeReprogrammingTech), hasTech(Technology.MonolithSurveyTech)]
+            [hasTech(Technology.CooperativeReprogramming), hasTech(Technology.MonolithSurvey)]
         ),
 
         new MonolithCompletionProject(
@@ -62,10 +62,10 @@ export default class Monolith extends Tile {
             [
                 tileWithinDistanceRequirement(NanotechFoundry, 3),
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(Technology.SingularityEngineeringTech),
+                techRequirement(Technology.SingularityEngineering),
             ],
             [
-                hasTech(Technology.MonolithSurveyTech)
+                hasTech(Technology.MonolithSurvey)
             ]
 
         )

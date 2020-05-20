@@ -17,12 +17,12 @@ export const safetyProject: TileProject = new TileProject(
     If approved, this line of research risks mission failure, since if the overseer allowed itself to be
     reprogrammed it would no longer pursue the mission of uncovering information about the aliens at all
     costs.`,
-    (position: GridCoordinates, game: Game) => game.unlockTechnology(Technology.AiResearchTech),
+    (position: GridCoordinates, game: Game) => game.unlockTechnology(Technology.AiResearch),
     [],
-    [techRequirement(Technology.RationalityTech)],
+    [techRequirement(Technology.Rationality)],
     [
-        hasTech(Technology.CognitiveBiasesTech),
-        notQuery(hasTech(Technology.AiResearchTech)),
+        hasTech(Technology.CognitiveBiases),
+        notQuery(hasTech(Technology.AiResearch)),
         speciesHasPopulation(Species.Human, 500),
     ]
 );
