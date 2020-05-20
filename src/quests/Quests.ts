@@ -88,7 +88,7 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
     `Study the Monolith`,
     [
         new QuestPath(
-            hasTech(Technology.MonolithSurveyTech),
+            hasTech(Technology.MonolithSurvey),
             QuestActivateMonolith
         )
     ],
@@ -96,10 +96,10 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
-    `Research ${Technology.AlienHistoryTech.name}`,
+    `Research ${Technology.AlienHistory.name}`,
     [
         new QuestPath(
-            hasTech(Technology.AlienHistoryTech),
+            hasTech(Technology.AlienHistory),
             QuestMonolithSurvey,
         )
     ]
@@ -140,10 +140,10 @@ export const TutorialQuestPopulation: QuestStage = new QuestStage(
 );
 
 export const TutorialQuestScience: QuestStage = new QuestStage(
-    `Develop the ${Technology.StructureConstructionTech.name} technology`,
+    `Develop the ${Technology.StructuralEngineering.name} technology`,
     [
         new QuestPath(
-            hasTech(Technology.StructureConstructionTech),
+            hasTech(Technology.StructuralEngineering),
             TutorialQuestPopulation,
         )
     ],

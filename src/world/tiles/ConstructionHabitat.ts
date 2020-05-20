@@ -38,17 +38,17 @@ export default class ConstructionHabitat extends Tile {
         constructionProject(RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
-                techRequirement(Technology.StructureConstructionTech),
-                techRequirement(Technology.RobotTech),
+                techRequirement(Technology.StructuralEngineering),
+                techRequirement(Technology.Robotics),
                 roadRequirement,
             ],
-            [hasTech(Technology.IndustrialEngineeringTech)],
+            [hasTech(Technology.IndustrialEngineering)],
         ),
 
         constructionProject(Habitat,
             [new Cost(Resource.BuildingMaterials, 200)],
             [
-                techRequirement(Technology.StructureConstructionTech),
+                techRequirement(Technology.StructuralEngineering),
                 roadRequirement,
             ],
             [],
@@ -56,20 +56,20 @@ export default class ConstructionHabitat extends Tile {
 
         constructionProject(Arcology,
             [new Cost(Resource.BuildingMaterials, 500)],
-            [techRequirement(Technology.UrbanPlanningTech), roadRequirement],
-            [hasTech(Technology.StructureConstructionTech)],
+            [techRequirement(Technology.UrbanPlanning), roadRequirement],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
             [roadRequirement],
-            [hasTech(Technology.StructureConstructionTech)],
+            [hasTech(Technology.StructuralEngineering)],
         ),
 
         constructionProject(Hydroponics,
             [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
-            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
-            [hasTech(Technology.StructureConstructionTech)]
+            [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
+            [hasTech(Technology.StructuralEngineering)]
         ),
     ];
 

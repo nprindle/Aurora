@@ -43,9 +43,9 @@ export default class ConstructionVictory extends Tile {
             [
                 roadRequirement,
                 nearMonolithRequirement(3),
-                techRequirement(Technology.NanoTech)
+                techRequirement(Technology.Nanotechnology)
             ],
-            [hasTech(Technology.MonolithSurveyTech), notQuery(tileExists(NanotechFoundry))],
+            [hasTech(Technology.MonolithSurvey), notQuery(tileExists(NanotechFoundry))],
         ),
 
         constructionProject(NeuralEmulator,
@@ -58,9 +58,9 @@ export default class ConstructionVictory extends Tile {
             [
                 roadRequirement,
                 tileWithinDistanceRequirement(Monolith, 2),
-                techRequirement(Technology.NeuralUploadingTech)
+                techRequirement(Technology.NeuralUploading)
             ],
-            [hasTech(Technology.MonolithSurveyTech), notQuery(tileExists(NeuralEmulator))],
+            [hasTech(Technology.MonolithSurvey), notQuery(tileExists(NeuralEmulator))],
         ),
     ];
 

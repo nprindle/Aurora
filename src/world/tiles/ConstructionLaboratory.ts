@@ -53,7 +53,7 @@ export default class ConstructionLaboratory extends Tile {
             [
                 nearRuinsOrMonolith(3),
                 roadRequirement,
-                techRequirement(Technology.SurveyTech)
+                techRequirement(Technology.Surveying)
             ],
             [],
         ),
@@ -61,7 +61,7 @@ export default class ConstructionLaboratory extends Tile {
         constructionProject(AlignmentLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
             [speciesPopulationRequirement(Species.Human, 200), roadRequirement],
-            [hasTech(Technology.AiResearchTech)],
+            [hasTech(Technology.AiResearch)],
         ),
     ];
 

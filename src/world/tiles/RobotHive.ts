@@ -42,7 +42,7 @@ export default class RobotHive extends Tile {
             },
             [new Cost(Resource.Electronics, 250), new Cost(Resource.Energy, 1000)],
             [availableHousingRequirement(Species.Robot, 1000)],
-            [hasTech(Technology.SwarmRoboticsTech)]
+            [hasTech(Technology.SwarmRobotics)]
         ),
     ];
 
