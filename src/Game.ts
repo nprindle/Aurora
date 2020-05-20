@@ -3,7 +3,7 @@ import Inventory from "./resources/Inventory.js";
 import Conversion from "./resources/Conversion.js";
 import { QuestStage } from "./quests/QuestStage.js";
 import { TutorialQuestUnpackLander } from "./quests/Quests.js";
-import Technology, { ResearchableTechnologies } from "./techtree/Technology.js";
+import Technology from "./techtree/Technology.js";
 import { Arrays } from "./util/Arrays.js";
 import Ending from "./quests/Ending.js";
 import { Schemas as S } from "@nprindle/augustus";
@@ -83,7 +83,7 @@ export default class Game {
     }
 
     hasUnlockedTechnology(tech: Technology): boolean {
-        return this.completedTechs.some(t => t.equals(tech));
+        return this.completedTechs.some(t => t === tech);
     }
 
     unlockTechnology(tech: Technology): void {
@@ -97,10 +97,10 @@ export default class Game {
     }
 
     getResearchOptions(): Technology[] {
-        return ResearchableTechnologies
-            .filter(tech => tech.visible)
-            .filter(tech => tech.requiredTechs.every(prerequisite =>
-                this.completedTechs.some(t => t.equals(prerequisite))
+        return Technology.values
+            .filter(tech => tech.researchCost !== undefined)
+            .filter(tech => tech.prerequisites.every(prerequisite =>
+                this.completedTechs.some(t => t === prerequisite)
             ))
             .filter(tech => !this.hasUnlockedTechnology(tech));
     }
@@ -151,7 +151,7 @@ export default class Game {
             endState: S.optional(Ending.schema),
             prevQuestDescription: S.aString,
             questCompletionShown: S.aBoolean,
-            completedTechs: S.arrayOf(Technology.schema()),
+            completedTechs: S.arrayOf(Technology.schema),
         }),
         (game: Game) => ({
             world: game.world,

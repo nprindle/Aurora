@@ -166,7 +166,7 @@ export function queryTile(query: TileQuery): TilePredicate {
 
 const worldQuerySchemas: Record<WorldQuery["queryType"], Schema<WorldQuery, any>> = {
     "hasTech": S.recordOf({
-        queryType: S.literal("hasTech" as const), technology: Technology.schema()
+        queryType: S.literal("hasTech" as const), technology: Technology.schema
     }),
     "speciesHasPopulation": S.recordOf({
         queryType: S.literal("speciesHasPopulation" as const), species: Species.schema, minPopulation: S.aNumber

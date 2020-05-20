@@ -9,7 +9,6 @@ import EngineeringLab from "../world/tiles/EngineeringLab.js";
 import Wasteland from "../world/tiles/Wasteland.js";
 import XenoLab from "../world/tiles/XenoLab.js";
 import Ruins from "../world/tiles/Ruins.js";
-import { StructureConstructionTech, AlienHistoryTech, MonolithSurveyTech } from "../techtree/TechTree.js";
 import Recycler from "../world/tiles/Recycler.js";
 import AlienSeedCore from "../world/tiles/AlienSeedCore.js";
 import AlienCircuits from "../world/tiles/AlienCircuits.js";
@@ -17,6 +16,7 @@ import HumanSeedCore from "../world/tiles/HumanSeedCore.js";
 import HumanCircuits from "../world/tiles/HumanCircuits.js";
 import { stripIndent } from "../util/Text.js";
 import { allTilesAreOfType, hasTech, tileExists, hasResource, hasTotalPopulation } from "../queries/Queries.js";
+import Technology from "../techtree/Technology.js";
 
 export const AlienEnding: Ending = new Ending("Final Mission Report",
     stripIndent`
@@ -88,7 +88,7 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
     `Study the Monolith`,
     [
         new QuestPath(
-            hasTech(MonolithSurveyTech),
+            hasTech(Technology.MonolithSurveyTech),
             QuestActivateMonolith
         )
     ],
@@ -96,10 +96,10 @@ export const QuestMonolithSurvey: QuestStage = new QuestStage(
 );
 
 export const QuestAlienHistory: QuestStage = new QuestStage(
-    `Research ${AlienHistoryTech.name}`,
+    `Research ${Technology.AlienHistoryTech.name}`,
     [
         new QuestPath(
-            hasTech(AlienHistoryTech),
+            hasTech(Technology.AlienHistoryTech),
             QuestMonolithSurvey,
         )
     ]
@@ -140,10 +140,10 @@ export const TutorialQuestPopulation: QuestStage = new QuestStage(
 );
 
 export const TutorialQuestScience: QuestStage = new QuestStage(
-    `Develop the ${StructureConstructionTech.name} technology`,
+    `Develop the ${Technology.StructureConstructionTech.name} technology`,
     [
         new QuestPath(
-            hasTech(StructureConstructionTech),
+            hasTech(Technology.StructureConstructionTech),
             TutorialQuestPopulation,
         )
     ],

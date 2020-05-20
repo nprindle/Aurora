@@ -25,7 +25,7 @@ export default class ResearchScreen implements Page {
             : UI.makeDiv(); // don't show header if there are no available technologies
 
         const researchResources: Resource[] =
-        Resource.values.filter(resource => possibleTechs.some((tech) => tech.researchCost.resource === resource));
+        Resource.values.filter(resource => possibleTechs.some((tech) => tech.researchCost?.resource === resource));
 
         const researchResourcesHTML: HTMLElement = UI.makeDiv(["research-resources"]);
         if (researchResources.length !== 0) {
@@ -38,7 +38,7 @@ export default class ResearchScreen implements Page {
         const researchOptionsHTML = UI.makeDivContaining(possibleTechs.map(tech => this.renderTechOption(tech)));
 
         const techHistory = this.game.getUnlockedTechnologies()
-            .filter(tech => tech.visible)
+            .filter(tech => tech.researchCost !== undefined)
             .map(tech => UI.makePara(`- ${tech.name}`, ["previous-research"]));
 
         const historyHeader = (techHistory.length > 0)
@@ -57,12 +57,22 @@ export default class ResearchScreen implements Page {
         ]);
     }
 
+    // only technologies that a have an associated research cost can be rendered
     private renderTechOption(tech: Technology): HTMLElement {
+
+        const researchCost = tech.researchCost;
+
+        // don't render "hidden" technologies, i.e. those that have no research cost
+        if (researchCost === undefined) {
+            console.warn("rendered unresearchable technology");
+            return UI.makeDiv();
+        }
+
         // we assume that all prerequisite technologies are completed because otherwise we don't show the option at all
-        const canUnlock = this.game.inventory.canAfford([tech.researchCost]);
+        const canUnlock = this.game.inventory.canAfford([researchCost]);
 
         const unlockCallback: () => void = () => {
-            this.game.inventory.payCost([tech.researchCost]);
+            this.game.inventory.payCost([researchCost]);
             this.game.unlockTechnology(tech);
             this.game.updateQuestState();
             this.refresh();

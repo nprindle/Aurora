@@ -9,9 +9,6 @@ import MiningFacility from "./MiningFacility.js";
 import SolarPanels from "./SolarArray.js";
 import NuclearPlant from "./NuclearPlant.js";
 import Wasteland from "./Wasteland.js";
-import {
-    StructureConstructionTech, NuclearTech, IndustrialEngineeringTech, XenoarchaeologyTech,
-    XenoMaterialsTech, ZeroPointTech } from "../../techtree/TechTree.js";
 import { constructionProject } from "../../world/TileProject.js";
 import ConstructionFactory from "./ConstructionFactory.js";
 import ElectronicsFactory from "./ElectronicsFactory.js";
@@ -20,6 +17,7 @@ import ZeroPointPlant from "./ZeroPointPlant.js";
 import { techRequirement, roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class ConstructionIndustry extends Tile {
 
@@ -46,20 +44,20 @@ export default class ConstructionIndustry extends Tile {
 
         constructionProject(MiningFacility,
             [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 100)],
-            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
-            [hasTech(StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(ConstructionFactory,
             [new Cost(Resource.BuildingMaterials, 350)],
-            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
-            [hasTech(StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(ElectronicsFactory,
             [new Cost(Resource.BuildingMaterials, 300), new Cost(Resource.Electronics, 150)],
-            [roadRequirement, techRequirement(IndustrialEngineeringTech)],
-            [hasTech(StructureConstructionTech)],
+            [roadRequirement, techRequirement(Technology.IndustrialEngineeringTech)],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(XenoFactory,
@@ -68,14 +66,14 @@ export default class ConstructionIndustry extends Tile {
                 new Cost(Resource.Electronics, 200),
                 new Cost(Resource.Energy, 1000)
             ],
-            [roadRequirement, techRequirement(XenoMaterialsTech)],
-            [hasTech(XenoarchaeologyTech)],
+            [roadRequirement, techRequirement(Technology.XenoMaterialsTech)],
+            [hasTech(Technology.XenoarchaeologyTech)],
         ),
 
         constructionProject(NuclearPlant,
             [new Cost(Resource.BuildingMaterials, 150), new Cost(Resource.Electronics, 300)],
-            [techRequirement(NuclearTech), roadRequirement],
-            [hasTech(StructureConstructionTech)],
+            [techRequirement(Technology.NuclearTech), roadRequirement],
+            [hasTech(Technology.StructureConstructionTech)],
         ),
 
         constructionProject(ZeroPointPlant,
@@ -84,8 +82,8 @@ export default class ConstructionIndustry extends Tile {
                 new Cost(Resource.Electronics, 100),
                 new Cost(Resource.Superconductor, 1000)
             ],
-            [techRequirement(ZeroPointTech)],
-            [hasTech(XenoarchaeologyTech)],
+            [techRequirement(Technology.ZeroPointTech)],
+            [hasTech(Technology.XenoarchaeologyTech)],
         ),
     ];
 

@@ -10,7 +10,6 @@ import PsychLab from "./PsychLab.js";
 import XenoLab from "./XenoLab.js";
 import AlignmentLab from "./AlignmentLab.js";
 import Wasteland from "./Wasteland.js";
-import { SurveyTech, AiResearchTech } from "../../techtree/TechTree.js";
 import Species from "../../resources/Species.js";
 import { constructionProject } from "../../world/TileProject.js";
 import {
@@ -18,6 +17,7 @@ import {
 } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class ConstructionLaboratory extends Tile {
 
@@ -53,7 +53,7 @@ export default class ConstructionLaboratory extends Tile {
             [
                 nearRuinsOrMonolith(3),
                 roadRequirement,
-                techRequirement(SurveyTech)
+                techRequirement(Technology.SurveyTech)
             ],
             [],
         ),
@@ -61,7 +61,7 @@ export default class ConstructionLaboratory extends Tile {
         constructionProject(AlignmentLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
             [speciesPopulationRequirement(Species.Human, 200), roadRequirement],
-            [hasTech(AiResearchTech)],
+            [hasTech(Technology.AiResearchTech)],
         ),
     ];
 

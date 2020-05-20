@@ -5,8 +5,6 @@ import TileProject, { MonolithCompletionProject } from "../../world/TileProject.
 import { stripIndent } from "../../util/Text.js";
 import AlienSeedCore from "./AlienSeedCore.js";
 import AlienCircuits from "./AlienCircuits.js";
-import { MonolithSurveyTech, SingularityEngineeringTech,
-    CooperativeReprogrammingTech, NeuralUploadingTech } from "../../techtree/TechTree.js";
 import NeuralEmulator from "./NeuralEmulator.js";
 import NanotechFoundry from "./NanotechFoundry.js";
 import Resource from "../../resources/Resource.js";
@@ -16,6 +14,7 @@ import HumanMonolith from "./HumanMonolith.js";
 import { tileWithinDistanceRequirement, techRequirement } from "../../queries/DescribedTileQuery.js";
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
+import Technology from "../../techtree/Technology.js";
 
 export default class Monolith extends Tile {
 
@@ -38,9 +37,9 @@ export default class Monolith extends Tile {
             [new Cost(Resource.Energy, 1000), new Cost(Resource.SmartMatter, 500)],
             [
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(NeuralUploadingTech),
+                techRequirement(Technology.NeuralUploadingTech),
             ],
-            [hasTech(CooperativeReprogrammingTech), hasTech(MonolithSurveyTech)]
+            [hasTech(Technology.CooperativeReprogrammingTech), hasTech(Technology.MonolithSurveyTech)]
         ),
 
         new MonolithCompletionProject(
@@ -63,10 +62,10 @@ export default class Monolith extends Tile {
             [
                 tileWithinDistanceRequirement(NanotechFoundry, 3),
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
-                techRequirement(SingularityEngineeringTech),
+                techRequirement(Technology.SingularityEngineeringTech),
             ],
             [
-                hasTech(MonolithSurveyTech)
+                hasTech(Technology.MonolithSurveyTech)
             ]
 
         )
