@@ -1,11 +1,9 @@
 import GridCoordinates from "../world/GridCoordinates";
 import Game from "../Game";
 import Cost from "../resources/Cost";
-import { NamedTileType } from "../world/Tile";
-import { GameWindow } from "../ui/GameWindow";
-import EndingWorldScreen from "../ui/worldScreen/EndingWorldScreen";
 import DescribedTileQuery from "../queries/DescribedTileQuery";
 import { TileQuery, queryTile } from "../queries/Queries.js";
+import { NamedTileType } from "./Tile";
 
 /* A project that can be performed by on tile
  * e.g., turning a wasteland tile into a habitat, or researching a technology
@@ -52,38 +50,4 @@ export function constructionProject(
         (position: GridCoordinates, game: Game) => game.world.placeTile(new tile(position)),
         costs, completionRequirements, visibilityRequirements
     );
-}
-
-// special TileProject used to win the game
-export class MonolithCompletionProject extends TileProject {
-    constructor(
-        readonly title: string,
-        readonly projectDescription: string,
-        private readonly activeMonolithTile: NamedTileType,
-        private readonly circuitsTile: NamedTileType,
-        readonly costs: Cost[],
-        readonly completionRequirements: DescribedTileQuery[],
-        readonly visibilityRequirements: TileQuery[],
-    ) {
-        super(
-            title,
-            projectDescription,
-            () => {},
-            costs,
-            completionRequirements,
-            visibilityRequirements);
-    }
-
-    doAction(position: GridCoordinates, game: Game): void {
-        if (!this.canDo(position, game)) {
-            console.warn(`tried to do project ${this.title} without meeting requirements`);
-        } else {
-            game.inventory.payCost(this.costs);
-            game.world.placeTile(new this.activeMonolithTile(position));
-
-            const endingWorldScreen = new EndingWorldScreen(game, position, this.circuitsTile);
-            GameWindow.show(endingWorldScreen);
-            endingWorldScreen.expandCircuits(1);
-        }
-    }
 }

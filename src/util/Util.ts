@@ -12,6 +12,10 @@ export function mod(a: number, b: number): number {
     return a - (b * Math.floor(a / b));
 }
 
+export async function sleep(milliseconds: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
 export function impossible(x: never): never {
     throw new Error("unreachable");
 }

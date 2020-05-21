@@ -1,7 +1,6 @@
 import Tile, { tileTypes } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { HumanMonolithTexture } from "../../ui/Images.js";
-import TileProject, { MonolithCompletionProject } from "../../world/TileProject.js";
 import { stripIndent } from "../../util/Text.js";
 import Resource from "../../resources/Resource.js";
 import Cost from "../../resources/Cost.js";
@@ -12,6 +11,8 @@ import NanotechFoundry from "./NanotechFoundry.js";
 import { techRequirement, tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import TileProject from "../TileProject.js";
+import { MonolithCompletionProject } from "../../quests/MonolithCompletionProject.js";
 
 export default class HumanMonolith extends Tile {
 
