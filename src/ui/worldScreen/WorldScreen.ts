@@ -20,11 +20,15 @@ export default class WorldScreen implements Page {
     private questIndicator: QuestIndicator;
     readonly html: HTMLElement;
 
-    constructor(game: Game) {
+    constructor(
+        game: Game,
+        // disabling the header buttons prevents the player from accessing menu pages or advancing to the next turn
+        headerButtonState: "enabled" | "disabled" = "enabled"
+    ) {
         this.mapUI = new MapUI(this, game.world);
         this.tileSidebar = new TileSidebar(this, game);
         this.inventorySidebar = new InventorySidebar(game.inventory);
-        this.header = new WorldScreenHeader(game);
+        this.header = new WorldScreenHeader(game, headerButtonState);
         this.questIndicator = new QuestIndicator(game);
 
         this.html = UI.makeDivContaining([
