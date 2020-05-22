@@ -1,4 +1,6 @@
 .world-screen {
+    display: flex;
+    flex-direction: column;
     overflow: hidden; /* hide scrollbar */
 }
 

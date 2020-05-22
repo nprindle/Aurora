@@ -1,3 +1,10 @@
+/* "loading" label in index.html before game menus are rendered */
+.index-label {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 .main-menu {
     position: absolute;
     top: 0;
