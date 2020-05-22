@@ -24,6 +24,8 @@ button {
      * would overwrite the color and font of buttons */
     background-color: black;
     color: white;
+    border-color: gainsboro;
+    border-bottom-color: #979797;
     font-family: var(--mono-font);
 }
 
