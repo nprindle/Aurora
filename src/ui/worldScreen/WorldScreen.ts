@@ -39,7 +39,7 @@ export default class WorldScreen implements Page {
                 UI.makeDivContaining([this.mapUI.html], ["world-screen-map-box"]),
                 this.tileSidebar.html,
             ], ["world-screen-hbox"]),
-        ], ["flex-vertical", "world-screen"]);
+        ], ["world-screen"]);
     }
 
     refresh(): void {
