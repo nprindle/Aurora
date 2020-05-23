@@ -5,12 +5,13 @@ import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { ElectronicsFactoryTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 @TileType
 export default class ElectronicsFactory extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -19,6 +20,7 @@ export default class ElectronicsFactory extends Tile {
 
     resourceConversions = [
         Conversion.newConversion(
+            this.world,
             [new Cost(Resource.Metal, 500)],
             [new Cost(Resource.Electronics, 500)],
             100,
@@ -34,13 +36,20 @@ export default class ElectronicsFactory extends Tile {
         return ElectronicsFactory.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        resourceConversions: S.arrayOf(Conversion.schema),
-    }, ({ position, resourceConversions }) => {
-        const s = new ElectronicsFactory(position);
-        s.resourceConversions = resourceConversions;
-        return s;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            resourceConversions: S.arrayOf(Conversion.schema),
+        }),
+        (x: ElectronicsFactory) => ({
+            position: x.position,
+            resourceConversions: x.resourceConversions,
+        }),
+        (world: World) => ({ position, resourceConversions }) => {
+            const s = new ElectronicsFactory(world, position);
+            s.resourceConversions = resourceConversions;
+            return s;
+        }
+    );
 }
 

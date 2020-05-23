@@ -3,7 +3,7 @@ import TileProject from "../world/TileProject.js";
 import Conversion from "../resources/Conversion.js";
 import Housing from "../resources/Housing.js";
 import World from "./World.js";
-import { Schema, Schemas as S } from "@nprindle/augustus";
+import { Schema, InjectSchema, Schemas as S } from "@nprindle/augustus";
 
 /**
  * A tile is an object in the world that occupies a map square
@@ -22,7 +22,8 @@ export default abstract class Tile {
     readonly populationCapacity?: Housing = undefined;
 
     constructor(
-        public position: GridCoordinates
+        protected world: World,
+        public position: GridCoordinates,
     ) {}
 
     abstract getTileName(): string; // returns the name of the tile type
@@ -46,12 +47,12 @@ export type NamedTileType = typeof Tile & {
 /**
  * A global map of names of subtypes of Tile to their constructor
  */
-const tileTypes: Record<string, typeof Tile & { schema: Schema<Tile, any>; }> = {};
+const tileTypes: Record<string, typeof Tile & { schema: InjectSchema<Tile, World, any, any>; }> = {};
 
 /**
  * Decorator for registering Tile subclasses with 'tileTypes'
  */
-export function TileType(target: typeof Tile & { schema: Schema<Tile, any>; }): void {
+export function TileType(target: typeof Tile & { schema: InjectSchema<Tile, World, any, any>; }): void {
     tileTypes[target.name] = target;
 }
 
@@ -67,29 +68,41 @@ export const typeofTileSchema: Schema<typeof Tile, keyof typeof tileTypes> = S.s
     },
 });
 
-export const tileSchema: Schema<Tile, { type: string; value: any; }> = S.schema({
-    encode: (x: Tile): { type: string; value: any; } => {
+export const tileSchema: InjectSchema<Tile, World, { type: string; value: any; }, { type: string; value: any; }> = S.injecting(
+    S.schema({
+        encode: (data: { type: string; value: any; }) => ({
+            type: data.type,
+            value: tileTypes[data.type].schema.encode(data.value),
+        }),
+        decode: (x: { type: string; value: any; }) => ({
+            type: x.type,
+            value: tileTypes[x.type].schema.decode(x.value),
+        }),
+        validate: (data: unknown): data is { type: string; value: any; } => {
+            if (S.recordOf({ type: S.aString, value: S.anAny }).validate(data)) {
+                const tileType = tileTypes[data.type];
+                if (tileType === undefined) {
+                    return false;
+                }
+                const schema = tileType.schema;
+                return schema.validate(data.value);
+            } else {
+                return false;
+            }
+        },
+    }),
+    (x: Tile): { type: string; value: any; } => {
         const name: string = x.constructor.name;
         return {
             type: name,
-            value: tileTypes[name].schema.encode(x),
+            value: tileTypes[name].schema.project(x),
         };
-    }, decode: (x: { type: string; value: any; }): Tile => {
+    },
+    (world: World) => (x: { type: string; value: any; }): Tile => {
         const con = tileTypes[x.type];
-        return con.schema.decode(x.value);
-    }, validate: (data: unknown): data is { type: string; value: any; } => {
-        if (S.recordOf({ type: S.aString, value: S.anAny }).validate(data)) {
-            const tileType = tileTypes[data.type];
-            if (tileType === undefined) {
-                return false;
-            }
-            const schema = tileType.schema;
-            return schema.validate(data.value);
-        } else {
-            return false;
-        }
-    }
-});
+        return con.schema.inject(world)(x.value);
+    },
+);
 
 /**
  * Serializer for the type of wasteland tile texture variants. The

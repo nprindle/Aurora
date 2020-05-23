@@ -12,13 +12,14 @@ import { tileWithinDistanceRequirement } from "../../queries/DescribedTileQuery.
 import { hasTech, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 
 @TileType
 export default class XenoLab extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -27,6 +28,7 @@ export default class XenoLab extends Tile {
 
     resourceConversions = [
         Conversion.newConversion(
+            this.world,
             [],
             [new Cost(Resource.AlienKnowledge, 10)],
             50,
@@ -59,13 +61,20 @@ export default class XenoLab extends Tile {
         return XenoLab.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        resourceConversions: S.arrayOf(Conversion.schema),
-    }, ({ position, resourceConversions }) => {
-        const s = new XenoLab(position);
-        s.resourceConversions = resourceConversions;
-        return s;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            resourceConversions: S.arrayOf(Conversion.schema),
+        }),
+        (x: XenoLab) => ({
+            position: x.position,
+            resourceConversions: x.resourceConversions,
+        }),
+        (world: World) => ({ position, resourceConversions }) => {
+            const s = new XenoLab(world, position);
+            s.resourceConversions = resourceConversions;
+            return s;
+        }
+    );
 }
 

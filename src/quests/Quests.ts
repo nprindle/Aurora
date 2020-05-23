@@ -126,7 +126,7 @@ export const QuestXenoLab: QuestStage = new QuestStage(
     `Use the "WASD" or arrow keys to move around the map`,
 );
 
-const habitatPopulationCapacity = new Habitat(new GridCoordinates(0, 0)).populationCapacity.capacity;
+const habitatPopulationCapacity = Habitat.populationCapacity.capacity;
 
 export const TutorialQuestPopulation: QuestStage = new QuestStage(
     "Grow total worker population to 250",

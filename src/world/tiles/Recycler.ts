@@ -5,23 +5,26 @@ import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { RecyclerTexture1, RecyclerTexture2 } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 @TileType
 export default class Recycler extends Tile {
     private textureVariant: 1 | 2;
 
-    constructor(position: GridCoordinates, textureVariant: 1 | 2 = 1) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, textureVariant: 1 | 2 = 1) {
+        super(world, position);
         this.textureVariant = textureVariant;
     }
 
     resourceConversions = [
         Conversion.newConversion(
+            this.world,
             [],
             [new Cost(Resource.Cavorite, 200), new Cost(Resource.Energy, 25)],
             300,
         ),
         Conversion.newConversion(
+            this.world,
             [],
             [new Cost(Resource.Orichalcum, 200), new Cost(Resource.Energy, 25)],
             300,
@@ -48,7 +51,7 @@ export default class Recycler extends Tile {
         }
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             resourceConversions: S.arrayOf(Conversion.schema),
@@ -57,8 +60,8 @@ export default class Recycler extends Tile {
             position: recycler.position,
             resourceConversions: recycler.resourceConversions,
             textureVariant: recycler.textureVariant,
-        }), ({ position, textureVariant, resourceConversions }) => {
-            const r = new Recycler(position, textureVariant);
+        }), (world: World) => ({ position, textureVariant, resourceConversions }) => {
+            const r = new Recycler(world, position, textureVariant);
             r.resourceConversions = resourceConversions;
             return r;
         }

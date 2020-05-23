@@ -10,8 +10,8 @@ import { Schemas as S } from "@nprindle/augustus";
 @TileType
 export default class Road extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     static readonly tileName: string = "Road";
@@ -78,6 +78,10 @@ export default class Road extends Tile {
         return RoadTextureVertical;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Road(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: Road) => ({ position: x.position }),
+        (world: World) => ({ position }) => new Road(world, position),
+    );
 }
 

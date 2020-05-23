@@ -6,13 +6,14 @@ import Cost from "../../resources/Cost.js";
 import { ZeroPointPlantTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 import { stripIndent } from "../../util/Text.js";
+import World from "../World.js";
 
 
 @TileType
 export default class ZeroPointPlant extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -21,6 +22,7 @@ export default class ZeroPointPlant extends Tile {
 
     resourceConversions = [
         Conversion.newConversion(
+            this.world,
             [],
             [new Cost(Resource.Energy, 10000)],
             40,
@@ -39,13 +41,20 @@ export default class ZeroPointPlant extends Tile {
         return ZeroPointPlant.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        resourceConversions: S.arrayOf(Conversion.schema),
-    }, ({ position, resourceConversions }) => {
-        const s = new ZeroPointPlant(position);
-        s.resourceConversions = resourceConversions;
-        return s;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            resourceConversions: S.arrayOf(Conversion.schema),
+        }),
+        (x: ZeroPointPlant) => ({
+            position: x.position,
+            resourceConversions: x.resourceConversions,
+        }),
+        (world: World) => ({ position, resourceConversions }) => {
+            const s = new ZeroPointPlant(world, position);
+            s.resourceConversions = resourceConversions;
+            return s;
+        }
+    );
 }
 

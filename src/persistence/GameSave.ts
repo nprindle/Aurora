@@ -2,17 +2,6 @@ import Game from "../Game.js";
 import { DomainOf, Schemas as S } from "@nprindle/augustus";
 import { Storage } from "./Storage.js";
 
-/**
- * The schema of everything that needs to be serialized about the current game
- * state in a save.
- */
-const gameStateSchema = S.recordOf({
-    game: Game.schema,
-    nextConversionPriority: S.aNumber,
-});
-
-type GameState = DomainOf<typeof gameStateSchema>;
-
 export namespace GameSave {
     // The key to use in local storage
     const lsKey = "save" as const;
@@ -21,15 +10,15 @@ export namespace GameSave {
      * Save the current state of the game in local storage. Returns 'true' if
      * saving succeeded and false otherwise.
      */
-    export function saveProgress(gameState: GameState): boolean {
-        return Storage.saveItem(lsKey, gameState, gameStateSchema);
+    export function saveProgress(gameState: Game): boolean {
+        return Storage.saveItem(lsKey, gameState, Game.schema);
     }
 
     /**
      * Load the previous state of the game from local storage.
      */
-    export function loadProgress(): GameState | undefined {
-        const stored = Storage.loadItem(lsKey, gameStateSchema);
+    export function loadProgress(): Game | undefined {
+        const stored = Storage.loadItem(lsKey, Game.schema);
         if (stored?.resultType === "success") {
             return stored.result;
         } else {

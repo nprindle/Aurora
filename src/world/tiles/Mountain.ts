@@ -11,12 +11,13 @@ import { techRequirement, tileWithinDistanceRequirement, roadRequirement } from 
 import MiningFacility from "./MiningFacility.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class Mountain extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -26,7 +27,7 @@ export default class Mountain extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject("Construct Mineshaft", "Create a mineshaft to allow long-term ore extraction",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Mineshaft(position));
+                game.world.placeTile(new Mineshaft(this.world, position));
             },
             [new Cost(Resource.Energy, 500), new Cost(Resource.BuildingMaterials, 250)],
             [
@@ -40,7 +41,7 @@ export default class Mountain extends Tile {
         new TileProject("Strip Mining", `Destroy the mountain to produce ${Resource.Metal.name}`,
             (position: GridCoordinates, game: Game) => {
                 game.inventory.addResource(Resource.Metal, 500);
-                game.world.placeTile(new Wasteland(position, 5));
+                game.world.placeTile(new Wasteland(this.world, position, 5));
             },
             [new Cost(Resource.Energy, 25)],
             [tileWithinDistanceRequirement(MiningFacility, 5)],
@@ -57,6 +58,10 @@ export default class Mountain extends Tile {
         return Mountain.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Mountain(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: Mountain) => ({ position: x.position }),
+        (world: World) => ({ position }) => new Mountain(world, position),
+    );
 }
 

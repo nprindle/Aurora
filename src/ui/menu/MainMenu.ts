@@ -43,11 +43,10 @@ export default class MainMenu implements Page {
         const saved: boolean = GameSave.saveExists();
 
         const resumeButton = UI.makeButton("resume_game", () => {
-            const data = GameSave.loadProgress();
-            if (data) {
-                Conversion.unsafeSetNextPriority(data.nextConversionPriority);
-                Cheats.enableCheats(data.game);
-                GameWindow.show(new WorldScreen(data.game));
+            const game = GameSave.loadProgress();
+            if (game) {
+                Cheats.enableCheats(game);
+                GameWindow.show(new WorldScreen(game));
             } else {
                 GameWindow.show(new MessageScreen(
                     "Deserialization Error",

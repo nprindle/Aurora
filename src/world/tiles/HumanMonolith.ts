@@ -13,12 +13,13 @@ import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
 import TileProject from "../TileProject.js";
 import { MonolithCompletionProject } from "../../quests/MonolithCompletionProject.js";
+import World from "../World.js";
 
 @TileType
 export default class HumanMonolith extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -27,6 +28,7 @@ export default class HumanMonolith extends Tile {
 
     possibleProjects: TileProject[] = [
         new MonolithCompletionProject(
+            this.world,
             "Activate Seed Core",
             stripIndent`
             Evidence suggests that, once activated, the hypercomputing matrix will expand to absorb all available
@@ -59,7 +61,10 @@ export default class HumanMonolith extends Tile {
         return HumanMonolith.tileDescription;
     }
 
-    static readonly schema =
-        S.classOf({ position: GridCoordinates.schema }, ({ position }) => new HumanMonolith(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: HumanMonolith) => ({ position: x.position }),
+        (world: World) => ({ position }) => new HumanMonolith(world, position)
+    );
 }
 

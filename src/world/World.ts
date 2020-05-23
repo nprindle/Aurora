@@ -15,6 +15,8 @@ export default class World {
     // this is stored as part of the world so that the current position persists between screens
     viewPosition: GridCoordinates = new GridCoordinates(0, 0);
 
+    private currentConversionPriority: number = 0;
+
     private constructor(
         public width: number,
         public height: number,
@@ -28,14 +30,13 @@ export default class World {
 
         // generate empty map
         const grid = new Array(height);
+        const world = new World(width, height, grid);
         for (let row = 0; row < height; row++) {
             grid[row] = new Array(width);
             for (let column = 0; column < width; column++) {
-                grid[row][column] = new Wasteland(new GridCoordinates(column, row));
+                grid[row][column] = new Wasteland(world, new GridCoordinates(column, row));
             }
         }
-
-        const world = new World(width, height, grid);
 
         // place random mountains
         const mountainNumber = Random.intBetween(...WorldGenerationParameters.mountainRange);
@@ -43,7 +44,7 @@ export default class World {
             const wastelandTiles = world.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             if (Arrays.isNonEmpty(wastelandTiles)) {
                 const position = Random.fromArray(wastelandTiles).position;
-                world.placeTile(new Mountain(position));
+                world.placeTile(new Mountain(world, position));
             }
         }
 
@@ -53,16 +54,23 @@ export default class World {
             const wastelandTiles = world.getTiles().filter((tile: Tile) => (tile instanceof Wasteland));
             if (Arrays.isNonEmpty(wastelandTiles)) {
                 const position = Random.fromArray(wastelandTiles).position;
-                world.placeTile(new Ruins(position));
+                world.placeTile(new Ruins(world, position));
             }
         }
 
         // place the tiles specified in the parameters
-        for (const tile of WorldGenerationParameters.nonrandomTiles()) {
+        for (const tile of WorldGenerationParameters.nonrandomTiles(world)) {
             world.placeTile(tile);
         }
 
         return world;
+    }
+
+    /**
+     * Returns the next available conversion priority number
+     */
+    nextConversionPriority(): number {
+        return this.currentConversionPriority++;
     }
 
     // place a tile into the grid in the position given by the tile's coordinates
@@ -118,9 +126,24 @@ export default class World {
         return capacity;
     }
 
-    static readonly schema = S.classOf({
-        width: S.aNumber,
-        height: S.aNumber,
-        grid: S.arrayOf(S.arrayOf(tileSchema)),
-    }, ({ width, height, grid }) => new World(width, height, grid));
+    static readonly schema = S.contra(
+        S.recordOf({
+            width: S.aNumber,
+            height: S.aNumber,
+            grid: S.arrayOf(S.arrayOf(tileSchema)),
+            currentConversionPriority: S.aNumber,
+        }),
+        (x: World) => ({
+            width: x.width,
+            height: x.height,
+            grid: x.grid.map(a => a.map(b => tileSchema.project(b))),
+            currentConversionPriority: x.currentConversionPriority,
+        }),
+        ({ width, height, grid, currentConversionPriority }) => {
+            const w = new World(width, height, undefined as any);
+            w.grid = grid.map(a => a.map(b => tileSchema.inject(w)(b)));
+            w.currentConversionPriority = currentConversionPriority;
+            return w;
+        }
+    );
 }

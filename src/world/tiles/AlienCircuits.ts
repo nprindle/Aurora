@@ -2,12 +2,13 @@ import Tile, { TileType } from "../Tile.js";
 import GridCoordinates from "../GridCoordinates.js";
 import { AlienCircuitsTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 @TileType
 export default class AlienCircuits extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -26,7 +27,10 @@ export default class AlienCircuits extends Tile {
         return AlienCircuits.tileDescription;
     }
 
-    static readonly schema =
-        S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienCircuits(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: AlienCircuits) => ({ position: x.position }),
+        (world: World) => ({ position }) => new AlienCircuits(world, position),
+    );
 }
 

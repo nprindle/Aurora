@@ -18,6 +18,7 @@ import { hasTech, tileExists, orQuery, notQuery } from "../../queries/Queries.js
 import { roadRequirement } from "../../queries/DescribedTileQuery.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class Wasteland extends Tile {
@@ -25,8 +26,8 @@ export default class Wasteland extends Tile {
     private textureVariant: 1 | 2 | 3 | 4 | 5;
 
 
-    constructor(position: GridCoordinates, textureVariant?: 1 | 2 | 3 | 4 | 5) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, textureVariant?: 1 | 2 | 3 | 4 | 5) {
+        super(world, position);
         if (textureVariant) {
             this.textureVariant = textureVariant;
         } else {
@@ -46,7 +47,7 @@ export default class Wasteland extends Tile {
             "Create habitat construction site",
             "Designate this location for construction of habitation and life support facilities",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new ConstructionHabitat(position, this.textureVariant));
+                game.world.placeTile(new ConstructionHabitat(this.world, position, this.textureVariant));
             }, [], [], [],
         ),
 
@@ -54,7 +55,7 @@ export default class Wasteland extends Tile {
             "Create industry construction site",
             "Designate this location for construction of industrial facilities and infrastructure",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new ConstructionIndustry(position, this.textureVariant));
+                game.world.placeTile(new ConstructionIndustry(this.world, position, this.textureVariant));
             }, [], [], [],
         ),
 
@@ -62,7 +63,7 @@ export default class Wasteland extends Tile {
             "Create laboratory construction site",
             "Designate this location for construction of research laboratories",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new ConstructionLaboratory(position, this.textureVariant));
+                game.world.placeTile(new ConstructionLaboratory(this.world, position, this.textureVariant));
             }, [], [], [],
         ),
 
@@ -70,7 +71,7 @@ export default class Wasteland extends Tile {
             "Create xenoengineering construction site",
             "Designate this location for construction of advanced technologies",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new ConstructionVictory(position, this.textureVariant));
+                game.world.placeTile(new ConstructionVictory(this.world, position, this.textureVariant));
             },
             [],
             [],
@@ -82,7 +83,7 @@ export default class Wasteland extends Tile {
 
         new TileProject("Construct Road", "Construct roads to extend the reach of the colony's logistics",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Road(position));
+                game.world.placeTile(new Road(this.world, position));
             },
             [new Cost(Resource.BuildingMaterials, 10)],
             [roadRequirement],
@@ -115,13 +116,13 @@ export default class Wasteland extends Tile {
         }
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             textureVariant: wastelandVariantSchema,
         }),
         (w: Wasteland) => ({ position: w.position, textureVariant: w.textureVariant }),
-        ({ position, textureVariant }) => new Wasteland(position, textureVariant),
+        (world: World) => ({ position, textureVariant }) => new Wasteland(world, position, textureVariant),
     );
 }
 

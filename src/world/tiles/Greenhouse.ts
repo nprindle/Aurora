@@ -6,12 +6,13 @@ import Cost from "../../resources/Cost.js";
 import Species from "../../resources/Species.js";
 import { GreenhouseTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 @TileType
 export default class Greenhouse extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -20,7 +21,7 @@ export default class Greenhouse extends Tile {
 
     resourceConversions = [
         Conversion.newConversion(
-            [new Cost(Resource.Energy, 10)], [new Cost(Resource.Food, 200)], 30
+            this.world, [new Cost(Resource.Energy, 10)], [new Cost(Resource.Food, 200)], 30
         ),
     ];
 
@@ -33,13 +34,20 @@ export default class Greenhouse extends Tile {
         return Greenhouse.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        resourceConversions: S.arrayOf(Conversion.schema),
-    }, ({ position, resourceConversions }) => {
-        const s = new Greenhouse(position);
-        s.resourceConversions = resourceConversions;
-        return s;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            resourceConversions: S.arrayOf(Conversion.schema),
+        }),
+        (x: Greenhouse) => ({
+            position: x.position,
+            resourceConversions: x.resourceConversions,
+        }),
+        (world: World) => ({ position, resourceConversions }) => {
+            const s = new Greenhouse(world, position);
+            s.resourceConversions = resourceConversions;
+            return s;
+        }
+    );
 }
 

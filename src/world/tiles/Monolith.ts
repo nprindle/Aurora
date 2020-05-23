@@ -16,12 +16,13 @@ import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
 import { MonolithCompletionProject } from "../../quests/MonolithCompletionProject.js";
+import World from "../World.js";
 
 @TileType
 export default class Monolith extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -35,7 +36,7 @@ export default class Monolith extends Tile {
             In the process of repairing the monolith, it would be possible to delete the alien neural scans contained
             within, and replace them with the connectomes of human colonists. However, this would result in the
             permanent loss of the monolith's vast stores of alien data, which would be considered mission failure.`,
-            (position: GridCoordinates, game: Game) => { game.world.placeTile(new HumanMonolith(position)); },
+            (position: GridCoordinates, game: Game) => { game.world.placeTile(new HumanMonolith(this.world, position)); },
             [new Cost(Resource.Energy, 1000), new Cost(Resource.SmartMatter, 500)],
             [
                 tileWithinDistanceRequirement(NeuralEmulator, 2),
@@ -45,6 +46,7 @@ export default class Monolith extends Tile {
         ),
 
         new MonolithCompletionProject(
+            this.world,
             "Activate Seed Core",
             stripIndent`
             The alien faction that built the monolith was destroyed by their ideological opponents before they could
@@ -82,6 +84,10 @@ export default class Monolith extends Tile {
         return Monolith.tileDescription;
     }
 
-    static readonly schema = S.classOf({ position: GridCoordinates.schema }, ({ position }) => new Monolith(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: Monolith) => ({ position: x.position }),
+        (world: World) => ({ position }) => new Monolith(world, position),
+    );
 }
 

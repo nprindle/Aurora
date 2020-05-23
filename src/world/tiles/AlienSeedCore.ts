@@ -3,12 +3,13 @@ import GridCoordinates from "../GridCoordinates.js";
 import { AlienSeedCoreTexture } from "../../ui/Images.js";
 import { stripIndent } from "../../util/Text.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 @TileType
 export default class AlienSeedCore extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -28,7 +29,10 @@ export default class AlienSeedCore extends Tile {
         return AlienSeedCore.tileDescription;
     }
 
-    static readonly schema =
-        S.classOf({ position: GridCoordinates.schema }, ({ position }) => new AlienSeedCore(position));
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: AlienSeedCore) => ({ position: x.position }),
+        (world: World) => ({ position }) => new AlienSeedCore(world, position)
+    );
 }
 

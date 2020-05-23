@@ -48,7 +48,7 @@ export default class TransitionScreen implements Page {
     startLoading(): void {
         const startTime = Date.now();
         this.game.completeTurn();
-        GameSave.saveProgress({ game: this.game, nextConversionPriority: Conversion.unsafeGetNextPriority() });
+        GameSave.saveProgress(this.game);
         const elapsedTime = Date.now() - startTime;
 
         setTimeout(() => {

@@ -5,13 +5,14 @@ import Conversion from "../../resources/Conversion.js";
 import Cost from "../../resources/Cost.js";
 import { PsychLabTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../World.js";
 
 
 @TileType
 export default class PsychLab extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -20,6 +21,7 @@ export default class PsychLab extends Tile {
 
     resourceConversions = [
         Conversion.newConversion(
+            this.world,
             [],
             [new Cost(Resource.PsychKnowledge, 10)],
             25,
@@ -37,13 +39,20 @@ export default class PsychLab extends Tile {
         return PsychLab.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        resourceConversions: S.arrayOf(Conversion.schema),
-    }, ({ position, resourceConversions }) => {
-        const s = new PsychLab(position);
-        s.resourceConversions = resourceConversions;
-        return s;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            resourceConversions: S.arrayOf(Conversion.schema),
+        }),
+        (x: PsychLab) => ({
+            position: x.position,
+            resourceConversions: x.resourceConversions,
+        }),
+        (world: World) => ({ position, resourceConversions }) => {
+            const s = new PsychLab(world, position);
+            s.resourceConversions = resourceConversions;
+            return s;
+        }
+    );
 }
 

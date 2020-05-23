@@ -11,12 +11,13 @@ import { availableHousingRequirement } from "../../queries/DescribedTileQuery.js
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class RobotHive extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -58,13 +59,20 @@ export default class RobotHive extends Tile {
         return RobotHive.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        populationCapacity: Housing.schema,
-    }, ({ position, populationCapacity }) => {
-        const r = new RobotHive(position);
-        r.populationCapacity = populationCapacity;
-        return r;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            populationCapacity: Housing.schema,
+        }),
+        (x: RobotHive) => ({
+            position: x.position,
+            populationCapacity: x.populationCapacity,
+        }),
+        (world: World) => ({ position, populationCapacity }) => {
+            const r = new RobotHive(world, position);
+            r.populationCapacity = populationCapacity;
+            return r;
+        }
+    );
 }
 

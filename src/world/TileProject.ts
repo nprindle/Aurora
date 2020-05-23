@@ -4,6 +4,7 @@ import Cost from "../resources/Cost";
 import DescribedTileQuery from "../queries/DescribedTileQuery";
 import { TileQuery, queryTile } from "../queries/Queries.js";
 import { NamedTileType } from "./Tile";
+import World from "./World";
 
 /* A project that can be performed by on tile
  * e.g., turning a wasteland tile into a habitat, or researching a technology
@@ -40,6 +41,7 @@ export default class TileProject {
 }
 
 export function constructionProject(
+    world: World,
     tile: NamedTileType,
     costs: Cost[],
     completionRequirements: DescribedTileQuery[],
@@ -47,7 +49,7 @@ export function constructionProject(
 ): TileProject {
     return new TileProject(
         `Construct ${tile.tileName}`, tile.tileDescription,
-        (position: GridCoordinates, game: Game) => game.world.placeTile(new tile(position)),
+        (position: GridCoordinates, game: Game) => game.world.placeTile(new tile(world, position)),
         costs, completionRequirements, visibilityRequirements
     );
 }

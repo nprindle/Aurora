@@ -11,20 +11,21 @@ import { roadRequirement, techRequirement } from "../../queries/DescribedTileQue
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class Ruins extends Tile {
 
     private textureVariant: 1 | 2 = Random.bool() ? 1 : 2;
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     possibleProjects = [
         new TileProject("Excavate", "Construct a facility to harvest exotic alien resources from the ruins",
             (position: GridCoordinates, game: Game) =>
-                game.world.placeTile(new Recycler(position, this.textureVariant)),
+                game.world.placeTile(new Recycler(this.world, position, this.textureVariant)),
             [new Cost(Resource.BuildingMaterials, 200), new Cost(Resource.Energy, 100)],
             [roadRequirement, techRequirement(Technology.Xenoarchaeology)],
             [hasTech(Technology.Surveying)],
@@ -50,15 +51,15 @@ export default class Ruins extends Tile {
         }
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             textureVariant: S.union(S.literal(1 as const), S.literal(2 as const)),
         }), (ruins: Ruins) => ({
             position: ruins.position,
             textureVariant: ruins.textureVariant
-        }), ({ position, textureVariant }) => {
-            const r = new Ruins(position);
+        }), (world: World) => ({ position, textureVariant }) => {
+            const r = new Ruins(world, position);
             r.textureVariant = textureVariant;
             return r;
         }

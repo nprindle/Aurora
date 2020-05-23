@@ -11,11 +11,13 @@ import HumanSeedCore from "../world/tiles/HumanSeedCore";
 import HumanCircuits from "../world/tiles/HumanCircuits";
 import AlienCircuits from "../world/tiles/AlienCircuits";
 import WorldScreen from "../ui/worldScreen/WorldScreen";
+import World from "../world/World";
 
 
 // special TileProject used to win the game
 export class MonolithCompletionProject extends TileProject {
     constructor(
+        private world: World,
         readonly title: string,
         readonly projectDescription: string,
         private readonly activeMonolithTile: typeof AlienSeedCore | typeof HumanSeedCore,
@@ -38,7 +40,7 @@ export class MonolithCompletionProject extends TileProject {
             console.warn(`tried to do project ${this.title} without meeting requirements`);
         } else {
             game.inventory.payCost(this.costs);
-            game.world.placeTile(new this.activeMonolithTile(position));
+            game.world.placeTile(new this.activeMonolithTile(this.world, position));
 
             // disable "pause game", "next turn", etc. buttons
             GameWindow.show(new WorldScreen(game, "disabled"));
@@ -71,7 +73,7 @@ export class MonolithCompletionProject extends TileProject {
             tilesInRadius = world.getTilesInCircle(center, radius);
             for (const target of tilesInRadius) {
                 if (!(target instanceof this.activeMonolithTile) && !(target instanceof this.circuitsTile)) {
-                    world.placeTile(new this.circuitsTile(target.position));
+                    world.placeTile(new this.circuitsTile(this.world, target.position));
                 }
             }
 

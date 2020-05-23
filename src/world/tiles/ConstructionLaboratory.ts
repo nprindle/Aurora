@@ -18,12 +18,13 @@ import {
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class ConstructionLaboratory extends Tile {
 
-    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -33,23 +34,23 @@ export default class ConstructionLaboratory extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
+                game.world.placeTile(new Wasteland(this.world, position, this.wastelandVariant));
             }, [], [], [],
         ),
 
-        constructionProject(EngineeringLab,
+        constructionProject(this.world, EngineeringLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 20)],
             [roadRequirement],
             [],
         ),
 
-        constructionProject(PsychLab,
+        constructionProject(this.world, PsychLab,
             [new Cost(Resource.BuildingMaterials, 30)],
             [roadRequirement],
             [],
         ),
 
-        constructionProject(XenoLab,
+        constructionProject(this.world, XenoLab,
             [new Cost(Resource.BuildingMaterials, 40)],
             [
                 nearRuinsOrMonolith(3),
@@ -59,7 +60,7 @@ export default class ConstructionLaboratory extends Tile {
             [],
         ),
 
-        constructionProject(AlignmentLab,
+        constructionProject(this.world, AlignmentLab,
             [new Cost(Resource.BuildingMaterials, 20), new Cost(Resource.Electronics, 40)],
             [speciesPopulationRequirement(Species.Human, 200), roadRequirement],
             [hasTech(Technology.AiResearch)],
@@ -75,13 +76,13 @@ export default class ConstructionLaboratory extends Tile {
         return ConstructionLaboratory.tileDescription;
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,
         }),
         (x: ConstructionLaboratory) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
-        ({ position, wastelandVariant }) => new ConstructionLaboratory(position, wastelandVariant),
+        (world: World) => ({ position, wastelandVariant }) => new ConstructionLaboratory(world, position, wastelandVariant),
     );
 }
 

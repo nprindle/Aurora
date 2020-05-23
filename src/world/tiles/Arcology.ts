@@ -5,12 +5,13 @@ import Housing from "../../resources/Housing.js";
 import { ArcologyTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 import { safetyProject } from "../../quests/SafetyProject.js";
+import World from "../World.js";
 
 @TileType
 export default class Arcology extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -34,13 +35,20 @@ export default class Arcology extends Tile {
         return Arcology.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        populationCapacity: Housing.schema,
-    }, ({ position, populationCapacity }) => {
-        const r = new Arcology(position);
-        r.populationCapacity = populationCapacity;
-        return r;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            populationCapacity: Housing.schema,
+        }),
+        (x: Arcology) => ({
+            position: x.position,
+            populationCapacity: x.populationCapacity,
+        }),
+        (world: World) => ({ position, populationCapacity }) => {
+            const r = new Arcology(world, position);
+            r.populationCapacity = populationCapacity;
+            return r;
+        }
+    );
 }
 

@@ -3,12 +3,13 @@ import GridCoordinates from "../GridCoordinates.js";
 import { NeuralEmulatorTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 import { stripIndent } from "../../util/Text.js";
+import World from "../World.js";
 
 @TileType
 export default class NeuralEmulator extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -28,9 +29,10 @@ export default class NeuralEmulator extends Tile {
         return NeuralEmulator.tileDescription;
     }
 
-    static readonly schema = S.classOf(
-        { position: GridCoordinates.schema },
-        ({ position }) => new NeuralEmulator(position)
+    static readonly schema = S.injecting(
+        S.recordOf({ position: GridCoordinates.schema }),
+        (x: NeuralEmulator) => ({ position: x.position }),
+        (world: World) => ({ position }) => new NeuralEmulator(world, position),
     );
 }
 

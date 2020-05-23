@@ -16,12 +16,13 @@ import {
 import { hasTech, tileExists, notQuery } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class ConstructionVictory extends Tile {
 
-    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -31,11 +32,11 @@ export default class ConstructionVictory extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
+                game.world.placeTile(new Wasteland(this.world, position, this.wastelandVariant));
             }, [], [], [],
         ),
 
-        constructionProject(NanotechFoundry,
+        constructionProject(this.world, NanotechFoundry,
             [
                 new Cost(Resource.SmartMatter, 1000),
                 new Cost(Resource.BuildingMaterials, 500),
@@ -49,7 +50,7 @@ export default class ConstructionVictory extends Tile {
             [hasTech(Technology.MonolithSurvey), notQuery(tileExists(NanotechFoundry))],
         ),
 
-        constructionProject(NeuralEmulator,
+        constructionProject(this.world, NeuralEmulator,
             [
                 new Cost(Resource.BuildingMaterials, 300),
                 new Cost(Resource.Electronics, 1000),
@@ -76,13 +77,13 @@ export default class ConstructionVictory extends Tile {
         return ConstructionVictory.tileDescription;
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,
         }),
         (x: ConstructionVictory) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
-        ({ position, wastelandVariant }) => new ConstructionVictory(position, wastelandVariant),
+        (world: World) => ({ position, wastelandVariant }) => new ConstructionVictory(world, position, wastelandVariant),
     );
 }
 

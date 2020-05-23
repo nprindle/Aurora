@@ -1,13 +1,12 @@
 import Cost from "./Cost.js";
 import { NonEmptyArray } from "../util/Arrays.js";
 import { Schemas as S } from "@nprindle/augustus";
+import World from "../world/World.js";
 
 /* a conversion from input resources to output resources that a tile can perform between turns if the conversion's
  * input resources are available
  */
 export default class Conversion {
-
-    private static nextNumber = 0; // the initial priority of the next non-free conversion that will be created
 
     public enabled: boolean = true; // conversion will be skipped when disabled
 
@@ -20,10 +19,9 @@ export default class Conversion {
         public priority: number,
     ) {}
 
-    static newConversion(inputs: Cost[], outputs: NonEmptyArray<Cost>, requiredWorkers: number = 0): Conversion {
-        const c = new Conversion(inputs, outputs, requiredWorkers, Conversion.nextNumber);
-        Conversion.nextNumber++;
-        return c;
+    static newConversion(world: World, inputs: Cost[], outputs: NonEmptyArray<Cost>, requiredWorkers: number = 0): Conversion {
+        const priority = world.nextConversionPriority();
+        return new Conversion(inputs, outputs, requiredWorkers, priority);
     }
 
     isFree(): boolean {
@@ -42,23 +40,6 @@ export default class Conversion {
             const inputDescription = inputStrings.join(", ");
             return `Produce ${outputDescription} using ${inputDescription}`;
         }
-    }
-
-    /**
-     * Do not use this function. This exists purely for serialization of the
-     * game state. Depending on this value will lead to bad conversion behavior.
-     */
-    static unsafeGetNextPriority(): number {
-        return Conversion.nextNumber;
-    }
-
-    /**
-     * Do not use this function. This exists purely for deserialization of the
-     * game state, and setting this at runtime will lead to bad conversion
-     * behavior.
-     */
-    static unsafeSetNextPriority(priority: number): void {
-        Conversion.nextNumber = priority;
     }
 
     static readonly schema = S.classOf({

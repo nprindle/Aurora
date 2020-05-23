@@ -16,12 +16,13 @@ import { hasTech } from "../../queries/Queries.js";
 import RobotHive from "./RobotHive.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class ConstructionHabitat extends Tile {
 
-    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5 ) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5 ) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -32,11 +33,11 @@ export default class ConstructionHabitat extends Tile {
 
         new TileProject("Break down construction site", "Revert this location to wasteland",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
+                game.world.placeTile(new Wasteland(this.world, position, this.wastelandVariant));
             }, [], [], [],
         ),
 
-        constructionProject(RobotHive,
+        constructionProject(this.world, RobotHive,
             [new Cost(Resource.BuildingMaterials, 250), new Cost(Resource.Electronics, 500)],
             [
                 techRequirement(Technology.StructuralEngineering),
@@ -46,7 +47,7 @@ export default class ConstructionHabitat extends Tile {
             [hasTech(Technology.IndustrialEngineering)],
         ),
 
-        constructionProject(Habitat,
+        constructionProject(this.world, Habitat,
             [new Cost(Resource.BuildingMaterials, 200)],
             [
                 techRequirement(Technology.StructuralEngineering),
@@ -55,19 +56,19 @@ export default class ConstructionHabitat extends Tile {
             [],
         ),
 
-        constructionProject(Arcology,
+        constructionProject(this.world, Arcology,
             [new Cost(Resource.BuildingMaterials, 500)],
             [techRequirement(Technology.UrbanPlanning), roadRequirement],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(Greenhouse,
+        constructionProject(this.world, Greenhouse,
             [new Cost(Resource.BuildingMaterials, 25)],
             [roadRequirement],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(Hydroponics,
+        constructionProject(this.world, Hydroponics,
             [new Cost(Resource.BuildingMaterials, 25), new Cost(Resource.Electronics, 30)],
             [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
             [hasTech(Technology.StructuralEngineering)]
@@ -85,13 +86,13 @@ export default class ConstructionHabitat extends Tile {
         return ConstructionHabitat.tileDescription;
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,
         }),
         (x: ConstructionHabitat) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
-        ({ position, wastelandVariant }) => new ConstructionHabitat(position, wastelandVariant),
+        (world: World) => ({ position, wastelandVariant }) => new ConstructionHabitat(world, position, wastelandVariant),
     );
 }
 

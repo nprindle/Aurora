@@ -5,19 +5,21 @@ import Housing from "../../resources/Housing.js";
 import { HabitatTexture } from "../../ui/Images.js";
 import { Schemas as S } from "@nprindle/augustus";
 import { safetyProject } from "../../quests/SafetyProject.js";
+import World from "../World.js";
 
 @TileType
 export default class Habitat extends Tile {
 
-    constructor(position: GridCoordinates) {
-        super(position);
+    constructor(world: World, position: GridCoordinates) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
         return HabitatTexture;
     }
 
-    populationCapacity: Housing = new Housing(Species.Human, 200);
+    static populationCapacity: Housing = new Housing(Species.Human, 200);
+    populationCapacity: Housing = Habitat.populationCapacity;
 
     possibleProjects = [
         safetyProject
@@ -34,13 +36,20 @@ export default class Habitat extends Tile {
         return Habitat.tileDescription;
     }
 
-    static readonly schema = S.classOf({
-        position: GridCoordinates.schema,
-        populationCapacity: Housing.schema
-    }, ({ position, populationCapacity }) => {
-        const h = new Habitat(position);
-        h.populationCapacity = populationCapacity;
-        return h;
-    });
+    static readonly schema = S.injecting(
+        S.recordOf({
+            position: GridCoordinates.schema,
+            populationCapacity: Housing.schema
+        }),
+        (x: Habitat) => ({
+            position: x.position,
+            populationCapacity: x.populationCapacity,
+        }),
+        (world: World) => ({ position, populationCapacity }) => {
+            const h = new Habitat(world, position);
+            h.populationCapacity = populationCapacity;
+            return h;
+        }
+    );
 }
 

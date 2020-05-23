@@ -18,12 +18,13 @@ import { techRequirement, roadRequirement } from "../../queries/DescribedTileQue
 import { hasTech } from "../../queries/Queries.js";
 import { Schemas as S } from "@nprindle/augustus";
 import Technology from "../../techtree/Technology.js";
+import World from "../World.js";
 
 @TileType
 export default class ConstructionIndustry extends Tile {
 
-    constructor(position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
-        super(position);
+    constructor(world: World, position: GridCoordinates, private wastelandVariant?: 1 | 2 | 3 | 4 | 5) {
+        super(world, position);
     }
 
     getTexture(): HTMLImageElement {
@@ -33,35 +34,35 @@ export default class ConstructionIndustry extends Tile {
     possibleProjects: TileProject[] = [
         new TileProject("Break down construction site", "Revert this location to wasteland",
             (position: GridCoordinates, game: Game) => {
-                game.world.placeTile(new Wasteland(position, this.wastelandVariant));
+                game.world.placeTile(new Wasteland(this.world, position, this.wastelandVariant));
             }, [], [], [],
         ),
 
-        constructionProject(SolarPanels,
+        constructionProject(this.world, SolarPanels,
             [new Cost(Resource.Electronics, 200)],
             [],
             [],
         ),
 
-        constructionProject(MiningFacility,
+        constructionProject(this.world, MiningFacility,
             [new Cost(Resource.Energy, 100), new Cost(Resource.BuildingMaterials, 100)],
             [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(ConstructionFactory,
+        constructionProject(this.world, ConstructionFactory,
             [new Cost(Resource.BuildingMaterials, 350)],
             [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(ElectronicsFactory,
+        constructionProject(this.world, ElectronicsFactory,
             [new Cost(Resource.BuildingMaterials, 300), new Cost(Resource.Electronics, 150)],
             [roadRequirement, techRequirement(Technology.IndustrialEngineering)],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(XenoFactory,
+        constructionProject(this.world, XenoFactory,
             [
                 new Cost(Resource.BuildingMaterials, 200),
                 new Cost(Resource.Electronics, 200),
@@ -71,13 +72,13 @@ export default class ConstructionIndustry extends Tile {
             [hasTech(Technology.Xenoarchaeology)],
         ),
 
-        constructionProject(NuclearPlant,
+        constructionProject(this.world, NuclearPlant,
             [new Cost(Resource.BuildingMaterials, 150), new Cost(Resource.Electronics, 300)],
             [techRequirement(Technology.NuclearEngineering), roadRequirement],
             [hasTech(Technology.StructuralEngineering)],
         ),
 
-        constructionProject(ZeroPointPlant,
+        constructionProject(this.world, ZeroPointPlant,
             [
                 new Cost(Resource.BuildingMaterials, 200),
                 new Cost(Resource.Electronics, 100),
@@ -99,13 +100,13 @@ export default class ConstructionIndustry extends Tile {
         return ConstructionIndustry.tileDescription;
     }
 
-    static readonly schema = S.contra(
+    static readonly schema = S.injecting(
         S.recordOf({
             position: GridCoordinates.schema,
             wastelandVariant: wastelandVariantSchema,
         }),
         (x: ConstructionIndustry) => ({ position: x.position, wastelandVariant: x.wastelandVariant }),
-        ({ position, wastelandVariant }) => new ConstructionIndustry(position, wastelandVariant),
+        (world: World) => ({ position, wastelandVariant }) => new ConstructionIndustry(world, position, wastelandVariant),
     );
 }
 
